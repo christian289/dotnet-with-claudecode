@@ -24,6 +24,7 @@ argument-hint: <ControlName> <description or HTML file path> [CSS file path]
 - If in HTML mode and 3rd argument exists, verify CSS file existence
 
 ### Step 2: Search for Solution and WPF CustomControl Project Library
+
 #### 2.1 Search for Solution File
 
 Search for `.sln` or `.slnx` file in current directory and parent directories.
