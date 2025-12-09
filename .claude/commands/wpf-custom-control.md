@@ -72,6 +72,8 @@ When no `.sln` or `.slnx` file is found in the current directory, create a compl
 
 ```bash
 dotnet new wpf -n {ControlName}.Wpf.Gallery -o {ControlName}.Wpf.Gallery
+mkdir -p {ControlName}.Wpf.Gallery/Properties
+mv {ControlName}.Wpf.Gallery/AssemblyInfo.cs {ControlName}.Wpf.Gallery/Properties/AssemblyInfo.cs
 ```
 
 2. **Create WPF Custom Control Library Project (UI):**
