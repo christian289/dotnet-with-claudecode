@@ -1,6 +1,6 @@
 ---
 description: WPF CustomControl generation command
-allowed-tools: Bash(find:*), Bash(ls:*), Bash(mkdir:*), Bash(mv:*), Bash(cat:*), Bash(dotnet:*), Read, Write, Glob
+allowed-tools: Bash(find:*), Bash(ls:*), Bash(mkdir:*), Bash(mv:*), Bash(cat:*), Bash(rm:*), Bash(dotnet:*), Read, Write, Glob
 argument-hint: <ControlName> <description or HTML file path> [CSS file path]
 ---
 
