@@ -92,7 +92,7 @@ dotnet sln {ControlName}.Wpf.sln add {ControlName}.Wpf.UI/{ControlName}.Wpf.UI.c
 
 ```bash
 dotnet sln {ControlName}.Wpf.sln migrate
-rm {ControlName}.Wpf.sln
+rm -f {ControlName}.Wpf.sln
 ```
 
 5. **Add Project Reference (Gallery → UI):**
@@ -154,7 +154,7 @@ dotnet sln add {ProjectName}.UI/{ProjectName}.UI.csproj
 mkdir -p {ProjectName}.UI/Properties
 mkdir -p {ProjectName}.UI/Controls
 mv {ProjectName}.UI/AssemblyInfo.cs {ProjectName}.UI/Properties/AssemblyInfo.cs
-rm {ProjectName}.UI/CustomControl1.cs
+rm -f ProjectName}.UI/CustomControl1.cs
 ```
 
 #### Case C: 1 WPF CustomControl Library Found (Single project)
@@ -320,6 +320,8 @@ Modify `{TargetProject}/Themes/Generic.xaml` file to merge new Style ResourceDic
 - CSS file not found: Warn and proceed without CSS
 - dotnet CLI error: Provide error details and resolution guidance
 - `dotnet sln migrate` failure: Continue with .sln format and notify user
+- Multiple solution files exist: After migration, delete the original `.sln` file to prevent MSB1011 error
+- Platform-specific commands: Use cross-platform compatible commands (`mv`, `rm -f`, `mkdir -p`) instead of Windows-specific commands (`move`, `del`, `mkdir`)
 
 ## Usage Examples
 
