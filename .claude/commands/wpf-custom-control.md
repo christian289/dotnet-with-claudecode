@@ -92,6 +92,7 @@ dotnet sln {ControlName}.Wpf.sln add {ControlName}.Wpf.UI/{ControlName}.Wpf.UI.c
 
 ```bash
 dotnet sln {ControlName}.Wpf.sln migrate
+rm {ControlName}.Wpf.sln
 ```
 
 5. **Add Project Reference (Gallery → UI):**
