@@ -16,6 +16,7 @@ description: HTML/CSS를 WPF CustomControl XAML로 변환할 때 필요한 가�
 | `::before`, `::after`                | Canvas 내 요소, 선언 순서로 z-order                            | [layout.md](references/layout.md)       |
 | `z-index`                            | 선언 순서 또는 `Panel.ZIndex`                                  | [layout.md](references/layout.md)       |
 | 중앙 정렬 콘텐츠                     | Canvas 밖 Grid에서 Alignment 적용                              | [layout.md](references/layout.md)       |
+| `spacing`                            | Maring 속성으로 대체                                           | -                                       |
 
 ## 핵심 규칙 요약
 
