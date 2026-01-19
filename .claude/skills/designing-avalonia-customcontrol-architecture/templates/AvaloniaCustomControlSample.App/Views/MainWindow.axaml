@@ -1,0 +1,94 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="using:AvaloniaCustomControlSample.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="AvaloniaCustomControlSample.App.Views.MainWindow"
+        Title="AvaloniaUI CustomControl 샘플"
+        Width="800" Height="600"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Styles>
+        <Style Selector="controls|CustomButton.AccentButton">
+            <Setter Property="CustomBackground" Value="#FF6200EE" />
+            <Setter Property="CornerRadiusValue" Value="16" />
+        </Style>
+
+        <Style Selector="controls|CustomButton.SuccessButton">
+            <Setter Property="CustomBackground" Value="#FF00C853" />
+            <Setter Property="CornerRadiusValue" Value="4" />
+        </Style>
+
+        <Style Selector="controls|CustomButton.DangerButton">
+            <Setter Property="CustomBackground" Value="#FFD32F2F" />
+            <Setter Property="CornerRadiusValue" Value="20" />
+        </Style>
+    </Window.Styles>
+
+    <StackPanel Margin="40" Spacing="20">
+        
+        <TextBlock Text="AvaloniaUI CustomControl 샘플"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20" />
+
+        <TextBlock Text="WPF CustomControl 패턴에 대응하는 AvaloniaUI 구현"
+                   FontSize="14"
+                   HorizontalAlignment="Center"
+                   Foreground="#FF666666"
+                   Margin="0,0,0,40" />
+
+        <Border BorderBrush="#FFCCCCCC" BorderThickness="1" Padding="20" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="기본 스타일 (Default Style)" FontWeight="SemiBold" />
+                <controls:CustomButton CustomText="기본 커스텀 버튼" />
+                <controls:CustomButton CustomText="Default Custom Button" />
+            </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#FFCCCCCC" BorderThickness="1" Padding="20" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="스타일 클래스 (Style Classes)" FontWeight="SemiBold" />
+                <controls:CustomButton Classes="AccentButton" CustomText="Accent 버튼" />
+                <controls:CustomButton Classes="SuccessButton" CustomText="Success 버튼" />
+                <controls:CustomButton Classes="DangerButton" CustomText="Danger 버튼" />
+            </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#FFCCCCCC" BorderThickness="1" Padding="20" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="개별 속성 설정 (Custom Properties)" FontWeight="SemiBold" />
+                
+                <controls:CustomButton 
+                    CustomText="커스텀 배경색"
+                    CustomBackground="#FFFF5722"
+                    CornerRadiusValue="12" />
+                
+                <controls:CustomButton 
+                    CustomText="Custom Foreground"
+                    CustomForeground="#FF000000"
+                    CustomBackground="#FFFFC107"
+                    CornerRadiusValue="24" />
+                
+                <controls:CustomButton 
+                    CustomText="Large Padding"
+                    Padding="32,16"
+                    FontSize="18"
+                    CornerRadiusValue="8" />
+            </StackPanel>
+        </Border>
+
+        <Border BorderBrush="#FFCCCCCC" BorderThickness="1" Padding="20" CornerRadius="8">
+            <StackPanel Spacing="12">
+                <TextBlock Text="비활성화 상태 (Disabled State)" FontWeight="SemiBold" />
+                <controls:CustomButton 
+                    CustomText="Disabled Button"
+                    IsEnabled="False" />
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+
+</Window>

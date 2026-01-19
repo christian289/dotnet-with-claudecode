@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AvaloniaCustomControlSample.App/AvaloniaCustomControlSample.App.csproj" />
+  <Project Path="AvaloniaCustomControlSample.Controls/AvaloniaCustomControlSample.Controls.csproj" />
+</Solution>

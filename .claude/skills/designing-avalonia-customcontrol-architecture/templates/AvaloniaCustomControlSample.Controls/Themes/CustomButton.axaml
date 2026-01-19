@@ -1,0 +1,50 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:AvaloniaCustomControlSample.Controls">
+  
+    <SolidColorBrush x:Key="CustomButtonDefaultBackground" Color="#FF2D5460" />
+    <SolidColorBrush x:Key="CustomButtonDefaultForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="CustomButtonMouseOverBackground" Color="#FF1D5460" />
+    <SolidColorBrush x:Key="CustomButtonPressedBackground" Color="#FF0D4450" />
+
+    <ControlTheme x:Key="{x:Type controls:CustomButton}" TargetType="controls:CustomButton">
+        <Setter Property="CustomBackground" Value="{StaticResource CustomButtonDefaultBackground}" />
+        <Setter Property="CustomForeground" Value="{StaticResource CustomButtonDefaultForeground}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Border"
+                        Background="{TemplateBinding CustomBackground}"
+                        CornerRadius="{TemplateBinding CornerRadiusValue}"
+                        Padding="{TemplateBinding Padding}">
+                    <TextBlock Name="PART_TextBlock"
+                               Text="{TemplateBinding CustomText}"
+                               Foreground="{TemplateBinding CustomForeground}"
+                               FontSize="{TemplateBinding FontSize}"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               HorizontalAlignment="{TemplateBinding }"
+                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{StaticResource CustomButtonMouseOverBackground}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{StaticResource CustomButtonPressedBackground}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Border#PART_Border">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

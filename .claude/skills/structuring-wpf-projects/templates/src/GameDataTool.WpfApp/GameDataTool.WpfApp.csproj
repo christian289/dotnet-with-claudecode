@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <!-- Composition Root: 모든 프로젝트 참조 -->
+  <!-- Composition Root: Reference all projects -->
+  <ItemGroup>
+    <ProjectReference Include="..\GameDataTool.Domain\GameDataTool.Domain.csproj" />
+    <ProjectReference Include="..\GameDataTool.Application\GameDataTool.Application.csproj" />
+    <ProjectReference Include="..\GameDataTool.Infrastructure\GameDataTool.Infrastructure.csproj" />
+    <ProjectReference Include="..\GameDataTool.ViewModels\GameDataTool.ViewModels.csproj" />
+    <ProjectReference Include="..\GameDataTool.WpfServices\GameDataTool.WpfServices.csproj" />
+    <ProjectReference Include="..\GameDataTool.UI\GameDataTool.UI.csproj" />
+  </ItemGroup>
+
+  <!-- DI 및 호스팅 패키지 -->
+  <!-- DI and hosting packages -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

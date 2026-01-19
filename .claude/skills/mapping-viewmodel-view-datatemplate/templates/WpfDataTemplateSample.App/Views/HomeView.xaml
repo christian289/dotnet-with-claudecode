@@ -1,0 +1,35 @@
+<UserControl x:Class="WpfDataTemplateSample.App.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:WpfDataTemplateSample.ViewModels;assembly=WpfDataTemplateSample.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}">
+
+    <Grid Background="#F0F8FF">
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBlock Margin="0,0,0,20"
+                       HorizontalAlignment="Center"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="#2C3E50"
+                       Text="{Binding WelcomeMessage}" />
+
+            <Border MaxWidth="600"
+                    Padding="30"
+                    Background="White"
+                    BorderBrush="#3498DB"
+                    BorderThickness="2"
+                    CornerRadius="10">
+                <TextBlock FontSize="16"
+                           Foreground="#34495E"
+                           LineHeight="24"
+                           Text="{Binding Description}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap" />
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
