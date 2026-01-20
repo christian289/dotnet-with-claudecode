@@ -1,6 +1,6 @@
 ---
 name: html-css-to-wpf-xaml
-description: HTML/CSS를 WPF CustomControl XAML로 변환할 때 필요한 가이드. CSS 애니메이션, overflow 클리핑, pseudo-element, 회전 요소 등을 WPF로 변환할 때 발생하는 일반적인 실수와 올바른 패턴을 제공한다. 다음 상황에서 사용: (1) HTML/CSS를 WPF XAML로 변환, (2) CSS 애니메이션을 WPF Storyboard로 변환, (3) CSS border-radius + overflow: hidden을 WPF 클리핑으로 구현, (4) CSS ::before/::after pseudo-element를 WPF로 구현, (5) CSS transform: rotate를 WPF RotateTransform으로 변환
+description: Converts HTML/CSS to WPF CustomControl XAML with correct patterns and common pitfall solutions. Use when transforming web designs to WPF, converting CSS animations to Storyboards, implementing CSS border-radius clipping, CSS pseudo-elements (::before/::after), or CSS transforms in XAML.
 ---
 
 # HTML/CSS → WPF XAML 변환 가이드

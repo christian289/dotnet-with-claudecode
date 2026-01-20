@@ -1,6 +1,6 @@
 ---
 name: avaloniaui-radialgradientbrush-fix
-description: AvaloniaUI에서 RadialGradientBrush를 사용하는 경우 실행. AvaloniaUI Issue #19888로 인해 GradientOrigin과 Center 값이 반드시 동일해야 함. WPF RadialGradientBrush 변환, AvaloniaUI RadialGradientBrush 호환성, GradientOrigin Center 불일치 문제 해결 시 사용.
+description: Fixes RadialGradientBrush compatibility issues in AvaloniaUI due to Issue #19888 where GradientOrigin and Center must be identical. Use when converting WPF RadialGradientBrush to AvaloniaUI, resolving gradient rendering issues, or GradientOrigin/Center value mismatch problems.
 ---
 
 # AvaloniaUI RadialGradientBrush 호환성 수정
