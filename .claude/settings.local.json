@@ -3,7 +3,16 @@
     "allow": [
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "mcp__plugin_serena_serena__activate_project",
+      "mcp__plugin_serena_serena__check_onboarding_performed",
+      "mcp__plugin_serena_serena__onboarding",
+      "mcp__plugin_serena_serena__list_dir",
+      "mcp__plugin_serena_serena__find_file",
+      "mcp__plugin_serena_serena__write_memory",
+      "mcp__plugin_serena_serena__list_memories",
+      "Bash(ren \"E:\\\\Playground\\\\dotnet-with-claudecode\\\\.claude\\\\skills\\\\avaloniaui-radialgradientbrush-fix\" \"fixing-avaloniaui-radialgradientbrush\")",
+      "Bash(powershell -Command:*)"
     ]
   }
 }

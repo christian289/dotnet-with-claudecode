@@ -1,5 +1,5 @@
 ---
-name: html-css-to-wpf-xaml
+name: converting-html-css-to-wpf-xaml
 description: Converts HTML/CSS to WPF CustomControl XAML with correct patterns and common pitfall solutions. Use when transforming web designs to WPF, converting CSS animations to Storyboards, implementing CSS border-radius clipping, CSS pseudo-elements (::before/::after), or CSS transforms in XAML.
 ---
 
