@@ -445,3 +445,7 @@ FodyWeavers.xsd
 # CLAUDE.md 파일 허용
 !/CLAUDE.md
 !/CLAUDE.local.md
+
+# Allow wpf-dev-pack plugin folder
+# wpf-dev-pack 플러그인 폴더 허용
+!/wpf-dev-pack/

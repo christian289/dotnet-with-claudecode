@@ -1,0 +1,20 @@
+{
+  "name": "wpf-dev-pack",
+  "description": "WPF development toolkit for Claude Code with specialized agents and skills for CustomControl, MVVM, XAML styling, and high-performance rendering",
+  "version": "1.0.0",
+  "author": {
+    "name": "vincent lee"
+  },
+  "repository": "https://github.com/christian289/dotnet-with-claudecode",
+  "homepage": "https://github.com/christian289/dotnet-with-claudecode/tree/main/wpf-dev-pack",
+  "license": "MIT",
+  "keywords": [
+    "wpf",
+    "dotnet",
+    "csharp",
+    "xaml",
+    "mvvm",
+    "customcontrol",
+    "communitytoolkit"
+  ]
+}
