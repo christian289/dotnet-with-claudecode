@@ -356,7 +356,6 @@ public sealed partial class FolderViewModel : ObservableObject
                     xmlns:viewmodels="clr-namespace:MyApp.ViewModels">
 
     <!-- HierarchicalDataTemplate for recursive tree structure -->
-    <!-- 재귀적 트리 구조를 위한 HierarchicalDataTemplate -->
     <HierarchicalDataTemplate DataType="{x:Type viewmodels:FolderViewModel}"
                               ItemsSource="{Binding Children}">
         <StackPanel Orientation="Horizontal">
@@ -373,7 +372,6 @@ public sealed partial class FolderViewModel : ObservableObject
 ```xml
 <TreeView ItemsSource="{Binding RootFolders}">
     <!-- HierarchicalDataTemplate from resources is automatically applied -->
-    <!-- 리소스의 HierarchicalDataTemplate이 자동 적용됨 -->
     <TreeView.ItemContainerStyle>
         <Style TargetType="{x:Type TreeViewItem}">
             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
@@ -387,7 +385,6 @@ public sealed partial class FolderViewModel : ObservableObject
 
 ```xml
 <!-- Different templates for different node types -->
-<!-- 다른 노드 타입에 대한 다른 템플릿 -->
 <HierarchicalDataTemplate DataType="{x:Type viewmodels:FolderViewModel}"
                           ItemsSource="{Binding Children}">
     <StackPanel Orientation="Horizontal">

@@ -57,7 +57,6 @@ public class [ControlName] : [BaseClass]
 
     /// <summary>
     /// Example dependency property
-    /// 예제 의존성 속성
     /// </summary>
     public static readonly DependencyProperty ExampleProperty =
         DependencyProperty.Register(
@@ -86,7 +85,6 @@ public class [ControlName] : [BaseClass]
     protected virtual void OnExampleChanged(string oldValue, string newValue)
     {
         // Handle property change
-        // 속성 변경 처리
     }
 
     #endregion
@@ -235,6 +233,5 @@ After generation, provide:
 
 ```xml
 <!-- Usage Example -->
-<!-- 사용 예제 -->
 <local:[ControlName] Example="Hello World"/>
 ```

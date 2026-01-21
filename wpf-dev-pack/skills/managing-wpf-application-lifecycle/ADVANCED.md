@@ -23,7 +23,6 @@ public partial class App : Application
         if (!createdNew)
         {
             // Another instance is already running
-            // 다른 인스턴스가 이미 실행 중
             MessageBox.Show(
                 "Application is already running.",
                 "Single Instance",
@@ -31,7 +30,6 @@ public partial class App : Application
                 MessageBoxImage.Information);
 
             // Optionally activate existing instance
-            // 기존 인스턴스 활성화 (선택)
             ActivateExistingInstance();
 
             Shutdown();
@@ -51,7 +49,6 @@ public partial class App : Application
     private void ActivateExistingInstance()
     {
         // Use named pipe or other IPC to signal existing instance
-        // 네임드 파이프 또는 다른 IPC로 기존 인스턴스에 신호
     }
 }
 ```
@@ -81,14 +78,12 @@ public partial class App : Application
         if (!createdNew)
         {
             // Send arguments to existing instance
-            // 기존 인스턴스에 인수 전송
             SendArgumentsToExistingInstance(e.Args);
             Shutdown();
             return;
         }
 
         // Start pipe server to receive arguments
-        // 인수 수신용 파이프 서버 시작
         StartPipeServer();
 
         base.OnStartup(e);
@@ -111,7 +106,6 @@ public partial class App : Application
                     var args = await reader.ReadToEndAsync();
 
                     // Process arguments on UI thread
-                    // UI 스레드에서 인수 처리
                     Dispatcher.Invoke(() => ProcessReceivedArguments(args.Split('\n')));
                 }
                 catch (OperationCanceledException)
@@ -141,11 +135,9 @@ public partial class App : Application
     private void ProcessReceivedArguments(string[] args)
     {
         // Activate main window
-        // 메인 윈도우 활성화
         MainWindow?.Activate();
 
         // Process arguments
-        // 인수 처리
         foreach (var arg in args)
         {
             if (!string.IsNullOrWhiteSpace(arg))
@@ -173,12 +165,10 @@ public partial class App : Application
 
 ```csharp
 // Store temporary runtime data
-// 임시 런타임 데이터 저장
 Application.Current.Properties["CurrentUser"] = currentUser;
 Application.Current.Properties["IsDebugMode"] = true;
 
 // Retrieve
-// 검색
 var user = Application.Current.Properties["CurrentUser"] as User;
 ```
 
@@ -186,7 +176,6 @@ var user = Application.Current.Properties["CurrentUser"] as User;
 
 ```csharp
 // Access strongly-typed settings
-// 강력한 형식의 설정 접근
 var lastOpenedFile = Properties.Settings.Default.LastOpenedFile;
 Properties.Settings.Default.LastOpenedFile = filePath;
 Properties.Settings.Default.Save();
@@ -210,14 +199,12 @@ public partial class App : Application
     private void OnActivated(object? sender, EventArgs e)
     {
         // Application gained focus
-        // 애플리케이션이 포커스를 얻음
         ResumeBackgroundTasks();
     }
 
     private void OnDeactivated(object? sender, EventArgs e)
     {
         // Application lost focus
-        // 애플리케이션이 포커스를 잃음
         PauseBackgroundTasks();
         SaveDraft();
     }

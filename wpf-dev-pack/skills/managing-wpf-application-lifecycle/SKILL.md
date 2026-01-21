@@ -70,15 +70,12 @@ public partial class App : Application
         base.OnStartup(e);
 
         // Process command line arguments
-        // 명령줄 인수 처리
         ProcessCommandLineArgs(e.Args);
 
         // Initialize services
-        // 서비스 초기화
         InitializeServices();
 
         // Create and show main window manually (if StartupUri not set)
-        // 메인 윈도우 수동 생성 및 표시 (StartupUri 미설정 시)
         var mainWindow = new MainWindow();
         mainWindow.Show();
     }
@@ -129,15 +126,12 @@ public partial class App : Application
 protected override void OnExit(ExitEventArgs e)
 {
     // Save settings
-    // 설정 저장
     SaveUserSettings();
 
     // Cleanup resources
-    // 리소스 정리
     DisposeServices();
 
     // Set exit code
-    // 종료 코드 설정
     e.ApplicationExitCode = 0;
 
     base.OnExit(e);
@@ -151,7 +145,6 @@ protected override void OnExit(ExitEventArgs e)
 private void Window_Closing(object sender, CancelEventArgs e)
 {
     // Check for unsaved changes
-    // 저장되지 않은 변경사항 확인
     if (HasUnsavedChanges)
     {
         var result = MessageBox.Show(
@@ -181,7 +174,6 @@ private void Window_Closing(object sender, CancelEventArgs e)
 private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
 {
     // e.ReasonSessionEnding: Logoff or Shutdown
-    // e.ReasonSessionEnding: Logoff 또는 Shutdown
 
     if (HasCriticalOperation)
     {
@@ -199,7 +191,6 @@ private void Application_SessionEnding(object sender, SessionEndingCancelEventAr
     }
 
     // Perform emergency save
-    // 긴급 저장 수행
     EmergencySave();
 }
 ```
@@ -218,7 +209,6 @@ public partial class App : Application
         base.OnStartup(e);
 
         // Handle UI thread exceptions
-        // UI 스레드 예외 처리
         DispatcherUnhandledException += OnDispatcherUnhandledException;
     }
 
@@ -235,7 +225,6 @@ public partial class App : Application
             MessageBoxImage.Error);
 
         // Prevent application crash (handle the exception)
-        // 애플리케이션 충돌 방지 (예외 처리)
         e.Handled = true;
     }
 }
@@ -249,11 +238,9 @@ protected override void OnStartup(StartupEventArgs e)
     base.OnStartup(e);
 
     // Handle non-UI thread exceptions
-    // 비-UI 스레드 예외 처리
     AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
     // Handle Task exceptions
-    // Task 예외 처리
     TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
 }
 

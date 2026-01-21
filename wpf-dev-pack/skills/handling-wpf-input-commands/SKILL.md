@@ -46,14 +46,12 @@ ICommand (Interface)
 private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
 {
     // Copy logic
-    // 복사 로직
     Clipboard.SetText(SelectedText);
 }
 
 private void CopyCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 {
     // Enable condition
-    // 활성화 조건
     e.CanExecute = !string.IsNullOrEmpty(SelectedText);
 }
 ```
@@ -81,7 +79,6 @@ using System.Windows.Input;
 public static class CustomCommands
 {
     // Define custom command
-    // 커스텀 커맨드 정의
     public static readonly RoutedCommand RefreshData = new(
         nameof(RefreshData),
         typeof(CustomCommands),
@@ -217,7 +214,6 @@ public static class CustomCommands
     <TextBox x:Name="TargetTextBox"/>
 
     <!-- Commands target the TextBox even when button is focused -->
-    <!-- 버튼이 포커스되어 있어도 TextBox로 커맨드 전달 -->
     <Button Command="ApplicationCommands.Copy"
             CommandTarget="{Binding ElementName=TargetTextBox}"
             Content="Copy from TextBox"/>
@@ -247,27 +243,22 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         // Preview events (Tunneling - captured before child elements)
-        // Preview 이벤트 (Tunneling - 자식보다 먼저 처리)
         PreviewKeyDown += OnPreviewKeyDown;
 
         // Normal events (Bubbling - captured after child elements)
-        // 일반 이벤트 (Bubbling - 자식 이후 처리)
         KeyDown += OnKeyDown;
     }
 
     private void OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
         // Global shortcut handling
-        // 전역 단축키 처리
         if (e.Key == Key.Escape)
         {
             // Close popup or cancel operation
-            // 팝업 닫기 또는 작업 취소
             e.Handled = true;
         }
 
         // Modifier key combinations
-        // 조합키 처리
         if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.G)
         {
             // Ctrl+G: Go to line
@@ -279,7 +270,6 @@ public partial class MainWindow : Window
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
         // Handle if not processed by child elements
-        // 자식에서 처리되지 않은 경우 처리
     }
 }
 ```
@@ -290,7 +280,6 @@ public partial class MainWindow : Window
 private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 {
     // Allow only numeric input
-    // 숫자만 입력 허용
     if (!char.IsDigit(e.Text, 0))
     {
         e.Handled = true;
@@ -329,15 +318,12 @@ public partial class DrawingCanvas : FrameworkElement
         _isDragging = true;
 
         // Capture mouse to receive events outside the element
-        // 요소 외부에서도 이벤트를 받기 위해 마우스 캡처
         CaptureMouse();
 
         // Click count detection
-        // 클릭 횟수 감지
         if (e.ClickCount == 2)
         {
             // Double click
-            // 더블 클릭
         }
     }
 
@@ -349,7 +335,6 @@ public partial class DrawingCanvas : FrameworkElement
         var delta = currentPoint - _startPoint;
 
         // Draw or drag logic
-        // 그리기 또는 드래그 로직
     }
 
     private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -364,7 +349,6 @@ public partial class DrawingCanvas : FrameworkElement
     private void OnMouseWheel(object sender, MouseWheelEventArgs e)
     {
         // e.Delta: positive = scroll up, negative = scroll down
-        // e.Delta: 양수 = 위로, 음수 = 아래로
         var zoomFactor = e.Delta > 0 ? 1.1 : 0.9;
         ApplyZoom(zoomFactor);
     }
@@ -379,15 +363,12 @@ public partial class DrawingCanvas : FrameworkElement
 
 ```csharp
 // Set focus
-// 포커스 설정
 myTextBox.Focus();
 
 // Set keyboard focus specifically
-// 키보드 포커스 명시적 설정
 Keyboard.Focus(myTextBox);
 
 // Check focus
-// 포커스 확인
 if (myTextBox.IsFocused)
 {
     // Has focus
@@ -403,7 +384,6 @@ if (myTextBox.IsKeyboardFocused)
 
 ```xml
 <!-- Set default focused element -->
-<!-- 기본 포커스 요소 설정 -->
 <Window FocusManager.FocusedElement="{Binding ElementName=FirstTextBox}">
     <StackPanel>
         <TextBox x:Name="FirstTextBox"/>
@@ -412,7 +392,6 @@ if (myTextBox.IsKeyboardFocused)
 </Window>
 
 <!-- Define focus scope -->
-<!-- 포커스 범위 정의 -->
 <ToolBar FocusManager.IsFocusScope="True">
     <Button Content="Button 1"/>
     <Button Content="Button 2"/>

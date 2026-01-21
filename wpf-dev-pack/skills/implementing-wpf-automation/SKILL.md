@@ -33,23 +33,19 @@ UI Automation Framework
 
 ```xml
 <!-- Name - primary identifier for screen readers -->
-<!-- Name - 스크린 리더용 주 식별자 -->
 <Button Content="Submit"
         AutomationProperties.Name="Submit form"/>
 
 <!-- Name for image buttons (no text content) -->
-<!-- 이미지 버튼용 이름 (텍스트 콘텐츠 없음) -->
 <Button AutomationProperties.Name="Close window">
     <Image Source="/Icons/close.png"/>
 </Button>
 
 <!-- HelpText - additional description -->
-<!-- HelpText - 추가 설명 -->
 <TextBox AutomationProperties.Name="Email address"
          AutomationProperties.HelpText="Enter your email in format user@domain.com"/>
 
 <!-- LabeledBy - reference to label element -->
-<!-- LabeledBy - 라벨 요소 참조 -->
 <Label x:Name="UsernameLabel" Content="Username:"/>
 <TextBox AutomationProperties.LabeledBy="{Binding ElementName=UsernameLabel}"/>
 ```
@@ -58,25 +54,20 @@ UI Automation Framework
 
 ```xml
 <!-- AcceleratorKey - keyboard shortcut hint -->
-<!-- AcceleratorKey - 키보드 단축키 힌트 -->
 <Button Content="_Save"
         AutomationProperties.AcceleratorKey="Ctrl+S"/>
 
 <!-- AccessKey - mnemonic key -->
-<!-- AccessKey - 니모닉 키 -->
 <Button Content="_File"
         AutomationProperties.AccessKey="Alt+F"/>
 
 <!-- ItemStatus - current state information -->
-<!-- ItemStatus - 현재 상태 정보 -->
 <ListBoxItem AutomationProperties.ItemStatus="Selected, 3 of 10"/>
 
 <!-- ItemType - type description for list items -->
-<!-- ItemType - 목록 항목의 타입 설명 -->
 <ListBoxItem AutomationProperties.ItemType="Email message"/>
 
 <!-- LiveSetting - for dynamic content updates -->
-<!-- LiveSetting - 동적 콘텐츠 업데이트용 -->
 <TextBlock AutomationProperties.LiveSetting="Polite"
            Text="{Binding StatusMessage}"/>
 ```
@@ -117,7 +108,6 @@ public class RatingControl : Control
     public int MaxValue { get; set; } = 5;
 
     // Create custom AutomationPeer
-    // 커스텀 AutomationPeer 생성
     protected override AutomationPeer OnCreateAutomationPeer()
     {
         return new RatingControlAutomationPeer(this);
@@ -134,21 +124,18 @@ public class RatingControlAutomationPeer : FrameworkElementAutomationPeer
     private RatingControl RatingControl => (RatingControl)Owner;
 
     // Return control type for screen readers
-    // 스크린 리더용 컨트롤 타입 반환
     protected override AutomationControlType GetAutomationControlTypeCore()
     {
         return AutomationControlType.Slider;
     }
 
     // Return class name
-    // 클래스 이름 반환
     protected override string GetClassNameCore()
     {
         return nameof(RatingControl);
     }
 
     // Return accessible name
-    // 접근 가능한 이름 반환
     protected override string GetNameCore()
     {
         var name = base.GetNameCore();
@@ -162,7 +149,6 @@ public class RatingControlAutomationPeer : FrameworkElementAutomationPeer
     }
 
     // Return help text
-    // 도움말 텍스트 반환
     protected override string GetHelpTextCore()
     {
         return "Use arrow keys to change rating";
@@ -190,7 +176,6 @@ public class RatingControlAutomationPeer : FrameworkElementAutomationPeer,
     private RatingControl RatingControl => (RatingControl)Owner;
 
     // Expose supported patterns
-    // 지원하는 패턴 노출
     public override object? GetPattern(PatternInterface patternInterface)
     {
         if (patternInterface == PatternInterface.RangeValue)
@@ -202,7 +187,6 @@ public class RatingControlAutomationPeer : FrameworkElementAutomationPeer,
     }
 
     // IRangeValueProvider implementation
-    // IRangeValueProvider 구현
     public bool IsReadOnly => false;
 
     public double LargeChange => 1;
@@ -264,7 +248,6 @@ public class CustomControlAutomationPeer : FrameworkElementAutomationPeer
     public void RaiseValueChanged(int oldValue, int newValue)
     {
         // Notify automation clients of value change
-        // 값 변경을 자동화 클라이언트에 알림
         RaisePropertyChangedEvent(
             RangeValuePatternIdentifiers.ValueProperty,
             (double)oldValue,
@@ -288,7 +271,6 @@ public class RatingControl : Control
         var control = (RatingControl)d;
 
         // Get automation peer and raise event
-        // AutomationPeer를 가져와 이벤트 발생
         var peer = UIElementAutomationPeer.FromElement(control) as RatingControlAutomationPeer;
         peer?.RaiseValueChanged((int)e.OldValue, (int)e.NewValue);
     }
@@ -307,7 +289,6 @@ public class RatingControl : Control
     public RatingControl()
     {
         // Enable keyboard focus
-        // 키보드 포커스 활성화
         Focusable = true;
         FocusVisualStyle = (Style)FindResource(SystemParameters.FocusVisualStyleKey);
     }
@@ -381,7 +362,6 @@ public class RatingControl : Control
 
 ```xml
 <!-- Status updates announced when changed -->
-<!-- 변경 시 상태 업데이트 안내 -->
 <TextBlock x:Name="StatusText"
            AutomationProperties.LiveSetting="Polite"
            AutomationProperties.Name="Status"/>
@@ -389,7 +369,6 @@ public class RatingControl : Control
 
 ```csharp
 // Update status - screen reader will announce
-// 상태 업데이트 - 스크린 리더가 안내
 StatusText.Text = "3 items selected";
 ```
 

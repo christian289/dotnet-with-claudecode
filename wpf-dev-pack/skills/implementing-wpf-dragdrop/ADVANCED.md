@@ -126,7 +126,6 @@ public sealed class ReorderableListBox : ListBox
             return;
 
         // Find dragged item
-        // 드래그된 항목 찾기
         var listBoxItem = FindAncestor<ListBoxItem>((DependencyObject)e.OriginalSource);
         if (listBoxItem == null)
             return;
@@ -187,18 +186,15 @@ using System.Windows;
 public static class CustomDataFormats
 {
     // Register custom data format
-    // 사용자 정의 데이터 형식 등록
     public static readonly string TreeNodeFormat = DataFormats.GetDataFormat("MyApp.TreeNode").Name;
     public static readonly string GridRowFormat = DataFormats.GetDataFormat("MyApp.GridRow").Name;
 }
 
 // Usage
-// 사용법
 var data = new DataObject();
 data.SetData(CustomDataFormats.TreeNodeFormat, treeNode);
 
 // Check format
-// 형식 확인
 if (e.Data.GetDataPresent(CustomDataFormats.TreeNodeFormat))
 {
     var node = e.Data.GetData(CustomDataFormats.TreeNodeFormat) as TreeNode;
@@ -215,28 +211,24 @@ if (e.Data.GetDataPresent(CustomDataFormats.TreeNodeFormat))
 private void Window_Drop(object sender, DragEventArgs e)
 {
     // Files from Explorer
-    // 탐색기에서 파일
     if (e.Data.GetDataPresent(DataFormats.FileDrop))
     {
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
     }
 
     // Text from other apps
-    // 다른 앱에서 텍스트
     if (e.Data.GetDataPresent(DataFormats.UnicodeText))
     {
         var text = (string)e.Data.GetData(DataFormats.UnicodeText);
     }
 
     // HTML content
-    // HTML 콘텐츠
     if (e.Data.GetDataPresent(DataFormats.Html))
     {
         var html = (string)e.Data.GetData(DataFormats.Html);
     }
 
     // Bitmap image
-    // 비트맵 이미지
     if (e.Data.GetDataPresent(DataFormats.Bitmap))
     {
         var image = e.Data.GetData(DataFormats.Bitmap) as System.Drawing.Bitmap;

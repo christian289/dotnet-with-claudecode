@@ -10,6 +10,10 @@ WPF development toolkit for Claude Code with specialized agents and skills.
 - **C# LSP Server**: Requires `csharp-lsp` from Claude Code marketplace
 - **Auto-detection**: WPF keywords trigger relevant skills automatically
 
+## Requirements
+
+- **.NET 10 SDK**: This plugin requires [.NET 10](https://dotnet.microsoft.com/download/dotnet/10.0) or later
+
 ## Installation
 
 ```bash

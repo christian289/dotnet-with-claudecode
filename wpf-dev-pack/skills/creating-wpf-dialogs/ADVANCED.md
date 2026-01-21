@@ -152,7 +152,6 @@ public partial class FindReplaceWindow : Window
         InitializeComponent();
 
         // Keep window on top of owner
-        // 오너 위에 창 유지
         Owner = Application.Current.MainWindow;
     }
 

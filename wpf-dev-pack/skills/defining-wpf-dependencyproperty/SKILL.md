@@ -46,7 +46,6 @@ using System.Windows.Controls;
 public class MyControl : Control
 {
     // 1. Register DependencyProperty
-    // 1. DependencyProperty 등록
     public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
         name: nameof(Title),
         propertyType: typeof(string),
@@ -54,7 +53,6 @@ public class MyControl : Control
         typeMetadata: new PropertyMetadata(defaultValue: string.Empty));
 
     // 2. CLR property wrapper
-    // 2. CLR 속성 래퍼
     public string Title
     {
         get => (string)GetValue(TitleProperty);
@@ -102,20 +100,17 @@ public double Value
 
 ```csharp
 // Read-only display property (AffectsRender)
-// 읽기 전용 표시 속성
 new FrameworkPropertyMetadata(
     defaultValue: null,
     flags: FrameworkPropertyMetadataOptions.AffectsRender);
 
 // Layout-affecting property (AffectsMeasure)
-// 레이아웃 영향 속성
 new FrameworkPropertyMetadata(
     defaultValue: 100.0,
     flags: FrameworkPropertyMetadataOptions.AffectsMeasure |
            FrameworkPropertyMetadataOptions.AffectsArrange);
 
 // Two-way bindable property
-// 양방향 바인딩 속성
 new FrameworkPropertyMetadata(
     defaultValue: false,
     flags: FrameworkPropertyMetadataOptions.BindsTwoWayByDefault);
@@ -141,7 +136,6 @@ private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChan
     var newValue = (bool)e.NewValue;
 
     // Handle property change
-    // 속성 변경 처리
     control.UpdateVisualState(newValue);
 }
 ```
@@ -163,7 +157,6 @@ private static object CoerceProgress(DependencyObject d, object baseValue)
     var value = (double)baseValue;
 
     // Clamp value to valid range
-    // 값을 유효 범위로 제한
     if (value < 0.0) return 0.0;
     if (value > 100.0) return 100.0;
 
@@ -186,7 +179,6 @@ private static bool ValidateCount(object value)
     var count = (int)value;
 
     // Return false to reject the value (throws exception)
-    // false 반환 시 값 거부 (예외 발생)
     return count >= 0;
 }
 ```
@@ -211,7 +203,6 @@ using System.Windows;
 public class StatusControl : Control
 {
     // 1. Register read-only property key (private)
-    // 1. 읽기 전용 속성 키 등록 (private)
     private static readonly DependencyPropertyKey IsConnectedPropertyKey =
         DependencyProperty.RegisterReadOnly(
             nameof(IsConnected),
@@ -220,16 +211,13 @@ public class StatusControl : Control
             new FrameworkPropertyMetadata(false));
 
     // 2. Expose public DependencyProperty
-    // 2. public DependencyProperty 노출
     public static readonly DependencyProperty IsConnectedProperty =
         IsConnectedPropertyKey.DependencyProperty;
 
     // 3. Read-only CLR property
-    // 3. 읽기 전용 CLR 속성
     public bool IsConnected => (bool)GetValue(IsConnectedProperty);
 
     // 4. Internal setter using key
-    // 4. 키를 사용한 내부 setter
     protected void SetIsConnected(bool value)
     {
         SetValue(IsConnectedPropertyKey, value);
@@ -251,7 +239,6 @@ using System.Windows;
 public static class GridHelper
 {
     // Register attached property
-    // 첨부 속성 등록
     public static readonly DependencyProperty ColumnSpacingProperty =
         DependencyProperty.RegisterAttached(
             name: "ColumnSpacing",

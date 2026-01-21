@@ -55,7 +55,6 @@ public static class ThemeHelper
 
 ```xml
 <!-- Set once at Window level, inherited by all children -->
-<!-- Window에서 한 번 설정, 모든 자식에 상속 -->
 <Window local:ThemeHelper.ThemeName="Dark">
     <Grid>
         <!-- All children can access ThemeName -->
@@ -81,13 +80,11 @@ public class MyButton : Button
     static MyButton()
     {
         // Override default value for existing property
-        // 기존 속성의 기본값 재정의
         DefaultStyleKeyProperty.OverrideMetadata(
             typeof(MyButton),
             new FrameworkPropertyMetadata(typeof(MyButton)));
 
         // Override with new default and callback
-        // 새 기본값과 콜백으로 재정의
         BackgroundProperty.OverrideMetadata(
             typeof(MyButton),
             new FrameworkPropertyMetadata(
@@ -98,7 +95,6 @@ public class MyButton : Button
     private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         // Handle in derived class
-        // 파생 클래스에서 처리
     }
 }
 ```
@@ -117,7 +113,6 @@ public static readonly DependencyProperty SelectedItemProperty = DependencyPrope
     new FrameworkPropertyMetadata(null, OnSelectedItemChanged));
 
 // Routed event for selection changed
-// 선택 변경 라우티드 이벤트
 public static readonly RoutedEvent SelectedItemChangedEvent = EventManager.RegisterRoutedEvent(
     nameof(SelectedItemChanged),
     RoutingStrategy.Bubble,

@@ -67,21 +67,18 @@ public partial class MainViewModel : ObservableObject
 ### Collection Handling (MVVM Compliant)
 ```csharp
 // ViewModel only exposes BCL types
-// ViewModel은 BCL 타입만 노출
 public partial class ItemsViewModel : ObservableObject
 {
     [ObservableProperty]
     private ObservableCollection<ItemModel> _items = [];
 
     // DO NOT expose ICollectionView - it's in WindowsBase.dll
-    // ICollectionView를 노출하지 마세요 - WindowsBase.dll에 있습니다
 }
 ```
 
 ### CollectionView Encapsulation Pattern
 ```csharp
 // Service Layer (WPF project) handles CollectionView
-// Service Layer(WPF 프로젝트)에서 CollectionView 처리
 public interface ICollectionViewService
 {
     void ApplyFilter(Func<object, bool> predicate);

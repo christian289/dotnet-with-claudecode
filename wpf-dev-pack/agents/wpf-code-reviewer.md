@@ -52,14 +52,12 @@ Use the csharp-lsp tools for enhanced code analysis:
 #### ViewModel References
 ```csharp
 // VIOLATION: System.Windows namespace in ViewModel
-// 위반: ViewModel에서 System.Windows 네임스페이스 참조
 using System.Windows;           // ❌
 using System.Windows.Controls;  // ❌
 using System.Windows.Media;     // ❌
 using System.Windows.Data;      // ❌ (contains ICollectionView)
 
 // ALLOWED
-// 허용
 using System.Collections.ObjectModel;  // ✅ BCL
 using CommunityToolkit.Mvvm;           // ✅ MVVM toolkit
 ```
@@ -67,7 +65,6 @@ using CommunityToolkit.Mvvm;           // ✅ MVVM toolkit
 #### Direct UI Manipulation in ViewModel
 ```csharp
 // VIOLATION
-// 위반
 public void UpdateUI()
 {
     _textBox.Text = "Updated";  // ❌ Direct control access
@@ -75,19 +72,16 @@ public void UpdateUI()
 }
 
 // CORRECT: Use binding and services
-// 올바른 방법: 바인딩과 서비스 사용
 [ObservableProperty]
 private string _message;  // ✅ Bind to TextBox.Text
 
 // Inject dialog service
-// 다이얼로그 서비스 주입
 private readonly IDialogService _dialogService;
 ```
 
 #### Business Logic in Code-Behind
 ```csharp
 // VIOLATION: Logic in .xaml.cs
-// 위반: .xaml.cs에 로직
 private void Button_Click(object sender, RoutedEventArgs e)
 {
     var result = CalculateTotal();  // ❌ Business logic
@@ -95,7 +89,6 @@ private void Button_Click(object sender, RoutedEventArgs e)
 }
 
 // CORRECT: Use Command binding
-// 올바른 방법: Command 바인딩 사용
 ```
 
 ### 2. Performance Anti-Patterns
@@ -103,11 +96,9 @@ private void Button_Click(object sender, RoutedEventArgs e)
 #### Unfrozen Freezable
 ```csharp
 // ANTI-PATTERN
-// 안티패턴
 var brush = new SolidColorBrush(Colors.Blue);  // Not frozen
 
 // CORRECT
-// 올바른 방법
 var brush = new SolidColorBrush(Colors.Blue);
 brush.Freeze();  // ✅
 ```
@@ -115,7 +106,6 @@ brush.Freeze();  // ✅
 #### Repeated InvalidateVisual
 ```csharp
 // ANTI-PATTERN
-// 안티패턴
 foreach (var point in points)
 {
     _data.Add(point);
@@ -123,7 +113,6 @@ foreach (var point in points)
 }
 
 // CORRECT
-// 올바른 방법
 _data.AddRange(points);
 InvalidateVisual();  // ✅ Called once after all changes
 ```
@@ -131,7 +120,6 @@ InvalidateVisual();  // ✅ Called once after all changes
 #### Missing Virtualization
 ```xml
 <!-- ANTI-PATTERN: Large list without virtualization -->
-<!-- 안티패턴: 가상화 없는 대용량 리스트 -->
 <ItemsControl ItemsSource="{Binding ThousandsOfItems}">
     <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -141,7 +129,6 @@ InvalidateVisual();  // ✅ Called once after all changes
 </ItemsControl>
 
 <!-- CORRECT -->
-<!-- 올바른 방법 -->
 <ItemsControl ItemsSource="{Binding ThousandsOfItems}">
     <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -156,7 +143,6 @@ InvalidateVisual();  // ✅ Called once after all changes
 #### DependencyProperty Callback Exception Handling
 ```csharp
 // BEST PRACTICE: Validate in callback
-// 베스트 프랙티스: 콜백에서 유효성 검사
 private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     if (d is not MyControl control) return;  // ✅ Null check
@@ -170,18 +156,15 @@ private static void OnValueChanged(DependencyObject d, DependencyPropertyChanged
 #### TemplateBinding vs Binding
 ```xml
 <!-- Use TemplateBinding in ControlTemplate (faster) -->
-<!-- ControlTemplate에서는 TemplateBinding 사용 (더 빠름) -->
 <Border Background="{TemplateBinding Background}"/>  <!-- ✅ -->
 
 <!-- Use Binding only when TemplateBinding doesn't work -->
-<!-- TemplateBinding이 작동하지 않을 때만 Binding 사용 -->
 <Border Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"/>
 ```
 
 #### ResourceDictionary Structure
 ```xml
 <!-- BEST PRACTICE: Generic.xaml as hub only -->
-<!-- 베스트 프랙티스: Generic.xaml은 허브 역할만 -->
 <ResourceDictionary>
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Themes/Button.xaml"/>

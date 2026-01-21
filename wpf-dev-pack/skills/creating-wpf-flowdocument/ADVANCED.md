@@ -23,7 +23,6 @@ public static class DocumentBuilder
         };
 
         // Title
-        // 제목
         document.Blocks.Add(new Paragraph(new Run(title))
         {
             FontSize = 24,
@@ -33,7 +32,6 @@ public static class DocumentBuilder
         });
 
         // Table
-        // 테이블
         var table = CreateTable(items);
         document.Blocks.Add(table);
 
@@ -45,13 +43,11 @@ public static class DocumentBuilder
         var table = new Table { CellSpacing = 0 };
 
         // Columns
-        // 열
         table.Columns.Add(new TableColumn { Width = new GridLength(200) });
         table.Columns.Add(new TableColumn { Width = new GridLength(100) });
         table.Columns.Add(new TableColumn { Width = new GridLength(100) });
 
         // Header
-        // 헤더
         var headerGroup = new TableRowGroup();
         var headerRow = new TableRow { Background = Brushes.LightGray };
         headerRow.Cells.Add(CreateCell("Item", FontWeights.Bold));
@@ -61,7 +57,6 @@ public static class DocumentBuilder
         table.RowGroups.Add(headerGroup);
 
         // Data rows
-        // 데이터 행
         var dataGroup = new TableRowGroup();
         var alternate = false;
 
@@ -127,11 +122,9 @@ public static class DocumentPrinter
             return;
 
         // Clone document for printing (FlowDocument can only have one parent)
-        // 인쇄용 문서 복제 (FlowDocument는 부모가 하나만 가능)
         var paginator = ((IDocumentPaginatorSource)document).DocumentPaginator;
 
         // Set page size from printer
-        // 프린터에서 페이지 크기 설정
         paginator.PageSize = new Size(
             printDialog.PrintableAreaWidth,
             printDialog.PrintableAreaHeight);

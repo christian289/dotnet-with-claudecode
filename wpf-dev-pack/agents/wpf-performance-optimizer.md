@@ -33,7 +33,6 @@ public class OptimizedCanvas : FrameworkElement
     public OptimizedCanvas()
     {
         // Create and freeze resources
-        // 리소스 생성 및 Freeze
         _pen = new Pen(Brushes.Black, 1);
         _pen.Freeze();
 
@@ -55,7 +54,6 @@ public class OptimizedCanvas : FrameworkElement
     {
         _points.AddRange(points);
         // Call InvalidateVisual ONCE after all data added
-        // 모든 데이터 추가 후 InvalidateVisual 한 번만 호출
         InvalidateVisual();
     }
 }
@@ -93,10 +91,8 @@ public class VisualHost : FrameworkElement
 ### Freezable Pattern (Memory & Performance)
 ```csharp
 // ALWAYS freeze Brushes, Pens, Geometries
-// Brush, Pen, Geometry는 항상 Freeze
 
 // Correct
-// 올바른 방법
 var brush = new SolidColorBrush(Colors.Blue);
 brush.Freeze();
 
@@ -107,7 +103,6 @@ var geometry = new EllipseGeometry(new Point(0, 0), 10, 10);
 geometry.Freeze();
 
 // Wrong - unfrozen resources consume more memory
-// 잘못된 방법 - Freeze하지 않은 리소스는 더 많은 메모리 소비
 var brush = new SolidColorBrush(Colors.Blue); // Not frozen
 ```
 
@@ -145,20 +140,17 @@ var brush = new SolidColorBrush(Colors.Blue); // Not frozen
 ### Dispatcher Priority
 ```csharp
 // Use appropriate dispatcher priority
-// 적절한 Dispatcher 우선순위 사용
 await Dispatcher.InvokeAsync(() =>
 {
     // UI update
 }, DispatcherPriority.Background);
 
 // For render updates
-// 렌더링 업데이트용
 CompositionTarget.Rendering += OnRendering;
 
 private void OnRendering(object sender, EventArgs e)
 {
     // Called every frame (~60fps)
-    // 매 프레임마다 호출 (~60fps)
 }
 ```
 

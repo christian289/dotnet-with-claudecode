@@ -96,15 +96,12 @@ Project Structure:
 using MyApp.Resources;
 
 // Direct access
-// 직접 접근
 var title = Strings.AppTitle;
 
 // Formatted string
-// 형식화된 문자열
 var welcome = string.Format(Strings.WelcomeMessage, userName);
 
 // Access by key (for dynamic keys)
-// 키로 접근 (동적 키용)
 var value = Strings.ResourceManager.GetString("SaveButton");
 ```
 
@@ -128,7 +125,6 @@ public partial class App : Application
         base.OnStartup(e);
 
         // Set culture from user settings or system
-        // 사용자 설정 또는 시스템에서 문화권 설정
         var cultureName = GetSavedCulture() ?? CultureInfo.CurrentCulture.Name;
         SetCulture(cultureName);
     }
@@ -138,12 +134,10 @@ public partial class App : Application
         var culture = new CultureInfo(cultureName);
 
         // Set for current thread
-        // 현재 스레드에 설정
         Thread.CurrentThread.CurrentCulture = culture;
         Thread.CurrentThread.CurrentUICulture = culture;
 
         // Set for new threads (.NET 4.6+)
-        // 새 스레드에 설정 (.NET 4.6+)
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
@@ -180,16 +174,13 @@ public sealed class LocalizationService
         CultureInfo.DefaultThreadCurrentUICulture = culture;
 
         // Save preference
-        // 설정 저장
         Properties.Settings.Default.Culture = cultureName;
         Properties.Settings.Default.Save();
 
         // Notify subscribers
-        // 구독자에게 알림
         CultureChanged?.Invoke(this, EventArgs.Empty);
 
         // Restart required for full XAML update
-        // 전체 XAML 업데이트를 위해 재시작 필요
         RestartApplication();
     }
 
@@ -238,11 +229,9 @@ public sealed class LocalizationService
 
 ```bash
 # Extract resources to CSV
-# 리소스를 CSV로 추출
 LocBaml /parse MyApp.exe /out:en-US.csv
 
 # Create satellite assembly
-# 위성 어셈블리 생성
 LocBaml /generate MyApp.resources.dll /trans:ko-KR.csv /cul:ko-KR /out:.\ko-KR
 ```
 
@@ -273,7 +262,6 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         // Set based on current culture
-        // 현재 문화권에 따라 설정
         var culture = Thread.CurrentThread.CurrentUICulture;
         FlowDirection = culture.TextInfo.IsRightToLeft
             ? FlowDirection.RightToLeft
@@ -286,11 +274,9 @@ public partial class MainWindow : Window
 
 ```xml
 <!-- Prevent mirroring for specific elements -->
-<!-- 특정 요소의 미러링 방지 -->
 <Image Source="logo.png" FlowDirection="LeftToRight"/>
 
 <!-- Numbers should not be mirrored -->
-<!-- 숫자는 미러링하지 않음 -->
 <TextBlock FlowDirection="LeftToRight" Text="{Binding PhoneNumber}"/>
 ```
 
@@ -318,12 +304,10 @@ public partial class MainWindow : Window
 
 ```csharp
 // Uses current thread culture
-// 현재 스레드 문화권 사용
 var dateStr = DateTime.Now.ToString("d");
 var currencyStr = price.ToString("C");
 
 // Specific culture
-// 특정 문화권
 var koKr = new CultureInfo("ko-KR");
 var dateKr = DateTime.Now.ToString("d", koKr);  // 2026-01-21
 var currencyKr = price.ToString("C", koKr);     // ₩1,234
@@ -348,7 +332,6 @@ public class LocalizedEnumConverter : IValueConverter
         if (value is Enum enumValue)
         {
             // Get localized string from resources
-            // 리소스에서 지역화된 문자열 가져오기
             var key = $"{enumValue.GetType().Name}_{enumValue}";
             return Strings.ResourceManager.GetString(key, culture) ?? enumValue.ToString();
         }
@@ -371,7 +354,6 @@ public class LocalizedEnumConverter : IValueConverter
 
 ```csharp
 // Create LocalizedStrings class for easy XAML binding
-// XAML 바인딩용 LocalizedStrings 클래스 생성
 namespace MyApp.Resources;
 
 public class LocalizedStrings
@@ -413,7 +395,6 @@ public static class LocalizedImageHelper
         var ext = Path.GetExtension(basePath);
 
         // Try culture-specific image
-        // 문화권별 이미지 시도
         var localizedPath = Path.Combine(dir!, $"{name}.{culture}{ext}");
 
         if (File.Exists(localizedPath))

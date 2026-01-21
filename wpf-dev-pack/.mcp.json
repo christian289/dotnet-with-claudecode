@@ -7,10 +7,9 @@
       "args": ["-y", "upstash/context7-mcp@latest"],
       "description": "Context7 - Up-to-date library documentation and code examples"
     },
-    "microsoft-docs": {
-      "command": "npx",
-      "args": ["-y", "@anthropics/microsoft-docs-mcp@latest"],
-      "description": "MicrosoftDocs - Official Microsoft technical documentation"
+    "MicrosoftDocs": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
     },
     "sequential-thinking": {
       "command": "npx",

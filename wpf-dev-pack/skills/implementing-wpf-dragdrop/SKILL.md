@@ -55,14 +55,12 @@ public partial class DragSourceView : UserControl
         var diff = _startPoint - currentPoint;
 
         // Check if drag threshold is exceeded
-        // 드래그 임계값 초과 확인
         if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
             Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
         {
             if (sender is TextBlock textBlock)
             {
                 // Create data object and start drag
-                // 데이터 객체 생성 및 드래그 시작
                 var data = new DataObject(DataFormats.Text, textBlock.Text);
                 DragDrop.DoDragDrop(textBlock, data, DragDropEffects.Copy);
             }
@@ -79,7 +77,6 @@ private void StartDragWithMultipleFormats(FrameworkElement source, object item)
     var data = new DataObject();
 
     // Add multiple formats for compatibility
-    // 호환성을 위해 여러 형식 추가
     if (item is MyDataItem dataItem)
     {
         data.SetData(typeof(MyDataItem), dataItem);
@@ -117,7 +114,6 @@ private void StartDragWithMultipleFormats(FrameworkElement source, object item)
 private void DropZone_DragEnter(object sender, DragEventArgs e)
 {
     // Check if data format is acceptable
-    // 데이터 형식 허용 여부 확인
     if (!e.Data.GetDataPresent(DataFormats.FileDrop) &&
         !e.Data.GetDataPresent(DataFormats.Text))
     {
@@ -134,7 +130,6 @@ private void DropZone_DragEnter(object sender, DragEventArgs e)
 private void DropZone_DragOver(object sender, DragEventArgs e)
 {
     // Continuously update effects based on position or modifier keys
-    // 위치나 수정자 키에 따라 효과 지속 업데이트
     if (e.Data.GetDataPresent(DataFormats.FileDrop))
     {
         e.Effects = (e.KeyStates & DragDropKeyStates.ControlKey) != 0
@@ -299,7 +294,6 @@ public sealed partial class FileDropZone : UserControl
 private void DropZone_DragOver(object sender, DragEventArgs e)
 {
     // Set effect based on modifier keys
-    // 수정자 키에 따라 효과 설정
     if ((e.KeyStates & DragDropKeyStates.ControlKey) != 0)
     {
         e.Effects = DragDropEffects.Copy;

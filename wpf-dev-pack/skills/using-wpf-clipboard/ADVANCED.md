@@ -86,7 +86,6 @@ public partial class MainWindow : Window
     private void OnClipboardChanged(object? sender, EventArgs e)
     {
         // Handle clipboard change
-        // 클립보드 변경 처리
         if (Clipboard.ContainsText())
         {
             var text = Clipboard.GetText();
@@ -122,7 +121,6 @@ public static class SafeClipboard
         catch (ExternalException)
         {
             // Clipboard is locked by another process
-            // 클립보드가 다른 프로세스에 의해 잠김
             return false;
         }
     }

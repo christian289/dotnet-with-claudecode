@@ -343,7 +343,6 @@ When using grouped CollectionView, display groups using `GroupStyle` in ListBox 
 ```xml
 <ListBox ItemsSource="{Binding GroupedMembers}">
     <!-- Group header template -->
-    <!-- 그룹 헤더 템플릿 -->
     <ListBox.GroupStyle>
         <GroupStyle>
             <GroupStyle.HeaderTemplate>
@@ -373,7 +372,6 @@ When using grouped CollectionView, display groups using `GroupStyle` in ListBox 
     </ListBox.GroupStyle>
 
     <!-- Item template -->
-    <!-- 항목 템플릿 -->
     <ListBox.ItemTemplate>
         <DataTemplate>
             <TextBlock Text="{Binding Name}" Padding="10,5"/>
@@ -419,7 +417,6 @@ When using grouped CollectionView, display groups using `GroupStyle` in ListBox 
 
 ```csharp
 // Create view with sorting and grouping combined
-// 정렬과 그룹화를 결합한 뷰 생성
 public IEnumerable CreateSortedGroupedView(
     string sortProperty,
     ListSortDirection sortDirection,
@@ -429,7 +426,6 @@ public IEnumerable CreateSortedGroupedView(
     var view = viewSource.View;
 
     // Apply sort first, then group
-    // 먼저 정렬 적용, 그 다음 그룹화
     view.SortDescriptions.Add(new SortDescription(sortProperty, sortDirection));
     view.GroupDescriptions.Add(new PropertyGroupDescription(groupProperty));
 
