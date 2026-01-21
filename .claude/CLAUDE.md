@@ -1,5 +1,29 @@
 # dotnet-with-claudecode Project Configuration
 
+## Skills with Templates
+
+실행 가능한 코드 예시가 포함된 skill 목록입니다.
+
+> **📌 마이그레이션 계획**: `templates` 폴더 방식에서 `scripts` 폴더 방식으로 전환 예정입니다.
+> - 기존: 정적 템플릿 파일 제공
+> - 변경: PowerShell 스크립트로 .NET CLI 명령어를 통해 프로젝트 구조 생성
+> - 완료: `configuring-dependency-injection` (2026-01-22)
+
+| Skill | Template 프로젝트 | 설명 | 상태 |
+|-------|------------------|------|------|
+| `configuring-dependency-injection` | WpfDISample | WPF DI 설정 | ✅ scripts 전환 완료 |
+| `configuring-avalonia-dependency-injection` | AvaloniaDISample | AvaloniaUI DI 설정 | 📋 전환 예정 |
+| `designing-avalonia-customcontrol-architecture` | AvaloniaCustomControlSample | AvaloniaUI CustomControl 구조 | 📋 전환 예정 |
+| `designing-wpf-customcontrol-architecture` | WpfCustomControlSample | WPF CustomControl 구조 | 📋 전환 예정 |
+| `implementing-communitytoolkit-mvvm` | WpfMvvmSample | CommunityToolkit.Mvvm 패턴 | 📋 전환 예정 |
+| `managing-literal-strings` | LiteralStringSample | const string 관리 | 📋 전환 예정 |
+| `managing-wpf-collectionview-mvvm` | WpfCollectionViewSample | CollectionView MVVM 캡슐화 | 📋 전환 예정 |
+| `managing-wpf-popup-focus` | WpfPopupSample | Popup 포커스 관리 | 📋 전환 예정 |
+| `mapping-viewmodel-view-datatemplate` | WpfDataTemplateSample | ViewModel-View DataTemplate 매핑 | 📋 전환 예정 |
+| `rendering-with-drawingcontext` | DrawingContextSample | DrawingContext 고성능 렌더링 | 📋 전환 예정 |
+
+---
+
 ## WPF Skills 관리
 
 ### 검토 대기 항목 (WPF-Samples 기반)
@@ -18,6 +42,24 @@
 ---
 
 ## Skills 업데이트 이력
+
+### 2026-01-22: configuring-dependency-injection 스킬 개선
+
+**templates → scripts 마이그레이션:**
+- `templates` 폴더를 `scripts` 폴더로 변경
+- 정적 템플릿 파일 대신 `Create-WpfDISample.ps1` PowerShell 스크립트 생성
+- .NET CLI 명령어로 프로젝트 구조 자동 생성 (dotnet new, dotnet add package 등)
+- `dotnet sln migrate`로 .sln을 .slnx 형식으로 변환
+
+**SKILL.md 개선:**
+- 스크립트 없이도 프로젝트 구조 파악 가능하도록 모든 파일 내용 포함
+- 생성되는 프로젝트 구조 다이어그램 추가
+- 각 파일별 코드 예시 완비 (csproj, xaml, cs 파일 전체)
+
+**요구사항:**
+- .NET 10 SDK 필요
+
+---
 
 ### 2026-01-21: WPF-Samples 기반 Skills 정비
 

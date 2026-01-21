@@ -12,7 +12,10 @@
       "mcp__plugin_serena_serena__write_memory",
       "mcp__plugin_serena_serena__list_memories",
       "Bash(ren \"E:\\\\Playground\\\\dotnet-with-claudecode\\\\.claude\\\\skills\\\\avaloniaui-radialgradientbrush-fix\" \"fixing-avaloniaui-radialgradientbrush\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet:*)",
+      "Bash(pwsh:*)"
     ]
   }
 }

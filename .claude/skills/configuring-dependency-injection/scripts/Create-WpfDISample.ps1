@@ -1,84 +1,64 @@
----
-name: configuring-dependency-injection
-description: "Configures Dependency Injection using Microsoft.Extensions.DependencyInjection and GenericHost. Use when setting up DI container, registering services, or implementing IoC patterns in WPF/.NET projects."
----
+# WpfDISample Solution Creation Script
+#
+# Usage:
+#   .\Create-WpfDISample.ps1
+#
+# Requirements:
+#   - .NET 10 SDK
 
-# Dependency Injection with GenericHost in WPF
+$ErrorActionPreference = "Stop"
+$projectName = "WpfDISample"
 
-## Quick Start
+Write-Host "=== Creating $projectName Solution ===" -ForegroundColor Cyan
 
-Run the PowerShell script to generate a complete WPF DI sample project:
+# 1. Create solution and projects
+Write-Host "`n[1/9] Creating solution..." -ForegroundColor Yellow
+dotnet new sln -n $projectName
 
-```powershell
-.\scripts\Create-WpfDISample.ps1
-```
+Write-Host "`n[2/9] Creating WPF Application project..." -ForegroundColor Yellow
+dotnet new wpf -n "$projectName.App"
 
-**Requirements:** .NET 10 SDK
+Write-Host "`n[3/9] Creating Class Library project..." -ForegroundColor Yellow
+dotnet new classlib -n "$projectName.ViewModels" -f net10.0
 
-## Generated Project Structure
+# 2. Add projects to solution
+Write-Host "`n[4/9] Adding projects to solution..." -ForegroundColor Yellow
+dotnet sln "$projectName.sln" add "$projectName.App/$projectName.App.csproj"
+dotnet sln "$projectName.sln" add "$projectName.ViewModels/$projectName.ViewModels.csproj"
 
-```
-WpfDISample.slnx
-├── WpfDISample.App/              # WPF Application
-│   ├── App.xaml                  # No StartupUri (DI handles startup)
-│   ├── App.xaml.cs               # GenericHost configuration
-│   ├── GlobalUsings.cs
-│   ├── Views/
-│   │   ├── MainWindow.xaml
-│   │   └── MainWindow.xaml.cs    # Constructor Injection
-│   └── WpfDISample.App.csproj
-└── WpfDISample.ViewModels/       # UI-independent ViewModel library
-    ├── GlobalUsings.cs
-    ├── MainViewModel.cs
-    └── WpfDISample.ViewModels.csproj
-```
+# 3. Add NuGet packages
+Write-Host "`n[5/9] Adding NuGet packages..." -ForegroundColor Yellow
+dotnet add "$projectName.App" package CommunityToolkit.Mvvm
+dotnet add "$projectName.App" package Microsoft.Extensions.DependencyInjection
+dotnet add "$projectName.App" package Microsoft.Extensions.Hosting
+dotnet add "$projectName.ViewModels" package CommunityToolkit.Mvvm
 
----
+# 4. Add project reference
+Write-Host "`n[6/9] Adding project reference..." -ForegroundColor Yellow
+dotnet add "$projectName.App" reference "$projectName.ViewModels/$projectName.ViewModels.csproj"
 
-## WpfDISample.App Project
+# 5. Remove default files and create directories
+Write-Host "`n[7/9] Cleaning default files and creating directories..." -ForegroundColor Yellow
+Remove-Item "$projectName.App/MainWindow.xaml" -ErrorAction SilentlyContinue
+Remove-Item "$projectName.App/MainWindow.xaml.cs" -ErrorAction SilentlyContinue
+Remove-Item "$projectName.ViewModels/Class1.cs" -ErrorAction SilentlyContinue
+New-Item -ItemType Directory -Path "$projectName.App/Views" -Force | Out-Null
 
-### WpfDISample.App.csproj
+# 6. Create custom files
+Write-Host "`n[8/9] Creating custom files..." -ForegroundColor Yellow
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WpfDISample.ViewModels\WpfDISample.ViewModels.csproj" />
-  </ItemGroup>
-
-</Project>
-```
-
-### App.xaml
-
-```xml
+# App.xaml (Remove StartupUri for DI)
+@'
 <Application x:Class="WpfDISample.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
     </Application.Resources>
 </Application>
-```
+'@ | Set-Content "$projectName.App/App.xaml" -Encoding UTF8
 
-> **Note:** No `StartupUri` - DI handles MainWindow creation.
-
-### App.xaml.cs
-
-```csharp
+# App.xaml.cs (GenericHost configuration)
+@'
 namespace WpfDISample.App;
 
 public partial class App : Application
@@ -121,11 +101,10 @@ public partial class App : Application
         base.OnExit(e);
     }
 }
-```
+'@ | Set-Content "$projectName.App/App.xaml.cs" -Encoding UTF8
 
-### GlobalUsings.cs (App)
-
-```csharp
+# WpfDISample.App/GlobalUsings.cs
+@'
 global using System;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
@@ -136,11 +115,10 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using WpfDISample.ViewModels;
 global using WpfDISample.App.Views;
-```
+'@ | Set-Content "$projectName.App/GlobalUsings.cs" -Encoding UTF8
 
-### Views/MainWindow.xaml
-
-```xml
+# Views/MainWindow.xaml
+@'
 <Window x:Class="WpfDISample.App.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -168,11 +146,10 @@ global using WpfDISample.App.Views;
         </StackPanel>
     </Grid>
 </Window>
-```
+'@ | Set-Content "$projectName.App/Views/MainWindow.xaml" -Encoding UTF8
 
-### Views/MainWindow.xaml.cs
-
-```csharp
+# Views/MainWindow.xaml.cs
+@'
 namespace WpfDISample.App.Views;
 
 public partial class MainWindow : Window
@@ -184,35 +161,10 @@ public partial class MainWindow : Window
         DataContext = viewModel;
     }
 }
-```
+'@ | Set-Content "$projectName.App/Views/MainWindow.xaml.cs" -Encoding UTF8
 
----
-
-## WpfDISample.ViewModels Project
-
-### WpfDISample.ViewModels.csproj
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-  </ItemGroup>
-
-</Project>
-```
-
-> **Note:** No WPF references - UI framework independent.
-
-### GlobalUsings.cs (ViewModels)
-
-```csharp
+# WpfDISample.ViewModels/GlobalUsings.cs
+@'
 global using System;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
@@ -220,11 +172,10 @@ global using System.Linq;
 global using System.Threading.Tasks;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
-```
+'@ | Set-Content "$projectName.ViewModels/GlobalUsings.cs" -Encoding UTF8
 
-### MainViewModel.cs
-
-```csharp
+# MainViewModel.cs
+@'
 namespace WpfDISample.ViewModels;
 
 public sealed partial class MainViewModel : ObservableObject
@@ -237,26 +188,20 @@ public sealed partial class MainViewModel : ObservableObject
         Message = $"Button clicked at {DateTime.Now:HH:mm:ss}";
     }
 }
-```
+'@ | Set-Content "$projectName.ViewModels/MainViewModel.cs" -Encoding UTF8
 
----
+# 7. Migrate sln to slnx and remove old sln
+Write-Host "`n[9/9] Migrating to slnx format..." -ForegroundColor Yellow
+dotnet sln "$projectName.sln" migrate
+Remove-Item "$projectName.sln" -ErrorAction SilentlyContinue
 
-## Service Lifetime
+# 8. Verify build
+Write-Host "`n=== Verifying Build ===" -ForegroundColor Cyan
+dotnet build "$projectName.slnx"
 
-| Lifetime | Usage | Example |
-|----------|-------|---------|
-| `AddSingleton` | One instance for app lifetime | Repository, Settings, MainWindow |
-| `AddTransient` | New instance per request | ViewModel |
-| `AddScoped` | One instance per scope | DbContext (Web apps only) |
-
----
-
-## Anti-pattern: Service Locator
-
-```csharp
-// ❌ Bad: Direct ServiceProvider usage
-var service = _serviceProvider.GetRequiredService<IUserService>();
-
-// ✅ Good: Constructor Injection
-public SomeClass(IUserService userService) { ... }
-```
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "`n=== $projectName Solution Created Successfully! ===" -ForegroundColor Green
+    Write-Host "Run: dotnet run --project $projectName.App" -ForegroundColor White
+} else {
+    Write-Host "`n=== Build Failed ===" -ForegroundColor Red
+}
