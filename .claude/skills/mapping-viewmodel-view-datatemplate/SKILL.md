@@ -314,3 +314,103 @@ WpfDataTemplateSample/
 
 ---
 
+#### 5.8.9 HierarchicalDataTemplate for TreeView
+
+For hierarchical data structures (e.g., folder trees, organization charts), use `HierarchicalDataTemplate`.
+
+**ViewModel with Hierarchical Data:**
+
+```csharp
+// ViewModels/FolderViewModel.cs
+namespace MyApp.ViewModels;
+
+public sealed partial class FolderViewModel : ObservableObject
+{
+    [ObservableProperty] private string _name = string.Empty;
+    [ObservableProperty] private ObservableCollection<FolderViewModel> _children = [];
+    [ObservableProperty] private bool _isExpanded;
+    [ObservableProperty] private bool _isSelected;
+
+    public FolderViewModel(string name)
+    {
+        Name = name;
+    }
+
+    public FolderViewModel(string name, IEnumerable<FolderViewModel> children)
+        : this(name)
+    {
+        foreach (var child in children)
+        {
+            Children.Add(child);
+        }
+    }
+}
+```
+
+**HierarchicalDataTemplate in XAML:**
+
+```xml
+<!-- Mappings.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodels="clr-namespace:MyApp.ViewModels">
+
+    <!-- HierarchicalDataTemplate for recursive tree structure -->
+    <!-- 재귀적 트리 구조를 위한 HierarchicalDataTemplate -->
+    <HierarchicalDataTemplate DataType="{x:Type viewmodels:FolderViewModel}"
+                              ItemsSource="{Binding Children}">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="/Icons/folder.png" Width="16" Height="16" Margin="0,0,5,0"/>
+            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>
+```
+
+**TreeView Usage:**
+
+```xml
+<TreeView ItemsSource="{Binding RootFolders}">
+    <!-- HierarchicalDataTemplate from resources is automatically applied -->
+    <!-- 리소스의 HierarchicalDataTemplate이 자동 적용됨 -->
+    <TreeView.ItemContainerStyle>
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+        </Style>
+    </TreeView.ItemContainerStyle>
+</TreeView>
+```
+
+**Multiple ViewModel Types in Tree:**
+
+```xml
+<!-- Different templates for different node types -->
+<!-- 다른 노드 타입에 대한 다른 템플릿 -->
+<HierarchicalDataTemplate DataType="{x:Type viewmodels:FolderViewModel}"
+                          ItemsSource="{Binding Children}">
+    <StackPanel Orientation="Horizontal">
+        <Image Source="/Icons/folder.png" Width="16" Height="16"/>
+        <TextBlock Text="{Binding Name}" Margin="5,0"/>
+    </StackPanel>
+</HierarchicalDataTemplate>
+
+<DataTemplate DataType="{x:Type viewmodels:FileViewModel}">
+    <StackPanel Orientation="Horizontal">
+        <Image Source="/Icons/file.png" Width="16" Height="16"/>
+        <TextBlock Text="{Binding FileName}" Margin="5,0"/>
+    </StackPanel>
+</DataTemplate>
+```
+
+**Key Differences:**
+
+| DataTemplate | HierarchicalDataTemplate |
+|--------------|-------------------------|
+| Flat data | Hierarchical/nested data |
+| No children | Has ItemsSource for children |
+| ContentControl | TreeView, Menu, MenuItem |
+
+---
+

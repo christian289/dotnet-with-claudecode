@@ -1,9 +1,4 @@
----
-name: implementing-io-pipelines-lite
-description: "Provides essential System.IO.Pipelines patterns. Use when quickly referencing core pipeline streaming techniques without detailed explanations."
----
-
-# Pipelines Essentials
+# Pipelines Quick Reference
 
 ## 1. Basic Pattern
 
@@ -61,5 +56,3 @@ private async Task ReadPipeAsync(PipeReader reader)
 
 - Must call AdvanceTo after ReadAsync
 - Must call CompleteAsync for both Writer and Reader
-
-> For details: See `/dotnet-pipelines` skill

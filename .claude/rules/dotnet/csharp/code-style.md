@@ -33,18 +33,17 @@
 
 고성능 .NET API는 각 주제별 skill을 참조:
 
-| 주제 | 정식 버전 | 간소화 버전 |
-|------|-----------|-------------|
-| 메모리 효율화 | `/optimizing-memory-allocation` | `/optimizing-memory-allocation-lite` |
-| 비동기 프로그래밍 | `/handling-async-operations` | `/handling-async-operations-lite` |
-| 병렬 처리 | `/processing-parallel-tasks` | `/processing-parallel-tasks-lite` |
-| 고속 탐색 | `/optimizing-fast-lookup` | `/optimizing-fast-lookup-lite` |
-| Pub-Sub 패턴 | `/implementing-pubsub-pattern` | `/implementing-pubsub-pattern-lite` |
-| 고속 입출력 | `/optimizing-io-operations` | `/optimizing-io-operations-lite` |
-| Streaming | `/implementing-io-pipelines` | `/implementing-io-pipelines-lite` |
+| 주제 | Skill |
+|------|-------|
+| 메모리 효율화 | `/optimizing-memory-allocation` |
+| 비동기 프로그래밍 | `/handling-async-operations` |
+| 병렬 처리 | `/processing-parallel-tasks` |
+| 고속 탐색 | `/optimizing-fast-lookup` |
+| Pub-Sub 패턴 | `/implementing-pubsub-pattern` |
+| 고속 입출력 | `/optimizing-io-operations` |
+| Streaming | `/implementing-io-pipelines` |
 
-- 정식 버전: 상세 설명과 다양한 패턴 포함
-- 간소화 버전: 핵심 패턴만 빠르게 참조
+- 각 스킬에는 **QUICKREF.md** (빠른 참조)와 **SKILL.md** (상세 가이드) 포함
 
 ## 8. 파일 구조
 

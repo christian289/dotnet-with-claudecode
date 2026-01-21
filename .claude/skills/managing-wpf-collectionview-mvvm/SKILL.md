@@ -334,7 +334,110 @@ public sealed partial class AppViewModel(IMemberCollectionService memberService)
    - `MemberViewFactory` (Factory suffix)
    - `MemberStore` (Store suffix)
 
-#### 5.6.11 Microsoft Official Documentation
+#### 5.6.11 Grouping UI in XAML
+
+When using grouped CollectionView, display groups using `GroupStyle` in ListBox or ItemsControl.
+
+**XAML - Grouped ListBox:**
+
+```xml
+<ListBox ItemsSource="{Binding GroupedMembers}">
+    <!-- Group header template -->
+    <!-- 그룹 헤더 템플릿 -->
+    <ListBox.GroupStyle>
+        <GroupStyle>
+            <GroupStyle.HeaderTemplate>
+                <DataTemplate>
+                    <Border Background="#E0E0E0" Padding="5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"
+                                       FontWeight="Bold"
+                                       FontSize="14"/>
+                            <TextBlock Text=" ("
+                                       Foreground="Gray"/>
+                            <TextBlock Text="{Binding ItemCount}"
+                                       Foreground="Gray"/>
+                            <TextBlock Text=" items)"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </GroupStyle.HeaderTemplate>
+            <!-- Optional: Group container style -->
+            <GroupStyle.ContainerStyle>
+                <Style TargetType="{x:Type GroupItem}">
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Style>
+            </GroupStyle.ContainerStyle>
+        </GroupStyle>
+    </ListBox.GroupStyle>
+
+    <!-- Item template -->
+    <!-- 항목 템플릿 -->
+    <ListBox.ItemTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding Name}" Padding="10,5"/>
+        </DataTemplate>
+    </ListBox.ItemTemplate>
+</ListBox>
+```
+
+**XAML - Expander Style Grouping:**
+
+```xml
+<ListBox ItemsSource="{Binding GroupedMembers}">
+    <ListBox.GroupStyle>
+        <GroupStyle>
+            <GroupStyle.ContainerStyle>
+                <Style TargetType="{x:Type GroupItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                <Expander IsExpanded="True">
+                                    <Expander.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}"
+                                                       FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding ItemCount,
+                                                       StringFormat=' ({0})'}"
+                                                       Foreground="Gray"/>
+                                        </StackPanel>
+                                    </Expander.Header>
+                                    <ItemsPresenter/>
+                                </Expander>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GroupStyle.ContainerStyle>
+        </GroupStyle>
+    </ListBox.GroupStyle>
+</ListBox>
+```
+
+**Service Layer - Multiple Sort and Group:**
+
+```csharp
+// Create view with sorting and grouping combined
+// 정렬과 그룹화를 결합한 뷰 생성
+public IEnumerable CreateSortedGroupedView(
+    string sortProperty,
+    ListSortDirection sortDirection,
+    string groupProperty)
+{
+    var viewSource = new CollectionViewSource { Source = Source };
+    var view = viewSource.View;
+
+    // Apply sort first, then group
+    // 먼저 정렬 적용, 그 다음 그룹화
+    view.SortDescriptions.Add(new SortDescription(sortProperty, sortDirection));
+    view.GroupDescriptions.Add(new PropertyGroupDescription(groupProperty));
+
+    return view;
+}
+```
+
+#### 5.6.12 Microsoft Official Documentation
 
 - [CollectionViewSource Class](https://learn.microsoft.com/en-us/dotnet/api/system.windows.data.collectionviewsource?view=windowsdesktop-10.0)
 - [Data Binding Overview - Collection Views](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/data/#binding-to-collections)

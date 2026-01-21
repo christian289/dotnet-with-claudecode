@@ -1,9 +1,4 @@
----
-name: handling-async-operations-lite
-description: "Provides essential async programming patterns with Task and ValueTask. Use when quickly referencing core async/await techniques without detailed explanations."
----
-
-# Async Programming Essentials
+# Async Programming Quick Reference
 
 ## 1. Task vs ValueTask
 
@@ -38,14 +33,12 @@ await LongOperationAsync(cts.Token);
 ## 3. Anti-patterns
 
 ```csharp
-// ❌ No async void
+// No async void
 public async void BadMethod() { }
 
-// ❌ No .Result, .Wait() (deadlock)
+// No .Result, .Wait() (deadlock)
 var result = GetDataAsync().Result;
 
-// ✅ Use await
+// Use await
 var result = await GetDataAsync();
 ```
-
-> For details: See `/dotnet-async` skill

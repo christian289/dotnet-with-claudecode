@@ -1,9 +1,4 @@
----
-name: optimizing-fast-lookup-lite
-description: "Provides essential fast lookup patterns with HashSet and Dictionary. Use when quickly referencing core O(1) lookup techniques without detailed explanations."
----
-
-# Fast Lookup Essentials
+# Fast Lookup Quick Reference
 
 ## 1. HashSet<T>
 
@@ -30,11 +25,11 @@ var allowedExtensions = new[] { ".jpg", ".png", ".gif" }
 ## 3. Dictionary Optimization
 
 ```csharp
-// ❌ Two lookups
+// Two lookups
 if (dict.ContainsKey(key))
     var value = dict[key];
 
-// ✅ Single lookup
+// Single lookup
 if (dict.TryGetValue(key, out var value))
 {
     // Use value
@@ -48,5 +43,3 @@ if (dict.TryGetValue(key, out var value))
 | Frequently modified set | `HashSet<T>` |
 | Read-only configuration | `FrozenSet<T>` |
 | Key-Value cache | `Dictionary<K,V>` |
-
-> For details: See `/dotnet-fast-lookup` skill

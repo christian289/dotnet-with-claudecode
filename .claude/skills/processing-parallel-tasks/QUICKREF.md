@@ -1,9 +1,4 @@
----
-name: processing-parallel-tasks-lite
-description: "Provides essential parallel processing patterns with Parallel.ForEach and PLINQ. Use when quickly referencing core parallel processing techniques without detailed explanations."
----
-
-# Parallel Processing Essentials
+# Parallel Processing Quick Reference
 
 ## 1. Parallel.ForEach
 
@@ -47,11 +42,9 @@ Parallel.ForEach(data, item =>
 - I/O-bound: Use async-await
 
 ```csharp
-// ❌ Using Parallel for I/O
+// Using Parallel for I/O
 Parallel.ForEach(urls, url => httpClient.GetAsync(url).Result);
 
-// ✅ Using async-await for I/O
+// Using async-await for I/O
 await Task.WhenAll(urls.Select(url => httpClient.GetAsync(url)));
 ```
-
-> For details: See `/dotnet-parallel` skill

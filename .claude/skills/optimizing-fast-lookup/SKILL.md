@@ -7,6 +7,8 @@ description: "Implements fast O(1) lookup patterns using HashSet, FrozenSet, and
 
 A guide for fast lookup APIs leveraging O(1) time complexity.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core APIs
 
 | API | Time Complexity | Features |

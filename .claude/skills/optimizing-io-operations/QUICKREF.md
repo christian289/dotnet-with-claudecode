@@ -1,9 +1,4 @@
----
-name: optimizing-io-operations-lite
-description: "Provides essential high-performance I/O patterns. Use when quickly referencing core I/O optimization techniques without detailed explanations."
----
-
-# High-Performance I/O Essentials
+# High-Performance I/O Quick Reference
 
 ## 1. High-Speed Standard I/O
 
@@ -49,5 +44,3 @@ int bytesRead = await RandomAccess.ReadAsync(handle, buffer, offset);
 | Console.ReadLine() | 1x |
 | StreamReader (64KB) | 3-5x |
 | MemoryMappedFile | 5-10x |
-
-> For details: See `/dotnet-fast-io` skill

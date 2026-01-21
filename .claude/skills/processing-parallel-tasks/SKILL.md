@@ -7,6 +7,8 @@ description: "Implements parallel processing using Parallel, PLINQ, and Concurre
 
 A guide for APIs and patterns for parallel processing of CPU-bound tasks.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core APIs
 
 | API | Purpose |

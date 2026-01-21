@@ -7,6 +7,8 @@ description: "Implements Zero Allocation patterns using Span, ArrayPool, and Obj
 
 A guide for APIs that minimize GC pressure and enable high-performance memory management.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core Concepts
 
 - .NET CLR GC Heap Memory Optimization

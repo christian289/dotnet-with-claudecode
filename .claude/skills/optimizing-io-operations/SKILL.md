@@ -7,6 +7,8 @@ description: "Optimizes standard I/O and file operations for high-performance da
 
 A guide for APIs optimizing large-scale data input/output.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core APIs
 
 | API | Purpose |

@@ -7,6 +7,8 @@ description: "Implements Pub-Sub patterns using System.Reactive and Channels for
 
 A guide for Pub-Sub patterns for event-based asynchronous communication.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core APIs
 
 | API | Purpose | NuGet |

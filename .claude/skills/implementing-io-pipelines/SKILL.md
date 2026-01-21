@@ -7,6 +7,8 @@ description: "Implements high-performance streaming using System.IO.Pipelines in
 
 A guide for System.IO.Pipelines API for high-performance I/O pipelines.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core Concepts
 
 | Concept | Description |

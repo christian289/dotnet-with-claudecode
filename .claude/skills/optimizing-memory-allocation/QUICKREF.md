@@ -1,9 +1,4 @@
----
-name: optimizing-memory-allocation-lite
-description: "Provides essential Zero Allocation patterns using Span and ArrayPool. Use when quickly referencing core memory optimization techniques without detailed explanations."
----
-
-# Zero Allocation Essentials
+# Zero Allocation Quick Reference
 
 ## 1. Span<T> Basics
 
@@ -43,5 +38,3 @@ Span<byte> buffer = stackalloc byte[256];
 
 - Span<T> cannot be used with async-await
 - ArrayPool: Must call Return after Rent
-
-> For details: See `/dotnet-zero-allocation` skill

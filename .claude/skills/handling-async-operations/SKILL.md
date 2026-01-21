@@ -7,6 +7,8 @@ description: "Implements asynchronous programming patterns using Task, ValueTask
 
 A guide for APIs and patterns for efficient asynchronous programming.
 
+**Quick Reference:** See [QUICKREF.md](QUICKREF.md) for essential patterns at a glance.
+
 ## 1. Core APIs
 
 | API | Purpose |

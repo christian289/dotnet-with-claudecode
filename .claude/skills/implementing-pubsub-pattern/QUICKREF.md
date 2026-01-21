@@ -1,9 +1,4 @@
----
-name: implementing-pubsub-pattern-lite
-description: "Provides essential Pub-Sub patterns using Channels. Use when quickly referencing core event-driven communication techniques without detailed explanations."
----
-
-# Pub-Sub Essentials
+# Pub-Sub Quick Reference
 
 ## 1. Channel Basics
 
@@ -50,5 +45,3 @@ services.AddSingleton(sp => sp.GetRequiredService<Channel<Message>>().Writer);
 | Purpose | Producer-Consumer | Event streams |
 | Backpressure | Built-in | Separate implementation |
 | Dependency | BCL | NuGet |
-
-> For details: See `/dotnet-pubsub` skill
