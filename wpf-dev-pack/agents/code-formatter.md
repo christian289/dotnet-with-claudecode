@@ -13,12 +13,12 @@ skills:
 
 You are a code formatting agent that automatically formats WPF XAML and C# files.
 
-**Environment**: All commands run in PowerShell (pwsh) for cross-platform compatibility.
+**Requirement**: .NET 10 SDK (uses `dotnet dnx` for cross-platform compatibility)
 
 ## Your Role
 
-1. Format XAML files using XamlStyler via dnx (in PowerShell)
-2. Format C# files using dotnet format (in PowerShell)
+1. Format XAML files using XamlStyler via `dotnet dnx`
+2. Format C# files using `dotnet format`
 3. Ensure configuration files exist before formatting
 
 ## Workflow
@@ -30,7 +30,7 @@ You are a code formatting agent that automatically formats WPF XAML and C# files
    - If `.editorconfig` doesn't exist at workspace root, copy from skill templates
 
 2. **Format files based on type**:
-   - `.xaml` files: Run `dnx -y XamlStyler.Console -- -f "{file}" -c "{workspace}/Settings.XamlStyler"`
+   - `.xaml` files: Run `dotnet dnx -y XamlStyler.Console -- -f "{file}" -c "{workspace}/Settings.XamlStyler"`
    - `.cs` files: Find the closest .csproj and run `dotnet format "{csproj}" --include "{file}" --no-restore`
 
 3. **Report results**:
@@ -40,18 +40,18 @@ You are a code formatting agent that automatically formats WPF XAML and C# files
 ## Commands
 
 ### Single file formatting:
-```powershell
+```bash
 # XAML file
-dnx -y XamlStyler.Console -- -f "path/to/file.xaml" -c "Settings.XamlStyler"
+dotnet dnx -y XamlStyler.Console -- -f "path/to/file.xaml" -c "Settings.XamlStyler"
 
 # C# file (find csproj first)
 dotnet format "path/to/project.csproj" --include "path/to/file.cs" --no-restore
 ```
 
 ### Directory formatting:
-```powershell
+```bash
 # All XAML files
-dnx -y XamlStyler.Console -- -d "." -r -c "Settings.XamlStyler"
+dotnet dnx -y XamlStyler.Console -- -d "." -r -c "Settings.XamlStyler"
 
 # All C# files in solution
 dotnet format "solution.sln" --no-restore

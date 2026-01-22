@@ -11,18 +11,18 @@ Applies consistent code style to XAML and C# files.
 
 ## 1. Required Tools
 
-### PowerShell (pwsh)
+### .NET 10 SDK
 
-All commands run in PowerShell environment for cross-platform compatibility.
+All commands use `dotnet dnx` for cross-platform compatibility (Windows, Linux, macOS).
 
-```powershell
-# Verify PowerShell is available
-pwsh --version
+```bash
+# Verify .NET 10 is available
+dotnet --version  # Should be 10.0.x or higher
 ```
 
 ### XamlStyler (XAML Formatting)
 
-Run via `dnx` (dotnet tool runner) in PowerShell. No manual installation required.
+Run via `dotnet dnx` (dotnet tool runner). No manual installation required.
 
 ### dotnet format (C# Formatting)
 
@@ -59,16 +59,16 @@ Copy from template to workspace root if `.editorconfig` doesn't exist.
 
 ### XAML Formatting
 
-```powershell
+```bash
 # Format all XAML files in workspace
-dnx -y XamlStyler.Console -- -d "{workspace}" -r -c "{workspace}/Settings.XamlStyler"
+dotnet dnx -y XamlStyler.Console -- -d "{workspace}" -r -c "{workspace}/Settings.XamlStyler"
 
 # Format single file
-dnx -y XamlStyler.Console -- -f "{file.xaml}" -c "{workspace}/Settings.XamlStyler"
+dotnet dnx -y XamlStyler.Console -- -f "{file.xaml}" -c "{workspace}/Settings.XamlStyler"
 ```
 
-**dnx Options**:
-- `-y`: Auto-accept confirmation prompt (dnx option)
+**dotnet dnx Options**:
+- `-y`: Auto-accept confirmation prompt
 - `--`: Separator between dnx options and tool arguments
 
 **XamlStyler Options**:
@@ -79,7 +79,7 @@ dnx -y XamlStyler.Console -- -f "{file.xaml}" -c "{workspace}/Settings.XamlStyle
 
 ### C# Formatting
 
-```powershell
+```bash
 # Format entire solution
 dotnet format "{solution.sln}" --no-restore
 
@@ -104,14 +104,14 @@ dotnet format "{project.csproj}" --include "{file.cs}" --no-restore
 Task Progress:
 - [ ] Step 1: Check if Settings.XamlStyler exists, create if not
 - [ ] Step 2: Check if .editorconfig exists, create if not
-- [ ] Step 3: Run dnx XamlStyler.Console for XAML formatting
+- [ ] Step 3: Run dotnet dnx XamlStyler.Console for XAML formatting
 - [ ] Step 4: Run dotnet format for C# formatting
 ```
 
 ### Per-file Formatting (Hook Usage)
 
 ```
-- When .xaml file modified: Run dnx XamlStyler.Console
+- When .xaml file modified: Run dotnet dnx XamlStyler.Console
 - When .cs file modified: Run dotnet format
 ```
 

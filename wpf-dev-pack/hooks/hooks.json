@@ -1,5 +1,5 @@
 {
-  "description": "WPF Dev Pack hooks - WPF keyword detection, XAML validation, and code formatting (C# file-based apps, PowerShell internally)",
+  "description": "WPF Dev Pack hooks - WPF keyword detection, XAML validation, and code formatting (C# file-based apps, .NET 10 required)",
   "hooks": {
     "UserPromptSubmit": [
       {
