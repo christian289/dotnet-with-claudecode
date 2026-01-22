@@ -1,47 +1,40 @@
 # dotnet-with-claudecode Project Configuration
 
-## Skills with Templates
+## AvaloniaUI Skills
 
-실행 가능한 코드 예시가 포함된 skill 목록입니다.
+이 프로젝트에서 관리하는 AvaloniaUI 전용 스킬 목록입니다.
 
-> **📌 마이그레이션 계획**: `templates` 폴더 방식에서 `scripts` 폴더 방식으로 전환 예정입니다.
-> - 기존: 정적 템플릿 파일 제공
-> - 변경: PowerShell 스크립트로 .NET CLI 명령어를 통해 프로젝트 구조 생성
-> - 완료: `configuring-dependency-injection` (2026-01-22)
+> **📌 참고**: WPF 관련 스킬들은 [wpf-dev-pack](./wpf-dev-pack)으로 이전되었습니다.
 
-| Skill | Template 프로젝트 | 설명 | 상태 |
-|-------|------------------|------|------|
-| `configuring-dependency-injection` | WpfDISample | WPF DI 설정 | ✅ scripts 전환 완료 |
-| `configuring-avalonia-dependency-injection` | AvaloniaDISample | AvaloniaUI DI 설정 | 📋 전환 예정 |
-| `designing-avalonia-customcontrol-architecture` | AvaloniaCustomControlSample | AvaloniaUI CustomControl 구조 | 📋 전환 예정 |
-| `designing-wpf-customcontrol-architecture` | WpfCustomControlSample | WPF CustomControl 구조 | 📋 전환 예정 |
-| `implementing-communitytoolkit-mvvm` | WpfMvvmSample | CommunityToolkit.Mvvm 패턴 | 📋 전환 예정 |
-| `managing-literal-strings` | LiteralStringSample | const string 관리 | 📋 전환 예정 |
-| `managing-wpf-collectionview-mvvm` | WpfCollectionViewSample | CollectionView MVVM 캡슐화 | 📋 전환 예정 |
-| `managing-wpf-popup-focus` | WpfPopupSample | Popup 포커스 관리 | 📋 전환 예정 |
-| `mapping-viewmodel-view-datatemplate` | WpfDataTemplateSample | ViewModel-View DataTemplate 매핑 | 📋 전환 예정 |
-| `rendering-with-drawingcontext` | DrawingContextSample | DrawingContext 고성능 렌더링 | 📋 전환 예정 |
-
----
-
-## WPF Skills 관리
-
-### 검토 대기 항목 (WPF-Samples 기반)
-
-아래 항목들은 WPF-Samples와 비교하여 Skill 추가 여부를 검토해야 합니다.
-
-| WPF-Samples 폴더/샘플 | 고려사항 | 결정 |
-|----------------------|----------|------|
-| **PerMonitorDPI** | DPI-Aware 설정은 프로젝트 설정 수준. Skill로 만들 가치 있을지? | 미정 |
-| **Migration and Interoperability** (WindowsFormsHost, HwndHost) | Win32/WinForms 통합은 레거시 시나리오. 수요 있을지? | 미정 |
-| **Compatibility** (.NET Framework → .NET 마이그레이션) | 버전별 차이 문서화 가치 있을지? | 미정 |
-| **Data Binding** → ADODataSet, XmlDataSource | XML/ADO 바인딩은 현대 앱에서 드묾. 필요할지? | 미정 |
-| **Data Binding** → PriorityBinding, MultiBinding | 고급 바인딩 시나리오. 별도 Skill vs 기존에 통합? | 미정 |
-| **Elements** → FocusVisualStyle, VisibiltyChanges | 작은 주제. 독립 Skill vs 다른 Skill에 통합? | 미정 |
+| Skill | 설명 |
+|-------|------|
+| `configuring-avalonia-dependency-injection` | AvaloniaUI DI 설정 (GenericHost) |
+| `designing-avalonia-customcontrol-architecture` | AvaloniaUI CustomControl 구조 |
+| `structuring-avalonia-projects` | AvaloniaUI 프로젝트 구조 설계 |
+| `using-avalonia-collectionview` | DataGridCollectionView, ReactiveUI 패턴 |
+| `fixing-avaloniaui-radialgradientbrush` | RadialGradientBrush 호환성 이슈 해결 |
+| `converting-html-css-to-wpf-xaml` | HTML/CSS → WPF XAML 변환 |
 
 ---
 
 ## Skills 업데이트 이력
+
+### 2026-01-22: WPF 스킬 wpf-dev-pack으로 이전
+
+**변경 사항:**
+- WPF 관련 49개 스킬을 `wpf-dev-pack/skills`로 이전
+- `.claude/skills`에는 AvaloniaUI 전용 스킬만 유지
+- WPF Skills 관리 섹션 제거 (wpf-dev-pack에서 관리)
+
+**남은 스킬 (AvaloniaUI 전용):**
+- configuring-avalonia-dependency-injection
+- converting-html-css-to-wpf-xaml
+- designing-avalonia-customcontrol-architecture
+- fixing-avaloniaui-radialgradientbrush
+- structuring-avalonia-projects
+- using-avalonia-collectionview
+
+---
 
 ### 2026-01-22: configuring-dependency-injection 스킬 개선
 
