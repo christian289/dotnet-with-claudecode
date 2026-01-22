@@ -77,13 +77,20 @@ static string? FindClosestCsproj(string filePath)
 static void FormatXaml(string filePath, string workspaceRoot)
 {
     var configPath = Path.Combine(workspaceRoot, "Settings.XamlStyler");
-    var args = File.Exists(configPath)
-        ? $"XamlStyler.Console --yes -f \"{filePath}\" -c \"{configPath}\""
-        : $"XamlStyler.Console --yes -f \"{filePath}\"";
+
+    // dnx 옵션: -y (확인 프롬프트 자동 수락)
+    // -- 구분자 이후 XamlStyler.Console 인자 전달
+    // dnx option: -y (auto-accept confirmation prompt)
+    // Arguments after -- separator are passed to XamlStyler.Console
+    var toolArgs = File.Exists(configPath)
+        ? $"-f \"{filePath}\" -c \"{configPath}\""
+        : $"-f \"{filePath}\"";
+
+    var dnxArgs = $"/c dnx -y XamlStyler.Console -- {toolArgs}";
 
     try
     {
-        var psi = new ProcessStartInfo("dnx", args)
+        var psi = new ProcessStartInfo("cmd.exe", dnxArgs)
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,

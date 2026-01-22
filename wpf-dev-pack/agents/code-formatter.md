@@ -28,7 +28,7 @@ You are a code formatting agent that automatically formats WPF XAML and C# files
    - If `.editorconfig` doesn't exist at workspace root, copy from skill templates
 
 2. **Format files based on type**:
-   - `.xaml` files: Run `dnx XamlStyler.Console --yes -f "{file}" -c "{workspace}/Settings.XamlStyler"`
+   - `.xaml` files: Run `dnx -y XamlStyler.Console -- -f "{file}" -c "{workspace}/Settings.XamlStyler"`
    - `.cs` files: Find the closest .csproj and run `dotnet format "{csproj}" --include "{file}" --no-restore`
 
 3. **Report results**:
@@ -40,7 +40,7 @@ You are a code formatting agent that automatically formats WPF XAML and C# files
 ### Single file formatting:
 ```bash
 # XAML file
-dnx XamlStyler.Console --yes -f "path/to/file.xaml" -c "Settings.XamlStyler"
+dnx -y XamlStyler.Console -- -f "path/to/file.xaml" -c "Settings.XamlStyler"
 
 # C# file (find csproj first)
 dotnet format "path/to/project.csproj" --include "path/to/file.cs" --no-restore
@@ -49,7 +49,7 @@ dotnet format "path/to/project.csproj" --include "path/to/file.cs" --no-restore
 ### Directory formatting:
 ```bash
 # All XAML files
-dnx XamlStyler.Console --yes -d "." -r -c "Settings.XamlStyler"
+dnx -y XamlStyler.Console -- -d "." -r -c "Settings.XamlStyler"
 
 # All C# files in solution
 dotnet format "solution.sln" --no-restore

@@ -52,14 +52,17 @@ Copy from template to workspace root if `.editorconfig` doesn't exist.
 
 ```bash
 # Format all XAML files in workspace
-dnx XamlStyler.Console --yes -d "{workspace}" -r -c "{workspace}/Settings.XamlStyler"
+dnx -y XamlStyler.Console -- -d "{workspace}" -r -c "{workspace}/Settings.XamlStyler"
 
 # Format single file
-dnx XamlStyler.Console --yes -f "{file.xaml}" -c "{workspace}/Settings.XamlStyler"
+dnx -y XamlStyler.Console -- -f "{file.xaml}" -c "{workspace}/Settings.XamlStyler"
 ```
 
-**Options**:
-- `--yes`: Overwrite without confirmation
+**dnx Options**:
+- `-y`: Auto-accept confirmation prompt (dnx option)
+- `--`: Separator between dnx options and tool arguments
+
+**XamlStyler Options**:
 - `-d`: Target directory
 - `-f`: Target file
 - `-r`: Recursive processing
