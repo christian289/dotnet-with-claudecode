@@ -3,6 +3,7 @@
 // Code Formatter Hook
 // Formats XAML and C# files after Write or Edit operations.
 // Input: stdin JSON with "tool_name" and "tool_input.file_path" fields
+// Requires: PowerShell (pwsh) for cross-platform dnx execution
 
 using System.Diagnostics;
 using System.Text.Json;
@@ -78,19 +79,19 @@ static void FormatXaml(string filePath, string workspaceRoot)
 {
     var configPath = Path.Combine(workspaceRoot, "Settings.XamlStyler");
 
+    // pwsh 환경에서 dnx 실행 (크로스 플랫폼 호환)
+    // Execute dnx in pwsh environment (cross-platform compatible)
     // dnx 옵션: -y (확인 프롬프트 자동 수락)
-    // -- 구분자 이후 XamlStyler.Console 인자 전달
     // dnx option: -y (auto-accept confirmation prompt)
-    // Arguments after -- separator are passed to XamlStyler.Console
     var toolArgs = File.Exists(configPath)
-        ? $"-f \"{filePath}\" -c \"{configPath}\""
-        : $"-f \"{filePath}\"";
+        ? $"-f '{filePath}' -c '{configPath}'"
+        : $"-f '{filePath}'";
 
-    var dnxArgs = $"/c dnx -y XamlStyler.Console -- {toolArgs}";
+    var pwshCommand = $"dnx -y XamlStyler.Console -- {toolArgs}";
 
     try
     {
-        var psi = new ProcessStartInfo("cmd.exe", dnxArgs)
+        var psi = new ProcessStartInfo("pwsh", $"-NoProfile -Command \"{pwshCommand}\"")
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -118,9 +119,13 @@ static void FormatCSharp(string filePath)
         return;
     }
 
+    // pwsh 환경에서 dotnet format 실행 (일관성 유지)
+    // Execute dotnet format in pwsh environment (consistency)
+    var pwshCommand = $"dotnet format '{csproj}' --include '{filePath}' --no-restore";
+
     try
     {
-        var psi = new ProcessStartInfo("dotnet", $"format \"{csproj}\" --include \"{filePath}\" --no-restore")
+        var psi = new ProcessStartInfo("pwsh", $"-NoProfile -Command \"{pwshCommand}\"")
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,

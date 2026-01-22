@@ -11,9 +11,18 @@ Applies consistent code style to XAML and C# files.
 
 ## 1. Required Tools
 
+### PowerShell (pwsh)
+
+All commands run in PowerShell environment for cross-platform compatibility.
+
+```powershell
+# Verify PowerShell is available
+pwsh --version
+```
+
 ### XamlStyler (XAML Formatting)
 
-Run via `dnx` (dotnet tool runner). No manual installation required.
+Run via `dnx` (dotnet tool runner) in PowerShell. No manual installation required.
 
 ### dotnet format (C# Formatting)
 
@@ -50,7 +59,7 @@ Copy from template to workspace root if `.editorconfig` doesn't exist.
 
 ### XAML Formatting
 
-```bash
+```powershell
 # Format all XAML files in workspace
 dnx -y XamlStyler.Console -- -d "{workspace}" -r -c "{workspace}/Settings.XamlStyler"
 
@@ -70,7 +79,7 @@ dnx -y XamlStyler.Console -- -f "{file.xaml}" -c "{workspace}/Settings.XamlStyle
 
 ### C# Formatting
 
-```bash
+```powershell
 # Format entire solution
 dotnet format "{solution.sln}" --no-restore
 
