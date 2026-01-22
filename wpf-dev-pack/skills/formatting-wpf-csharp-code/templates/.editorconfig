@@ -1,0 +1,143 @@
+# EditorConfig - WPF 프로젝트 표준 설정
+# EditorConfig - WPF Project Standard Configuration
+# https://editorconfig.org/
+
+root = true
+
+# 모든 파일 기본 설정
+# Default settings for all files
+[*]
+charset = utf-8-bom
+end_of_line = crlf
+indent_style = space
+indent_size = 4
+tab_width = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 120
+
+# C# 파일 설정
+# C# file settings
+[*.cs]
+# 들여쓰기 설정
+# Indentation settings
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+
+# 새 줄 설정
+# New line settings
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# 공백 설정
+# Space settings
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+
+# 정렬 설정
+# Wrapping settings
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = true
+
+# using 지시문 설정
+# using directive settings
+csharp_using_directive_placement = outside_namespace:suggestion
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+
+# 코드 스타일 - var 사용
+# Code style - var usage
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+
+# 코드 스타일 - 식 본문 멤버
+# Code style - Expression-bodied members
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_constructors = false:suggestion
+csharp_style_expression_bodied_operators = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = when_on_single_line:suggestion
+csharp_style_expression_bodied_indexers = when_on_single_line:suggestion
+csharp_style_expression_bodied_accessors = when_on_single_line:suggestion
+csharp_style_expression_bodied_lambdas = when_on_single_line:suggestion
+csharp_style_expression_bodied_local_functions = when_on_single_line:suggestion
+
+# 코드 스타일 - 패턴 매칭
+# Code style - Pattern matching
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+csharp_style_prefer_switch_expression = true:suggestion
+csharp_style_prefer_pattern_matching = true:suggestion
+csharp_style_prefer_not_pattern = true:suggestion
+
+# 코드 스타일 - null 검사
+# Code style - Null checking
+csharp_style_throw_expression = true:suggestion
+csharp_style_conditional_delegate_call = true:suggestion
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+
+# 코드 스타일 - 기타
+# Code style - Miscellaneous
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_prefer_braces = when_multiline:suggestion
+csharp_style_prefer_top_level_statements = true:suggestion
+
+# 명명 규칙 - private 필드
+# Naming rules - Private fields
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_underscore_prefix
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.camel_case_underscore_prefix.required_prefix = _
+dotnet_naming_style.camel_case_underscore_prefix.capitalization = camel_case
+
+# 명명 규칙 - const 필드
+# Naming rules - Const fields
+dotnet_naming_rule.constants_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.constants_should_be_pascal_case.symbols = constants
+dotnet_naming_rule.constants_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_symbols.constants.applicable_kinds = field
+dotnet_naming_symbols.constants.required_modifiers = const
+
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+# XAML 파일 설정
+# XAML file settings
+[*.xaml]
+indent_size = 4
+
+# XML 파일 설정
+# XML file settings
+[*.xml]
+indent_size = 2
+
+# JSON 파일 설정
+# JSON file settings
+[*.json]
+indent_size = 2
+
+# 프로젝트 파일 설정
+# Project file settings
+[*.{csproj,props,targets}]
+indent_size = 2
+
+# 솔루션 파일 설정
+# Solution file settings
+[*.{sln,slnx}]
+indent_style = tab

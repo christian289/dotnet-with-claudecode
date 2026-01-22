@@ -1,5 +1,5 @@
 {
-  "description": "WPF Dev Pack hooks - WPF keyword detection and auto skill activation",
+  "description": "WPF Dev Pack hooks - WPF keyword detection, XAML validation, and code formatting (C# file-based apps)",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -7,8 +7,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/wpf-keyword-detector.js\"",
-            "timeout": 5
+            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/WpfKeywordDetector.cs\"",
+            "timeout": 10
           }
         ]
       }
@@ -19,8 +19,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/xaml-validator.js\"",
-            "timeout": 10
+            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
+            "timeout": 45
           }
         ]
       }
