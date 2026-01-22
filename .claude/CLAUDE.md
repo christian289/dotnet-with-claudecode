@@ -17,6 +17,21 @@
 
 ---
 
+## WPF Skills 검토 대기 항목
+
+아래 항목들은 WPF-Samples와 비교하여 wpf-dev-pack에 Skill 추가 여부를 검토해야 합니다.
+
+| WPF-Samples 폴더/샘플 | 고려사항 | 결정 |
+|----------------------|----------|------|
+| **PerMonitorDPI** | DPI-Aware 설정은 프로젝트 설정 수준. Skill로 만들 가치 있을지? | 미정 |
+| **Migration and Interoperability** (WindowsFormsHost, HwndHost) | Win32/WinForms 통합은 레거시 시나리오. 수요 있을지? | 미정 |
+| **Compatibility** (.NET Framework → .NET 마이그레이션) | 버전별 차이 문서화 가치 있을지? | 미정 |
+| **Data Binding** → ADODataSet, XmlDataSource | XML/ADO 바인딩은 현대 앱에서 드묾. 필요할지? | 미정 |
+| **Data Binding** → PriorityBinding, MultiBinding | 고급 바인딩 시나리오. 별도 Skill vs 기존에 통합? | 미정 |
+| **Elements** → FocusVisualStyle, VisibiltyChanges | 작은 주제. 독립 Skill vs 다른 Skill에 통합? | 미정 |
+
+---
+
 ## Skills 업데이트 이력
 
 ### 2026-01-22: WPF 스킬 wpf-dev-pack으로 이전
@@ -24,7 +39,7 @@
 **변경 사항:**
 - WPF 관련 49개 스킬을 `wpf-dev-pack/skills`로 이전
 - `.claude/skills`에는 AvaloniaUI 전용 스킬만 유지
-- WPF Skills 관리 섹션 제거 (wpf-dev-pack에서 관리)
+- WPF Skills 검토 대기 항목은 유지 (wpf-dev-pack 추가 후보)
 
 **남은 스킬 (AvaloniaUI 전용):**
 - configuring-avalonia-dependency-injection
