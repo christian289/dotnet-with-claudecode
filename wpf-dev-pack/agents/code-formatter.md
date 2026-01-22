@@ -5,6 +5,8 @@ model: haiku
 tools:
   - Bash
 permissionMode: default
+skills:
+  - formatting-wpf-csharp-code
 ---
 
 # Code Formatter Agent
