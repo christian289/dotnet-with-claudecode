@@ -29,7 +29,9 @@
       "Bash(dnx:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "WebFetch(domain:gist.github.com)"
+      "WebFetch(domain:gist.github.com)",
+      "Bash(dir:*)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

@@ -227,7 +227,7 @@ global using Prism.Commands;
 global using Prism.Ioc;
 global using Prism.Modularity;
 global using Prism.Mvvm;
-global using Prism.Regions;
+global using Prism.Navigation.Regions;
 global using Prism.DryIoc;
 global using MyApp.Core.Mvvm;
 ```
@@ -263,6 +263,7 @@ dotnet add MyApp.Modules.Home reference MyApp.Core
 dotnet add MyApp package Prism.DryIoc
 dotnet add MyApp.Core package Prism.Core
 dotnet add MyApp.Modules.Home package Prism.DryIoc
+dotnet add MyApp.Modules.Home package Prism.Wpf
 ```
 
 ---
