@@ -6,7 +6,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-9.0+-purple.svg)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
 **57 Skills** · **9 Specialized Agents** · **5 Commands** · **4 MCP Servers**
@@ -82,7 +82,7 @@ claude --plugin-dir ./wpf-dev-pack
 
 | Requirement | Version |
 |-------------|---------|
-| .NET SDK | 9.0 or later |
+| .NET SDK | 10.0 or later |
 | Claude Code | Latest |
 | uv (for Serena) | Latest |
 
