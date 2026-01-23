@@ -177,8 +177,7 @@ public sealed partial class MainViewModel : ObservableObject
         LoadDataAsync();
     }
 
-    [ObservableProperty]
-    private ObservableCollection<User> users = [];
+    [ObservableProperty] private ObservableCollection<User> _users = [];
 
     [RelayCommand]
     private async Task LoadDataAsync()

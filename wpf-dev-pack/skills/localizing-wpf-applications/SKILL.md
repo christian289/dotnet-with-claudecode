@@ -61,16 +61,16 @@ Project Structure:
 **Strings.ko-KR.resx (Korean):**
 ```xml
 <data name="AppTitle" xml:space="preserve">
-    <value>내 애플리케이션</value>
+    <value>My Application (Korean translation)</value>
 </data>
 <data name="WelcomeMessage" xml:space="preserve">
-    <value>환영합니다, {0}님!</value>
+    <value>Welcome, {0}! (Korean translation)</value>
 </data>
 <data name="SaveButton" xml:space="preserve">
-    <value>저장</value>
+    <value>Save (Korean translation)</value>
 </data>
 <data name="CancelButton" xml:space="preserve">
-    <value>취소</value>
+    <value>Cancel (Korean translation)</value>
 </data>
 ```
 
@@ -413,9 +413,9 @@ public static class LocalizedImageHelper
 <ComboBox x:Name="LanguageSelector"
           SelectionChanged="LanguageSelector_SelectionChanged">
     <ComboBoxItem Tag="en-US" Content="English"/>
-    <ComboBoxItem Tag="ko-KR" Content="한국어"/>
-    <ComboBoxItem Tag="ja-JP" Content="日本語"/>
-    <ComboBoxItem Tag="de-DE" Content="Deutsch"/>
+    <ComboBoxItem Tag="ko-KR" Content="Korean"/>
+    <ComboBoxItem Tag="ja-JP" Content="Japanese"/>
+    <ComboBoxItem Tag="de-DE" Content="German"/>
 </ComboBox>
 ```
 

@@ -15,14 +15,11 @@ using CommunityToolkit.Mvvm.Input;
 
 public sealed partial class GalleryViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<BitmapImage> _images = [];
+    [ObservableProperty] private ObservableCollection<BitmapImage> _images = [];
 
-    [ObservableProperty]
-    private BitmapImage? _selectedImage;
+    [ObservableProperty] private BitmapImage? _selectedImage;
 
-    [ObservableProperty]
-    private int _selectedIndex;
+    [ObservableProperty] private int _selectedIndex;
 
     [RelayCommand]
     private void LoadFolder(string folderPath)

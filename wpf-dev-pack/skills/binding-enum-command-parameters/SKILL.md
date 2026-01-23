@@ -53,8 +53,7 @@ public enum ViewerTool
 
 public partial class ViewerViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ViewerTool _currentTool = ViewerTool.Pan;
+    [ObservableProperty] private ViewerTool _currentTool = ViewerTool.Pan;
 
     [RelayCommand]
     private void SelectTool(ViewerTool tool)

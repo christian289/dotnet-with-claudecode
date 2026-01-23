@@ -28,14 +28,12 @@ When displaying collection indices with a slider, **internally using 0-based ind
 public partial class ViewerViewModel : ObservableObject
 {
     // Internal index (0-based)
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SliceDisplayNumber))]
-    private int _currentSliceIndex;
+    [ObservableProperty] private int _currentSliceIndex;
 
     // Total count
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MaxSliceIndex))]
-    private int _totalSliceCount;
+    [ObservableProperty] private int _totalSliceCount;
 
     /// <summary>
     /// Slider Maximum value (0-based index maximum)
@@ -94,14 +92,12 @@ The `[NotifyPropertyChangedFor]` attribute automatically raises `PropertyChanged
 
 ```csharp
 // When CurrentSliceIndex changes, SliceDisplayNumber also raises PropertyChanged
-[ObservableProperty]
 [NotifyPropertyChangedFor(nameof(SliceDisplayNumber))]
-private int _currentSliceIndex;
+[ObservableProperty] private int _currentSliceIndex;
 
 // When TotalSliceCount changes, MaxSliceIndex also raises PropertyChanged
-[ObservableProperty]
 [NotifyPropertyChangedFor(nameof(MaxSliceIndex))]
-private int _totalSliceCount;
+[ObservableProperty] private int _totalSliceCount;
 ```
 
 ---

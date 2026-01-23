@@ -365,11 +365,9 @@ public sealed partial class RenderViewModel : ObservableObject
     private Func<int, Task<TimeSpan>>? _drawItems;
     private Action? _clearCanvas;
 
-    [ObservableProperty]
-    private bool _isRendering;
+    [ObservableProperty] private bool _isRendering;
 
-    [ObservableProperty]
-    private string _elapsedTime = "Waiting...";
+    [ObservableProperty] private string _elapsedTime = "Waiting...";
 
     // Inject required methods from View
     public void SetRenderActions(

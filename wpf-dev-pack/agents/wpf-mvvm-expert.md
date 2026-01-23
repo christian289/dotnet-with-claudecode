@@ -35,16 +35,13 @@ namespace MyApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string _title = string.Empty;
+    [ObservableProperty] private string _title = string.Empty;
 
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FullName))]
-    private string _firstName = string.Empty;
+    [ObservableProperty] private string _firstName = string.Empty;
 
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FullName))]
-    private string _lastName = string.Empty;
+    [ObservableProperty] private string _lastName = string.Empty;
 
     public string FullName => $"{FirstName} {LastName}";
 
@@ -69,8 +66,7 @@ public partial class MainViewModel : ObservableObject
 // ViewModel only exposes BCL types
 public partial class ItemsViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<ItemModel> _items = [];
+    [ObservableProperty] private ObservableCollection<ItemModel> _items = [];
 
     // DO NOT expose ICollectionView - it's in WindowsBase.dll
 }
@@ -126,8 +122,7 @@ public class CollectionViewService : ICollectionViewService
 ```csharp
 public partial class ShellViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableObject? _currentViewModel;
+    [ObservableProperty] private ObservableObject? _currentViewModel;
 
     [RelayCommand]
     private void NavigateTo(string viewName)

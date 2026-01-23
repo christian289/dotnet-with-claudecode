@@ -15,7 +15,21 @@
       "Bash(powershell -Command:*)",
       "Bash(dotnet new:*)",
       "Bash(dotnet:*)",
-      "Bash(pwsh:*)"
+      "Bash(pwsh:*)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "WebSearch",
+      "Bash(where:*)",
+      "Bash(dnx XamlStyler.Console:*)",
+      "Bash(cmd.exe /c \"dnx XamlStyler.Console --help\")",
+      "Bash(cmd //c \"dnx XamlStyler.Console --help\")",
+      "Bash(cmd //c \"dnx XamlStyler.Console --yes --help\")",
+      "Bash(cmd //c:*)",
+      "Bash(git restore:*)",
+      "Bash(dnx:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:gist.github.com)"
     ]
   }
 }

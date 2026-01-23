@@ -150,8 +150,7 @@ namespace MyApp.ViewModels;
 
 public sealed partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableCollection<Person> people = [];
+    [ObservableProperty] private ObservableCollection<Person> _people = [];
 
     private ICollectionView? _peopleView;
 

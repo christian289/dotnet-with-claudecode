@@ -265,8 +265,7 @@ using CommunityToolkit.Mvvm.Input;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private MyItem? _selectedItem;
+    [ObservableProperty] private MyItem? _selectedItem;
 
     [RelayCommand(CanExecute = nameof(CanCopy))]
     private void Copy()
