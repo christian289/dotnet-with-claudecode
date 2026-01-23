@@ -4,7 +4,7 @@
   "mcpServers": {
     "context7": {
       "command": "npx",
-      "args": ["-y", "upstash/context7-mcp@latest"],
+      "args": ["-y", "@upstash/context7-mcp@latest"],
       "description": "Context7 - Up-to-date library documentation and code examples"
     },
     "MicrosoftDocs": {
