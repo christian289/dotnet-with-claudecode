@@ -446,6 +446,10 @@ FodyWeavers.xsd
 !/CLAUDE.md
 !/CLAUDE.local.md
 
+# Allow .claude-plugin folder (marketplace definition)
+# .claude-plugin 폴더 허용 (마켓플레이스 정의)
+!/.claude-plugin/
+
 # Allow wpf-dev-pack plugin folder
 # wpf-dev-pack 플러그인 폴더 허용
 !/wpf-dev-pack/

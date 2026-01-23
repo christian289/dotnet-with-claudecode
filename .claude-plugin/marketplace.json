@@ -1,0 +1,34 @@
+{
+  "name": "dotnet-claude-plugins",
+  "owner": {
+    "name": "vincent lee",
+    "email": "christian289@gmail.com"
+  },
+  "metadata": {
+    "description": ".NET development plugins for Claude Code - WPF, AvaloniaUI, and more",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "wpf-dev-pack",
+      "source": "./wpf-dev-pack",
+      "description": "WPF development toolkit with 57 skills, 9 agents, and 5 commands for CustomControl, MVVM, XAML styling, and high-performance rendering",
+      "version": "1.1.0",
+      "author": {
+        "name": "vincent lee"
+      },
+      "homepage": "https://github.com/christian289/dotnet-with-claudecode/tree/main/wpf-dev-pack",
+      "repository": "https://github.com/christian289/dotnet-with-claudecode",
+      "license": "MIT",
+      "keywords": [
+        "wpf",
+        "dotnet",
+        "csharp",
+        "xaml",
+        "mvvm",
+        "customcontrol"
+      ],
+      "category": "development"
+    }
+  ]
+}
