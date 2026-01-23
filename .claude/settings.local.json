@@ -33,7 +33,13 @@
       "Bash(dir:*)",
       "WebFetch(domain:github.com)",
       "Bash(git push:*)",
-      "Bash(claude /plugin marketplace add christian289/dotnet-with-claudecode)"
+      "Bash(claude /plugin marketplace add christian289/dotnet-with-claudecode)",
+      "mcp__plugin_serena_serena__read_file",
+      "Bash(Remove-Item -Path \"E:\\\\Playground\\\\dotnet-with-claudecode\\\\test-wpf-pack\" -Recurse -Force)",
+      "Bash(gh auth:*)",
+      "Bash(gh api:*)",
+      "Bash(gh repo edit:*)",
+      "Bash(git check-ignore:*)"
     ]
   }
 }

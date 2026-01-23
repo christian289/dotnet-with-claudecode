@@ -1,13 +1,13 @@
 ---
 name: Bug Report
-about: 버그를 보고합니다
+about: Report a bug
 title: '[BUG] '
 labels: bug
 assignees: ''
 ---
 
 ## Bug Description
-<!-- 버그에 대한 명확한 설명 -->
+<!-- A clear description of the bug -->
 
 ## Steps to Reproduce
 1.
@@ -15,10 +15,10 @@ assignees: ''
 3.
 
 ## Expected Behavior
-<!-- 예상했던 동작 -->
+<!-- What you expected to happen -->
 
 ## Actual Behavior
-<!-- 실제 발생한 동작 -->
+<!-- What actually happened -->
 
 ## Environment
 - Claude Code Version:
@@ -26,4 +26,4 @@ assignees: ''
 - .NET Version (if applicable):
 
 ## Additional Context
-<!-- 스크린샷, 로그 등 추가 정보 -->
+<!-- Screenshots, logs, or any additional information -->

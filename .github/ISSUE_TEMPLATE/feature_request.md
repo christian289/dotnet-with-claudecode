@@ -1,22 +1,22 @@
 ---
 name: Feature Request
-about: 새로운 기능을 제안합니다
+about: Suggest a new feature
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''
 ---
 
 ## Feature Description
-<!-- 제안하는 기능에 대한 설명 -->
+<!-- A description of the feature you're proposing -->
 
 ## Use Case
-<!-- 이 기능이 필요한 상황 -->
+<!-- The situation where this feature would be useful -->
 
 ## Proposed Solution
-<!-- 가능하다면, 구현 방안 제안 -->
+<!-- If possible, suggest an implementation approach -->
 
 ## Alternatives Considered
-<!-- 고려한 대안들 -->
+<!-- Any alternative solutions you've considered -->
 
 ## Additional Context
-<!-- 관련 참조, 예시 등 -->
+<!-- Related references, examples, etc. -->

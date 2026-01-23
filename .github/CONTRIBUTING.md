@@ -1,64 +1,64 @@
 # Contributing to dotnet-with-claudecode
 
-기여해 주셔서 감사합니다! 이 문서는 프로젝트에 기여하는 방법을 안내합니다.
+Thank you for your interest in contributing! This document explains how to contribute to this project.
 
 ## How to Contribute
 
 ### 1. Fork & Clone
 
 ```bash
-# Fork 후 클론
+# Clone after forking
 git clone https://github.com/YOUR_USERNAME/dotnet-with-claudecode.git
 cd dotnet-with-claudecode
 ```
 
-### 2. Branch 생성
+### 2. Create a Branch
 
 ```bash
 git checkout -b feature/your-feature-name
-# 또는
+# or
 git checkout -b fix/your-bug-fix
 ```
 
-### 3. 변경 사항 커밋
+### 3. Commit Your Changes
 
 ```bash
 git add .
 git commit -m "feat: add new skill for XYZ"
 ```
 
-**커밋 메시지 규칙:**
-- `feat:` - 새로운 기능
-- `fix:` - 버그 수정
-- `docs:` - 문서 변경
-- `refactor:` - 리팩토링
-- `chore:` - 기타 변경
+**Commit Message Convention:**
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `refactor:` - Code refactoring
+- `chore:` - Other changes
 
-### 4. Pull Request 생성
+### 4. Create a Pull Request
 
-1. 본인의 fork에 push
-2. 원본 저장소로 Pull Request 생성
-3. PR 템플릿에 따라 설명 작성
+1. Push to your fork
+2. Create a Pull Request to the original repository
+3. Fill out the PR template with description
 
 ## Guidelines
 
-### Skill 작성 시
+### When Writing Skills
 
-- `SKILL.md`는 500줄 이내로 유지
-- description은 3인칭으로 작성
-- 예시 코드는 실제 동작하는 코드로 작성
-- 한글/영문 병기 (코멘트, 예외 메시지 등)
+- Keep `SKILL.md` under 500 lines
+- Write description in third person
+- Include working example code
+- Follow project coding conventions
 
-### Agent 작성 시
+### When Writing Agents
 
-- 명확한 역할 정의
-- 적절한 모델 티어 선택 (haiku/sonnet/opus)
-- 다른 에이전트와의 중복 최소화
+- Define clear responsibilities
+- Choose appropriate model tier (haiku/sonnet/opus)
+- Minimize overlap with other agents
 
 ## Code of Conduct
 
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)를 준수해주세요.
+Please follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Questions?
 
-질문이 있으시면 [Issues](https://github.com/christian289/dotnet-with-claudecode/issues)에 등록해주세요.
+If you have questions, please open an [Issue](https://github.com/christian289/dotnet-with-claudecode/issues).

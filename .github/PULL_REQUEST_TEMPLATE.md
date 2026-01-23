@@ -1,5 +1,5 @@
 ## Summary
-<!-- 변경 사항 요약 -->
+<!-- Summary of changes -->
 
 ## Type of Change
 - [ ] Bug fix
@@ -9,21 +9,21 @@
 - [ ] Other (describe):
 
 ## Related Issues
-<!-- 관련 Issue 번호 (예: Fixes #123) -->
+<!-- Related issue number (e.g., Fixes #123) -->
 
 ## Changes Made
-<!-- 주요 변경 사항 목록 -->
+<!-- List of main changes -->
 -
 -
 
 ## Checklist
-- [ ] 코드가 프로젝트 스타일 가이드를 따릅니다
-- [ ] 셀프 리뷰를 완료했습니다
-- [ ] 필요한 경우 문서를 업데이트했습니다
-- [ ] 변경 사항이 새로운 경고를 생성하지 않습니다
+- [ ] Code follows the project's style guidelines
+- [ ] Self-review completed
+- [ ] Documentation updated if necessary
+- [ ] Changes do not generate new warnings
 
 ## Testing
-<!-- 테스트 방법 설명 -->
+<!-- Description of how this was tested -->
 
 ## Screenshots (if applicable)
-<!-- UI 변경의 경우 스크린샷 첨부 -->
+<!-- Attach screenshots for UI changes -->

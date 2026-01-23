@@ -2,27 +2,27 @@
 
 ## Reporting a Vulnerability
 
-보안 취약점을 발견하셨다면, **공개 Issue로 등록하지 마시고** 아래 방법으로 비공개 보고해주세요.
+If you discover a security vulnerability, please **do not open a public issue**. Instead, report it privately using one of the methods below.
 
-### 보고 방법
+### How to Report
 
-1. GitHub Security Advisories 사용 (권장)
-   - [Security Advisories](https://github.com/christian289/dotnet-with-claudecode/security/advisories/new)에서 비공개 보고
+1. Use GitHub Security Advisories (Recommended)
+   - Report privately at [Security Advisories](https://github.com/christian289/dotnet-with-claudecode/security/advisories/new)
 
-2. 또는 이메일로 연락
-   - 저장소 소유자에게 직접 연락
+2. Or contact directly
+   - Reach out to the repository owner directly
 
-### 보고 시 포함할 내용
+### What to Include
 
-- 취약점 설명
-- 재현 단계
-- 영향 범위
-- 가능하다면 수정 제안
+- Description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested fix (if possible)
 
-### 응답 시간
+### Response Time
 
-- 초기 응답: 48시간 이내
-- 상태 업데이트: 7일 이내
+- Initial response: Within 48 hours
+- Status update: Within 7 days
 
 ## Supported Versions
 
@@ -32,9 +32,9 @@
 
 ## Scope
 
-이 프로젝트는 Claude Code용 스킬/에이전트 정의 파일을 제공합니다.
-실행 코드가 아닌 설정 파일이므로, 주요 보안 고려사항은:
+This project provides skill/agent definition files for Claude Code.
+Since these are configuration files rather than executable code, the main security considerations are:
 
-- 민감한 정보 노출 방지
-- 악성 명령어 주입 방지
-- 안전하지 않은 패턴 권장 방지
+- Preventing sensitive information exposure
+- Preventing malicious command injection
+- Avoiding recommendations of insecure patterns
