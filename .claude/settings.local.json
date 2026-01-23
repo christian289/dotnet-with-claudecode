@@ -39,7 +39,12 @@
       "Bash(gh auth:*)",
       "Bash(gh api:*)",
       "Bash(gh repo edit:*)",
-      "Bash(git check-ignore:*)"
+      "Bash(git check-ignore:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git branch:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(git clone:*)"
     ]
   }
 }
