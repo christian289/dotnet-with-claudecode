@@ -4,12 +4,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**57 Skills** · **9 Specialized Agents** · **5 Commands** · **4 MCP Servers**
+**57 Skills** · **11 Specialized Agents** · **5 Commands** · **4 MCP Servers**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -24,7 +24,7 @@
 <td width="50%">
 
 ### 🤖 AI-Powered Development
-- **9 Specialized Agents** for different WPF tasks
+- **11 Specialized Agents** for different WPF tasks
 - **Opus-level** architects for strategic decisions
 - **Auto-detection** of WPF keywords
 
@@ -130,16 +130,20 @@ claude --plugin-dir ./wpf-dev-pack
 
 ### 🤖 Specialized Agents
 
+> **Claude Pro users**: Use `-low` versions for `wpf-architect` and `wpf-code-reviewer` (Opus → Sonnet)
+
 | Agent | Model | Specialty |
 |-------|:-----:|-----------|
 | 🏗️ **wpf-architect** | Opus | Strategic architecture & design decisions |
+| 🏗️ **wpf-architect-low** | Sonnet | Architecture analysis (Claude Pro) |
 | 🎨 **wpf-control-designer** | Sonnet | CustomControl implementation |
 | 📐 **wpf-xaml-designer** | Sonnet | XAML styles & templates |
 | 🔄 **wpf-mvvm-expert** | Sonnet | MVVM pattern & CommunityToolkit |
 | 🔗 **wpf-data-binding-expert** | Sonnet | Complex bindings & validation |
 | ⚡ **wpf-performance-optimizer** | Sonnet | Rendering & performance |
 | 🔍 **wpf-code-reviewer** | Opus | Code quality analysis |
-| 📝 **code-formatter** | Sonnet | C# formatting & style |
+| 🔍 **wpf-code-reviewer-low** | Sonnet | Code review (Claude Pro) |
+| 📝 **code-formatter** | Haiku | C# formatting & style |
 | 🔧 **serena-initializer** | Haiku | Project setup |
 
 ### 🔌 MCP Servers
@@ -282,16 +286,18 @@ claude --plugin-dir ./wpf-dev-pack
 wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # Plugin manifest
-├── 📁 agents/                 # 9 Specialized agents
-│   ├── wpf-architect.md
-│   ├── wpf-control-designer.md
-│   ├── wpf-xaml-designer.md
-│   ├── wpf-mvvm-expert.md
-│   ├── wpf-data-binding-expert.md
-│   ├── wpf-performance-optimizer.md
-│   ├── wpf-code-reviewer.md
-│   ├── code-formatter.md
-│   └── serena-initializer.md
+├── 📁 agents/                 # 11 Specialized agents
+│   ├── wpf-architect.md           # Opus
+│   ├── wpf-architect-low.md       # Sonnet (Claude Pro)
+│   ├── wpf-code-reviewer.md       # Opus
+│   ├── wpf-code-reviewer-low.md   # Sonnet (Claude Pro)
+│   ├── wpf-control-designer.md    # Sonnet
+│   ├── wpf-xaml-designer.md       # Sonnet
+│   ├── wpf-mvvm-expert.md         # Sonnet
+│   ├── wpf-data-binding-expert.md # Sonnet
+│   ├── wpf-performance-optimizer.md # Sonnet
+│   ├── code-formatter.md          # Haiku
+│   └── serena-initializer.md      # Haiku
 ├── 📁 commands/               # 5 User commands
 │   ├── make-wpf-custom-control/
 │   ├── make-wpf-project/

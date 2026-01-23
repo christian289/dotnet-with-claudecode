@@ -17,22 +17,34 @@
 
 ---
 
-## WPF Skills 검토 대기 항목
+## Skills 업데이트 이력
 
-아래 항목들은 WPF-Samples와 비교하여 wpf-dev-pack에 Skill 추가 여부를 검토해야 합니다.
+### 2026-01-23: wpf-dev-pack v1.2.0 - 모델 티어 구조 개선
 
-| WPF-Samples 폴더/샘플 | 고려사항 | 결정 |
-|----------------------|----------|------|
-| **PerMonitorDPI** | DPI-Aware 설정은 프로젝트 설정 수준. Skill로 만들 가치 있을지? | 미정 |
-| **Migration and Interoperability** (WindowsFormsHost, HwndHost) | Win32/WinForms 통합은 레거시 시나리오. 수요 있을지? | 미정 |
-| **Compatibility** (.NET Framework → .NET 마이그레이션) | 버전별 차이 문서화 가치 있을지? | 미정 |
-| **Data Binding** → ADODataSet, XmlDataSource | XML/ADO 바인딩은 현대 앱에서 드묾. 필요할지? | 미정 |
-| **Data Binding** → PriorityBinding, MultiBinding | 고급 바인딩 시나리오. 별도 Skill vs 기존에 통합? | 미정 |
-| **Elements** → FocusVisualStyle, VisibiltyChanges | 작은 주제. 독립 Skill vs 다른 Skill에 통합? | 미정 |
+**목적:**
+- Claude Pro 구독자와 Claude Max 구독자 모두 wpf-dev-pack 사용 가능하도록 개선
+
+**에이전트 구조 (11개):**
+
+| 에이전트 | 모델 | 대상 |
+|----------|------|------|
+| wpf-architect | Opus | Claude Max |
+| wpf-architect-low | Sonnet | Claude Pro |
+| wpf-code-reviewer | Opus | Claude Max |
+| wpf-code-reviewer-low | Sonnet | Claude Pro |
+| wpf-control-designer | Sonnet | 모두 |
+| wpf-xaml-designer | Sonnet | 모두 |
+| wpf-mvvm-expert | Sonnet | 모두 |
+| wpf-data-binding-expert | Sonnet | 모두 |
+| wpf-performance-optimizer | Sonnet | 모두 |
+| code-formatter | Haiku | 모두 |
+| serena-initializer | Haiku | 모두 |
+
+**Claude Pro 사용자 안내:**
+- 대부분의 에이전트는 Sonnet이므로 그대로 사용
+- `wpf-architect`와 `wpf-code-reviewer`만 `-low` 버전 사용
 
 ---
-
-## Skills 업데이트 이력
 
 ### 2026-01-22: WPF 스킬 wpf-dev-pack으로 이전
 
