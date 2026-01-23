@@ -441,6 +441,14 @@ FodyWeavers.xsd
 # README 파일 허용
 !/README.md
 
+# Allow LICENSE file
+# LICENSE 파일 허용
+!/LICENSE
+
+# Allow .github folder (templates, workflows)
+# .github 폴더 허용 (템플릿, 워크플로우)
+!/.github/
+
 # Allow CLAUDE.md files
 # CLAUDE.md 파일 허용
 !/CLAUDE.md
