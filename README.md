@@ -46,6 +46,32 @@ AvaloniaUI-specific skills:
 /plugin install wpf-dev-pack@dotnet-claude-plugins
 ```
 
+## Git Hooks Setup
+
+This repository includes shared git hooks for automated version bumping of `wpf-dev-pack`.
+
+### Installing Git Hooks
+
+After cloning the repository, run one of the following:
+
+```bash
+# Option 1: Direct configuration
+# 방법 1: 직접 설정
+git config core.hooksPath .githooks
+
+# Option 2: Use install script (Windows PowerShell)
+# 방법 2: 설치 스크립트 사용 (Windows PowerShell)
+.\.githooks\install.ps1
+
+# Option 2: Use install script (Linux/Mac)
+# 방법 2: 설치 스크립트 사용 (Linux/Mac)
+./.githooks/install.sh
+```
+
+### What the Hook Does
+
+- **pre-commit**: Automatically bumps `wpf-dev-pack` patch version when committing changes to `wpf-dev-pack/` directory (excluding `plugin.json` and `README.md`)
+
 ## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
