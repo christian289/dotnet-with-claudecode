@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -File .claude/hooks/pre-git-push.ps1"
+            "command": "pwsh -File \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre-git-push.ps1\""
           }
         ]
       }
