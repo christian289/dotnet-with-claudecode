@@ -2,12 +2,6 @@
 # pre-push hook: Auto-bump wpf-dev-pack patch version
 # wpf-dev-pack 하위 파일 push 시 자동으로 patch 버전 증가
 
-# Prevent infinite loop
-# 무한 루프 방지
-if [ "$WPF_VERSION_BUMP_IN_PROGRESS" = "1" ]; then
-    exit 0
-fi
-
 # Get the repository root
 # 저장소 루트 경로 가져오기
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -99,13 +93,8 @@ while read local_ref local_sha remote_ref remote_sha; do
 
     echo "Version bumped to $NEW_VERSION"
     echo ""
-    echo "New version commit created. Push will continue with the new commit."
-
-    # Re-push with the new commit (prevent infinite loop with env var)
-    # 새 커밋과 함께 다시 push (환경 변수로 무한 루프 방지)
-    export WPF_VERSION_BUMP_IN_PROGRESS=1
-    git push
-    exit $?
+    echo "Please run 'git push' again to include the version bump commit."
+    exit 1
 done
 
 exit 0
