@@ -5,7 +5,7 @@ description: "Formats dates, numbers, and currency with culture awareness in WPF
 
 # Culture-Aware Data Formatting in WPF
 
-Format dates, numbers, and currency according to user's culture preferences.
+Format dates, numbers, and currency based on user's culture preferences.
 
 ## 1. Culture Formatting Overview
 
