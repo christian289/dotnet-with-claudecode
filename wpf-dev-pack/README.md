@@ -182,6 +182,65 @@ wpf-dev-pack requires the following MCP servers for full functionality:
 
 ---
 
+## 🧠 Auto-Trigger System
+
+wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode). When you mention WPF, C#, or .NET keywords, relevant skills are **automatically activated**.
+
+### How It Works
+
+1. **Keyword Detection**: Your prompt is scanned for WPF/.NET keywords
+2. **Skill Activation**: Matching skills are automatically loaded
+3. **Agent Recommendation**: Complex tasks suggest specialized agents
+
+### Example Triggers
+
+| You Say | Auto-Activates |
+|---------|----------------|
+| "CustomControl 만들어줘" | `authoring-wpf-controls`, `developing-wpf-customcontrols` |
+| "MVVM 패턴 적용" | `implementing-communitytoolkit-mvvm` |
+| "DrawingContext로 렌더링" | `rendering-with-drawingcontext` |
+| "성능 최적화 필요" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` agent |
+| "아키텍처 검토" | `wpf-architect` agent recommended |
+
+### Silent Triggers
+
+Some skills activate without notification:
+- `formatting-wpf-csharp-code` - Code formatting
+- `using-xaml-property-element-syntax` - XAML syntax
+- `managing-literal-strings` - String management
+
+### Keyword Categories
+
+<details>
+<summary><b>📌 Primary WPF Keywords (Click to expand)</b></summary>
+
+| Category | Keywords |
+|----------|----------|
+| **Controls** | `customcontrol`, `dependencyproperty`, `templatepart`, `controltemplate` |
+| **MVVM** | `mvvm`, `viewmodel`, `relaycommand`, `observableproperty` |
+| **Rendering** | `drawingcontext`, `drawingvisual`, `onrender`, `invalidatevisual` |
+| **Performance** | `virtualizingstackpanel`, `freeze`, `freezable`, `bitmapcache` |
+| **Events** | `routedevent`, `command`, `inputbinding`, `dragdrop` |
+| **Styling** | `resourcedictionary`, `generic.xaml`, `storyboard`, `animation` |
+| **Threading** | `dispatcher`, `invoke`, `begininvoke` |
+
+</details>
+
+<details>
+<summary><b>🔷 .NET Keywords (Click to expand)</b></summary>
+
+| Category | Keywords |
+|----------|----------|
+| **Async** | `async`, `await`, `task`, `valuetask`, `configureawait` |
+| **Parallel** | `parallel`, `plinq`, `concurrentdictionary` |
+| **Memory** | `span`, `memory<`, `arraypool`, `stackalloc` |
+| **I/O** | `pipeline`, `pipereader`, `pipewriter` |
+| **Patterns** | `repository pattern`, `pubsub`, `channel` |
+
+</details>
+
+---
+
 ## 🎯 Features
 
 ### 🤖 Specialized Agents
