@@ -1,3 +1,5 @@
+[🇰🇷 한국어](./README.ko.md)
+
 # dotnet-with-claudecode
 
 .NET Development Tutorial with Claude Code

@@ -417,51 +417,6 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# =============================================================================
-# Whitelist approach: Ignore everything, then allow specific files
-# 화이트리스트 방식: 모든 것을 무시하고 특정 파일만 추적
-# =============================================================================
-# This allows cloning any repository under this directory
-# 이 디렉토리 하위에 어떤 저장소든 clone 가능
-
-# Ignore everything at root level
-# 루트 레벨의 모든 것을 무시
-/*
-
-# Allow .claude folder (but not local settings)
-# .claude 폴더 허용 (로컬 설정 제외)
-!/.claude/
+# Claude Code local settings
+# Claude Code 로컬 설정
 .claude/settings.local.json
-
-# Allow .gitignore itself
-# .gitignore 파일 허용
-!/.gitignore
-
-# Allow README if exists
-# README 파일 허용
-!/README.md
-
-# Allow LICENSE file
-# LICENSE 파일 허용
-!/LICENSE
-
-# Allow .github folder (templates, workflows)
-# .github 폴더 허용 (템플릿, 워크플로우)
-!/.github/
-
-# Allow .githooks folder (shared git hooks)
-# .githooks 폴더 허용 (공유 git hooks)
-!/.githooks/
-
-# Allow CLAUDE.md files
-# CLAUDE.md 파일 허용
-!/CLAUDE.md
-!/CLAUDE.local.md
-
-# Allow .claude-plugin folder (marketplace definition)
-# .claude-plugin 폴더 허용 (마켓플레이스 정의)
-!/.claude-plugin/
-
-# Allow wpf-dev-pack plugin folder
-# wpf-dev-pack 플러그인 폴더 허용
-!/wpf-dev-pack/
