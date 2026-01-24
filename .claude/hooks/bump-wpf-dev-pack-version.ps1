@@ -4,7 +4,7 @@
 # 자동으로 wpf-dev-pack patch 버전을 git push 전에 올립니다
 
 param(
-    [string]$RepoRoot = (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)))
+    [string]$RepoRoot = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))
 )
 
 $WpfDevPackPath = Join-Path $RepoRoot "wpf-dev-pack"
