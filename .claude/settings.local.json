@@ -44,7 +44,8 @@
       "Bash(git branch:*)",
       "mcp__plugin_playwright_playwright__browser_navigate",
       "mcp__plugin_playwright_playwright__browser_close",
-      "Bash(git clone:*)"
+      "Bash(git clone:*)",
+      "Bash(git status:*)"
     ]
   }
 }
