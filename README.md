@@ -70,7 +70,7 @@ git config core.hooksPath .githooks
 
 ### What the Hook Does
 
-- **pre-commit**: Automatically bumps `wpf-dev-pack` patch version when committing changes to `wpf-dev-pack/` directory (excluding `plugin.json` and `README.md`)
+- **pre-push**: Automatically bumps `wpf-dev-pack` patch version when pushing changes to `wpf-dev-pack/` directory (excluding `plugin.json` and `README.md`)
 
 ## Contributing
 

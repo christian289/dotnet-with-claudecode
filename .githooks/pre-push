@@ -1,0 +1,111 @@
+#!/bin/bash
+# pre-push hook: Auto-bump wpf-dev-pack patch version
+# wpf-dev-pack 하위 파일 push 시 자동으로 patch 버전 증가
+
+# Prevent infinite loop
+# 무한 루프 방지
+if [ "$WPF_VERSION_BUMP_IN_PROGRESS" = "1" ]; then
+    exit 0
+fi
+
+# Get the repository root
+# 저장소 루트 경로 가져오기
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+WPF_DEV_PACK_PATH="$REPO_ROOT/wpf-dev-pack"
+PLUGIN_JSON_PATH="$WPF_DEV_PACK_PATH/.claude-plugin/plugin.json"
+README_PATH="$WPF_DEV_PACK_PATH/README.md"
+
+# Check if wpf-dev-pack exists
+# wpf-dev-pack 존재 여부 확인
+if [ ! -f "$PLUGIN_JSON_PATH" ]; then
+    exit 0
+fi
+
+# Read stdin (pre-push receives: local_ref local_sha remote_ref remote_sha)
+# stdin 읽기 (pre-push는 local_ref local_sha remote_ref remote_sha를 받음)
+while read local_ref local_sha remote_ref remote_sha; do
+    # Skip delete operations
+    # 삭제 작업 건너뛰기
+    if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+        continue
+    fi
+
+    # Get changed files between remote and local
+    # 원격과 로컬 사이의 변경 파일 가져오기
+    if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+        # New branch - compare with default branch
+        # 새 브랜치 - 기본 브랜치와 비교
+        CHANGED_FILES=$(git diff --name-only origin/main...$local_sha 2>/dev/null)
+    else
+        CHANGED_FILES=$(git diff --name-only $remote_sha...$local_sha 2>/dev/null)
+    fi
+
+    # Filter wpf-dev-pack changes (excluding plugin.json and README.md)
+    # wpf-dev-pack 변경 필터링 (plugin.json, README.md 제외)
+    WPF_CHANGES=$(echo "$CHANGED_FILES" | grep "^wpf-dev-pack/" | grep -v "plugin.json" | grep -v "README.md")
+
+    if [ -z "$WPF_CHANGES" ]; then
+        continue
+    fi
+
+    # Check for [skip-version] in commit messages being pushed
+    # push될 커밋 메시지에서 [skip-version] 확인
+    if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+        COMMIT_MESSAGES=$(git log --oneline origin/main...$local_sha 2>/dev/null)
+    else
+        COMMIT_MESSAGES=$(git log --oneline $remote_sha...$local_sha 2>/dev/null)
+    fi
+
+    if echo "$COMMIT_MESSAGES" | grep -q "\[skip-version\]"; then
+        echo "[skip-version] found in commits, skipping version bump"
+        continue
+    fi
+
+    # Read current version from plugin.json
+    # plugin.json에서 현재 버전 읽기
+    CURRENT_VERSION=$(grep -o '"version": *"[^"]*"' "$PLUGIN_JSON_PATH" | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+
+    if [ -z "$CURRENT_VERSION" ]; then
+        echo "Could not read version from plugin.json"
+        exit 1
+    fi
+
+    # Parse version
+    # 버전 파싱
+    MAJOR=$(echo "$CURRENT_VERSION" | cut -d. -f1)
+    MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+    PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+
+    # Bump patch version
+    # patch 버전 증가
+    NEW_PATCH=$((PATCH + 1))
+    NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+    echo "Bumping wpf-dev-pack version: $CURRENT_VERSION -> $NEW_VERSION"
+
+    # Update plugin.json
+    # plugin.json 업데이트
+    sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" "$PLUGIN_JSON_PATH"
+
+    # Update README.md badge
+    # README.md 배지 업데이트
+    sed -i "s/version-$CURRENT_VERSION-blue/version-$NEW_VERSION-blue/" "$README_PATH"
+
+    # Commit the version bump
+    # 버전 bump 커밋
+    git add "$PLUGIN_JSON_PATH" "$README_PATH"
+    git commit -m "chore(wpf-dev-pack): bump version to $NEW_VERSION [skip-version]"
+
+    echo "Version bumped to $NEW_VERSION"
+    echo ""
+    echo "New version commit created. Push will continue with the new commit."
+
+    # Re-push with the new commit (prevent infinite loop with env var)
+    # 새 커밋과 함께 다시 push (환경 변수로 무한 루프 방지)
+    export WPF_VERSION_BUMP_IN_PROGRESS=1
+    git push
+    exit $?
+done
+
+exit 0
