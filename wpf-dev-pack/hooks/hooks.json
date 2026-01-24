@@ -1,5 +1,5 @@
 {
-  "description": "WPF Dev Pack hooks - WPF keyword detection, XAML validation, and code formatting (C# file-based apps, .NET 10 required)",
+  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, and code formatting (C# file-based apps, .NET 10 required)",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -7,7 +7,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/WpfKeywordDetector.cs\"",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/McpDependencyChecker.cs\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/WpfKeywordDetector.cs\"",
             "timeout": 10
           }
         ]
@@ -19,12 +24,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
             "timeout": 15
           },
           {
             "type": "command",
-            "command": "dotnet run \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
             "timeout": 45
           }
         ]

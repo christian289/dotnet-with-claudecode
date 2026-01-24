@@ -2,32 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "MCP servers for WPF Dev Pack plugin",
   "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
-      "description": "Context7 - Up-to-date library documentation and code examples",
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
-      }
-    },
     "MicrosoftDocs": {
       "type": "http",
       "url": "https://learn.microsoft.com/api/mcp"
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "description": "Sequential Thinking - Step-by-step problem solving and analysis",
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
-      }
-    },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"],
-      "description": "Serena - Semantic code analysis and manipulation tools"
     }
   }
 }

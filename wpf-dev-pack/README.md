@@ -4,12 +4,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.2.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**57 Skills** · **11 Specialized Agents** · **5 Commands** · **4 MCP Servers**
+**57 Skills** · **11 Specialized Agents** · **5 Commands** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -42,9 +42,9 @@
 <td width="50%">
 
 ### 📚 Smart Documentation
-- **Context7** for up-to-date docs
-- **MicrosoftDocs** integration
-- **Semantic code analysis** with Serena
+- **MicrosoftDocs** integration (included)
+- **Context7** for up-to-date docs (external)
+- **Semantic code analysis** with Serena (external)
 
 </td>
 <td width="50%">
@@ -80,34 +80,55 @@ claude --plugin-dir ./wpf-dev-pack
 
 ### Requirements
 
-| Requirement | Version |
-|-------------|---------|
-| .NET SDK | 10.0 or later |
-| Claude Code | Latest |
-| uv (for Serena) | Latest |
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| .NET SDK | 10.0+ | For hooks execution |
+| Claude Code | Latest | - |
+| uv | Latest | For Serena MCP |
 
-### ⚠️ Important: Avoid Plugin Conflicts
+### Required MCP Dependencies
 
-**wpf-dev-pack includes these MCP servers internally:**
-- Context7
-- Serena
-- Sequential-thinking
-- MicrosoftDocs
+wpf-dev-pack requires the following MCP servers for full functionality:
 
-**If you have these plugins separately enabled, disable them to avoid duplication:**
+| MCP Server | Purpose | Required By |
+|------------|---------|-------------|
+| **Context7** | Up-to-date library docs | Most agents |
+| **Sequential-thinking** | Step-by-step analysis | Opus-level agents |
+| **Serena** | Semantic code analysis | All agents |
+
+> **Note:** These are commonly used MCPs that you may already have installed.
+> wpf-dev-pack will check for their availability at runtime and warn if missing.
+
+**If not installed, add to `~/.claude/.mcp.json`:**
 
 ```json
-// ~/.claude/settings.json
 {
-  "enabledPlugins": {
-    "context7@claude-plugins-official": false,  // Disable - included in wpf-dev-pack
-    "serena@claude-plugins-official": false,    // Disable - included in wpf-dev-pack
-    "wpf-dev-pack@dotnet-claude-plugins": true
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
+      }
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
+    }
   }
 }
 ```
 
-> **Why?** Duplicate MCP servers cause "Large MCP tools context" warnings and consume excessive context window space.
+> **Why external?** These MCPs are commonly used across many plugins. Including them in wpf-dev-pack would cause duplication for users who already have them configured.
 
 ---
 
@@ -171,12 +192,21 @@ claude --plugin-dir ./wpf-dev-pack
 
 ### 🔌 MCP Servers
 
+**Included:**
+
 | Server | Purpose |
 |--------|---------|
-| **Context7** | Up-to-date library documentation |
 | **MicrosoftDocs** | Official Microsoft documentation |
-| **Sequential-thinking** | Step-by-step problem solving |
-| **Serena** | Semantic code analysis |
+
+**Required (External):**
+
+| Server | Purpose | Notes |
+|--------|---------|-------|
+| **Context7** | Up-to-date library docs | Install separately |
+| **Sequential-thinking** | Step-by-step analysis | Install separately |
+| **Serena** | Semantic code analysis | Install separately |
+
+> See [Required MCP Dependencies](#required-mcp-dependencies) for installation instructions.
 
 ### 📚 Skills by Category
 
@@ -329,7 +359,7 @@ wpf-dev-pack/
 │   └── make-wpf-usercontrol/
 ├── 📁 skills/                 # 57 Skills
 ├── 📁 hooks/                  # Event hooks
-├── 📄 .mcp.json               # MCP server config
+├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```
