@@ -5,7 +5,11 @@
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp@latest"],
-      "description": "Context7 - Up-to-date library documentation and code examples"
+      "description": "Context7 - Up-to-date library documentation and code examples",
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
+      }
     },
     "MicrosoftDocs": {
       "type": "http",
@@ -14,7 +18,11 @@
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "description": "Sequential Thinking - Step-by-step problem solving and analysis"
+      "description": "Sequential Thinking - Step-by-step problem solving and analysis",
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
+      }
     },
     "serena": {
       "command": "uvx",
