@@ -56,7 +56,19 @@ chore(wpf-dev-pack): bump version to X.Y.Z
 
 ---
 
-## 6. 예외 상황
+## 6. Hook 구현
+
+자동 버전 업데이트는 다음 파일들로 구현됨:
+
+| 파일 | 역할 |
+|------|------|
+| `dotnet-with-claudecode/.claude/settings.json` | PreToolUse hook 설정 |
+| `dotnet-with-claudecode/.claude/hooks/pre-git-push.ps1` | git push 감지 wrapper |
+| `dotnet-with-claudecode/.claude/hooks/bump-wpf-dev-pack-version.ps1` | 버전 업데이트 로직 |
+
+---
+
+## 7. 예외 상황
 
 버전 업데이트를 건너뛰는 경우:
 
