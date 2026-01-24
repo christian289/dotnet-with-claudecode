@@ -449,6 +449,10 @@ FodyWeavers.xsd
 # .github 폴더 허용 (템플릿, 워크플로우)
 !/.github/
 
+# Allow .githooks folder (shared git hooks)
+# .githooks 폴더 허용 (공유 git hooks)
+!/.githooks/
+
 # Allow CLAUDE.md files
 # CLAUDE.md 파일 허용
 !/CLAUDE.md

@@ -1,0 +1,71 @@
+#!/bin/bash
+# pre-commit hook: Auto-bump wpf-dev-pack patch version
+# wpf-dev-pack 하위 파일 커밋 시 자동으로 patch 버전 증가
+
+# Get the repository root
+# 저장소 루트 경로 가져오기
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+WPF_DEV_PACK_PATH="$REPO_ROOT/wpf-dev-pack"
+PLUGIN_JSON_PATH="$WPF_DEV_PACK_PATH/.claude-plugin/plugin.json"
+README_PATH="$WPF_DEV_PACK_PATH/README.md"
+
+# Check if wpf-dev-pack exists
+# wpf-dev-pack 존재 여부 확인
+if [ ! -f "$PLUGIN_JSON_PATH" ]; then
+    exit 0
+fi
+
+# Get staged files in wpf-dev-pack (excluding plugin.json and README.md)
+# wpf-dev-pack의 staged 파일 가져오기 (plugin.json, README.md 제외)
+STAGED_FILES=$(git diff --cached --name-only | grep "^wpf-dev-pack/" | grep -v "plugin.json" | grep -v "README.md")
+
+if [ -z "$STAGED_FILES" ]; then
+    # No relevant wpf-dev-pack changes
+    # wpf-dev-pack 관련 변경사항 없음
+    exit 0
+fi
+
+# Check for [skip-version] in commit message (if available via prepare-commit-msg)
+# 커밋 메시지에서 [skip-version] 확인
+if [ -n "$GIT_COMMIT_MSG" ] && echo "$GIT_COMMIT_MSG" | grep -q "\[skip-version\]"; then
+    echo "[skip-version] found, skipping version bump"
+    exit 0
+fi
+
+# Read current version from plugin.json
+# plugin.json에서 현재 버전 읽기
+CURRENT_VERSION=$(grep -o '"version": *"[^"]*"' "$PLUGIN_JSON_PATH" | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+
+if [ -z "$CURRENT_VERSION" ]; then
+    echo "Could not read version from plugin.json"
+    exit 1
+fi
+
+# Parse version
+# 버전 파싱
+MAJOR=$(echo "$CURRENT_VERSION" | cut -d. -f1)
+MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+
+# Bump patch version
+# patch 버전 증가
+NEW_PATCH=$((PATCH + 1))
+NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+echo "Bumping wpf-dev-pack version: $CURRENT_VERSION -> $NEW_VERSION"
+
+# Update plugin.json
+# plugin.json 업데이트
+sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" "$PLUGIN_JSON_PATH"
+
+# Update README.md badge
+# README.md 배지 업데이트
+sed -i "s/version-$CURRENT_VERSION-blue/version-$NEW_VERSION-blue/" "$README_PATH"
+
+# Stage the updated files
+# 업데이트된 파일 스테이징
+git add "$PLUGIN_JSON_PATH" "$README_PATH"
+
+echo "Version bumped to $NEW_VERSION"
+exit 0
