@@ -4,7 +4,7 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.2.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
@@ -85,6 +85,29 @@ claude --plugin-dir ./wpf-dev-pack
 | .NET SDK | 10.0 or later |
 | Claude Code | Latest |
 | uv (for Serena) | Latest |
+
+### ⚠️ Important: Avoid Plugin Conflicts
+
+**wpf-dev-pack includes these MCP servers internally:**
+- Context7
+- Serena
+- Sequential-thinking
+- MicrosoftDocs
+
+**If you have these plugins separately enabled, disable them to avoid duplication:**
+
+```json
+// ~/.claude/settings.json
+{
+  "enabledPlugins": {
+    "context7@claude-plugins-official": false,  // Disable - included in wpf-dev-pack
+    "serena@claude-plugins-official": false,    // Disable - included in wpf-dev-pack
+    "wpf-dev-pack@dotnet-claude-plugins": true
+  }
+}
+```
+
+> **Why?** Duplicate MCP servers cause "Large MCP tools context" warnings and consume excessive context window space.
 
 ---
 
