@@ -172,76 +172,23 @@ Lowercase = relative coordinates, Uppercase = absolute coordinates
 
 ---
 
-## 4. Brush
-
-### 4.1 SolidColorBrush
+## 4. Brush (Quick Reference)
 
 ```xml
+<!-- SolidColorBrush -->
 <Rectangle Fill="Blue"/>
 <Rectangle Fill="#FF2196F3"/>
-<Rectangle>
-    <Rectangle.Fill>
-        <SolidColorBrush Color="Blue" Opacity="0.5"/>
-    </Rectangle.Fill>
-</Rectangle>
+
+<!-- LinearGradientBrush -->
+<Rectangle.Fill>
+    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#2196F3" Offset="0"/>
+        <GradientStop Color="#FF9800" Offset="1"/>
+    </LinearGradientBrush>
+</Rectangle.Fill>
 ```
 
-### 4.2 LinearGradientBrush
-
-```xml
-<Rectangle Width="200" Height="100">
-    <Rectangle.Fill>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#2196F3" Offset="0"/>
-            <GradientStop Color="#4CAF50" Offset="0.5"/>
-            <GradientStop Color="#FF9800" Offset="1"/>
-        </LinearGradientBrush>
-    </Rectangle.Fill>
-</Rectangle>
-```
-
-### 4.3 RadialGradientBrush
-
-```xml
-<Ellipse Width="200" Height="200">
-    <Ellipse.Fill>
-        <RadialGradientBrush GradientOrigin="0.3,0.3">
-            <GradientStop Color="White" Offset="0"/>
-            <GradientStop Color="Blue" Offset="1"/>
-        </RadialGradientBrush>
-    </Ellipse.Fill>
-</Ellipse>
-```
-
-### 4.4 ImageBrush
-
-```xml
-<Rectangle Width="200" Height="200">
-    <Rectangle.Fill>
-        <ImageBrush ImageSource="/Assets/pattern.png"
-                    TileMode="Tile"
-                    Viewport="0,0,0.25,0.25"
-                    ViewportUnits="RelativeToBoundingBox"/>
-    </Rectangle.Fill>
-</Rectangle>
-```
-
-### 4.5 VisualBrush
-
-```xml
-<Rectangle Width="200" Height="200">
-    <Rectangle.Fill>
-        <VisualBrush TileMode="Tile" Viewport="0,0,0.5,0.5">
-            <VisualBrush.Visual>
-                <StackPanel>
-                    <Ellipse Width="20" Height="20" Fill="Red"/>
-                    <Ellipse Width="20" Height="20" Fill="Blue"/>
-                </StackPanel>
-            </VisualBrush.Visual>
-        </VisualBrush>
-    </Rectangle.Fill>
-</Rectangle>
-```
+> **📌 상세 가이드**: `/creating-wpf-brushes` skill 참조
 
 ---
 
@@ -277,201 +224,17 @@ Lowercase = relative coordinates, Uppercase = absolute coordinates
 
 ---
 
-## 6. Creating Graphics in Code
+## 6. Related Skills
 
-### 6.1 Dynamic Shape Creation
-
-```csharp
-namespace MyApp.Graphics;
-
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-public static class ShapeFactory
-{
-    /// <summary>
-    /// Create circular marker
-    /// </summary>
-    public static Ellipse CreateCircleMarker(double size, Brush fill)
-    {
-        return new Ellipse
-        {
-            Width = size,
-            Height = size,
-            Fill = fill,
-            Stroke = Brushes.Black,
-            StrokeThickness = 1
-        };
-    }
-
-    /// <summary>
-    /// Create arrow Path
-    /// </summary>
-    public static Path CreateArrow(Point start, Point end, Brush stroke)
-    {
-        var geometry = new PathGeometry();
-
-        // Arrow body
-        var bodyFigure = new PathFigure { StartPoint = start };
-        bodyFigure.Segments.Add(new LineSegment(end, isStroked: true));
-        geometry.Figures.Add(bodyFigure);
-
-        // Calculate arrow head
-        var direction = end - start;
-        direction.Normalize();
-        var perpendicular = new Vector(-direction.Y, direction.X);
-
-        const double headLength = 10;
-        const double headWidth = 5;
-
-        var headBase = end - direction * headLength;
-        var headLeft = headBase + perpendicular * headWidth;
-        var headRight = headBase - perpendicular * headWidth;
-
-        var headFigure = new PathFigure { StartPoint = end };
-        headFigure.Segments.Add(new LineSegment(headLeft, isStroked: true));
-        headFigure.Segments.Add(new LineSegment(headRight, isStroked: true));
-        headFigure.IsClosed = true;
-        geometry.Figures.Add(headFigure);
-
-        return new Path
-        {
-            Data = geometry,
-            Stroke = stroke,
-            StrokeThickness = 2,
-            Fill = stroke
-        };
-    }
-}
-```
-
-### 6.2 Dynamic PathGeometry Creation
-
-```csharp
-namespace MyApp.Graphics;
-
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-
-public static class GeometryBuilder
-{
-    /// <summary>
-    /// Create polygon Geometry from point list
-    /// </summary>
-    public static PathGeometry CreatePolygon(IReadOnlyList<Point> points)
-    {
-        if (points.Count < 3)
-        {
-            return new PathGeometry();
-        }
-
-        var figure = new PathFigure
-        {
-            StartPoint = points[0],
-            IsClosed = true,
-            IsFilled = true
-        };
-
-        for (var i = 1; i < points.Count; i++)
-        {
-            figure.Segments.Add(new LineSegment(points[i], isStroked: true));
-        }
-
-        var geometry = new PathGeometry();
-        geometry.Figures.Add(figure);
-
-        return geometry;
-    }
-
-    /// <summary>
-    /// Create Bezier curve Geometry
-    /// </summary>
-    public static PathGeometry CreateBezierCurve(
-        Point start,
-        Point control1,
-        Point control2,
-        Point end)
-    {
-        var figure = new PathFigure { StartPoint = start };
-        figure.Segments.Add(new BezierSegment(control1, control2, end, isStroked: true));
-
-        var geometry = new PathGeometry();
-        geometry.Figures.Add(figure);
-
-        return geometry;
-    }
-}
-```
+| Skill | Description |
+|-------|-------------|
+| `/creating-wpf-brushes` | All Brush patterns (Solid, Linear, Radial, Image, Visual) |
+| `/creating-wpf-vector-icons` | XAML vector icons, IconButton styles |
+| `/creating-graphics-in-code` | C# dynamic graphics (ShapeFactory, GeometryBuilder) |
 
 ---
 
-## 7. Icon Implementation
-
-### 7.1 XAML Vector Icons
-
-```xml
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!-- Check mark icon -->
-    <PathGeometry x:Key="CheckIconGeometry">
-        M 2,7 L 5,10 L 10,3
-    </PathGeometry>
-
-    <!-- Close icon -->
-    <PathGeometry x:Key="CloseIconGeometry">
-        M 2,2 L 10,10 M 10,2 L 2,10
-    </PathGeometry>
-
-    <!-- Menu icon (hamburger) -->
-    <GeometryGroup x:Key="MenuIconGeometry">
-        <RectangleGeometry Rect="0,0,16,2"/>
-        <RectangleGeometry Rect="0,6,16,2"/>
-        <RectangleGeometry Rect="0,12,16,2"/>
-    </GeometryGroup>
-
-</ResourceDictionary>
-```
-
-### 7.2 Icon Button Style
-
-```xml
-<Style x:Key="IconButtonStyle" TargetType="{x:Type Button}">
-    <Setter Property="Width" Value="32"/>
-    <Setter Property="Height" Value="32"/>
-    <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Template">
-        <Setter.Value>
-            <ControlTemplate TargetType="{x:Type Button}">
-                <Border Background="{TemplateBinding Background}">
-                    <Path x:Name="IconPath"
-                          Data="{TemplateBinding Content}"
-                          Fill="{TemplateBinding Foreground}"
-                          Stretch="Uniform"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Width="16" Height="16"/>
-                </Border>
-                <ControlTemplate.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter TargetName="IconPath" Property="Fill" Value="#2196F3"/>
-                    </Trigger>
-                </ControlTemplate.Triggers>
-            </ControlTemplate>
-        </Setter.Value>
-    </Setter>
-</Style>
-
-<!-- Usage -->
-<Button Style="{StaticResource IconButtonStyle}"
-        Content="{StaticResource CloseIconGeometry}"/>
-```
-
----
-
-## 8. Performance Considerations
+## 7. Performance Considerations
 
 | Element | Complexity | Recommended Use |
 |---------|------------|-----------------|
@@ -493,7 +256,7 @@ streamGeometry.Freeze(); // Set immutable for performance improvement
 
 ---
 
-## 9. References
+## 8. References
 
 - [Shapes and Basic Drawing - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/shapes-and-basic-drawing-in-wpf-overview)
 - [Geometry Overview - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/geometry-overview)

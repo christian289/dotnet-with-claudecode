@@ -7,26 +7,6 @@ description: "Configures Dependency Injection using Microsoft.Extensions.Depende
 
 A guide on using Dependency Injection and GenericHost in .NET projects.
 
-## Project Structure
-
-The templates folder contains a .NET 9 WPF project example.
-
-```
-templates/
-├── WpfDISample.App/           ← WPF Application Project
-│   ├── Views/
-│   │   ├── MainWindow.xaml
-│   │   └── MainWindow.xaml.cs
-│   ├── App.xaml
-│   ├── App.xaml.cs
-│   ├── GlobalUsings.cs
-│   └── WpfDISample.App.csproj
-└── WpfDISample.ViewModels/    ← ViewModel Class Library (UI framework independent)
-    ├── MainViewModel.cs
-    ├── GlobalUsings.cs
-    └── WpfDISample.ViewModels.csproj
-```
-
 ## Core Principles
 
 - **Implement dependency injection using Microsoft.Extensions.DependencyInjection**
