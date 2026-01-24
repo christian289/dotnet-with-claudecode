@@ -78,6 +78,18 @@
 claude --plugin-dir ./wpf-dev-pack
 ```
 
+### Updating
+
+```bash
+# Manual update
+claude plugin update wpf-dev-pack@dotnet-claude-plugins
+
+# Or enable auto-updates for this marketplace
+/plugin → Marketplaces → dotnet-claude-plugins → Enable auto-update
+```
+
+> **Note:** Third-party marketplaces have auto-update disabled by default.
+
 ### Requirements
 
 | Requirement | Version | Notes |
