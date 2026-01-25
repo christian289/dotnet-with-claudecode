@@ -84,6 +84,16 @@ RULE 4: Select most specific skill when multiple match
 | `startup`, `shutdown`, `application lifecycle` | `managing-wpf-application-lifecycle` | App lifecycle |
 | `generichost`, `host builder` | `configuring-console-app-di` | Console app DI |
 
+### Build & Deployment Keywords
+
+| Keyword | Trigger Skill | Condition |
+|---------|---------------|-----------|
+| `pdb`, `pdb embedded`, `pdb 임베드` | `embedding-pdb-in-exe` | PDB embedding |
+| `debugtype`, `debug symbols`, `디버그 심볼` | `embedding-pdb-in-exe` | Debug symbols |
+| `dotnet publish`, `dotnet build` | `embedding-pdb-in-exe` | Build/publish |
+| `single-file`, `publishsinglefile`, `단일 파일 배포` | `embedding-pdb-in-exe` | Single-file deploy |
+| `source link`, `소스 링크` | `embedding-pdb-in-exe` | Source Link |
+
 ### Graphics Keywords
 
 | Keyword | Trigger Skill | Condition |
@@ -191,6 +201,9 @@ When multiple keywords detected:
 
 ### Application & Threading (6)
 `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `migrating-wpf-to-dotnet`, `localizing-wpf-with-baml`, `implementing-wpf-rtl-support`, `formatting-culture-aware-data`
+
+### Build & Deployment (1)
+`embedding-pdb-in-exe`
 
 ### .NET Common (11)
 `configuring-console-app-di`, `handling-async-operations`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `implementing-repository-pattern`, `managing-literal-strings`, `optimizing-fast-lookup`, `optimizing-io-operations`, `optimizing-memory-allocation`, `processing-parallel-tasks`, `using-generated-regex`

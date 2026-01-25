@@ -367,7 +367,26 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["리터럴 문자열"] = ["managing-literal-strings"],
         ["console app di"] = ["configuring-console-app-di"],
         ["콘솔 앱 di"] = ["configuring-console-app-di"],
-        ["console host"] = ["configuring-console-app-di"]
+        ["console host"] = ["configuring-console-app-di"],
+
+        // ─────────────────────────────────────────────────────────
+        // Build & Deployment
+        // ─────────────────────────────────────────────────────────
+        ["pdb"] = ["embedding-pdb-in-exe"],
+        ["pdb 임베드"] = ["embedding-pdb-in-exe"],
+        ["pdb 내장"] = ["embedding-pdb-in-exe"],
+        ["pdb embedded"] = ["embedding-pdb-in-exe"],
+        ["debugtype"] = ["embedding-pdb-in-exe"],
+        ["디버그 심볼"] = ["embedding-pdb-in-exe"],
+        ["debug symbols"] = ["embedding-pdb-in-exe"],
+        ["dotnet publish"] = ["embedding-pdb-in-exe"],
+        ["dotnet build"] = ["embedding-pdb-in-exe"],
+        ["single-file"] = ["embedding-pdb-in-exe"],
+        ["단일 파일 배포"] = ["embedding-pdb-in-exe"],
+        ["single file deployment"] = ["embedding-pdb-in-exe"],
+        ["publishsinglefile"] = ["embedding-pdb-in-exe"],
+        ["source link"] = ["embedding-pdb-in-exe"],
+        ["소스 링크"] = ["embedding-pdb-in-exe"]
     };
 
     // ============================================================
