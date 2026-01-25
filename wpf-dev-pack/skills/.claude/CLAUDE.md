@@ -46,9 +46,10 @@
 
 | Keyword | Skill |
 |---------|-------|
-| `pdb`, `debugtype` | `embedding-pdb-in-exe` |
-| `single-file`, `dotnet publish` | `embedding-pdb-in-exe` |
-| `source link` | `embedding-pdb-in-exe` |
+| `pdb`, `debugtype`, `source link` | `embedding-pdb-in-exe` |
+| `publish`, `deploy`, `release` | `publishing-wpf-apps` |
+| `self-contained`, `single-file` | `publishing-wpf-apps` |
+| `installer`, `velopack`, `msix`, `nsis` | `publishing-wpf-apps` |
 
 ---
 
@@ -63,5 +64,5 @@
 | **Input & Events** | `handling-wpf-input-commands`, `routing-wpf-events`, `implementing-wpf-dragdrop` |
 | **Styling & Resources** | `managing-styles-resourcedictionary`, `creating-wpf-brushes`, `creating-wpf-vector-icons` |
 | **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `migrating-wpf-to-dotnet` |
-| **Build & Deployment** | `embedding-pdb-in-exe` |
+| **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
 | **.NET Common** | `handling-async-operations`, `processing-parallel-tasks`, `optimizing-memory-allocation`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `using-generated-regex` |

@@ -372,6 +372,7 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         // ─────────────────────────────────────────────────────────
         // Build & Deployment
         // ─────────────────────────────────────────────────────────
+        // PDB embedding
         ["pdb"] = ["embedding-pdb-in-exe"],
         ["pdb 임베드"] = ["embedding-pdb-in-exe"],
         ["pdb 내장"] = ["embedding-pdb-in-exe"],
@@ -379,14 +380,39 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["debugtype"] = ["embedding-pdb-in-exe"],
         ["디버그 심볼"] = ["embedding-pdb-in-exe"],
         ["debug symbols"] = ["embedding-pdb-in-exe"],
-        ["dotnet publish"] = ["embedding-pdb-in-exe"],
-        ["dotnet build"] = ["embedding-pdb-in-exe"],
-        ["single-file"] = ["embedding-pdb-in-exe"],
-        ["단일 파일 배포"] = ["embedding-pdb-in-exe"],
-        ["single file deployment"] = ["embedding-pdb-in-exe"],
-        ["publishsinglefile"] = ["embedding-pdb-in-exe"],
         ["source link"] = ["embedding-pdb-in-exe"],
-        ["소스 링크"] = ["embedding-pdb-in-exe"]
+        ["소스 링크"] = ["embedding-pdb-in-exe"],
+
+        // Publishing & Packaging
+        ["publish"] = ["publishing-wpf-apps"],
+        ["배포"] = ["publishing-wpf-apps"],
+        ["deploy"] = ["publishing-wpf-apps"],
+        ["release"] = ["publishing-wpf-apps"],
+        ["릴리스"] = ["publishing-wpf-apps"],
+        ["packaging"] = ["publishing-wpf-apps"],
+        ["패키징"] = ["publishing-wpf-apps"],
+        ["dotnet publish"] = ["publishing-wpf-apps"],
+        ["self-contained"] = ["publishing-wpf-apps"],
+        ["selfcontained"] = ["publishing-wpf-apps"],
+        ["자체 포함"] = ["publishing-wpf-apps"],
+        ["single-file"] = ["publishing-wpf-apps"],
+        ["singlefile"] = ["publishing-wpf-apps"],
+        ["단일 파일"] = ["publishing-wpf-apps"],
+        ["publishsinglefile"] = ["publishing-wpf-apps"],
+        ["readytorun"] = ["publishing-wpf-apps"],
+        ["r2r"] = ["publishing-wpf-apps"],
+
+        // Installers
+        ["installer"] = ["publishing-wpf-apps"],
+        ["인스톨러"] = ["publishing-wpf-apps"],
+        ["설치 프로그램"] = ["publishing-wpf-apps"],
+        ["velopack"] = ["publishing-wpf-apps"],
+        ["msix"] = ["publishing-wpf-apps"],
+        ["nsis"] = ["publishing-wpf-apps"],
+        ["inno setup"] = ["publishing-wpf-apps"],
+        ["innosetup"] = ["publishing-wpf-apps"],
+        ["auto update"] = ["publishing-wpf-apps"],
+        ["자동 업데이트"] = ["publishing-wpf-apps"]
     };
 
     // ============================================================
