@@ -420,3 +420,6 @@ FodyWeavers.xsd
 # Claude Code local settings
 # Claude Code 로컬 설정
 .claude/settings.local.json
+
+# Serena MCP workspace
+.serena/
