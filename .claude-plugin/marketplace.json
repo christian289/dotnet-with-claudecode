@@ -13,7 +13,7 @@
       "name": "wpf-dev-pack",
       "source": "./wpf-dev-pack",
       "description": "WPF development toolkit with 57 skills, 9 agents, and 5 commands for CustomControl, MVVM, XAML styling, and high-performance rendering",
-      "version": "1.1.0",
+      "version": "1.3.10",
       "author": {
         "name": "vincent lee"
       },
