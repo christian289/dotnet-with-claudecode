@@ -7,7 +7,7 @@ description: "Encapsulates CollectionView in Service Layer to maintain MVVM prin
 
 ## Project Structure
 
-The templates folder contains a .NET 9 WPF project example.
+The templates folder contains a WPF project example (use latest .NET per version mapping).
 
 ```
 templates/

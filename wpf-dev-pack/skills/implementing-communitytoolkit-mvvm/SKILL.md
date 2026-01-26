@@ -9,7 +9,7 @@ A guide for implementing MVVM pattern using CommunityToolkit.Mvvm in WPF.
 
 ## Project Structure
 
-The templates folder contains a .NET 9 WPF project example.
+The templates folder contains a WPF project example (use latest .NET per version mapping).
 
 ```
 templates/

@@ -9,11 +9,11 @@ A guide on handling literal strings in C# code.
 
 ## Project Structure
 
-The templates folder contains a .NET 9 Console Application example.
+The templates folder contains a Console Application example (use latest .NET per version mapping).
 
 ```
 templates/
-└── LiteralStringSample/                ← .NET 9 Console Application
+└── LiteralStringSample/                ← Console Application
     ├── Constants/
     │   ├── Messages.cs                 ← General message constants
     │   └── LogMessages.cs              ← Log message constants

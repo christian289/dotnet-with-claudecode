@@ -9,7 +9,7 @@ A guide for designing WPF project solution and project structure based on Clean 
 
 ## Template Project
 
-The templates folder contains a .NET 9 Clean Architecture WPF solution example.
+The templates folder contains a Clean Architecture WPF solution example (use latest .NET per version mapping).
 
 ```
 templates/
