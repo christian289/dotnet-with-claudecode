@@ -1,11 +1,11 @@
 ---
 name: implementing-communitytoolkit-mvvm
-description: "Implements MVVM pattern using CommunityToolkit.Mvvm with ObservableProperty attributes. Use when building ViewModels with source generators or implementing commands in WPF/AvaloniaUI."
+description: "Implements MVVM pattern using CommunityToolkit.Mvvm with ObservableProperty attributes. Use when building ViewModels with source generators or implementing commands in WPF."
 ---
 
 # CommunityToolkit.Mvvm Code Guidelines
 
-A guide for implementing MVVM pattern using CommunityToolkit.Mvvm in WPF/AvaloniaUI.
+A guide for implementing MVVM pattern using CommunityToolkit.Mvvm in WPF.
 
 ## Project Structure
 
