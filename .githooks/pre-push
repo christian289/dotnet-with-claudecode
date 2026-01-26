@@ -9,6 +9,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 WPF_DEV_PACK_PATH="$REPO_ROOT/wpf-dev-pack"
 PLUGIN_JSON_PATH="$WPF_DEV_PACK_PATH/.claude-plugin/plugin.json"
 README_PATH="$WPF_DEV_PACK_PATH/README.md"
+MARKETPLACE_JSON_PATH="$REPO_ROOT/.claude-plugin/marketplace.json"
 
 # Check if wpf-dev-pack exists
 # wpf-dev-pack 존재 여부 확인
@@ -86,9 +87,15 @@ while read local_ref local_sha remote_ref remote_sha; do
     # README.md 배지 업데이트
     sed -i "s/version-$CURRENT_VERSION-blue/version-$NEW_VERSION-blue/" "$README_PATH"
 
+    # Update marketplace.json wpf-dev-pack version
+    # marketplace.json의 wpf-dev-pack 버전 업데이트
+    if [ -f "$MARKETPLACE_JSON_PATH" ]; then
+        sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/g" "$MARKETPLACE_JSON_PATH"
+    fi
+
     # Commit the version bump
     # 버전 bump 커밋
-    git add "$PLUGIN_JSON_PATH" "$README_PATH"
+    git add "$PLUGIN_JSON_PATH" "$README_PATH" "$MARKETPLACE_JSON_PATH"
     git commit -m "chore(wpf-dev-pack): bump version to $NEW_VERSION [skip-version]"
 
     echo "Version bumped to $NEW_VERSION"
