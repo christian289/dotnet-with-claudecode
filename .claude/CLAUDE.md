@@ -19,6 +19,30 @@
 
 ## Skills 업데이트 이력
 
+### 2026-01-27: wpf-dev-pack - Requirements Interview 시스템 추가
+
+**목적:**
+- 사용자의 진짜 요구사항을 파악하기 위한 AskUserQuestion 기반 인터뷰 시스템
+
+**변경 사항:**
+- `wpf-architect`, `wpf-architect-low` 에이전트에 4단계 인터뷰 프로세스 추가
+- AskUserQuestion 도구 활성화
+
+**인터뷰 스텝:**
+| Step | 질문 | 라우팅 |
+|------|------|--------|
+| 1 | 작업 유형 | 프로젝트 생성/분석/기능구현/디버깅 |
+| 2 | 아키텍처 패턴 | MVVM/Code-behind/Prism |
+| 3 | 기술 수준 | 간단/균형/고급 |
+| 4 | 기능 영역 | UI, 바인딩, 렌더링, 애니메이션 (다중선택) |
+
+**Skill/Agent 매핑:**
+- MVVM 선택 → `wpf-mvvm-expert`, `implementing-communitytoolkit-mvvm`
+- 고급 렌더링 → `wpf-performance-optimizer`, `rendering-with-drawingcontext`
+- UI/컨트롤 → `wpf-control-designer`, `authoring-wpf-controls`
+
+---
+
 ### 2026-01-23: wpf-dev-pack v1.2.0 - 모델 티어 구조 개선
 
 **목적:**

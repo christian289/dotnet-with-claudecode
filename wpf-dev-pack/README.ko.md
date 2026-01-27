@@ -184,6 +184,56 @@ wpf-dev-pack의 전체 기능을 사용하려면 다음 MCP 서버가 필요합�
 
 ---
 
+## 🎯 요구사항 인터뷰 시스템
+
+`wpf-architect`를 호출하면 **지능형 4단계 인터뷰**가 정확한 요구사항을 파악합니다:
+
+### 작동 방식
+
+```
+Step 1: 작업 유형
+   └─→ 새 프로젝트 / 기존 분석 / 기능 구현 / 디버깅
+
+Step 2: 아키텍처 패턴
+   └─→ MVVM + CommunityToolkit / Code-behind / Prism / 자동 추천
+
+Step 3: 복잡도 수준
+   └─→ 간단 (빠른) / 균형 (유지보수) / 고급 (고성능)
+
+Step 4: 기능 영역 (다중 선택)
+   └─→ UI/컨트롤, 데이터 바인딩, 렌더링, 애니메이션
+```
+
+### 장점
+
+| 시나리오 | 인터뷰 없이 | 인터뷰 후 |
+|----------|-----------|----------|
+| "WPF 앱 만들어줘" | 일반적인 MVVM 설정 | MVVM 선호도, 복잡도, 기능 확인 |
+| "성능 문제 있어" | 일반적인 최적화 팁 | 구체적 영역 확인 (렌더링/메모리/UI) |
+| "컨트롤 만들어줘" | CustomControl 템플릿 | 간단한 UserControl vs 고급 CustomControl 확인 |
+
+### 예시 플로우
+
+```
+User: "WPF로 차트 앱 만들고 싶어요"
+
+wpf-architect: [Step 1] 어떤 작업을 도와드릴까요?
+   → User 선택: "새 WPF 프로젝트 생성"
+
+wpf-architect: [Step 2] 어떤 아키텍처 패턴을 사용할까요?
+   → User 선택: "MVVM + CommunityToolkit"
+
+wpf-architect: [Step 3] 원하는 기술 수준을 선택해주세요
+   → User 선택: "고성능/고급 기능" (차트 렌더링용)
+
+wpf-architect: [Step 4] 필요한 기능 영역을 모두 선택해주세요
+   → User 선택: "렌더링/그래픽", "데이터 바인딩"
+
+결과: DrawingContext 스킬 + wpf-performance-optimizer 활성화
+```
+
+---
+
 ## 🧠 자동 트리거 시스템
 
 wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)에서 영감을 받은 지능형 키워드 감지 시스템을 사용합니다. WPF, C#, .NET 키워드를 언급하면 관련 스킬이 **자동으로 활성화**됩니다.

@@ -51,7 +51,27 @@ RULE 1: Detect WPF/C#/.NET keywords → Activate relevant skills
 RULE 2: Delegate complex tasks to specialized agents
 RULE 3: Announce skill activation (except silent triggers)
 RULE 4: Select most specific skill when multiple match
+RULE 5: wpf-architect MUST conduct Requirements Interview before analysis
 ```
+
+---
+
+## Requirements Interview System
+
+When `wpf-architect` or `wpf-architect-low` is invoked, conduct a **4-step interview** using AskUserQuestion:
+
+| Step | Question | Routing |
+|------|----------|---------|
+| 1 | Task Type | Routes to appropriate workflow |
+| 2 | Architecture Pattern | Selects MVVM/Code-behind/Prism |
+| 3 | Complexity Level | Simple → Advanced |
+| 4 | Feature Areas | Multi-select: UI, Binding, Rendering, Animation |
+
+**Skip Rules:**
+- "특정 기능 구현" → Skip Step 2 (architecture already exists)
+- "문제 해결/디버깅" → Skip to Step 4 directly
+
+See `agents/wpf-architect.md` for full interview specification.
 
 ## Trigger Priority
 

@@ -184,6 +184,56 @@ wpf-dev-pack requires the following MCP servers for full functionality:
 
 ---
 
+## 🎯 Requirements Interview System
+
+When you invoke `wpf-architect`, an **intelligent 4-step interview** helps identify your exact needs:
+
+### How It Works
+
+```
+Step 1: Task Type
+   └─→ New project / Analyze existing / Implement feature / Debug
+
+Step 2: Architecture Pattern
+   └─→ MVVM + CommunityToolkit / Code-behind / Prism / Auto-recommend
+
+Step 3: Complexity Level
+   └─→ Simple (quick) / Balanced (maintainable) / Advanced (high-performance)
+
+Step 4: Feature Areas (Multi-Select)
+   └─→ UI/Controls, Data Binding, Rendering, Animation
+```
+
+### Benefits
+
+| Scenario | Without Interview | With Interview |
+|----------|-------------------|----------------|
+| "Build me a WPF app" | Generic MVVM setup | Asks MVVM preference, complexity, features |
+| "I have performance issues" | General optimization tips | Asks specific area (rendering/memory/UI) |
+| "Create a control" | CustomControl template | Asks simple UserControl or advanced CustomControl |
+
+### Example Flow
+
+```
+User: "I want to build a chart app with WPF"
+
+wpf-architect: [Step 1] What task can I help you with?
+   → User selects: "Create new WPF project"
+
+wpf-architect: [Step 2] Which architecture pattern would you like to use?
+   → User selects: "MVVM + CommunityToolkit"
+
+wpf-architect: [Step 3] Select your preferred complexity level
+   → User selects: "Advanced / High-Performance" (for chart rendering)
+
+wpf-architect: [Step 4] Select all feature areas you need
+   → User selects: "Rendering/Graphics", "Data Binding/Validation"
+
+Result: Activates DrawingContext skills + wpf-performance-optimizer
+```
+
+---
+
 ## 🧠 Auto-Trigger System
 
 wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode). When you mention WPF, C#, or .NET keywords, relevant skills are **automatically activated**.
