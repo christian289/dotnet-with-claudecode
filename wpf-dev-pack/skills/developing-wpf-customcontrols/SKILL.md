@@ -181,6 +181,7 @@ private static void OnValueChanged(DependencyObject d,
 ## Checklist
 
 - [ ] Inherit from Control class (not UserControl)
+- [ ] Add `ThemeInfo` attribute to AssemblyInfo.cs → See `/configuring-wpf-themeinfo`
 - [ ] Declare required Parts with `TemplatePart` attribute
 - [ ] Declare states with `TemplateVisualState` attribute
 - [ ] Define Part/State names as const strings

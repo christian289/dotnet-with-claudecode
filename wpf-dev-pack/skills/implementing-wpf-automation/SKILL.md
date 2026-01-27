@@ -7,6 +7,16 @@ description: Implements WPF UI Automation for accessibility using AutomationPeer
 
 Implementing accessibility features using UI Automation framework.
 
+## Prerequisites
+
+When implementing AutomationPeer for a CustomControl, ensure the control project is properly set up:
+
+- **ThemeInfo attribute** in AssemblyInfo.cs → See `/configuring-wpf-themeinfo`
+- **CustomControl project structure** → See `/authoring-wpf-controls`
+- **DefaultStyleKeyProperty** in static constructor
+
+---
+
 ## 1. UI Automation Overview
 
 ```

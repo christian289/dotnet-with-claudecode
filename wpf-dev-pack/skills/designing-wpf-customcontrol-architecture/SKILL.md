@@ -68,10 +68,11 @@ YourProject/
 
 ## Step-by-Step Setup
 
-### 1. Create Properties Folder and Move AssemblyInfo.cs
+### 1. Create Properties Folder and Configure AssemblyInfo.cs
 
 - Create Properties folder in the project
 - Move AssemblyInfo.cs to the Properties folder
+- Configure ThemeInfo attribute → See `/configuring-wpf-themeinfo`
 
 ### 2. Configure Generic.xaml - Use as MergedDictionaries Hub
 

@@ -14,7 +14,8 @@
 | `drawingcontext`, `onrender` | `rendering-with-drawingcontext` |
 | `drawingvisual` | `rendering-with-drawingvisual` |
 | `controltemplate` | `customizing-controltemplate` |
-| `resourcedictionary`, `generic.xaml` | `managing-styles-resourcedictionary` |
+| `resourcedictionary` | `managing-styles-resourcedictionary` |
+| `generic.xaml` | `designing-wpf-customcontrol-architecture`, `configuring-wpf-themeinfo` |
 | `animation`, `storyboard` | `creating-wpf-animations` |
 | `collectionview` | `managing-wpf-collectionview-mvvm` |
 | `datatemplate` | `mapping-viewmodel-view-datatemplate` |
@@ -29,6 +30,7 @@
 | `visualtree`, `logicaltree` | `navigating-visual-logical-tree` |
 | `validation` | `implementing-wpf-validation` |
 | `binding`, `multibinding` | `advanced-data-binding` |
+| `themeinfo`, `assemblyinfo` | `configuring-wpf-themeinfo` |
 
 ### .NET Keywords
 
@@ -57,7 +59,7 @@
 
 | Category | Skills |
 |----------|--------|
-| **UI & Controls** | `authoring-wpf-controls`, `developing-wpf-customcontrols`, `customizing-controltemplate`, `defining-wpf-dependencyproperty`, `implementing-wpf-adorners`, `creating-wpf-dialogs` |
+| **UI & Controls** | `authoring-wpf-controls`, `developing-wpf-customcontrols`, `customizing-controltemplate`, `defining-wpf-dependencyproperty`, `implementing-wpf-adorners`, `creating-wpf-dialogs`, `configuring-wpf-themeinfo` |
 | **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `mapping-viewmodel-view-datatemplate`, `configuring-dependency-injection` |
 | **Performance & Rendering** | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `rendering-wpf-high-performance`, `virtualizing-wpf-ui`, `optimizing-wpf-memory`, `implementing-hit-testing` |
 | **Animation & Media** | `creating-wpf-animations`, `integrating-wpf-media`, `using-wpf-clipboard` |

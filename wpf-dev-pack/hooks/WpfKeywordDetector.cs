@@ -115,6 +115,11 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["uiautomation"] = ["implementing-wpf-automation"],
         ["자동화"] = ["implementing-wpf-automation"],
         ["접근성"] = ["implementing-wpf-automation"],
+        ["themeinfo"] = ["configuring-wpf-themeinfo"],
+        ["theme info"] = ["configuring-wpf-themeinfo"],
+        ["테마 정보"] = ["configuring-wpf-themeinfo"],
+        ["assemblyinfo"] = ["configuring-wpf-themeinfo"],
+        ["assembly info"] = ["configuring-wpf-themeinfo"],
 
         // ─────────────────────────────────────────────────────────
         // XAML/Style
@@ -123,8 +128,8 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["resource dictionary"] = ["managing-styles-resourcedictionary"],
         ["리소스 사전"] = ["managing-styles-resourcedictionary"],
         ["리소스 딕셔너리"] = ["managing-styles-resourcedictionary"],
-        ["generic.xaml"] = ["designing-wpf-customcontrol-architecture"],
-        ["themes/generic"] = ["designing-wpf-customcontrol-architecture"],
+        ["generic.xaml"] = ["designing-wpf-customcontrol-architecture", "configuring-wpf-themeinfo"],
+        ["themes/generic"] = ["designing-wpf-customcontrol-architecture", "configuring-wpf-themeinfo"],
         ["basedonstyle"] = ["managing-styles-resourcedictionary"],
         ["dynamicresource"] = ["managing-styles-resourcedictionary"],
         ["staticresource"] = ["managing-styles-resourcedictionary"],
