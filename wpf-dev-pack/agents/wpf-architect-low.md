@@ -10,6 +10,10 @@ skills:
   - managing-wpf-collectionview-mvvm
   - mapping-viewmodel-view-datatemplate
   - configuring-dependency-injection
+  - integrating-wpfui-fluent
+  - integrating-livecharts2
+  - validating-with-fluentvalidation
+  - handling-errors-with-erroror
 ---
 
 # WPF Architect (Low) - Architecture Advisor
@@ -57,9 +61,13 @@ Act as an Oracle providing WPF architecture analysis and recommendations. Operat
 
 ## Requirements Interview (MUST RUN FIRST)
 
-Before any analysis, conduct a 4-step interview using AskUserQuestion tool.
+Before any work, conduct an adaptive interview using AskUserQuestion tool.
+Step 1 selection determines the entire interview path — questions, options, and step count all change.
 
-### Step 1: Task Type
+See `wpf-architect.md` for the full adaptive interview specification (Paths A/B/C/D).
+This agent uses the **identical interview flow** — the only difference is the model tier (Sonnet vs Opus).
+
+### Step 1: Task Type (All Paths)
 ```
 AskUserQuestion:
   question: "What task can I help you with?"
@@ -68,113 +76,26 @@ AskUserQuestion:
     - label: "Create new WPF project"
       description: "New project scaffolding with recommended structure"
     - label: "Analyze/improve existing project"
-      description: "Analyze current codebase and suggest improvements"
+      description: "Analyze current codebase, extract patterns, or suggest improvements"
     - label: "Implement specific feature"
-      description: "Implement specific feature (skip to Step 3)"
+      description: "Add a feature to an existing project"
     - label: "Debug/fix issues"
-      description: "Debug or fix specific issues (skip to Step 4)"
+      description: "Diagnose and fix specific problems"
 ```
 
 **Routing:**
-- "Create new WPF project" → Step 2, then delegate to `make-wpf-project`
-- "Analyze/improve existing project" → Step 2, then run Analysis Process
-- "Implement specific feature" → Skip to Step 3
-- "Debug/fix issues" → Skip to Step 4
+- "Create new WPF project" → **Path A** (7 steps)
+- "Analyze/improve existing project" → **Path B** (5 steps)
+- "Implement specific feature" → **Path C** (5 steps)
+- "Debug/fix issues" → **Path D** (4 steps)
 
-### Step 2: Architecture Pattern
-```
-AskUserQuestion:
-  question: "Which architecture pattern would you like to use?"
-  header: "Architecture"
-  options:
-    - label: "MVVM + CommunityToolkit (Recommended)"
-      description: "Modern MVVM with source generators, best for maintainable apps"
-    - label: "Code-behind (Simple)"
-      description: "Direct event handlers, best for quick prototypes"
-    - label: "Prism Framework"
-      description: "Enterprise MVVM with modules, regions, and navigation"
-    - label: "No preference"
-      description: "I'll recommend based on your project complexity"
-```
-
-**Skill Mapping:**
-| Selection | Activate Skills | Delegate To |
-|-----------|-----------------|-------------|
-| MVVM + CommunityToolkit | `implementing-communitytoolkit-mvvm`, `structuring-wpf-projects` | `wpf-mvvm-expert` |
-| Code-behind | Basic WPF patterns only | - |
-| Prism | `make-wpf-project --prism` | - |
-| No preference | Analyze complexity, then recommend | - |
-
-### Step 3: Complexity Level
-```
-AskUserQuestion:
-  question: "Select your preferred complexity level"
-  header: "Complexity"
-  options:
-    - label: "Simple & Quick"
-      description: "Standard controls, basic bindings, quick results"
-    - label: "Balanced"
-      description: "CustomControls, proper MVVM, good maintainability"
-    - label: "Advanced / High-Performance"
-      description: "DrawingContext, virtualization, optimized rendering"
-```
-
-**Skill Mapping:**
-| Selection | Activate Skills | Agents |
-|-----------|-----------------|--------|
-| Simple | Basic WPF, simple bindings | - |
-| Balanced | `authoring-wpf-controls`, `customizing-controltemplate` | `wpf-control-designer` |
-| Advanced | `rendering-with-drawingcontext`, `virtualizing-wpf-ui`, `rendering-wpf-high-performance` | `wpf-performance-optimizer` |
-
-### Step 4: Feature Areas (Multi-Select)
-```
-AskUserQuestion:
-  question: "Select all feature areas you need"
-  header: "Features"
-  multiSelect: true
-  options:
-    - label: "UI/Controls"
-      description: "CustomControl, UserControl, ControlTemplate"
-    - label: "Data Binding/Validation"
-      description: "Complex bindings, validation, converters"
-    - label: "Rendering/Graphics"
-      description: "Drawing, shapes, visual effects"
-    - label: "Animation/Media"
-      description: "Storyboards, transitions, media playback"
-```
-
-**Skill & Agent Mapping:**
-| Selection | Skills | Recommended Agent |
-|-----------|--------|-------------------|
-| UI/Controls | `authoring-wpf-controls`, `developing-wpf-customcontrols`, `understanding-wpf-content-model` | `wpf-control-designer` |
-| Data Binding | `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm` | `wpf-data-binding-expert` |
-| Rendering/Graphics | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `implementing-2d-graphics` | `wpf-performance-optimizer` |
-| Animation/Media | `creating-wpf-animations`, `integrating-wpf-media` | `wpf-xaml-designer` |
+For full path details (A-2~A-7, B-2~B-5, C-2~C-5, D-2~D-4), follow the same specification as `wpf-architect.md`.
 
 ---
 
-## Interview Summary Template
+## Interview Summary Templates
 
-After completing interview, summarize:
-
-```markdown
-## 📋 Requirements Summary
-
-### Task: [Task Type]
-### Architecture: [Pattern]
-### Complexity: [Level]
-### Feature Areas: [Selected areas]
-
-### Recommended Approach:
-- **Skills to activate**: [list]
-- **Agents to delegate**: [list]
-- **Commands to use**: [if applicable]
-
-### Next Steps:
-1. [First action]
-2. [Second action]
-...
-```
+Use the same summary templates as `wpf-architect.md` (Path A/B/C/D summaries).
 
 ---
 

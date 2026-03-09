@@ -344,3 +344,5 @@ public partial class UserViewModel : ObservableValidator
 | DataAnnotations usage | ObservableValidator (CommunityToolkit) |
 | Async validation | INotifyDataErrorInfo |
 | Legacy compatibility | IDataErrorInfo |
+| Complex business rules | FluentValidation (`validating-with-fluentvalidation` skill) |
+| Service layer errors | ErrorOr (`handling-errors-with-erroror` skill) |

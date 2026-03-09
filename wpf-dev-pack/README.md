@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.3.10-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-10.0+-purple.svg)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**57 Skills** · **11 Specialized Agents** · **5 Commands** · **1 MCP Server**
+**62 Skills** · **11 Specialized Agents** · **5 Commands** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -34,7 +34,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **57 Skills** covering all WPF aspects
+- **62 Skills** covering all WPF aspects
 - **5 Commands** for instant scaffolding
 - **Best practices** built-in
 
@@ -96,9 +96,12 @@ claude plugin update wpf-dev-pack@dotnet-claude-plugins
 
 | Requirement | Version | Notes |
 |-------------|---------|-------|
-| .NET SDK | 10.0+ | For hooks execution |
+| .NET SDK | **10.0+** | Required for file-based app hooks |
 | Claude Code | Latest | - |
 | uv | Latest | For Serena MCP |
+
+> **Target Framework vs SDK**: .NET 10 SDK is required to **run wpf-dev-pack** (hooks use file-based apps).
+> Generated WPF projects can **target .NET 8+** — install the corresponding SDK alongside .NET 10 if needed.
 
 ### Required MCP Dependencies
 
@@ -186,50 +189,48 @@ wpf-dev-pack requires the following MCP servers for full functionality:
 
 ## 🎯 Requirements Interview System
 
-When you invoke `wpf-architect`, an **intelligent 4-step interview** helps identify your exact needs:
+When you invoke `wpf-architect`, an **adaptive path-based interview** identifies your exact needs:
 
 ### How It Works
 
 ```
-Step 1: Task Type
-   └─→ New project / Analyze existing / Implement feature / Debug
-
-Step 2: Architecture Pattern
-   └─→ MVVM + CommunityToolkit / Code-behind / Prism / Auto-recommend
-
-Step 3: Complexity Level
-   └─→ Simple (quick) / Balanced (maintainable) / Advanced (high-performance)
-
-Step 4: Feature Areas (Multi-Select)
-   └─→ UI/Controls, Data Binding, Rendering, Animation
+Step 1: Task Type Selection
+   ├─→ Path A: Create new project (7 steps)
+   ├─→ Path B: Analyze/improve existing (5 steps)
+   ├─→ Path C: Implement feature (5 steps)
+   └─→ Path D: Debug/fix (4 steps)
 ```
 
-### Benefits
+Each path asks targeted questions with **keyword analysis** on free-input steps to auto-configure subsequent defaults.
 
-| Scenario | Without Interview | With Interview |
-|----------|-------------------|----------------|
-| "Build me a WPF app" | Generic MVVM setup | Asks MVVM preference, complexity, features |
-| "I have performance issues" | General optimization tips | Asks specific area (rendering/memory/UI) |
-| "Create a control" | CustomControl template | Asks simple UserControl or advanced CustomControl |
+### Interview Paths
 
-### Example Flow
+| Path | Task Type | Steps | Focus |
+|------|-----------|:-----:|-------|
+| **A** | Create new project | 7 | Concept → Architecture → Scale → Complexity → Libraries → Feature areas |
+| **B** | Analyze/improve | 5 | Goal → Analysis mode → Scope → Output format |
+| **C** | Implement feature | 5 | Description → Approach → Libraries → Feature areas |
+| **D** | Debug/fix | 4 | Symptoms → Problem type → Problem area |
+
+### Example Flow (Path A)
 
 ```
 User: "I want to build a chart app with WPF"
 
-wpf-architect: [Step 1] What task can I help you with?
-   → User selects: "Create new WPF project"
+wpf-architect: [A-1] What kind of app? Describe the concept.
+   → User: "Real-time stock chart dashboard"
+   (Keywords detected: "chart", "real-time" → LiveCharts2, performance defaults)
 
-wpf-architect: [Step 2] Which architecture pattern would you like to use?
+wpf-architect: [A-2] Architecture pattern?
    → User selects: "MVVM + CommunityToolkit"
 
-wpf-architect: [Step 3] Select your preferred complexity level
-   → User selects: "Advanced / High-Performance" (for chart rendering)
+wpf-architect: [A-3] Project scale?
+   → User selects: "Medium (5-15 Views)"
 
-wpf-architect: [Step 4] Select all feature areas you need
-   → User selects: "Rendering/Graphics", "Data Binding/Validation"
+wpf-architect: [A-5] 3rd-party libraries?
+   → Auto-suggested: LiveCharts2 ✓, WPF-UI (optional)
 
-Result: Activates DrawingContext skills + wpf-performance-optimizer
+Result: Activates LiveCharts2 + DrawingContext skills + wpf-performance-optimizer
 ```
 
 ---
@@ -436,6 +437,19 @@ Some skills activate without notification:
 </details>
 
 <details>
+<summary><b>📦 3rd Party Libraries (5 skills) — NEW in v1.4.0</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `integrating-wpfui-fluent` | WPF-UI (Wpf.Ui) Fluent Design integration |
+| `integrating-livecharts2` | LiveCharts2 charting library |
+| `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo bridge |
+| `handling-errors-with-erroror` | ErrorOr result pattern for service layer |
+| `integrating-nodify` | Nodify node-based editor control |
+
+</details>
+
+<details>
 <summary><b>🔷 .NET Common (12 skills)</b></summary>
 
 | Skill | Description |
@@ -480,7 +494,7 @@ wpf-dev-pack/
 │   ├── make-wpf-converter/
 │   ├── make-wpf-behavior/
 │   └── make-wpf-usercontrol/
-├── 📁 skills/                 # 57 Skills
+├── 📁 skills/                 # 62 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
 ├── 📄 README.md
