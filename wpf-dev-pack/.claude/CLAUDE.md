@@ -8,8 +8,9 @@ Automatically activates relevant skills when WPF/C#/.NET keywords are detected.
 
 ### Version Selection Rules
 
-1. **User specifies version** → Use that version with corresponding C# version
-2. **No specification** → Use **latest stable .NET** (currently .NET 10)
+1. **Minimum supported version**: **.NET 8** (C# 12)
+2. **User specifies version** → Use that version with corresponding C# version
+3. **No specification** → Use **latest stable .NET** (currently .NET 10)
 
 ### .NET ↔ C# Version Mapping
 
@@ -58,18 +59,16 @@ RULE 5: wpf-architect MUST conduct Requirements Interview before analysis
 
 ## Requirements Interview System
 
-When `wpf-architect` or `wpf-architect-low` is invoked, conduct a **4-step interview** using AskUserQuestion:
+When `wpf-architect` or `wpf-architect-low` is invoked, conduct an **adaptive path-based interview** using AskUserQuestion:
 
-| Step | Question | Routing |
-|------|----------|---------|
-| 1 | Task Type | Routes to appropriate workflow |
-| 2 | Architecture Pattern | Selects MVVM/Code-behind/Prism |
-| 3 | Complexity Level | Simple → Advanced |
-| 4 | Feature Areas | Multi-select: UI, Binding, Rendering, Animation |
+| Path | Task Type | Steps | Focus |
+|------|-----------|-------|-------|
+| **A** | Create new project | 7 | 컨셉 → 아키텍처 → 규모 → 복잡도 → 라이브러리 → 기능 영역 |
+| **B** | Analyze/improve | 5 | 분석 목표 → 분석 모드 → 범위 → 출력 형식 |
+| **C** | Implement feature | 5 | 기능 설명 → 구현 방식 → 라이브러리 → 기능 영역 |
+| **D** | Debug/fix | 4 | 문제 증상 → 문제 유형 → 문제 영역 |
 
-**Skip Rules:**
-- "특정 기능 구현" → Skip Step 2 (architecture already exists)
-- "문제 해결/디버깅" → Skip to Step 4 directly
+**Keyword Analysis**: 자유 입력 단계(A-2, B-2, C-2, D-2)에서 키워드를 감지하여 후속 단계 기본값 자동 설정.
 
 See `agents/wpf-architect.md` for full interview specification.
 

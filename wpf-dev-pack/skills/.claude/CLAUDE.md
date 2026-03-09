@@ -31,6 +31,11 @@
 | `validation` | `implementing-wpf-validation` |
 | `binding`, `multibinding` | `advanced-data-binding` |
 | `themeinfo`, `assemblyinfo` | `configuring-wpf-themeinfo` |
+| `wpf-ui`, `wpfui`, `fluentwindow`, `navigationview` | `integrating-wpfui-fluent` |
+| `livecharts`, `cartesianchart`, `piechart`, `iseries` | `integrating-livecharts2` |
+| `fluentvalidation`, `abstractvalidator`, `rulefor` | `validating-with-fluentvalidation` |
+| `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
+| `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
 
 ### .NET Keywords
 
@@ -67,4 +72,5 @@
 | **Styling & Resources** | `managing-styles-resourcedictionary`, `creating-wpf-brushes`, `creating-wpf-vector-icons` |
 | **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `migrating-wpf-to-dotnet` |
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
+| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify` |
 | **.NET Common** | `handling-async-operations`, `processing-parallel-tasks`, `optimizing-memory-allocation`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `using-generated-regex` |

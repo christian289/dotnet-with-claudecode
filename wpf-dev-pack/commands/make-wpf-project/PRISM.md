@@ -47,7 +47,7 @@ MyApp/
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Prism.DryIoc" Version="9.0.*" />
+    <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
   </ItemGroup>
 
   <ItemGroup>
@@ -260,10 +260,10 @@ dotnet add MyApp reference MyApp.Modules.Home
 dotnet add MyApp.Modules.Home reference MyApp.Core
 
 # Add packages
-dotnet add MyApp package Prism.DryIoc
-dotnet add MyApp.Core package Prism.Core
-dotnet add MyApp.Modules.Home package Prism.DryIoc
-dotnet add MyApp.Modules.Home package Prism.Wpf
+dotnet add MyApp package Prism.DryIoc --version 9.0.537
+dotnet add MyApp.Core package Prism.Core --version 9.0.537
+dotnet add MyApp.Modules.Home package Prism.DryIoc --version 9.0.537
+dotnet add MyApp.Modules.Home package Prism.Wpf --version 9.0.537
 ```
 
 ---
@@ -279,3 +279,121 @@ dotnet add MyApp.Modules.Home package Prism.Wpf
 | Dialog | Manual implementation | `IDialogService` |
 | Module | Not supported | `IModule` |
 | Best for | Small-Medium apps | Medium-Large apps |
+
+---
+
+## License Notice (Prism 9+)
+
+> ⚠️ Prism 9부터 **듀얼 라이선스** 모델 적용
+
+| License | 대상 | 비용 |
+|---------|------|------|
+| **Community** (무료) | 연매출 100만 USD 미만 또는 외부 투자 300만 USD 미만 | 무료 |
+| **Commercial Plus** | 대규모 조직, 상용 지원 | $499/개발자/년 |
+
+---
+
+## IDialogService (Prism 9)
+
+### Dialog ViewModel
+
+```csharp
+namespace MyApp.Modules.Home.ViewModels;
+
+public class ConfirmDialogViewModel : BindableBase, IDialogAware
+{
+    public string Title => "Confirm";
+
+    // Prism 9: DialogCloseListener (속성)
+    // Prism 9: DialogCloseListener (property)
+    public DialogCloseListener RequestClose { get; }
+
+    public DelegateCommand ConfirmCommand => new(() =>
+    {
+        RequestClose.Invoke(new DialogResult(ButtonResult.OK));
+    });
+
+    public DelegateCommand CancelCommand => new(() =>
+    {
+        RequestClose.Invoke(new DialogResult(ButtonResult.Cancel));
+    });
+
+    public bool CanCloseDialog() => true;
+
+    public void OnDialogClosed() { }
+
+    public void OnDialogOpened(IDialogParameters parameters)
+    {
+        // 파라미터 수신
+        // Receive parameters
+    }
+}
+```
+
+### Dialog 등록 (Module)
+
+```csharp
+public void RegisterTypes(IContainerRegistry containerRegistry)
+{
+    containerRegistry.RegisterDialog<ConfirmDialogView, ConfirmDialogViewModel>();
+}
+```
+
+### Dialog 호출 (ViewModel)
+
+```csharp
+private readonly IDialogService _dialogService;
+
+private void ShowConfirm()
+{
+    _dialogService.ShowDialog("ConfirmDialogView", new DialogParameters(), result =>
+    {
+        if (result.Result == ButtonResult.OK)
+        {
+            // 확인 처리
+            // Handle confirmation
+        }
+    });
+}
+```
+
+---
+
+## IEventAggregator
+
+모듈 간 느슨한 결합 통신.
+
+### Event 정의 (Core)
+
+```csharp
+namespace MyApp.Core.Events;
+
+public class UserSelectedEvent : PubSubEvent<int> { }
+```
+
+### Event 발행
+
+```csharp
+private readonly IEventAggregator _eventAggregator;
+
+private void SelectUser(int userId)
+{
+    _eventAggregator.GetEvent<UserSelectedEvent>().Publish(userId);
+}
+```
+
+### Event 구독
+
+```csharp
+public HomeViewModel(IEventAggregator eventAggregator)
+{
+    eventAggregator.GetEvent<UserSelectedEvent>()
+        .Subscribe(OnUserSelected, ThreadOption.UIThread);
+}
+
+private void OnUserSelected(int userId)
+{
+    // 사용자 선택 처리
+    // Handle user selection
+}
+```
