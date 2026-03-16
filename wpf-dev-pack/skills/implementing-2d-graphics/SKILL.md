@@ -1,5 +1,4 @@
 ---
-name: implementing-2d-graphics
 description: "Implements WPF 2D graphics using Shape, Geometry, Brush, and Pen classes. Use when building vector graphic UIs, icons, charts, or diagrams in WPF applications."
 ---
 

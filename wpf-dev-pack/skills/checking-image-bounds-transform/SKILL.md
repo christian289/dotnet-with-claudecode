@@ -1,5 +1,4 @@
 ---
-name: checking-image-bounds-transform
 description: "Checks and clamps mouse coordinates within transformed image bounds in WPF. Use when implementing measurement tools or annotations that should only work inside Pan/Zoom/Rotate transformed images."
 ---
 

@@ -1,5 +1,4 @@
 ---
-name: integrating-nodify
 description: "Integrates Nodify library for building node-based editors in WPF with MVVM. Use when creating visual scripting, workflow editors, state machines, or any node graph UI with NodifyEditor, Node, Connector, and Connection controls."
 ---
 

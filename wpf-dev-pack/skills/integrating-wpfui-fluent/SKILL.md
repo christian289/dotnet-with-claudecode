@@ -1,5 +1,4 @@
 ---
-name: integrating-wpfui-fluent
 description: "Integrates WPF-UI (Wpf.Ui) library for Fluent Design in WPF applications. Use when building modern UI with FluentWindow, NavigationView, SnackbarService, or theme management."
 ---
 

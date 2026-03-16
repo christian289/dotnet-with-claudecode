@@ -36,6 +36,11 @@
 | `fluentvalidation`, `abstractvalidator`, `rulefor` | `validating-with-fluentvalidation` |
 | `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
+| `프로젝트 생성`, `scaffold`, `새 프로젝트` | `make-wpf-project` |
+| `customcontrol 생성`, `컨트롤 생성` | `make-wpf-custom-control` |
+| `usercontrol 생성`, `유저컨트롤` | `make-wpf-usercontrol` |
+| `converter 생성`, `컨버터` | `make-wpf-converter` |
+| `behavior 생성`, `비헤이비어` | `make-wpf-behavior` |
 
 ### .NET Keywords
 
@@ -74,3 +79,4 @@
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
 | **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify` |
 | **.NET Common** | `handling-async-operations`, `processing-parallel-tasks`, `optimizing-memory-allocation`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `using-generated-regex` |
+| **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |

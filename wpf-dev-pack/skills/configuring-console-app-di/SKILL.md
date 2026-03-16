@@ -1,5 +1,4 @@
 ---
-name: configuring-console-app-di
 description: "Implements dependency injection using GenericHost in .NET Console Applications. Use when building console applications that require DI, hosted services, or background tasks."
 ---
 

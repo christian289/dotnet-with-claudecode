@@ -1,5 +1,4 @@
 ---
-name: optimizing-io-operations
 description: "Optimizes standard I/O and file operations for high-performance data processing in .NET. Use when building high-throughput file processing or competitive programming solutions."
 ---
 

@@ -1,5 +1,4 @@
 ---
-name: managing-wpf-application-lifecycle
 description: Manages WPF Application lifecycle including Startup, Exit, SessionEnding events and single instance detection. Use when handling app initialization, shutdown, or preventing multiple instances.
 ---
 

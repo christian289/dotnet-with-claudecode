@@ -1,5 +1,4 @@
 ---
-name: managing-wpf-collectionview-mvvm
 description: "Encapsulates CollectionView in Service Layer to maintain MVVM principles in WPF. Use when implementing filtering, sorting, or grouping while keeping ViewModels free of WPF dependencies."
 ---
 

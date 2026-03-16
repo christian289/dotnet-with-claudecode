@@ -1,5 +1,4 @@
 ---
-name: using-wpf-behaviors-triggers
 description: "Implements XAML behaviors and triggers using Microsoft.Xaml.Behaviors.Wpf. Use when adding interactivity to XAML without code-behind, implementing EventToCommand patterns, or creating reusable behaviors."
 ---
 

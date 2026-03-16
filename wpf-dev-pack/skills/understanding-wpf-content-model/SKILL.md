@@ -1,5 +1,4 @@
 ---
-name: understanding-wpf-content-model
 description: "Explains WPF content model hierarchy including ContentControl, ItemsControl, and Headered variants. Use when selecting base classes for custom controls or understanding content/items properties."
 ---
 

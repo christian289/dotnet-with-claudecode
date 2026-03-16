@@ -1,5 +1,4 @@
 ---
-name: configuring-dependency-injection
 description: "Configures Dependency Injection using Microsoft.Extensions.DependencyInjection and GenericHost. Use when setting up DI container, registering services, or implementing IoC patterns in .NET projects."
 ---
 

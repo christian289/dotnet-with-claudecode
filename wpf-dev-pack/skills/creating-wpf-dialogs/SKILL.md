@@ -1,5 +1,4 @@
 ---
-name: creating-wpf-dialogs
 description: Creates WPF dialog windows including modal dialogs, MessageBox, and common dialogs. Use when implementing confirmation prompts, settings windows, or file/folder pickers.
 ---
 

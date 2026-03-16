@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**62 Skills** · **11 Specialized Agents** · **5 Commands** · **1 MCP Server**
+**76 Skills** · **11 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -34,8 +34,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **62 Skills** covering all WPF aspects
-- **5 Commands** for instant scaffolding
+- **76 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -468,6 +467,19 @@ Some skills activate without notification:
 
 </details>
 
+<details>
+<summary><b>🏗️ Scaffolding (5 skills) — migrated from Commands</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `make-wpf-project` | WPF project scaffolding with MVVM/DI |
+| `make-wpf-custom-control` | CustomControl generation |
+| `make-wpf-usercontrol` | UserControl generation |
+| `make-wpf-converter` | IValueConverter generation |
+| `make-wpf-behavior` | Behavior<T> generation |
+
+</details>
+
 ---
 
 ## 📁 Plugin Structure
@@ -488,13 +500,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 commands/               # 5 User commands
-│   ├── make-wpf-custom-control/
-│   ├── make-wpf-project/
-│   ├── make-wpf-converter/
-│   ├── make-wpf-behavior/
-│   └── make-wpf-usercontrol/
-├── 📁 skills/                 # 62 Skills
+├── 📁 skills/                 # 76 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
 ├── 📄 README.md

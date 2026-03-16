@@ -1,5 +1,4 @@
 ---
-name: implementing-pubsub-pattern
 description: "Implements Pub-Sub patterns using System.Reactive and Channels for event-based communication in .NET. Use when building reactive applications or decoupled event-driven architectures."
 ---
 

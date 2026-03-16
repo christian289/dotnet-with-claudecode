@@ -1,5 +1,4 @@
 ---
-name: using-converter-markup-extension
 description: Implements IValueConverter as MarkupExtension for direct XAML usage without StaticResource. Use when creating converters to eliminate resource dictionary declarations.
 ---
 

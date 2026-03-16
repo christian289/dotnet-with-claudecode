@@ -1,5 +1,4 @@
 ---
-name: implementing-repository-pattern
 description: "Implements the Repository pattern with Service Layer for data access abstraction in .NET. Use when separating data access logic from business logic or building testable data layers."
 ---
 

@@ -19,6 +19,23 @@
 
 ## Skills 업데이트 이력
 
+### 2026-03-16: wpf-dev-pack - Command를 Skill로 마이그레이션
+
+**목적:**
+- Claude Code 2.1.3에서 command가 agent skill 2.0으로 통합됨에 따른 마이그레이션
+
+**변경 사항:**
+- 5개 command를 skills/로 이동: make-wpf-project, make-wpf-custom-control, make-wpf-usercontrol, make-wpf-converter, make-wpf-behavior
+- commands/ 디렉토리 삭제
+- skill 카운트: 71 → 76 (실제 카운트 기준)
+- 모든 SKILL.md frontmatter에서 `name` property 제거
+
+**호출 방식 변경 없음:**
+- 기존: `/wpf-dev-pack:make-wpf-project MyApp`
+- 이후: `/wpf-dev-pack:make-wpf-project MyApp` (동일)
+
+---
+
 ### 2026-01-27: wpf-dev-pack - Requirements Interview 시스템 추가
 
 **목적:**

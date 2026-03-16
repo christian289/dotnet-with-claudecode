@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**62개 스킬** · **11개 전문 에이전트** · **5개 명령어** · **1개 MCP 서버**
+**76개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -34,8 +34,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **62개 스킬**
-- 즉시 스캐폴딩을 위한 **5개 명령어**
+- WPF 전 영역을 다루는 **76개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -468,6 +467,19 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 </details>
 
+<details>
+<summary><b>🏗️ 스캐폴딩 (5개 스킬) — Commands에서 마이그레이션</b></summary>
+
+| 스킬 | 설명 |
+|------|------|
+| `make-wpf-project` | MVVM/DI 포함 WPF 프로젝트 스캐폴딩 |
+| `make-wpf-custom-control` | CustomControl 생성 |
+| `make-wpf-usercontrol` | UserControl 생성 |
+| `make-wpf-converter` | IValueConverter 생성 |
+| `make-wpf-behavior` | Behavior<T> 생성 |
+
+</details>
+
 ---
 
 ## 📁 플러그인 구조
@@ -488,13 +500,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 commands/               # 5개 사용자 명령어
-│   ├── make-wpf-custom-control/
-│   ├── make-wpf-project/
-│   ├── make-wpf-converter/
-│   ├── make-wpf-behavior/
-│   └── make-wpf-usercontrol/
-├── 📁 skills/                 # 62개 스킬
+├── 📁 skills/                 # 76개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (MicrosoftDocs만)
 ├── 📄 README.md

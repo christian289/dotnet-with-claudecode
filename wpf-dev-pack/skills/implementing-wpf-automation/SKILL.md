@@ -1,5 +1,4 @@
 ---
-name: implementing-wpf-automation
 description: Implements WPF UI Automation for accessibility using AutomationPeer and AutomationProperties. Use when building accessible applications or enabling screen reader support.
 ---
 

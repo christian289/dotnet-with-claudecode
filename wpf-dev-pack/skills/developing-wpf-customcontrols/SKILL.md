@@ -1,5 +1,4 @@
 ---
-name: developing-wpf-customcontrols
 description: "Develops WPF CustomControls using Parts and States Model best practices. Use when creating templatable controls with TemplatePart, TemplateVisualState, OnApplyTemplate, or VisualStateManager."
 ---
 

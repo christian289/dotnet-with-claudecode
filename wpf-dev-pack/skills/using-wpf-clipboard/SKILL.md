@@ -1,5 +1,4 @@
 ---
-name: using-wpf-clipboard
 description: Uses WPF Clipboard for copy/paste operations with text, images, and custom data formats. Use when implementing copy/paste functionality or inter-application data transfer.
 ---
 

@@ -1,5 +1,4 @@
 ---
-name: handling-wpf-input-commands
 description: Implements WPF input handling with RoutedCommand, ICommand, CommandBinding, and InputBinding patterns. Use when creating keyboard shortcuts, menu commands, or custom command implementations.
 ---
 

@@ -1,5 +1,4 @@
 ---
-name: validating-with-fluentvalidation
 description: "Implements FluentValidation with WPF INotifyDataErrorInfo bridge for form validation. Use when building complex validation rules with RuleFor, AbstractValidator, or integrating FluentValidation with CommunityToolkit.Mvvm."
 ---
 

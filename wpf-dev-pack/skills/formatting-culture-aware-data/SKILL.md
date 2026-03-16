@@ -1,5 +1,4 @@
 ---
-name: formatting-culture-aware-data
 description: "Formats dates, numbers, and currency with culture awareness in WPF. Use when displaying localized data formats or building international applications."
 ---
 

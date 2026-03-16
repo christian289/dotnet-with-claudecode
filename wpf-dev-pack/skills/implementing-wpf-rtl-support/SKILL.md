@@ -1,5 +1,4 @@
 ---
-name: implementing-wpf-rtl-support
 description: "Implements Right-to-Left (RTL) layout support in WPF using FlowDirection. Use when building applications for Arabic, Hebrew, Persian, or other RTL languages."
 ---
 

@@ -1,5 +1,4 @@
 ---
-name: handling-async-operations
 description: "Implements asynchronous programming patterns using Task, ValueTask, and ConfigureAwait in .NET. Use when building non-blocking I/O operations or improving application responsiveness."
 ---
 

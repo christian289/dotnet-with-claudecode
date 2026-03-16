@@ -1,5 +1,4 @@
 ---
-name: creating-wpf-animations
 description: "Creates WPF animations using Storyboard, Timeline, and EasingFunction patterns. Use when implementing UI transitions, state change visualizations, or interactive feedback effects."
 ---
 

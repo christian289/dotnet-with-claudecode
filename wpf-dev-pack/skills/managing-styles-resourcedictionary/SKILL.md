@@ -1,5 +1,4 @@
 ---
-name: managing-styles-resourcedictionary
 description: "Manages WPF Style definitions and ResourceDictionary patterns including BasedOn inheritance and resource merging. Use when building theme systems, organizing resources, or choosing between StaticResource and DynamicResource."
 ---
 

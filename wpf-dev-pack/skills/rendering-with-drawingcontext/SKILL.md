@@ -1,5 +1,4 @@
 ---
-name: rendering-with-drawingcontext
 description: "Renders high-performance graphics using WPF DrawingContext for 10-50x improvement over Shape. Use when drawing large numbers of shapes or optimizing rendering performance."
 ---
 

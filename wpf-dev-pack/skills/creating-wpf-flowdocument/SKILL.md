@@ -1,5 +1,4 @@
 ---
-name: creating-wpf-flowdocument
 description: Creates WPF FlowDocument for rich text display with Paragraph, Table, List elements. Use when building document viewers, rich text editors, or printable reports.
 ---
 

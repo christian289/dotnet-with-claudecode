@@ -1,5 +1,4 @@
 ---
-name: threading-wpf-dispatcher
 description: Explains WPF Dispatcher priority system and threading patterns. Use when implementing background operations, maintaining UI responsiveness, or understanding task scheduling order.
 ---
 

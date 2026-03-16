@@ -1,5 +1,4 @@
 ---
-name: localizing-wpf-with-baml
 description: "Localizes WPF applications using BAML localization with x:Uid attributes and LocBaml tool. Use when building enterprise multi-language applications requiring satellite assemblies."
 ---
 

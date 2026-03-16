@@ -1,5 +1,4 @@
 ---
-name: advanced-data-binding
 description: "Implements advanced WPF data binding patterns including MultiBinding, PriorityBinding, and complex converters. Use when combining multiple values, fallback values, or implementing complex binding scenarios."
 ---
 

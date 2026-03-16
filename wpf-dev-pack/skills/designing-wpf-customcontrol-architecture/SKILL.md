@@ -1,5 +1,4 @@
 ---
-name: designing-wpf-customcontrol-architecture
 description: "Designs stand-alone control styles using WPF CustomControl and ResourceDictionary. Use when creating reusable custom controls or organizing control themes in Generic.xaml."
 ---
 

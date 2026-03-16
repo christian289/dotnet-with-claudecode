@@ -1,5 +1,4 @@
 ---
-name: integrating-wpf-media
 description: Integrates multimedia content in WPF including MediaElement video/audio playback, Image control display, and SoundPlayerAction effects. Use when building media players, galleries, or multimedia UIs.
 ---
 

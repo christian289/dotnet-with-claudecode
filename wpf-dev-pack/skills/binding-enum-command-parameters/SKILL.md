@@ -1,5 +1,4 @@
 ---
-name: binding-enum-command-parameters
 description: "Binds enum values to WPF CommandParameter using x:Static markup extension. Use when passing enum types to commands or avoiding string-based command parameter errors."
 ---
 

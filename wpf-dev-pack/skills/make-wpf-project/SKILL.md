@@ -1,5 +1,4 @@
 ---
-name: make-wpf-project
 description: "Scaffolds a complete WPF project structure with MVVM, DI, and best practices. Usage: /wpf-dev-pack:make-wpf-project <ProjectName> [--minimal|--full|--prism]"
 ---
 

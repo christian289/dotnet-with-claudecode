@@ -1,5 +1,4 @@
 ---
-name: make-wpf-converter
 description: "Generates WPF IValueConverter or IMultiValueConverter classes with MarkupExtension pattern. Usage: /wpf-dev-pack:make-wpf-converter <ConverterName> [multi]"
 ---
 

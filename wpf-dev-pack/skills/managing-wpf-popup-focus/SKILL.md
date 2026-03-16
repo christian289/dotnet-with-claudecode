@@ -1,5 +1,4 @@
 ---
-name: managing-wpf-popup-focus
 description: "Manages focus behavior for WPF Popup controls using PreviewMouseDown events. Use when Popup loses focus unexpectedly or needs to stay open during user interaction."
 ---
 

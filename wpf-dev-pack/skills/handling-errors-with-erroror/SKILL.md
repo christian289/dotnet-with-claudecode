@@ -1,5 +1,4 @@
 ---
-name: handling-errors-with-erroror
 description: "Implements ErrorOr result pattern for service layer error handling in WPF MVVM. Use when returning errors from services instead of throwing exceptions, or integrating ErrorOr with FluentValidation and CommunityToolkit.Mvvm."
 ---
 

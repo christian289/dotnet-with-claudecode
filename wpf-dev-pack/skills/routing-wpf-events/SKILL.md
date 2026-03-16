@@ -1,5 +1,4 @@
 ---
-name: routing-wpf-events
 description: Implements WPF routed events including Bubbling, Tunneling, and Direct strategies. Use when creating custom routed events, handling event propagation, or understanding Preview events.
 ---
 

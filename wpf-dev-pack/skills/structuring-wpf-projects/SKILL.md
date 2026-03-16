@@ -1,5 +1,4 @@
 ---
-name: structuring-wpf-projects
 description: "Designs WPF solution and project structures based on Clean Architecture. Use when creating new WPF solutions, organizing layers, or establishing project naming conventions."
 ---
 

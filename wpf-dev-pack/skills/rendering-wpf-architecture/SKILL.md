@@ -1,5 +1,4 @@
 ---
-name: rendering-wpf-architecture
 description: Explains WPF rendering pipeline (Measure/Arrange/Render passes) and hardware acceleration tiers. Use when debugging layout issues, optimizing render performance, or understanding why software rendering occurs.
 ---
 

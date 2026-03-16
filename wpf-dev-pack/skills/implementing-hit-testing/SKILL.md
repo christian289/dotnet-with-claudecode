@@ -1,5 +1,4 @@
 ---
-name: implementing-hit-testing
 description: "Enables mouse event reception for WPF FrameworkElement using DrawingContext by drawing transparent backgrounds. Use when custom-drawn elements don't receive mouse events."
 ---
 

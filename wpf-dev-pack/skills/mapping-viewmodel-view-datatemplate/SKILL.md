@@ -1,5 +1,4 @@
 ---
-name: mapping-viewmodel-view-datatemplate
 description: "Implements automatic ViewModel-View mapping using DataTemplate for navigation scenarios. Use when building dynamic content display or implementing navigation between views in WPF."
 ---
 

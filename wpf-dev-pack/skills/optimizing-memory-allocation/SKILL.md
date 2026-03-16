@@ -1,5 +1,4 @@
 ---
-name: optimizing-memory-allocation
 description: "Implements Zero Allocation patterns using Span, ArrayPool, and ObjectPool for memory efficiency in .NET. Use when reducing GC pressure or optimizing high-performance memory operations."
 ---
 

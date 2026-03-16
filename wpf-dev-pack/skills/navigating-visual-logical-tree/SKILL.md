@@ -1,5 +1,4 @@
 ---
-name: navigating-visual-logical-tree
 description: Navigates WPF Visual Tree and Logical Tree with VisualTreeHelper and LogicalTreeHelper patterns. Use when traversing elements, accessing template internals, or understanding event routing.
 ---
 

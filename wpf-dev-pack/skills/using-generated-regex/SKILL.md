@@ -1,5 +1,4 @@
 ---
-name: using-generated-regex
 description: Implements compile-time regex using GeneratedRegexAttribute Source Generator. Use when working with Regex patterns for better performance and AOT compatibility.
 ---
 

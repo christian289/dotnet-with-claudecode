@@ -1,5 +1,4 @@
 ---
-name: implementing-wpf-validation
 description: "Implements WPF data validation using ValidationRule, IDataErrorInfo, and INotifyDataErrorInfo. Use when building forms, validating user input, or displaying validation errors in UI."
 ---
 

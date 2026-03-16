@@ -1,5 +1,4 @@
 ---
-name: make-wpf-behavior
 description: "Generates WPF Behavior<T> classes using Microsoft.Xaml.Behaviors.Wpf. Usage: /wpf-dev-pack:make-wpf-behavior <BehaviorName> <TargetType>"
 ---
 
