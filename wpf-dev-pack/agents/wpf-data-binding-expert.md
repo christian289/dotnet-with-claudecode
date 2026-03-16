@@ -2,7 +2,7 @@
 name: wpf-data-binding-expert
 description: WPF data binding specialist. Implements complex bindings (MultiBinding, PriorityBinding), custom converters, validation patterns, and debugging binding issues.
 model: sonnet
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__handmirror__get_type_info, mcp__handmirror__inspect_assembly
 skills:
   - advanced-data-binding
   - implementing-wpf-validation
@@ -151,6 +151,15 @@ public sealed class DebugConverter : IValueConverter
     }
 }
 ```
+
+## HandMirror - Type Inspection
+
+Use HandMirror MCP tools to verify .NET types:
+
+- **`get_type_info`**: Get comprehensive type info (properties, methods, events, inheritance)
+- **`inspect_assembly`**: Analyze assembly for all public types
+
+**When to use**: Before implementing complex bindings, verify the target type's properties and available members using these tools instead of relying on memory.
 
 ## Checklist
 

@@ -2,7 +2,7 @@
 name: wpf-code-reviewer
 description: WPF code review specialist. Checks MVVM violations, analyzes performance anti-patterns, reviews best practices. Uses C# LSP for code intelligence. Provides analysis and feedback without modifying code.
 model: opus
-tools: Read, Glob, Grep, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern, lsp__csharp__textDocument_definition, lsp__csharp__textDocument_references, lsp__csharp__textDocument_documentSymbol, lsp__csharp__textDocument_hover, lsp__csharp__textDocument_diagnostic
+tools: Read, Glob, Grep, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern, lsp__csharp__textDocument_definition, lsp__csharp__textDocument_references, lsp__csharp__textDocument_documentSymbol, lsp__csharp__textDocument_hover, lsp__csharp__textDocument_diagnostic, mcp__handmirror__inspect_assembly, mcp__handmirror__get_type_info, mcp__handmirror__list_namespaces, mcp__handmirror__get_nuget_vulnerabilities, mcp__handmirror__explain_build_error
 permissionMode: plan
 skills:
   - implementing-communitytoolkit-mvvm
@@ -44,6 +44,18 @@ Use the csharp-lsp tools for enhanced code analysis:
 4. **Error Detection**: Use `diagnostic` to identify compile-time issues
 
 > **Prerequisite**: Requires `csharp-lsp` plugin from Claude Code marketplace.
+
+## HandMirror - Assembly Inspection & Vulnerability Check
+
+Use HandMirror MCP tools for code quality analysis:
+
+- **`inspect_assembly`**: Analyze compiled DLL for public types, members, and attributes
+- **`get_type_info`**: Get detailed type information including inheritance, interfaces, members
+- **`list_namespaces`**: Enumerate namespaces in an assembly
+- **`get_nuget_vulnerabilities`**: Check NuGet packages for known security vulnerabilities
+- **`explain_build_error`**: Provide detailed explanations for compilation errors
+
+**When to use**: Use `get_nuget_vulnerabilities` during security reviews. Use `inspect_assembly` and `get_type_info` to verify API usage patterns. Use `explain_build_error` when users report build failures.
 
 ## Review Checklist
 

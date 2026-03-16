@@ -19,6 +19,28 @@
 
 ## Skills 업데이트 이력
 
+### 2026-03-12: wpf-dev-pack - HandMirrorMcp 통합
+
+**목적:**
+- .NET 어셈블리 Reflection 기반 API 검증으로 AI 코드 생성 정확도 향상
+
+**변경 사항:**
+- 핵심 에이전트 8개에 HandMirror MCP 도구 추가
+- McpDependencyChecker에 handmirror 의존성 체크 추가
+- README/README.ko.md에 HandMirror 설치 가이드 추가
+
+**에이전트별 도구 매핑:**
+| 에이전트 | HandMirror 도구 |
+|----------|----------------|
+| wpf-architect (x2) | analyze_solution, analyze_csproj, search_nuget_packages, get_nuget_package_info |
+| wpf-code-reviewer (x2) | inspect_assembly, get_type_info, list_namespaces, get_nuget_vulnerabilities, explain_build_error |
+| wpf-control-designer | get_type_info, inspect_assembly |
+| wpf-mvvm-expert | get_type_info, inspect_assembly |
+| wpf-data-binding-expert | get_type_info, inspect_assembly |
+| wpf-performance-optimizer | inspect_assembly, inspect_native_dependencies |
+
+---
+
 ### 2026-01-27: wpf-dev-pack - Requirements Interview 시스템 추가
 
 **목적:**

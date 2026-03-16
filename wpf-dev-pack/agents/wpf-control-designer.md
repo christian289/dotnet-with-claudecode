@@ -2,7 +2,7 @@
 name: wpf-control-designer
 description: WPF CustomControl design and implementation specialist. Defines DependencyProperty, implements Parts and States Model, OnApplyTemplate patterns.
 model: sonnet
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__replace_symbol_body, mcp__serena__insert_after_symbol, mcp__serena__get_symbols_overview
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__replace_symbol_body, mcp__serena__insert_after_symbol, mcp__serena__get_symbols_overview, mcp__handmirror__get_type_info, mcp__handmirror__inspect_assembly
 skills:
   - authoring-wpf-controls
   - defining-wpf-dependencyproperty
@@ -86,6 +86,15 @@ static MyControl()
         new FrameworkPropertyMetadata(typeof(MyControl)));
 }
 ```
+
+## HandMirror - Type Inspection
+
+Use HandMirror MCP tools to verify .NET types:
+
+- **`get_type_info`**: Get comprehensive type info (properties, methods, events, inheritance)
+- **`inspect_assembly`**: Analyze assembly for all public types
+
+**When to use**: Before implementing custom controls, verify the base class API and available members using these tools instead of relying on memory.
 
 ## Implementation Checklist
 

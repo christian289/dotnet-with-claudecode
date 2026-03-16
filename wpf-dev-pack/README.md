@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**62 Skills** · **11 Specialized Agents** · **5 Commands** · **1 MCP Server**
+**62 Skills** · **11 Specialized Agents** · **5 Commands** · **2 MCP Servers**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -47,6 +47,7 @@
 - **MicrosoftDocs** integration (included)
 - **Context7** for up-to-date docs (external)
 - **Semantic code analysis** with Serena (external)
+- **.NET assembly reflection** with HandMirror (external)
 
 </td>
 <td width="50%">
@@ -112,6 +113,7 @@ wpf-dev-pack requires the following MCP servers for full functionality:
 | **Context7** | Up-to-date library docs | Most agents |
 | **Sequential-thinking** | Step-by-step analysis | Opus-level agents |
 | **Serena** | Semantic code analysis | All agents |
+| **HandMirror** | .NET assembly reflection & NuGet inspection | Architecture & review agents |
 
 > **Note:** These are commonly used MCPs that you may already have installed.
 > wpf-dev-pack will check for their availability at runtime and warn if missing.
@@ -140,10 +142,25 @@ wpf-dev-pack requires the following MCP servers for full functionality:
     "serena": {
       "command": "uvx",
       "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
+    },
+    "handmirror": {
+      "command": "dotnet",
+      "args": ["run", "--project", "/path/to/HandMirrorMcp"],
+      "windows": {
+        "command": "dotnet",
+        "args": ["run", "--project", "C:/path/to/HandMirrorMcp"]
+      }
     }
   }
 }
 ```
+
+> **HandMirror 설치**: HandMirror는 소스에서 빌드가 필요합니다:
+> ```bash
+> git clone https://github.com/askmirror/HandMirrorMcp.git
+> cd HandMirrorMcp && dotnet build
+> ```
+> 이후 `--project` 경로를 클론한 디렉토리로 변경하세요.
 
 > **Why external?** These MCPs are commonly used across many plugins. Including them in wpf-dev-pack would cause duplication for users who already have them configured.
 
@@ -329,6 +346,7 @@ Some skills activate without notification:
 | **Context7** | Up-to-date library docs | Install separately |
 | **Sequential-thinking** | Step-by-step analysis | Install separately |
 | **Serena** | Semantic code analysis | Install separately |
+| **HandMirror** | .NET assembly reflection | Install separately |
 
 > See [Required MCP Dependencies](#required-mcp-dependencies) for installation instructions.
 
@@ -496,7 +514,7 @@ wpf-dev-pack/
 │   └── make-wpf-usercontrol/
 ├── 📁 skills/                 # 62 Skills
 ├── 📁 hooks/                  # Event hooks
-├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
+├── 📄 .mcp.json               # MCP config (MicrosoftDocs, HandMirror)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```

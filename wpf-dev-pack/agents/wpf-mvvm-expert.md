@@ -2,7 +2,7 @@
 name: wpf-mvvm-expert
 description: WPF MVVM pattern implementation expert. Implements ViewModel with CommunityToolkit.Mvvm, data binding, ICommand, CollectionView encapsulation.
 model: sonnet
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__rename_symbol
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__rename_symbol, mcp__handmirror__get_type_info, mcp__handmirror__inspect_assembly
 skills:
   - implementing-communitytoolkit-mvvm
   - managing-wpf-collectionview-mvvm
@@ -136,6 +136,15 @@ public partial class ShellViewModel : ObservableObject
     }
 }
 ```
+
+## HandMirror - Type Inspection
+
+Use HandMirror MCP tools to verify .NET types:
+
+- **`get_type_info`**: Get comprehensive type info (properties, methods, events, inheritance)
+- **`inspect_assembly`**: Analyze assembly for all public types
+
+**When to use**: Before implementing ViewModels or bindings, verify the base class API and available members using these tools instead of relying on memory.
 
 ## Implementation Checklist
 

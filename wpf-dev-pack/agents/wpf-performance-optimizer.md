@@ -2,7 +2,7 @@
 name: wpf-performance-optimizer
 description: WPF rendering and performance optimization specialist. Implements DrawingContext, DrawingVisual, VirtualizingStackPanel, Freezable patterns, memory optimization.
 model: sonnet
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__handmirror__inspect_assembly, mcp__handmirror__inspect_native_dependencies
 skills:
   - rendering-with-drawingcontext
   - rendering-with-drawingvisual
@@ -153,6 +153,15 @@ private void OnRendering(object sender, EventArgs e)
     // Called every frame (~60fps)
 }
 ```
+
+## HandMirror - Assembly & Native Analysis
+
+Use HandMirror MCP tools for performance analysis:
+
+- **`inspect_assembly`**: Analyze assembly for type count, complexity, and structure
+- **`inspect_native_dependencies`**: Identify P/Invoke and COM interop types that may affect performance
+
+**When to use**: Use `inspect_native_dependencies` when analyzing performance issues related to native interop. Use `inspect_assembly` to understand assembly complexity.
 
 ## Performance Checklist
 

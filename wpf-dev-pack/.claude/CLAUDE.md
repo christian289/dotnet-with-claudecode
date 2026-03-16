@@ -72,6 +72,32 @@ When `wpf-architect` or `wpf-architect-low` is invoked, conduct an **adaptive pa
 
 See `agents/wpf-architect.md` for full interview specification.
 
+## HandMirror MCP Integration
+
+HandMirror MCP를 통해 .NET 어셈블리와 NuGet 패키지를 Reflection으로 직접 검사할 수 있다.
+
+### 활용 시나리오
+
+| 시나리오 | 사용할 HandMirror 도구 | 에이전트 |
+|----------|----------------------|----------|
+| 프로젝트 구조 분석 | `analyze_solution`, `analyze_csproj` | wpf-architect |
+| NuGet 패키지 탐색 | `search_nuget_packages`, `get_nuget_package_info` | wpf-architect |
+| 타입/API 확인 | `get_type_info`, `inspect_assembly` | code-reviewer, control-designer, mvvm-expert, data-binding-expert |
+| 취약점 검사 | `get_nuget_vulnerabilities` | wpf-code-reviewer |
+| 빌드 에러 분석 | `explain_build_error` | wpf-code-reviewer |
+| P/Invoke 분석 | `inspect_native_dependencies` | wpf-performance-optimizer |
+
+### 키워드 트리거
+
+| 키워드 | HandMirror 도구 활성화 |
+|--------|----------------------|
+| "assembly", "dll", "reflection" | `inspect_assembly`, `get_type_info` |
+| "nuget", "package", "vulnerability" | `search_nuget_packages`, `get_nuget_vulnerabilities` |
+| "build error", "빌드 에러" | `explain_build_error` |
+| "p/invoke", "native", "com interop" | `inspect_native_dependencies` |
+
+---
+
 ## Trigger Priority
 
 1. **Explicit slash command** (`/wpf-dev-pack:skill-name`) → Highest

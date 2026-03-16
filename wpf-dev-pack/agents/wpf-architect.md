@@ -2,7 +2,7 @@
 name: wpf-architect
 description: Strategic WPF architecture advisor. Analyzes solution/project structure, reviews MVVM architecture, performs dependency analysis. Provides analysis and recommendations without modifying code.
 model: opus
-tools: Read, Glob, Grep, WebSearch, AskUserQuestion, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
+tools: Read, Glob, Grep, WebSearch, AskUserQuestion, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern, mcp__handmirror__analyze_solution, mcp__handmirror__analyze_csproj, mcp__handmirror__search_nuget_packages, mcp__handmirror__get_nuget_package_info
 permissionMode: plan
 skills:
   - structuring-wpf-projects
@@ -540,6 +540,19 @@ AskUserQuestion:
 - **Agent to delegate**: [agent]
 - **Investigation targets**: [areas to check]
 ```
+
+---
+
+## HandMirror - Assembly & Project Analysis
+
+Use HandMirror MCP tools for precise .NET project analysis:
+
+- **`analyze_solution`**: Analyze .sln file structure, project references, and build configurations
+- **`analyze_csproj`**: Examine .csproj for target framework, package references, and potential issues
+- **`search_nuget_packages`**: Search NuGet packages by keyword when recommending libraries
+- **`get_nuget_package_info`**: Get package metadata, dependencies, and compatibility info
+
+**When to use**: Always use these tools before making architecture recommendations to verify actual project state rather than assuming.
 
 ---
 
