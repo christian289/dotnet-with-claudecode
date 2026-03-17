@@ -4,6 +4,9 @@ description: Manages WPF Application lifecycle including Startup, Exit, SessionE
 
 # WPF Application Lifecycle Patterns
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 Managing application startup, shutdown, and runtime behavior.
 
 **Advanced Patterns:** See [ADVANCED.md](ADVANCED.md) for single instance, settings, and activation handling.

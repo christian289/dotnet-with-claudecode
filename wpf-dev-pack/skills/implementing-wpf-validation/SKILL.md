@@ -4,6 +4,9 @@ description: "Implements WPF data validation using ValidationRule, IDataErrorInf
 
 # WPF Data Validation
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 ## 1. Validation Approaches
 
 | Approach | Location | Pros | Cons |

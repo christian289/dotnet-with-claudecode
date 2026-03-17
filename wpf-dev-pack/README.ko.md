@@ -6,7 +6,7 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
@@ -29,6 +29,7 @@
 - **11개 전문 에이전트**로 다양한 WPF 작업 수행
 - 전략적 결정을 위한 **Opus급** 아키텍트
 - WPF 키워드 **자동 감지**
+- 듀얼 프레임워크 지원을 위한 **Prism 9** 컴패니언 파일
 
 </td>
 <td width="50%">
@@ -464,6 +465,31 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `optimizing-memory-allocation` | 메모리 할당 |
 | `processing-parallel-tasks` | 병렬 처리 |
 | `using-generated-regex` | Source-generated regex |
+
+</details>
+
+<details>
+<summary><b>🔄 Prism 9 컴패니언 (13개 PRISM.md 파일) — v1.4.1 신규</b></summary>
+
+13개 스킬에 Prism 9 (Community License) 대응 `PRISM.md` 컴패니언 파일을 제공합니다:
+
+| 스킬 | PRISM.md 주요 내용 |
+|------|-------------------|
+| `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
+| `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
+| `structuring-wpf-projects` | IModule 기반 모듈 아키텍처 |
+| `mapping-viewmodel-view-datatemplate` | RegionManager, ViewModelLocator |
+| `creating-wpf-dialogs` | IDialogService, IDialogAware |
+| `managing-wpf-application-lifecycle` | PrismApplication 라이프사이클 |
+| `binding-enum-command-parameters` | DelegateCommand\<T\> |
+| `handling-wpf-input-commands` | DelegateCommand, CompositeCommand |
+| `implementing-wpf-validation` | ValidatableBindableBase |
+| `managing-wpf-collectionview-mvvm` | BindableBase + IContainerRegistry |
+| `validating-with-fluentvalidation` | ValidatableBindableBase\<T\> 브릿지 |
+| `implementing-repository-pattern` | IContainerRegistry DI |
+| `displaying-slider-index` | SetProperty + RaisePropertyChanged |
+
+> 각 스킬의 SKILL.md (CommunityToolkit.Mvvm)와 PRISM.md (Prism 9)는 상호 참조합니다.
 
 </details>
 

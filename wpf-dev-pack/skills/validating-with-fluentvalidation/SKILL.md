@@ -4,6 +4,9 @@ description: "Implements FluentValidation with WPF INotifyDataErrorInfo bridge f
 
 # FluentValidation + WPF Integration Guide
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 FluentValidation 12.x를 WPF MVVM 패턴에 통합하는 가이드.
 
 ## NuGet Packages

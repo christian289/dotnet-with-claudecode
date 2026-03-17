@@ -4,6 +4,9 @@ description: "Displays 0-based collection indices as 1-based numbers in WPF Slid
 
 # WPF Slider 0-based Index Display Pattern
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 ## Problem Scenario
 
 When displaying collection indices with a slider, **internally using 0-based index** but **displaying as 1-based to users** is a common requirement.

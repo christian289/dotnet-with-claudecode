@@ -4,6 +4,9 @@ description: "Implements automatic ViewModel-View mapping using DataTemplate for
 
 # 5.8 Automatic View-ViewModel Mapping Using DataTemplate
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 In WPF, DataTemplate allows automatic mapping between ViewModel types and Views. This pattern is very useful for navigation scenarios and dynamic content display.
 
 ## Project Structure

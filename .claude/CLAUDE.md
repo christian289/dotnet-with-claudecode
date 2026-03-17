@@ -19,6 +19,28 @@
 
 ## Skills 업데이트 이력
 
+### 2026-03-16: wpf-dev-pack - Prism 9 PRISM.md 컴패니언 파일 추가
+
+**목적:**
+- Prism 9 (Community License) 사용자를 위한 PRISM.md 컴패니언 파일 생성
+- 기존 CommunityToolkit.Mvvm 예제만 있던 스킬에 Prism 9 대안 패턴 제공
+
+**변경 사항:**
+- 13개 스킬에 PRISM.md 파일 생성 (기존 make-wpf-project 포함 총 14개)
+- 13개 SKILL.md에 "Prism 9 Alternative" 크로스 레퍼런스 추가
+- skills/.claude/CLAUDE.md에 Prism 9 키워드 매핑 섹션 추가
+
+**대상 스킬:**
+- Tier 1 (핵심 MVVM 5개): implementing-communitytoolkit-mvvm, configuring-dependency-injection, mapping-viewmodel-view-datatemplate, creating-wpf-dialogs, structuring-wpf-projects
+- Tier 2 (Command/Binding 5개): binding-enum-command-parameters, handling-wpf-input-commands, implementing-wpf-validation, managing-wpf-collectionview-mvvm, managing-wpf-application-lifecycle
+- Tier 3 (소규모 3개): validating-with-fluentvalidation, implementing-repository-pattern, displaying-slider-index
+
+**Prism 9 제약사항:**
+- Prism.Magician (유료 소스 제너레이터) 미사용, 모든 코드 수동 작성
+- NuGet: `Prism.DryIoc` v9.0.537, `Prism.Core`, `Prism.Wpf`
+
+---
+
 ### 2026-03-16: wpf-dev-pack - Command를 Skill로 마이그레이션
 
 **목적:**
@@ -55,6 +77,7 @@
 
 **Skill/Agent 매핑:**
 - MVVM 선택 → `wpf-mvvm-expert`, `implementing-communitytoolkit-mvvm`
+- Prism 선택 → 각 스킬의 `PRISM.md` 컴패니언 파일 참조 (14개 스킬 지원)
 - 고급 렌더링 → `wpf-performance-optimizer`, `rendering-with-drawingcontext`
 - UI/컨트롤 → `wpf-control-designer`, `authoring-wpf-controls`
 

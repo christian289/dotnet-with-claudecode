@@ -4,6 +4,9 @@ description: Creates WPF dialog windows including modal dialogs, MessageBox, and
 
 # WPF Dialog Patterns
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 Creating and managing dialog windows for user interaction.
 
 **Advanced Patterns:** See [ADVANCED.md](ADVANCED.md) for MVVM dialog service, modeless dialogs, and input dialogs.

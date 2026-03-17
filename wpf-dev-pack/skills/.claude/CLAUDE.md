@@ -42,6 +42,18 @@
 | `converter 생성`, `컨버터` | `make-wpf-converter` |
 | `behavior 생성`, `비헤이비어` | `make-wpf-behavior` |
 
+### Prism 9 Keywords
+
+| Keyword | Skill (PRISM.md 참조) |
+|---------|----------------------|
+| `prism`, `bindablebase`, `delegatecommand` | `implementing-communitytoolkit-mvvm` |
+| `prismapplication`, `icontainerregistry` | `configuring-dependency-injection` |
+| `regionmanager`, `iregionmanager` | `mapping-viewmodel-view-datatemplate` |
+| `idialogservice`, `idialogaware` | `creating-wpf-dialogs` |
+| `imodule`, `modulecatalog` | `structuring-wpf-projects` |
+| `compositecommand` | `handling-wpf-input-commands` |
+| `validatablebindablebase` | `implementing-wpf-validation` |
+
 ### .NET Keywords
 
 | Keyword | Skill |

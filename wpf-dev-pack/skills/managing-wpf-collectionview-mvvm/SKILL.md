@@ -4,6 +4,9 @@ description: "Encapsulates CollectionView in Service Layer to maintain MVVM prin
 
 # 5.6 MVVM Pattern with CollectionView
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 ## Project Structure
 
 The templates folder contains a WPF project example (use latest .NET per version mapping).

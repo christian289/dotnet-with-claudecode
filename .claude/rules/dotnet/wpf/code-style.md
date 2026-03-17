@@ -4,7 +4,7 @@
 
 - UI 커스터마이징 시 WPF Custom Control Library 프로젝트 사용
 - Converter, WPF UI Service Layer는 WPF Class Library 프로젝트 사용
-- CommunityToolkit.Mvvm NuGet Package 사용
+- MVVM 프레임워크는 `mvvm-framework.md` 설정에 따라 결정
 
 ---
 
@@ -13,7 +13,9 @@
 > **📌 상세 가이드**: `/configuring-dependency-injection` skill 참조
 
 - 기본적으로 AddSingleton()만 사용
-- GenericHost로 DI 컨테이너 구성
+- DI 컨테이너 구성 방식은 MVVM 프레임워크에 따라 결정:
+  - CommunityToolkit.Mvvm → GenericHost (`Microsoft.Extensions.Hosting`)
+  - Prism 9 → PrismApplication (`IContainerRegistry`)
 
 ---
 
@@ -32,13 +34,15 @@
 | `.WpfApp` | WPF Application | 실행 진입점 |
 | `.UI` | WPF Custom Control Library | 커스텀 컨트롤 |
 
+> ⚠️ Prism 9 사용 시 `.Modules.*` 프로젝트 구조 추가 가능. 상세는 `structuring-wpf-projects/PRISM.md` 참조.
+
 ---
 
 ## 3. MVVM 패턴
 
-> **📌 상세 가이드**: `/implementing-communitytoolkit-mvvm` skill 참조
+> **📌 MVVM 프레임워크 선택**: `mvvm-framework.md` 참조
 
-### 핵심 제약
+### 핵심 제약 (프레임워크 공통)
 
 - **ViewModel 클래스에 UI 프레임워크 의존성 금지**
   - `System.Windows`로 시작하는 클래스 참조 금지
@@ -55,7 +59,7 @@
 
 **ViewModel 프로젝트 참조 가능:**
 - ✅ BCL 타입만 (IEnumerable, ObservableCollection 등)
-- ✅ CommunityToolkit.Mvvm
+- ✅ MVVM 프레임워크 패키지 (CommunityToolkit.Mvvm 또는 Prism.Core)
 
 ---
 
@@ -86,12 +90,13 @@
 
 ---
 
-## 7. DataTemplate View-ViewModel 매핑
+## 7. DataTemplate / Navigation 매핑
 
 > **📌 상세 가이드**: `/mapping-viewmodel-view-datatemplate` skill 참조
 
-- Mappings.xaml에 ViewModel-View DataTemplate 정의
-- ContentControl.Content에 ViewModel 바인딩하여 자동 View 렌더링
+- View-ViewModel 매핑 방식은 MVVM 프레임워크에 따라 결정:
+  - CommunityToolkit.Mvvm → Mappings.xaml DataTemplate 매핑
+  - Prism 9 → RegionManager + RegisterForNavigation
 
 ---
 

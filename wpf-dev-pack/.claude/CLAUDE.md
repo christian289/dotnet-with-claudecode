@@ -82,8 +82,11 @@ See `agents/wpf-architect.md` for full interview specification.
 
 **On Trigger:**
 1. Announce: "WPF Dev Pack: Activating `skill-name` skill."
-2. Load SKILL.md content
-3. Generate/modify code per guidelines
+2. Check `.claude/rules/dotnet/wpf/mvvm-framework.md` for active MVVM framework
+3. Load appropriate file:
+   - **CommunityToolkit.Mvvm** → SKILL.md
+   - **Prism 9** → PRISM.md (있을 경우), 없으면 SKILL.md
+4. Generate/modify code per guidelines and active framework rules
 
 **Silent Triggers** (no announcement):
 - `formatting-wpf-csharp-code`

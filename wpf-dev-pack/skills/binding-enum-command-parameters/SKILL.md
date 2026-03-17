@@ -4,6 +4,9 @@ description: "Binds enum values to WPF CommandParameter using x:Static markup ex
 
 # WPF Command Parameter Enum Type Binding
 
+> **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
+> Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
+
 ## Problem Scenario
 
 When binding enum values to `CommandParameter` in WPF, **passing as string causes type mismatch error**.

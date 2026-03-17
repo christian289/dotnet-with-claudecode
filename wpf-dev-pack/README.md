@@ -6,7 +6,7 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
@@ -29,6 +29,7 @@
 - **11 Specialized Agents** for different WPF tasks
 - **Opus-level** architects for strategic decisions
 - **Auto-detection** of WPF keywords
+- **Prism 9** companion files for dual-framework support
 
 </td>
 <td width="50%">
@@ -464,6 +465,31 @@ Some skills activate without notification:
 | `optimizing-memory-allocation` | Memory allocation |
 | `processing-parallel-tasks` | Parallel processing |
 | `using-generated-regex` | Source-generated regex |
+
+</details>
+
+<details>
+<summary><b>🔄 Prism 9 Companion (13 PRISM.md files) — NEW in v1.4.1</b></summary>
+
+13 skills provide `PRISM.md` companion files with Prism 9 (Community License) equivalents:
+
+| Skill | PRISM.md Focus |
+|-------|----------------|
+| `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
+| `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
+| `structuring-wpf-projects` | IModule-based module architecture |
+| `mapping-viewmodel-view-datatemplate` | RegionManager, ViewModelLocator |
+| `creating-wpf-dialogs` | IDialogService, IDialogAware |
+| `managing-wpf-application-lifecycle` | PrismApplication lifecycle |
+| `binding-enum-command-parameters` | DelegateCommand\<T\> |
+| `handling-wpf-input-commands` | DelegateCommand, CompositeCommand |
+| `implementing-wpf-validation` | ValidatableBindableBase |
+| `managing-wpf-collectionview-mvvm` | BindableBase + IContainerRegistry |
+| `validating-with-fluentvalidation` | ValidatableBindableBase\<T\> bridge |
+| `implementing-repository-pattern` | IContainerRegistry DI |
+| `displaying-slider-index` | SetProperty + RaisePropertyChanged |
+
+> Each skill's SKILL.md (CommunityToolkit.Mvvm) and PRISM.md (Prism 9) cross-reference each other.
 
 </details>
 
