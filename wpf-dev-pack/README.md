@@ -249,11 +249,11 @@ wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-cla
 
 | You Say | Auto-Activates |
 |---------|----------------|
-| "CustomControl 만들어줘" | `authoring-wpf-controls`, `developing-wpf-customcontrols` |
-| "MVVM 패턴 적용" | `implementing-communitytoolkit-mvvm` |
-| "DrawingContext로 렌더링" | `rendering-with-drawingcontext` |
-| "성능 최적화 필요" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` agent |
-| "아키텍처 검토" | `wpf-architect` agent recommended |
+| "Create a CustomControl" | `authoring-wpf-controls`, `developing-wpf-customcontrols` |
+| "Apply MVVM pattern" | `implementing-communitytoolkit-mvvm` |
+| "Render with DrawingContext" | `rendering-with-drawingcontext` |
+| "Need performance optimization" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` agent |
+| "Review architecture" | `wpf-architect` agent recommended |
 
 ### Silent Triggers
 
