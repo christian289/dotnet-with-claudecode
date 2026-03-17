@@ -45,7 +45,13 @@
       "mcp__plugin_playwright_playwright__browser_navigate",
       "mcp__plugin_playwright_playwright__browser_close",
       "Bash(git clone:*)",
-      "Bash(git status:*)"
+      "Bash(git status:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git checkout:*)",
+      "Bash(grep -rl \"^name:\" wpf-dev-pack/skills/*/SKILL.md | wc -l)",
+      "Bash(cd /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills && grep -l \"ObservableProperty\\\\|RelayCommand\\\\|ObservableObject\\\\|ViewModel\\\\|MVVM\\\\|ICommand\\\\|DependencyInjection\\\\|navigation\\\\|dialog\" */SKILL.md | sort | uniq)",
+      "Bash(grep -rl \"Prism 9 Alternative\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/SKILL.md | wc -l)",
+      "Bash(echo \"=== Rule files ===\" && ls /c/Users/chris/personal/dotnet-with-claudecode/.claude/rules/dotnet/wpf/ && echo \"\" && echo \"=== SKILL.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/SKILL.md | wc -l && echo \"\" && echo \"=== PRISM.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/PRISM.md | wc -l)"
     ]
   }
 }
