@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.4.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**76 Skills** · **11 Specialized Agents** · **1 MCP Server**
+**77 Skills** · **11 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -35,7 +35,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **76 Skills** covering all WPF aspects
+- **77 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -437,7 +437,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>📦 3rd Party Libraries (5 skills) — NEW in v1.4.0</b></summary>
+<summary><b>📦 3rd Party Libraries (6 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -446,6 +446,7 @@ Some skills activate without notification:
 | `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo bridge |
 | `handling-errors-with-erroror` | ErrorOr result pattern for service layer |
 | `integrating-nodify` | Nodify node-based editor control |
+| `flaui-cross-process-input` | FlaUI cross-process input calibration |
 
 </details>
 
@@ -526,7 +527,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 76 Skills
+├── 📁 skills/                 # 77 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
 ├── 📄 README.md

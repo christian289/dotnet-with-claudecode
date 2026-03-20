@@ -36,6 +36,7 @@
 | `fluentvalidation`, `abstractvalidator`, `rulefor` | `validating-with-fluentvalidation` |
 | `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
+| `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key` | `flaui-cross-process-input` |
 | `프로젝트 생성`, `scaffold`, `새 프로젝트` | `make-wpf-project` |
 | `customcontrol 생성`, `컨트롤 생성` | `make-wpf-custom-control` |
 | `usercontrol 생성`, `유저컨트롤` | `make-wpf-usercontrol` |
@@ -89,6 +90,6 @@
 | **Styling & Resources** | `managing-styles-resourcedictionary`, `creating-wpf-brushes`, `creating-wpf-vector-icons` |
 | **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `migrating-wpf-to-dotnet` |
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
-| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify` |
+| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input` |
 | **.NET Common** | `handling-async-operations`, `processing-parallel-tasks`, `optimizing-memory-allocation`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `using-generated-regex` |
 | **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |

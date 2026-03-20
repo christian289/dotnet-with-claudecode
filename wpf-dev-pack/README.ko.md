@@ -6,12 +6,12 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.4.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**76개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
+**77개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -35,7 +35,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **76개 스킬**
+- WPF 전 영역을 다루는 **77개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -437,7 +437,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>📦 서드파티 라이브러리 (5개 스킬) — v1.4.0 신규</b></summary>
+<summary><b>📦 서드파티 라이브러리 (6개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -446,6 +446,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo 브리지 |
 | `handling-errors-with-erroror` | ErrorOr 결과 패턴 (서비스 계층) |
 | `integrating-nodify` | Nodify 노드 기반 에디터 컨트롤 |
+| `flaui-cross-process-input` | FlaUI 크로스 프로세스 입력 보정 |
 
 </details>
 
@@ -526,7 +527,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 76개 스킬
+├── 📁 skills/                 # 77개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (MicrosoftDocs만)
 ├── 📄 README.md
