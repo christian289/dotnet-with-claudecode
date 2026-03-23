@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a WPF IValueConverter that can be used directly in XAML without StaticResource", "should_trigger": true},
+  {"query": "Implementing converter as MarkupExtension to avoid ResourceDictionary declaration in WPF", "should_trigger": true},
+  {"query": "I'm tired of declaring every converter in ResourceDictionary, is there a simpler way in WPF", "should_trigger": true},
+  {"query": "How to use IValueConverter that inherits from MarkupExtension for inline XAML usage", "should_trigger": true},
+  {"query": "Creating a self-providing converter that doesn't need StaticResource key in WPF XAML", "should_trigger": true},
+  {"query": "How to create a BoolToVisibilityConverter in WPF", "should_trigger": false},
+  {"query": "Using MultiBinding with IMultiValueConverter in WPF", "should_trigger": false},
+  {"query": "How to define a custom MarkupExtension in WPF for XAML", "should_trigger": false},
+  {"query": "WPF binding converter returning DependencyProperty.UnsetValue", "should_trigger": false},
+  {"query": "Organizing WPF ResourceDictionary with merged dictionaries", "should_trigger": false}
+]

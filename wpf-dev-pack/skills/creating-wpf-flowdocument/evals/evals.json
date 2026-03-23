@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a FlowDocument with paragraphs, tables, and lists for a print preview in WPF", "should_trigger": true},
+  {"query": "Building a rich text viewer using FlowDocumentScrollViewer with formatted content in WPF", "should_trigger": true},
+  {"query": "I need to generate a printable report with Table rows and Bold headers using FlowDocument", "should_trigger": true},
+  {"query": "How to add images and hyperlinks inside a FlowDocument Paragraph in WPF", "should_trigger": true},
+  {"query": "Creating a document viewer with FlowDocumentPageViewer that supports pagination", "should_trigger": true},
+  {"query": "How to display formatted text with RichTextBox and load RTF content in WPF", "should_trigger": false},
+  {"query": "Printing a WPF visual element using PrintDialog and PrintVisual", "should_trigger": false},
+  {"query": "How to create a PDF report from WPF application data", "should_trigger": false},
+  {"query": "Implementing a markdown renderer in WPF TextBlock", "should_trigger": false},
+  {"query": "WPF TextBlock with multiple Run elements and different formatting", "should_trigger": false}
+]

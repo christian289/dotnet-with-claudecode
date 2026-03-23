@@ -1,0 +1,12 @@
+[
+  {"query": "How to localize my WPF application using resource files (.resx) for multiple languages", "should_trigger": true},
+  {"query": "Setting up multi-language support in WPF with x:Uid and localization", "should_trigger": true},
+  {"query": "How to switch language at runtime in WPF application using ResourceManager", "should_trigger": true},
+  {"query": "My WPF app needs Korean and English translations, how to organize resource strings", "should_trigger": true},
+  {"query": "Implementing localization with satellite assemblies for WPF desktop application", "should_trigger": true},
+  {"query": "Using BAML localization with LocBaml tool for enterprise WPF app localization", "should_trigger": false},
+  {"query": "How to format dates and currency for different cultures in WPF", "should_trigger": false},
+  {"query": "Implementing Right-to-Left layout support for Arabic in WPF", "should_trigger": false},
+  {"query": "How to localize ASP.NET Core web application with .resx files", "should_trigger": false},
+  {"query": "Creating a language preference settings page in WPF application", "should_trigger": false}
+]

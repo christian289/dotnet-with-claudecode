@@ -1,0 +1,12 @@
+[
+  {"query": "Setting up GenericHost with dependency injection in a .NET console application", "should_trigger": true},
+  {"query": "How to use IHostedService for background processing in my console app", "should_trigger": true},
+  {"query": "I need to inject ILogger and IConfiguration into my console app services using Host.CreateDefaultBuilder", "should_trigger": true},
+  {"query": "My .NET 9 console app needs DI container setup with Microsoft.Extensions.Hosting", "should_trigger": true},
+  {"query": "How to register and resolve services in a console application without ASP.NET", "should_trigger": true},
+  {"query": "Setting up dependency injection in a WPF application with GenericHost", "should_trigger": false},
+  {"query": "How to configure appsettings.json in ASP.NET Core web API", "should_trigger": false},
+  {"query": "Using Autofac as DI container in .NET application", "should_trigger": false},
+  {"query": "Writing a simple console app with top-level statements in C#", "should_trigger": false},
+  {"query": "How to add logging to my .NET Worker Service project", "should_trigger": false}
+]

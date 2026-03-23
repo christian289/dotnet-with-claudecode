@@ -1,0 +1,12 @@
+[
+  {"query": "How to use LocBaml tool to extract and generate satellite assemblies for WPF localization", "should_trigger": true},
+  {"query": "Setting up BAML-based localization with x:Uid attributes in WPF enterprise application", "should_trigger": true},
+  {"query": "How to generate translation CSV from BAML and build satellite assemblies for WPF", "should_trigger": true},
+  {"query": "Implementing WPF localization using BAML approach with msbuild updateuid", "should_trigger": true},
+  {"query": "My enterprise WPF app needs satellite assembly localization instead of resx approach", "should_trigger": true},
+  {"query": "How to localize WPF application using resource files and ResourceManager", "should_trigger": false},
+  {"query": "Switching UI language at runtime in WPF using CultureInfo", "should_trigger": false},
+  {"query": "How to localize strings in .NET console application with .resx files", "should_trigger": false},
+  {"query": "Setting up multi-language support for AvaloniaUI application", "should_trigger": false},
+  {"query": "How to implement culture-aware date formatting in WPF data binding", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "What's the difference between ContentControl and ItemsControl base classes in WPF", "should_trigger": true},
+  {"query": "Should my custom control inherit from HeaderedContentControl or ContentControl in WPF", "should_trigger": true},
+  {"query": "Understanding the WPF content model hierarchy for choosing the right base class", "should_trigger": true},
+  {"query": "How does ItemsControl differ from HeaderedItemsControl when building custom WPF controls", "should_trigger": true},
+  {"query": "What properties do I get by inheriting from ContentControl vs Control in WPF", "should_trigger": true},
+  {"query": "Should I use UserControl or CustomControl for my WPF component", "should_trigger": false},
+  {"query": "How to use ContentPresenter inside a WPF ControlTemplate", "should_trigger": false},
+  {"query": "Implementing ItemsControl with custom ItemTemplate in WPF XAML", "should_trigger": false},
+  {"query": "How to create a WPF CustomControl with DependencyProperty", "should_trigger": false},
+  {"query": "Using DataTemplate to display items in a WPF ListBox", "should_trigger": false}
+]

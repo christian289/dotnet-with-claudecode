@@ -1,0 +1,12 @@
+[
+  {"query": "/make-wpf-behavior DragMoveBehavior Window", "should_trigger": true},
+  {"query": "Generate a WPF Behavior class for auto-scrolling a ListBox on new items", "should_trigger": true},
+  {"query": "/wpf-dev-pack:make-wpf-behavior FocusOnLoadBehavior TextBox", "should_trigger": true},
+  {"query": "Create a Behavior<T> class using Microsoft.Xaml.Behaviors.Wpf for my custom interaction", "should_trigger": true},
+  {"query": "I need a WPF behavior that closes a window when Escape key is pressed", "should_trigger": true},
+  {"query": "How to use EventTrigger and InvokeCommandAction from Microsoft.Xaml.Behaviors", "should_trigger": false},
+  {"query": "Creating a WPF attached property for custom functionality", "should_trigger": false},
+  {"query": "How to implement IValueConverter for WPF data binding", "should_trigger": false},
+  {"query": "Generate a WPF UserControl with XAML and code-behind", "should_trigger": false},
+  {"query": "How to add interactivity to XAML without code-behind using triggers", "should_trigger": false}
+]

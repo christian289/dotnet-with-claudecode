@@ -1,0 +1,12 @@
+[
+  {"query": "Mouse coordinates are outside the image after pan/zoom, need to clamp to image bounds in WPF", "should_trigger": true},
+  {"query": "My measurement tool draws outside the transformed image area when zoomed in WPF", "should_trigger": true},
+  {"query": "How to check if a mouse click is within a rotated and scaled image bounds in WPF", "should_trigger": true},
+  {"query": "Annotation points going outside the image when I apply RenderTransform with ScaleTransform", "should_trigger": true},
+  {"query": "Need to convert screen coordinates to image pixel coordinates after pan zoom rotate in WPF", "should_trigger": true},
+  {"query": "How to implement pan and zoom for an Image control using RenderTransform in WPF", "should_trigger": false},
+  {"query": "WPF Image control not displaying my PNG file, shows blank", "should_trigger": false},
+  {"query": "How to crop an image to a specific region using CroppedBitmap in WPF", "should_trigger": false},
+  {"query": "Implementing a zoom slider that scales a Canvas with ScaleTransform", "should_trigger": false},
+  {"query": "Hit testing on shapes drawn with DrawingContext in WPF", "should_trigger": false}
+]

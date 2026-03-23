@@ -1,0 +1,12 @@
+[
+  {"query": "How to add Right-to-Left layout support for Arabic text in my WPF application", "should_trigger": true},
+  {"query": "Setting FlowDirection to RightToLeft for Hebrew language UI in WPF", "should_trigger": true},
+  {"query": "My WPF app needs to support Persian/Farsi with proper RTL layout mirroring", "should_trigger": true},
+  {"query": "How to make WPF controls mirror their layout for RTL languages", "should_trigger": true},
+  {"query": "Implementing bidirectional text support with mixed LTR and RTL content in WPF", "should_trigger": true},
+  {"query": "How to localize WPF application with resource files for multiple languages", "should_trigger": false},
+  {"query": "Formatting dates and numbers for different cultures in WPF", "should_trigger": false},
+  {"query": "How to use BAML localization with x:Uid for WPF multi-language support", "should_trigger": false},
+  {"query": "Implementing a language switcher dropdown in WPF application", "should_trigger": false},
+  {"query": "How to change font family for CJK characters in WPF TextBlock", "should_trigger": false}
+]

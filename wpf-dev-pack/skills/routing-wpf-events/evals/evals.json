@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a custom routed event with Bubbling strategy in WPF", "should_trigger": true},
+  {"query": "Difference between Bubbling, Tunneling, and Direct routed event strategies in WPF", "should_trigger": true},
+  {"query": "My PreviewMouseDown (tunneling) event fires but MouseDown (bubbling) doesn't in WPF", "should_trigger": true},
+  {"query": "How to register and raise a custom RoutedEvent in my WPF CustomControl", "should_trigger": true},
+  {"query": "Understanding WPF event routing and how e.Handled affects event propagation", "should_trigger": true},
+  {"query": "How to handle click events in WPF Button using code-behind", "should_trigger": false},
+  {"query": "Using EventToCommand behavior to bind UI events to ViewModel commands", "should_trigger": false},
+  {"query": "WPF keyboard focus and FocusManager navigation", "should_trigger": false},
+  {"query": "How to navigate the visual tree and logical tree in WPF", "should_trigger": false},
+  {"query": "Implementing ICommand for button click handling in WPF MVVM", "should_trigger": false}
+]

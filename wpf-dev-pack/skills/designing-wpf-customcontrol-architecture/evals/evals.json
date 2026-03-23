@@ -1,0 +1,12 @@
+[
+  {"query": "How to organize Generic.xaml with MergedDictionaries for multiple custom controls in WPF", "should_trigger": true},
+  {"query": "Setting up stand-alone control styles using ResourceDictionary for my WPF CustomControl", "should_trigger": true},
+  {"query": "Best way to structure a WPF Custom Control Library with separate XAML files per control", "should_trigger": true},
+  {"query": "How to split each control style into individual ResourceDictionary files and merge into Generic.xaml", "should_trigger": true},
+  {"query": "Architecture pattern for reusable WPF custom controls with proper theme resource organization", "should_trigger": true},
+  {"query": "How to implement OnApplyTemplate and TemplatePart in WPF CustomControl", "should_trigger": false},
+  {"query": "Creating a ControlTemplate with TemplateBinding for a WPF Button", "should_trigger": false},
+  {"query": "How to configure ThemeInfo attribute for Generic.xaml auto-loading", "should_trigger": false},
+  {"query": "Deciding between UserControl and CustomControl for my WPF component", "should_trigger": false},
+  {"query": "How to structure a WPF solution with separate projects for Views and ViewModels", "should_trigger": false}
+]

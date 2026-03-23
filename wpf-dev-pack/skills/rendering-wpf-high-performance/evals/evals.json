@@ -1,0 +1,12 @@
+[
+  {"query": "How to implement real-time graphics rendering with CompositionTarget.Rendering in WPF", "should_trigger": true},
+  {"query": "Building a particle system in WPF using WriteableBitmap for pixel-level control", "should_trigger": true},
+  {"query": "My WPF chart with 50K Shape elements is extremely slow, need high-performance alternative", "should_trigger": true},
+  {"query": "How to use BitmapCache and CacheMode for WPF rendering optimization", "should_trigger": true},
+  {"query": "Implementing a game loop with frame-by-frame rendering in WPF using CompositionTarget", "should_trigger": true},
+  {"query": "Using DrawingContext in OnRender for efficient shape drawing in WPF", "should_trigger": false},
+  {"query": "How to implement DrawingVisual with VisualCollection for custom visual hosting", "should_trigger": false},
+  {"query": "WPF rendering pipeline architecture with Measure/Arrange/Render passes", "should_trigger": false},
+  {"query": "Optimizing WPF memory usage with Freezable patterns", "should_trigger": false},
+  {"query": "How to use VirtualizingStackPanel for large data sets in WPF ListView", "should_trigger": false}
+]

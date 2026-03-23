@@ -1,0 +1,12 @@
+[
+  {"query": "/make-wpf-project InventoryManager --full", "should_trigger": true},
+  {"query": "Scaffold a new WPF project structure with MVVM and dependency injection", "should_trigger": true},
+  {"query": "/wpf-dev-pack:make-wpf-project PhotoEditor --prism", "should_trigger": true},
+  {"query": "Create a complete WPF project template with proper folder structure and best practices", "should_trigger": true},
+  {"query": "/make-wpf-project QuickTool --minimal", "should_trigger": true},
+  {"query": "How to structure an existing WPF solution with separate projects for layers", "should_trigger": false},
+  {"query": "Creating a new WPF application project in Visual Studio", "should_trigger": false},
+  {"query": "Generate a WPF CustomControl with C# class and XAML style", "should_trigger": false},
+  {"query": "How to set up CommunityToolkit.Mvvm in an existing WPF project", "should_trigger": false},
+  {"query": "Migrating WPF application from .NET Framework to .NET 8", "should_trigger": false}
+]

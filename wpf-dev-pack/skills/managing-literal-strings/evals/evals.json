@@ -1,0 +1,12 @@
+[
+  {"query": "How to organize hardcoded string literals as const string constants in my C# codebase", "should_trigger": true},
+  {"query": "I have log messages and exception messages scattered everywhere, need to centralize as constants", "should_trigger": true},
+  {"query": "Best practice for managing literal strings like error messages and UI texts in C# project", "should_trigger": true},
+  {"query": "How to define a Constants class for pre-defined string messages in .NET", "should_trigger": true},
+  {"query": "Refactoring inline strings to const string fields organized by category in C#", "should_trigger": true},
+  {"query": "How to localize string resources using .resx files in WPF application", "should_trigger": false},
+  {"query": "Using string interpolation and raw string literals in C# 12", "should_trigger": false},
+  {"query": "How to use StringBuilder for efficient string concatenation in C#", "should_trigger": false},
+  {"query": "Implementing enum with Description attribute for display text in WPF", "should_trigger": false},
+  {"query": "How to store configuration strings in appsettings.json", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to use DrawingVisual with ContainerVisual and VisualCollection for lightweight WPF rendering", "should_trigger": true},
+  {"query": "Implementing a custom visual host with AddVisualChild for large-scale chart rendering in WPF", "should_trigger": true},
+  {"query": "How to render 100K data points using DrawingVisual instead of Shape in WPF", "should_trigger": true},
+  {"query": "Building a game graphics layer using DrawingVisual with DrawingContext in WPF", "should_trigger": true},
+  {"query": "How to implement VisualChildrenCount and GetVisualChild for custom VisualCollection host in WPF", "should_trigger": true},
+  {"query": "Using DrawingContext in OnRender override for high-performance rendering in WPF", "should_trigger": false},
+  {"query": "How to implement WriteableBitmap for pixel-level manipulation in WPF", "should_trigger": false},
+  {"query": "WPF BitmapCache and CacheMode for rendering optimization", "should_trigger": false},
+  {"query": "Creating vector icons with PathGeometry in WPF", "should_trigger": false},
+  {"query": "How to implement hit testing on DrawingVisual elements in WPF", "should_trigger": false}
+]

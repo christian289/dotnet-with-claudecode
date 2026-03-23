@@ -1,0 +1,12 @@
+[
+  {"query": "How to set up XamlStyler and dotnet format for consistent code formatting in WPF project", "should_trigger": true},
+  {"query": "I need to auto-format all XAML files in my WPF solution with consistent style", "should_trigger": true},
+  {"query": "Generate a Settings.XamlStyler configuration file for my WPF project", "should_trigger": true},
+  {"query": "How to create an .editorconfig for C# code style in my WPF solution", "should_trigger": true},
+  {"query": "My WPF XAML files have inconsistent attribute ordering, need a formatter tool", "should_trigger": true},
+  {"query": "How to configure Roslyn analyzers for C# code quality in .NET project", "should_trigger": false},
+  {"query": "Setting up StyleCop.Analyzers for enforcing naming conventions", "should_trigger": false},
+  {"query": "How to auto-format code on save in Visual Studio for WPF projects", "should_trigger": false},
+  {"query": "Using Prettier to format HTML and CSS files in my web project", "should_trigger": false},
+  {"query": "How to configure XAML namespace ordering in Visual Studio settings", "should_trigger": false}
+]

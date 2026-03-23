@@ -68,6 +68,8 @@ pdf/
 ├── FORMS.md              # 폼 작성 가이드 (필요 시 로드)
 ├── reference.md          # API 참조 (필요 시 로드)
 ├── examples.md           # 사용 예시 (필요 시 로드)
+├── evals/
+│   └── evals.json        # 트리거 평가 데이터 (필수)
 └── scripts/
     ├── analyze_form.py   # 유틸리티 스크립트 (실행, 로드 X)
     └── validate.py       # 검증 스크립트
@@ -255,7 +257,48 @@ Use the GitHub:create_issue tool to create issues.
 
 ---
 
-## 10. 체크리스트
+## 10. 트리거 평가 (evals/evals.json)
+
+스킬 생성 시 `evals/evals.json` 파일을 **반드시** 함께 생성한다.
+이 파일은 스킬의 description이 올바른 상황에서 트리거되는지 검증하는 평가 데이터이다.
+
+### 형식
+
+```json
+[
+  {"query": "realistic user prompt that SHOULD trigger this skill", "should_trigger": true},
+  {"query": "near-miss prompt that should NOT trigger this skill", "should_trigger": false}
+]
+```
+
+### 작성 규칙
+
+- **총 10개 쿼리**: should_trigger:true 5개 + should_trigger:false 5개
+- **should_trigger:true 쿼리**:
+  - 실제 개발자가 입력할 법한 구체적이고 현실적인 프롬프트
+  - 다양한 표현 방식 (격식체, 비격식체, 길이 다양화)
+  - 스킬명을 직접 언급하지 않지만 해당 스킬이 필요한 상황
+  - 파일 경로, 클래스명, 에러 메시지 등 구체적 디테일 포함
+- **should_trigger:false 쿼리**:
+  - **Near-miss** 필수 — 키워드가 겹치지만 다른 스킬이 적합한 케이스
+  - 명백히 무관한 쿼리는 금지 (예: PDF 스킬에 "fibonacci 함수 작성"은 부적절)
+  - 인접 도메인, 모호한 표현, 키워드 매칭만으로는 구분 어려운 케이스
+
+### 예시 (flaui-cross-process-input)
+
+```json
+[
+  {"query": "FlaUI connector drag is not working, Mouse.Down does nothing", "should_trigger": true},
+  {"query": "FlaUI Mouse.Down on a WPF control has no effect, no visual feedback", "should_trigger": true},
+  {"query": "After FlaUI Keyboard.Press the next mouse click does not work", "should_trigger": true},
+  {"query": "I want to implement drag and drop in my WPF app using DragDrop.DoDragDrop", "should_trigger": false},
+  {"query": "How to install FlaUI NuGet package and set up a test project", "should_trigger": false}
+]
+```
+
+---
+
+## 11. 체크리스트
 
 ### 핵심 품질
 
@@ -280,6 +323,13 @@ Use the GitHub:create_issue tool to create issues.
 - [ ] 중요 작업에 검증/확인 단계
 - [ ] 품질 중요 작업에 피드백 루프
 
+### 트리거 평가
+
+- [ ] `evals/evals.json` 파일 생성
+- [ ] should_trigger:true 쿼리 5개 (구체적, 현실적)
+- [ ] should_trigger:false 쿼리 5개 (near-miss, 인접 도메인)
+- [ ] 명백히 무관한 쿼리 없음 (모든 false 케이스가 near-miss)
+
 ### 테스트
 
 - [ ] 최소 3개 평가 생성
@@ -288,7 +338,7 @@ Use the GitHub:create_issue tool to create issues.
 
 ---
 
-## 11. 공식 문서
+## 12. 공식 문서
 
 - [Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Skills Quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart)

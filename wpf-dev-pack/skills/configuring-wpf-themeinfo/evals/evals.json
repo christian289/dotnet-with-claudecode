@@ -1,0 +1,12 @@
+[
+  {"query": "My WPF CustomControl style in Generic.xaml is not being applied, control appears blank", "should_trigger": true},
+  {"query": "ThemeInfo attribute missing in AssemblyInfo.cs for my WPF Custom Control Library", "should_trigger": true},
+  {"query": "Generic.xaml not loading automatically for my custom control in a separate library project", "should_trigger": true},
+  {"query": "How to configure ThemeInfo so my WPF control library loads its default styles", "should_trigger": true},
+  {"query": "Created a new WPF Custom Control Library but the default style doesn't apply at runtime", "should_trigger": true},
+  {"query": "How to organize ResourceDictionary and merge styles in Generic.xaml", "should_trigger": false},
+  {"query": "Creating a ControlTemplate for my WPF CustomControl in Generic.xaml", "should_trigger": false},
+  {"query": "WPF style not applying because of resource lookup order issue", "should_trigger": false},
+  {"query": "How to use BasedOn to inherit from a default WPF Button style", "should_trigger": false},
+  {"query": "Setting up a WPF Custom Control Library project in Visual Studio", "should_trigger": false}
+]

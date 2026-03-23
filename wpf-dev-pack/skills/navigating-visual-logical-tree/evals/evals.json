@@ -1,0 +1,12 @@
+[
+  {"query": "How to use VisualTreeHelper.GetChild to find a specific control inside a template in WPF", "should_trigger": true},
+  {"query": "Traversing the visual tree to find all TextBox controls within a WPF container", "should_trigger": true},
+  {"query": "Difference between Visual Tree and Logical Tree in WPF and when to use each", "should_trigger": true},
+  {"query": "Using LogicalTreeHelper.FindLogicalNode to locate a named element in WPF", "should_trigger": true},
+  {"query": "How to access a control inside an ItemsControl DataTemplate using visual tree traversal", "should_trigger": true},
+  {"query": "How to implement WPF routed events with bubbling and tunneling strategies", "should_trigger": false},
+  {"query": "Using FindName to locate a named element in WPF XAML", "should_trigger": false},
+  {"query": "How to use VisualTreeHelper.HitTest for element hit testing in WPF", "should_trigger": false},
+  {"query": "Getting the parent window of a WPF UserControl", "should_trigger": false},
+  {"query": "How to bind to an ancestor element using RelativeSource FindAncestor in WPF", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "/make-wpf-custom-control RangeSlider Slider", "should_trigger": true},
+  {"query": "Generate a WPF CustomControl with C# class and Generic.xaml style for a card control", "should_trigger": true},
+  {"query": "/wpf-dev-pack:make-wpf-custom-control CircularProgressBar", "should_trigger": true},
+  {"query": "Create a new WPF CustomControl based on ContentControl with auto-generated boilerplate", "should_trigger": true},
+  {"query": "Scaffold a WPF custom control class inheriting from ItemsControl with default style", "should_trigger": true},
+  {"query": "How to implement OnApplyTemplate and TemplatePart in existing WPF CustomControl", "should_trigger": false},
+  {"query": "Generate a WPF UserControl with XAML and code-behind", "should_trigger": false},
+  {"query": "How to define DependencyProperty in my WPF control", "should_trigger": false},
+  {"query": "Creating a ControlTemplate for an existing WPF Button", "should_trigger": false},
+  {"query": "How to organize Generic.xaml with MergedDictionaries", "should_trigger": false}
+]

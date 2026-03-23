@@ -1,0 +1,12 @@
+[
+  {"query": "/make-wpf-usercontrol StatusBar", "should_trigger": true},
+  {"query": "Generate a WPF UserControl with XAML and code-behind for a login form", "should_trigger": true},
+  {"query": "/wpf-dev-pack:make-wpf-usercontrol SettingsPanel --with-viewmodel", "should_trigger": true},
+  {"query": "Create a WPF UserControl with associated ViewModel using CommunityToolkit.Mvvm", "should_trigger": true},
+  {"query": "/make-wpf-usercontrol SearchBar --with-viewmodel", "should_trigger": true},
+  {"query": "Generate a WPF CustomControl with Generic.xaml style", "should_trigger": false},
+  {"query": "How to create a reusable templatable control in WPF", "should_trigger": false},
+  {"query": "Should I use UserControl or CustomControl for my WPF component", "should_trigger": false},
+  {"query": "How to pass data to a WPF UserControl using DependencyProperty", "should_trigger": false},
+  {"query": "Creating a WPF window with XAML layout", "should_trigger": false}
+]

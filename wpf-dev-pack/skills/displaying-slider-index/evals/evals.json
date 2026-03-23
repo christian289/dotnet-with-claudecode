@@ -1,0 +1,12 @@
+[
+  {"query": "My WPF Slider shows 0-based index but I want to display page 1 of 10 to the user", "should_trigger": true},
+  {"query": "How to show 1-based slice number in TextBlock while Slider.Value stays 0-based for collection binding", "should_trigger": true},
+  {"query": "WPF Slider bound to collection index, need to display human-friendly 1-based number", "should_trigger": true},
+  {"query": "Converting 0-based Slider value to 1-based display text for image viewer page indicator", "should_trigger": true},
+  {"query": "I have a Slider controlling an array index but want the label to show 'Item 1' instead of 'Item 0'", "should_trigger": true},
+  {"query": "How to create a custom Slider control with custom thumb template in WPF", "should_trigger": false},
+  {"query": "Binding Slider.Value to a ViewModel property with two-way binding in WPF", "should_trigger": false},
+  {"query": "How to implement a range slider with two thumbs in WPF", "should_trigger": false},
+  {"query": "WPF IValueConverter to add 1 to an integer value for display", "should_trigger": false},
+  {"query": "Displaying current page number in a pagination control for WPF DataGrid", "should_trigger": false}
+]

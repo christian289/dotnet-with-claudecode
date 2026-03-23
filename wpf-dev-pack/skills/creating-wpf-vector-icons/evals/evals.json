@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a scalable vector icon using PathGeometry for my WPF toolbar buttons", "should_trigger": true},
+  {"query": "Building a symbol library with reusable GeometryGroup icons in WPF ResourceDictionary", "should_trigger": true},
+  {"query": "I need resolution-independent icons that look sharp at any DPI in my WPF app", "should_trigger": true},
+  {"query": "How to combine multiple PathGeometry shapes into a single icon using GeometryGroup in WPF", "should_trigger": true},
+  {"query": "Converting SVG path data to WPF PathGeometry for use as button icons", "should_trigger": true},
+  {"query": "How to use Segoe Fluent Icons font for icons in WPF TextBlock", "should_trigger": false},
+  {"query": "Adding PNG image icons to WPF menu items and toolbar", "should_trigger": false},
+  {"query": "How to create a custom icon font and use it in WPF application", "should_trigger": false},
+  {"query": "Drawing shapes dynamically with PathFigure and LineSegment in C# code", "should_trigger": false},
+  {"query": "Implementing an icon picker control that shows available Material Design icons", "should_trigger": false}
+]

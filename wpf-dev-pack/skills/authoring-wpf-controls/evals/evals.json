@@ -1,0 +1,12 @@
+[
+  {"query": "Should I use UserControl or CustomControl for a reusable color picker widget in WPF", "should_trigger": true},
+  {"query": "I'm building a chart component, should I inherit from FrameworkElement or Control", "should_trigger": true},
+  {"query": "What's the difference between Style, ControlTemplate, and DataTemplate for customizing WPF controls", "should_trigger": true},
+  {"query": "I need to decide the best base class for my reusable timeline control in WPF", "should_trigger": true},
+  {"query": "When should I use Triggers vs VisualStateManager for my custom WPF button states", "should_trigger": true},
+  {"query": "How to define a DependencyProperty with PropertyChangedCallback in my custom control", "should_trigger": false},
+  {"query": "Implementing OnApplyTemplate and getting template parts in WPF CustomControl", "should_trigger": false},
+  {"query": "How to create a ControlTemplate for a WPF Button with rounded corners", "should_trigger": false},
+  {"query": "Setting up Generic.xaml for my WPF Custom Control Library project", "should_trigger": false},
+  {"query": "How to organize my WPF solution with separate projects for ViewModels and UI", "should_trigger": false}
+]

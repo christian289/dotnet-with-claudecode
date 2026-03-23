@@ -1,0 +1,12 @@
+[
+  {"query": "FlaUI FindAllDescendants returns empty for my WPF nodes", "should_trigger": true},
+  {"query": "AutomationId is set in XAML but ByAutomationId finds nothing in FlaUI", "should_trigger": true},
+  {"query": "FlaUI can't find Connection elements after connecting nodes in Nodify", "should_trigger": true},
+  {"query": "TextBlock inside ItemsControlItem not showing in FindAllDescendants", "should_trigger": true},
+  {"query": "Shape-based control invisible in UIA automation tree", "should_trigger": true},
+  {"query": "FlaUI drag and drop not working on WPF control", "should_trigger": false},
+  {"query": "How to set up FlaUI with xUnit for WPF testing", "should_trigger": false},
+  {"query": "WPF AutomationPeer implementation for custom control accessibility", "should_trigger": false},
+  {"query": "FlaUI Mouse.Down has no effect on connector", "should_trigger": false},
+  {"query": "How to use VisualTreeHelper.FindChild in WPF", "should_trigger": false}
+]

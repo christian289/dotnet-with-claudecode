@@ -1,0 +1,12 @@
+[
+  {"query": "/make-wpf-converter BoolToVisibilityConverter", "should_trigger": true},
+  {"query": "Generate a WPF IMultiValueConverter class with MarkupExtension pattern", "should_trigger": true},
+  {"query": "/wpf-dev-pack:make-wpf-converter EnumToDescriptionConverter", "should_trigger": true},
+  {"query": "Create a WPF converter that converts null to Visibility.Collapsed with MarkupExtension", "should_trigger": true},
+  {"query": "/make-wpf-converter ColorToBrushConverter multi", "should_trigger": true},
+  {"query": "How to use an existing BooleanToVisibilityConverter in WPF XAML binding", "should_trigger": false},
+  {"query": "Generate a WPF Behavior class for auto-focus on load", "should_trigger": false},
+  {"query": "How to create a MarkupExtension for custom XAML syntax in WPF", "should_trigger": false},
+  {"query": "Using StringFormat in WPF binding instead of creating a converter", "should_trigger": false},
+  {"query": "How to implement MultiBinding with built-in converters in WPF", "should_trigger": false}
+]

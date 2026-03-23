@@ -1,0 +1,12 @@
+[
+  {"query": "How does WPF rendering pipeline work with Measure, Arrange, and Render passes", "should_trigger": true},
+  {"query": "My WPF app is using software rendering instead of hardware acceleration, how to check tier", "should_trigger": true},
+  {"query": "Understanding WPF layout system and why MeasureOverride is called before ArrangeOverride", "should_trigger": true},
+  {"query": "How to check if WPF is using Tier 0, 1, or 2 hardware acceleration on my machine", "should_trigger": true},
+  {"query": "Why does my WPF custom control layout break and how does the rendering pipeline process it", "should_trigger": true},
+  {"query": "Using DrawingContext for high-performance rendering of many shapes in WPF", "should_trigger": false},
+  {"query": "How to optimize WPF app performance with UI virtualization", "should_trigger": false},
+  {"query": "WPF memory leak diagnosis and Freezable optimization", "should_trigger": false},
+  {"query": "How to implement MeasureOverride and ArrangeOverride in a custom Panel", "should_trigger": false},
+  {"query": "WPF Dispatcher priority system and threading patterns", "should_trigger": false}
+]

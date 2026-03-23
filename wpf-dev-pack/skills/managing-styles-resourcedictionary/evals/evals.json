@@ -1,0 +1,12 @@
+[
+  {"query": "How to use BasedOn to inherit from default WPF Button style and add custom setters", "should_trigger": true},
+  {"query": "Organizing WPF styles in separate ResourceDictionary files and merging them", "should_trigger": true},
+  {"query": "When should I use StaticResource vs DynamicResource for WPF style references", "should_trigger": true},
+  {"query": "Building a WPF theme system with switchable ResourceDictionary at runtime", "should_trigger": true},
+  {"query": "How to merge multiple ResourceDictionary XAML files in App.xaml MergedDictionaries", "should_trigger": true},
+  {"query": "How to create a ControlTemplate for completely changing a WPF control appearance", "should_trigger": false},
+  {"query": "Organizing Generic.xaml with individual control style files for Custom Control Library", "should_trigger": false},
+  {"query": "How to define DataTemplate for ViewModel-View mapping in WPF", "should_trigger": false},
+  {"query": "WPF style not applying to controls inside ItemsControl DataTemplate", "should_trigger": false},
+  {"query": "How to use implicit vs explicit styles in WPF", "should_trigger": false}
+]

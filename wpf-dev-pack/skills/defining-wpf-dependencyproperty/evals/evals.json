@@ -1,0 +1,12 @@
+[
+  {"query": "How to define a DependencyProperty with PropertyChangedCallback in my WPF custom control", "should_trigger": true},
+  {"query": "Creating an attached property for setting grid column span in WPF", "should_trigger": true},
+  {"query": "My DependencyProperty default value isn't being applied, Register metadata seems wrong", "should_trigger": true},
+  {"query": "How to add CoerceValueCallback and ValidateValueCallback to a WPF DependencyProperty", "should_trigger": true},
+  {"query": "I need a bindable property on my custom control that supports two-way data binding in WPF", "should_trigger": true},
+  {"query": "How to use ObservableProperty attribute in CommunityToolkit.Mvvm ViewModel", "should_trigger": false},
+  {"query": "Creating a CLR property wrapper for my WPF control in code-behind", "should_trigger": false},
+  {"query": "WPF binding not updating when property changes in ViewModel", "should_trigger": false},
+  {"query": "How to define StyledProperty in AvaloniaUI custom control", "should_trigger": false},
+  {"query": "Implementing INotifyPropertyChanged in a WPF model class", "should_trigger": false}
+]

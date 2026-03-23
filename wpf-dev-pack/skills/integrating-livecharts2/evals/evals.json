@@ -1,0 +1,12 @@
+[
+  {"query": "How to add a LiveCharts2 CartesianChart with line series to my WPF application", "should_trigger": true},
+  {"query": "Creating a real-time updating dashboard with LiveCharts2 PieChart in WPF", "should_trigger": true},
+  {"query": "How to configure LiveCharts2 with SkiaSharp rendering backend in WPF project", "should_trigger": true},
+  {"query": "Building a bar chart with multiple series using LiveCharts2 in WPF MVVM", "should_trigger": true},
+  {"query": "LiveCharts2 chart not rendering in WPF, just shows blank area", "should_trigger": true},
+  {"query": "How to create a chart using OxyPlot library in WPF application", "should_trigger": false},
+  {"query": "Building a custom chart by drawing on WPF Canvas with Shape elements", "should_trigger": false},
+  {"query": "How to render real-time data visualization with DrawingVisual in WPF", "should_trigger": false},
+  {"query": "Creating data visualization dashboard with D3.js in web application", "should_trigger": false},
+  {"query": "How to display tabular data with grouping in WPF DataGrid", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a LinearGradientBrush with multiple gradient stops in WPF XAML", "should_trigger": true},
+  {"query": "I need a RadialGradientBrush that creates a spotlight effect on my WPF control", "should_trigger": true},
+  {"query": "Using VisualBrush to create a reflection effect of a control in WPF", "should_trigger": true},
+  {"query": "How to tile an image as background using ImageBrush with TileMode in WPF", "should_trigger": true},
+  {"query": "Creating a diagonal gradient brush from top-left to bottom-right for a WPF Border", "should_trigger": true},
+  {"query": "How to change SolidColorBrush color dynamically from ViewModel binding", "should_trigger": false},
+  {"query": "WPF color picker control implementation for selecting colors", "should_trigger": false},
+  {"query": "Freezing brushes and pens for WPF rendering performance", "should_trigger": false},
+  {"query": "How to define a color resource in ResourceDictionary and reference with StaticResource", "should_trigger": false},
+  {"query": "Drawing shapes with Pen and Brush using DrawingContext in WPF", "should_trigger": false}
+]

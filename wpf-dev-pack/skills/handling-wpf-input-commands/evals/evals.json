@@ -1,0 +1,12 @@
+[
+  {"query": "How to create keyboard shortcut Ctrl+S for Save command using InputBinding in WPF", "should_trigger": true},
+  {"query": "Implementing RoutedCommand with CommandBinding for Undo/Redo in my WPF app", "should_trigger": true},
+  {"query": "How to bind menu item commands with keyboard gestures in WPF XAML", "should_trigger": true},
+  {"query": "Custom ICommand implementation for WPF with CanExecute and keyboard shortcut", "should_trigger": true},
+  {"query": "My WPF KeyBinding for Ctrl+Z doesn't fire when focus is in TextBox", "should_trigger": true},
+  {"query": "How to implement RelayCommand with CommunityToolkit.Mvvm in ViewModel", "should_trigger": false},
+  {"query": "WPF Button.Command binding to ViewModel not executing on click", "should_trigger": false},
+  {"query": "Handling PreviewKeyDown event in WPF for custom text input filtering", "should_trigger": false},
+  {"query": "How to create a context menu with commands in WPF DataGrid", "should_trigger": false},
+  {"query": "Using EventToCommand behavior to bind events to ViewModel commands", "should_trigger": false}
+]

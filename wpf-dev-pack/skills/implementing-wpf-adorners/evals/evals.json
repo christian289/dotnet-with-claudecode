@@ -1,0 +1,12 @@
+[
+  {"query": "How to create a resize grip adorner for selected elements in WPF designer", "should_trigger": true},
+  {"query": "Implementing a watermark adorner that shows placeholder text in empty TextBox in WPF", "should_trigger": true},
+  {"query": "How to add drag handles around a selected item using AdornerLayer in WPF", "should_trigger": true},
+  {"query": "My adorner is not showing up, AdornerLayer.GetAdornerLayer returns null in WPF", "should_trigger": true},
+  {"query": "Creating a selection rectangle adorner with resize corners for WPF Canvas items", "should_trigger": true},
+  {"query": "How to show validation error icon next to a TextBox using Validation.ErrorTemplate", "should_trigger": false},
+  {"query": "Implementing drag and drop between ListBox items in WPF", "should_trigger": false},
+  {"query": "How to draw overlay graphics on top of an Image control in WPF", "should_trigger": false},
+  {"query": "Creating a tooltip that follows the mouse cursor in WPF", "should_trigger": false},
+  {"query": "How to use Popup control to show a floating panel in WPF", "should_trigger": false}
+]

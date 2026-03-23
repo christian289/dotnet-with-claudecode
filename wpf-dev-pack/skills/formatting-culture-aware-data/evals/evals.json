@@ -1,0 +1,12 @@
+[
+  {"query": "How to format currency differently for Korean Won and US Dollar in WPF TextBlock", "should_trigger": true},
+  {"query": "Date format showing MM/dd/yyyy but I need it to change based on user locale in WPF", "should_trigger": true},
+  {"query": "Displaying numbers with culture-specific thousand separators in WPF data binding", "should_trigger": true},
+  {"query": "My WPF app needs to show dates in Japanese calendar format for ja-JP culture", "should_trigger": true},
+  {"query": "How to use StringFormat with CultureInfo in WPF binding for localized number display", "should_trigger": true},
+  {"query": "How to localize WPF application strings using resource files and satellite assemblies", "should_trigger": false},
+  {"query": "Implementing Right-to-Left layout for Arabic language support in WPF", "should_trigger": false},
+  {"query": "WPF IValueConverter to format a DateTime to relative time like '3 hours ago'", "should_trigger": false},
+  {"query": "How to parse a decimal number from user input in different cultures", "should_trigger": false},
+  {"query": "Setting Thread.CurrentThread.CurrentCulture in .NET application startup", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to set up Nodify NodifyEditor for building a node graph editor in WPF", "should_trigger": true},
+  {"query": "Creating a visual scripting editor with Nodify nodes and connections in WPF MVVM", "should_trigger": true},
+  {"query": "How to implement custom Node, Connector, and Connection controls with Nodify in WPF", "should_trigger": true},
+  {"query": "Building a workflow editor with draggable nodes and connection lines using Nodify", "should_trigger": true},
+  {"query": "Nodify connector not creating connections when dragging between nodes in WPF", "should_trigger": true},
+  {"query": "How to create a flowchart diagram with connected boxes in WPF Canvas", "should_trigger": false},
+  {"query": "Implementing a state machine visualizer in WPF with custom controls", "should_trigger": false},
+  {"query": "How to draw connected lines between UI elements in WPF", "should_trigger": false},
+  {"query": "Building a graph data structure with adjacency list in C#", "should_trigger": false},
+  {"query": "How to implement drag and drop for items on a WPF Canvas", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to animate opacity fade-in using DoubleAnimation and Storyboard in WPF", "should_trigger": true},
+  {"query": "Creating a smooth slide-in transition for a panel using ThicknessAnimation in WPF", "should_trigger": true},
+  {"query": "I want to add an EasingFunction like BounceEase to my WPF button click animation", "should_trigger": true},
+  {"query": "How to trigger a color animation on MouseEnter for a WPF Border using EventTrigger", "should_trigger": true},
+  {"query": "Implementing a loading spinner rotation animation with RepeatBehavior.Forever in WPF", "should_trigger": true},
+  {"query": "How to use VisualStateManager to switch between states in WPF CustomControl", "should_trigger": false},
+  {"query": "WPF DataTrigger to change background when IsSelected is true", "should_trigger": false},
+  {"query": "How to implement smooth scrolling in a WPF ScrollViewer", "should_trigger": false},
+  {"query": "CompositionTarget.Rendering for game loop animation in WPF", "should_trigger": false},
+  {"query": "CSS transition equivalent in WPF for hover effects", "should_trigger": false}
+]

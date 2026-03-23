@@ -1,0 +1,12 @@
+[
+  {"query": "How to use EventTrigger and InvokeCommandAction from Microsoft.Xaml.Behaviors.Wpf in XAML", "should_trigger": true},
+  {"query": "Implementing EventToCommand pattern to bind Loaded event to ViewModel command in WPF", "should_trigger": true},
+  {"query": "How to add interactivity to XAML without code-behind using Interaction.Triggers", "should_trigger": true},
+  {"query": "Creating a reusable behavior that validates TextBox input in WPF using XAML behaviors", "should_trigger": true},
+  {"query": "How to use CallMethodAction and ChangePropertyAction from Microsoft.Xaml.Behaviors in WPF", "should_trigger": true},
+  {"query": "Generating a WPF Behavior<T> class with /make-wpf-behavior command", "should_trigger": false},
+  {"query": "How to use WPF DataTrigger to change style based on bound property value", "should_trigger": false},
+  {"query": "Implementing ICommand with RelayCommand in WPF ViewModel", "should_trigger": false},
+  {"query": "How to handle PreviewMouseDown event in WPF code-behind", "should_trigger": false},
+  {"query": "Using attached properties for custom behavior on WPF controls", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to publish my WPF application for distribution to end users", "should_trigger": true},
+  {"query": "What installer options are available for packaging a WPF desktop app", "should_trigger": true},
+  {"query": "How to create an MSIX package for my WPF application deployment", "should_trigger": true},
+  {"query": "I need to deploy my WPF app with auto-update support, which installer should I use", "should_trigger": true},
+  {"query": "dotnet publish for WPF app, should I use self-contained or framework-dependent", "should_trigger": true},
+  {"query": "How to embed PDB symbols into my published WPF executable", "should_trigger": false},
+  {"query": "Setting up CI/CD pipeline for .NET application in GitHub Actions", "should_trigger": false},
+  {"query": "How to sign my WPF application with a code signing certificate", "should_trigger": false},
+  {"query": "Migrating WPF app from .NET Framework to .NET 8", "should_trigger": false},
+  {"query": "How to create a portable .NET console application", "should_trigger": false}
+]

@@ -1,0 +1,12 @@
+[
+  {"query": "How to organize a WPF solution with separate projects for ViewModels, Services, and UI layers", "should_trigger": true},
+  {"query": "Best project structure for a large WPF application following Clean Architecture", "should_trigger": true},
+  {"query": "What naming conventions should I use for WPF project layers like .Core, .UI, .WpfApp", "should_trigger": true},
+  {"query": "Setting up a WPF solution with proper layer separation and project references", "should_trigger": true},
+  {"query": "How to structure a WPF MVVM solution so ViewModel project doesn't reference UI assemblies", "should_trigger": true},
+  {"query": "Scaffolding a complete WPF project from scratch with /make-wpf-project", "should_trigger": false},
+  {"query": "How to set up dependency injection in a WPF application", "should_trigger": false},
+  {"query": "Organizing XAML ResourceDictionary files and Generic.xaml", "should_trigger": false},
+  {"query": "How to create a .NET solution with multiple projects in Visual Studio", "should_trigger": false},
+  {"query": "Designing an AvaloniaUI project structure with proper layer separation", "should_trigger": false}
+]

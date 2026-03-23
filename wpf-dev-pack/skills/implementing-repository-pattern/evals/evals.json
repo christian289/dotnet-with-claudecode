@@ -1,0 +1,12 @@
+[
+  {"query": "How to implement Repository pattern with Service Layer for data access in .NET", "should_trigger": true},
+  {"query": "Creating a generic repository interface with CRUD operations for Entity Framework", "should_trigger": true},
+  {"query": "How to separate data access logic from business logic using repository pattern in C#", "should_trigger": true},
+  {"query": "Implementing Unit of Work pattern with multiple repositories in .NET", "should_trigger": true},
+  {"query": "My ViewModel directly accesses DbContext, need to refactor with repository pattern", "should_trigger": true},
+  {"query": "How to set up Entity Framework Core DbContext with migrations in .NET", "should_trigger": false},
+  {"query": "Implementing CQRS pattern with separate read and write models", "should_trigger": false},
+  {"query": "How to configure dependency injection for services in .NET application", "should_trigger": false},
+  {"query": "Writing unit tests for data access layer with in-memory database", "should_trigger": false},
+  {"query": "How to use Dapper micro-ORM for high-performance queries in .NET", "should_trigger": false}
+]
