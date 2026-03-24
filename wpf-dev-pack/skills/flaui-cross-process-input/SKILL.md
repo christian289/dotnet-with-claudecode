@@ -1,5 +1,5 @@
 ---
-description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, or Keyboard.Press breaks the next mouse gesture. Covers stuck-key diagnosis, ReleaseAllKeys pattern, SetCursorPos vs SendInput hit-test issues, and drag interpolation tuning."
+description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, or canvas drag selection hits the wrong position. Covers stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, SetCursorPos vs SendInput hit-test issues, drag interpolation tuning, and UIA BoundingRectangle-based coordinate calculation."
 ---
 
 # FlaUI Cross-Process Input for WPF
@@ -223,6 +223,113 @@ var mid = new Point(
     Math.Min(source.Y, target.Y) - 50); // offset above
 ```
 
+## Problem 4: ReleaseAllKeys Sends Non-Modifier Key-Up That Breaks Gesture Matching
+
+When `ReleaseAllKeys()` sends key-up for non-modifier keys like `VK_DELETE (0x2E)`, the target WPF process receives a DELETE key-up event. Controls that check `Keyboard.IsKeyDown()` during `MouseGesture.Matches()` (e.g., Nodify's `IsAnyKeyPressed()`) may see transient key state during this processing window, causing the next mouse gesture to fail silently.
+
+**Symptoms:**
+- `ReleaseAllKeys()` before a mouse click causes a slight "drag" or "pan" effect instead of a clean click
+- Node selection works when clicking manually but fails after `ReleaseAllKeys()` in FlaUI
+- The issue is intermittent and timing-dependent
+
+**Root cause:** Nodify's `MouseGesture.MatchesKeyboard()` for plain LeftClick checks `!IsAnyKeyPressed()`. A stale DELETE key-up in the OS message queue makes this return `true` during the critical mouse-down window.
+
+**Fix — separate modifier-only release:**
+
+```csharp
+/// <summary>
+/// Releases only modifier keys (Ctrl, Shift, Alt).
+/// Non-modifier keys (DELETE, ESCAPE, etc.) are excluded because their
+/// key-up events can create transient states that break gesture matching
+/// in controls that check IsAnyKeyPressed() during mouse events.
+/// </summary>
+public static void ReleaseModifierKeys()
+{
+    byte[] modifierKeys =
+    [
+        0x11, // VK_CONTROL
+        0x10, // VK_SHIFT
+        0x12, // VK_MENU (Alt)
+    ];
+
+    foreach (byte vk in modifierKeys)
+    {
+        keybd_event(vk, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+    }
+}
+```
+
+**When to use each:**
+
+| Method | Use when |
+|--------|----------|
+| `ReleaseAllKeys()` + **500ms** delay | After `Keyboard.Press(ESCAPE)` or `Keyboard.Press(DELETE)` left keys stuck — needs time for all key states to settle |
+| `ReleaseModifierKeys()` + **200ms** delay | Between keyboard and mouse operations where only Ctrl/Shift/Alt may be stuck — avoids injecting non-modifier key-up noise |
+
+## Problem 5: Keyboard.Press Leaves Keys Permanently Down
+
+FlaUI's `Keyboard.Press(key)` sends **key-down only** — it does NOT send key-up. The key remains "pressed" in the OS input state until explicitly released. This accumulates across test steps, leaving multiple keys stuck.
+
+**Symptoms:**
+- After `ResetEditorState()` calls `Keyboard.Press(ESCAPE)` twice, VK_ESCAPE stays pressed
+- After `ClearDesigner()` calls `Keyboard.Press(DELETE)`, VK_DELETE stays pressed
+- Subsequent mouse gestures fail because `IsAnyKeyPressed()` returns `true`
+
+**Fix — use `Keyboard.Type()` instead of `Keyboard.Press()`:**
+
+```csharp
+// BAD — key-down only, DELETE stays pressed
+Keyboard.Press(VirtualKeyShort.DELETE);
+
+// GOOD — sends key-down + key-up, DELETE is properly released
+Keyboard.Type(VirtualKeyShort.DELETE);
+```
+
+**FlaUI keyboard method comparison:**
+
+| Method | Sends | Key state after |
+|--------|-------|-----------------|
+| `Keyboard.Press(key)` | key-down only | Key stays **pressed** |
+| `Keyboard.Release(key)` | key-up only | Key released |
+| `Keyboard.Type(key)` | key-down + key-up | Key released |
+| `Keyboard.TypeSimultaneously(keys)` | all down, then all up (reverse order) | All released |
+
+**Rule:** Always use `Keyboard.Type()` for single keystrokes. Reserve `Keyboard.Press()` + `Keyboard.Release()` only for held-key scenarios (e.g., Ctrl+Click).
+
+## Problem 6: Canvas Coordinates Must Use UIA BoundingRectangle, Not Designer Bounds
+
+When calculating positions on a NodifyEditor canvas for drag selection, using the editor control's screen bounds (`designer.BoundingRectangle`) as the origin is incorrect. NodifyEditor uses a virtual canvas with viewport offset — the first card at grid position (0,0) may not align with the editor's top-left screen coordinate.
+
+**Symptoms:**
+- Drag selection rectangle starts at the wrong position
+- Selection rectangle covers the intended area visually but selects nothing
+- The same test works when cards happen to be at the viewport origin
+
+**Fix — calculate positions from actual node UIA bounding rectangles:**
+
+```csharp
+// BAD — assumes viewport origin equals editor top-left
+var designerBounds = designer.BoundingRectangle;
+var selectionStart = new Point(
+    designerBounds.Left + CellWidth + 50,
+    designerBounds.Top + CellPitchY * 2);
+
+// GOOD — uses actual node screen positions (viewport-independent)
+var nodes = FindNodesByNameSortedByPosition(designer, "InputMethod2DFile");
+var lastNodeBounds = nodes[^1].BoundingRectangle;
+var firstNodeBounds = nodes[0].BoundingRectangle;
+
+// Start: below-right of last node (guaranteed empty canvas)
+var selectionStart = new Point(
+    lastNodeBounds.Right + 30,
+    lastNodeBounds.Bottom + 30);
+
+// End: center of first node
+var selectionEnd = new Point(
+    firstNodeBounds.Left + firstNodeBounds.Width / 2,
+    firstNodeBounds.Top + firstNodeBounds.Height / 2);
+```
+
 ## Quick Reference
 
 | Scenario | Action |
@@ -233,6 +340,10 @@ var mid = new Point(
 | Drag between two points | 3-5 intermediate `SendInput(MOVE)` steps, `Thread.Sleep(50)` between each |
 | Drag causes adorner flickering | Fewer steps, longer sleep, or route the path around interactive zones |
 | First click on background window | `SetForegroundWindow` via `AttachThreadInput` — the first click activates the window without reaching the control |
+| `ReleaseAllKeys` causes pan/drag side effect | Use `ReleaseModifierKeys()` (Ctrl/Shift/Alt only) to avoid non-modifier key-up noise |
+| Key stays pressed after `Keyboard.Press()` | Use `Keyboard.Type()` (down+up) instead of `Keyboard.Press()` (down only) |
+| Canvas drag selection at wrong position | Calculate coordinates from node `BoundingRectangle`, not editor control bounds |
+| `ReleaseAllKeys` before gesture, need all keys cleared | `ReleaseAllKeys()` + `Thread.Sleep(500)` — longer delay for non-modifier key states to settle |
 
 ## Diagnostic Checklist
 
@@ -243,3 +354,6 @@ When a FlaUI mouse gesture fails silently on a WPF control, check these in order
 3. **`ClickCount`** — Must be 1 for single-click gestures. Cross-process timing can produce 0 or 2.
 4. **Hit test target** — `VisualTreeHelper.HitTest()` in `PreviewMouseDown` to verify the correct element is under the cursor.
 5. **Correct binary** — When using git worktrees or separate build outputs, verify the test launches the exe that contains your changes.
+6. **Press vs Type** — Audit all `Keyboard.Press()` calls. Each one leaves a key pressed. Use `Keyboard.Type()` for single keystrokes.
+7. **Canvas coordinates** — Never assume viewport origin equals editor control top-left. Use node `BoundingRectangle` from UIA as position anchors.
+8. **ReleaseAllKeys delay** — 200ms is enough after `ReleaseModifierKeys()`. `ReleaseAllKeys()` needs 500ms because non-modifier key-up events take longer to settle across processes.
