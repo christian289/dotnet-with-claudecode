@@ -1,5 +1,5 @@
 ---
-description: "Integrates Nodify library for building node-based editors in WPF with MVVM. Use when creating visual scripting, workflow editors, state machines, or any node graph UI with NodifyEditor, Node, Connector, and Connection controls."
+description: "Integrates Nodify library for building node-based editors in WPF with MVVM. Use when creating visual scripting, workflow editors, state machines, or any node graph UI with NodifyEditor, Node, Connector, and Connection controls. Covers EditorGestures configuration, multi-selection with CanSelectMultipleItems, SelectedItems null pitfall, keyboard event handling via Window PreviewKeyDown Behavior pattern, and ItemContainerGenerator-based selection state reading."
 ---
 
 # Nodify Node-Based Editor Guide
@@ -226,7 +226,152 @@ public sealed partial class EditorViewModel : ObservableObject
                            Target="{Binding Target.Anchor}" />
 ```
 
-## 6. Common Mistakes
+## 6. EditorGestures Configuration
+
+`EditorGestures.Mappings`으로 마우스/키보드 제스처를 커스터마이징:
+
+```csharp
+// App 초기화 시 (App.xaml.cs 등)
+using Nodify.Interactivity;
+
+// 줌: Ctrl + 마우스 휠
+EditorGestures.Mappings.Editor.ZoomModifierKey = ModifierKeys.Control;
+
+// 패닝: Ctrl + 좌클릭 (기본값: 우클릭)
+EditorGestures.Mappings.Editor.Pan.Value = new MouseGesture(MouseAction.LeftClick, ModifierKeys.Control);
+
+// 선택 비활성화 (드래그 사각형 선택 끄기)
+EditorGestures.Mappings.Editor.Selection.Apply(EditorGestures.SelectionGestures.None);
+
+// 아이템 컨테이너 선택 제스처 (기본값)
+// Replace: LeftClick           → 클릭한 노드만 선택
+// Append:  Shift+LeftClick     → 기존 선택에 추가
+// Invert:  Ctrl+LeftClick      → 선택 반전
+// Remove:  Alt+LeftClick       → 선택에서 제거
+
+// 개별 해제 가능:
+EditorGestures.Mappings.ItemContainer.Selection.Append.Unbind();
+EditorGestures.Mappings.ItemContainer.CancelAction.Unbind();
+```
+
+**주의:** Pan 제스처를 `Ctrl+LeftClick`으로 설정하면 기본 `Invert` 선택 제스처와 충돌. 필요 시 `Invert`를 Unbind하거나 다른 조합으로 변경.
+
+## 7. Multi-Selection
+
+### XAML 설정
+
+```xml
+<nodify:NodifyEditor CanSelectMultipleItems="True"
+                     SelectedItem="{Binding SelectedNode}"
+                     ... />
+```
+
+### SelectedItems는 null — 사용 금지
+
+`NodifyEditor.SelectedItems`는 별도 초기화 없이 **null을 반환**. 직접 접근하면 `NullReferenceException` 또는 `ArgumentNullException` 발생:
+
+```csharp
+// BAD — NullReferenceException
+var count = editor.SelectedItems.Count;
+
+// BAD — ArgumentNullException (LINQ)
+var nodes = editor.SelectedItems.OfType<INodeItem>().ToList();
+```
+
+### 선택 상태 읽기 — ItemContainerGenerator 사용
+
+```csharp
+private List<INodeItem> GetSelectedNodes(NodifyEditor editor)
+{
+    var selectedNodes = new List<INodeItem>();
+
+    for (int i = 0; i < editor.Items.Count; i++)
+    {
+        if (editor.Items[i] is not INodeItem node)
+        {
+            continue;
+        }
+
+        var container = editor.ItemContainerGenerator.ContainerFromIndex(i) as ItemContainer;
+
+        if (container is { IsSelected: true })
+        {
+            selectedNodes.Add(node);
+        }
+    }
+
+    // 다중 선택이 없으면 SelectedItem 폴백
+    if (selectedNodes.Count <= 0 && editor.SelectedItem is INodeItem selectedNode)
+    {
+        selectedNodes.Add(selectedNode);
+    }
+
+    return selectedNodes;
+}
+```
+
+## 8. Keyboard Event Handling (Delete Key Pattern)
+
+NodifyEditor는 `OnKeyDown`을 `InputProcessor`에 위임하여 키보드 네비게이션 등에 사용. Delete 키를 커스텀 처리하려면 NodifyEditor보다 먼저 이벤트를 가로채야 함.
+
+**문제:** NodifyEditor는 기본적으로 키보드 포커스를 받지 않으므로, Editor에 직접 `PreviewKeyDown`을 걸어도 동작하지 않음.
+
+**해결:** Behavior에서 부모 Window의 `PreviewKeyDown`을 구독:
+
+```csharp
+public class EditorDeleteBehavior : Behavior<NodifyEditor>
+{
+    public static readonly DependencyProperty DeleteCommandProperty =
+        DependencyProperty.Register(nameof(DeleteCommand), typeof(ICommand),
+            typeof(EditorDeleteBehavior));
+
+    public ICommand? DeleteCommand { get; set; }
+
+    private Window? _parentWindow;
+
+    protected override void OnAttached()
+    {
+        base.OnAttached();
+        AssociatedObject.Loaded += OnLoaded;
+        AssociatedObject.Unloaded += OnUnloaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        _parentWindow = Window.GetWindow(AssociatedObject);
+        if (_parentWindow is not null)
+        {
+            _parentWindow.PreviewKeyDown += OnWindowPreviewKeyDown;
+        }
+    }
+
+    private void OnWindowPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Delete) return;
+
+        // 텍스트 입력 중이면 무시
+        if (Keyboard.FocusedElement is TextBox or TextBoxBase or PasswordBox) return;
+
+        // Editor 영역에서만 처리
+        if (!AssociatedObject.IsMouseOver && !AssociatedObject.IsKeyboardFocusWithin) return;
+
+        var selectedNodes = GetSelectedNodes(AssociatedObject);
+        if (selectedNodes.Count > 0 && DeleteCommand?.CanExecute(selectedNodes) == true)
+        {
+            DeleteCommand.Execute(selectedNodes);
+            e.Handled = true;
+        }
+    }
+    // ... OnUnloaded에서 구독 해제
+}
+```
+
+**스코프 가드 조건:**
+- `IsMouseOver` — 마우스가 Editor 위에 있으면 처리 (키보드 포커스 없어도)
+- `IsKeyboardFocusWithin` — Editor 내부에 포커스가 있으면 처리
+- `TextBox` 체크 — 검색창 등에서 Delete 키가 텍스트 삭제로 동작하도록
+
+## 9. Common Mistakes
 
 | 실수 | 올바른 방법 |
 |------|------------|
