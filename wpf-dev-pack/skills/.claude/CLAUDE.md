@@ -36,7 +36,7 @@
 | `fluentvalidation`, `abstractvalidator`, `rulefor` | `validating-with-fluentvalidation` |
 | `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
-| `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key` | `flaui-cross-process-input` |
+| `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
 | `프로젝트 생성`, `scaffold`, `새 프로젝트` | `make-wpf-project` |
 | `customcontrol 생성`, `컨트롤 생성` | `make-wpf-custom-control` |
 | `usercontrol 생성`, `유저컨트롤` | `make-wpf-usercontrol` |

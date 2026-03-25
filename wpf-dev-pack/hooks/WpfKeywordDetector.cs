@@ -31,22 +31,27 @@ var (skills, agents) = DetectKeywordsAndAgents(prompt);
 
 if (skills.Count > 0 || agents.Count > 0)
 {
-    var messages = new List<string>();
+    Console.WriteLine("========================================");
+    Console.WriteLine("[WPF Dev Pack] Hook Triggered");
 
     if (skills.Count > 0)
     {
-        var skillList = string.Join(", ", skills.Take(5)); // Show max 5
-        var moreCount = skills.Count - 5;
-        var suffix = moreCount > 0 ? $" (+{moreCount} more)" : "";
-        messages.Add($"Skills: {skillList}{suffix}");
+        int shown = 0;
+        foreach (var skill in skills.Take(5))
+        {
+            Console.WriteLine($"  -> /wpf-dev-pack:{skill}");
+            shown++;
+        }
+        if (skills.Count > shown)
+            Console.WriteLine($"  -> (+{skills.Count - shown} more)");
     }
 
     if (agents.Count > 0)
     {
-        messages.Add($"Recommended agents: {string.Join(", ", agents)}");
+        Console.WriteLine($"  Recommended agents: {string.Join(", ", agents)}");
     }
 
-    Console.WriteLine($"[WPF Dev Pack] {string.Join(" | ", messages)}");
+    Console.WriteLine("========================================");
 }
 
 static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(string prompt)
@@ -417,7 +422,58 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["inno setup"] = ["publishing-wpf-apps"],
         ["innosetup"] = ["publishing-wpf-apps"],
         ["auto update"] = ["publishing-wpf-apps"],
-        ["자동 업데이트"] = ["publishing-wpf-apps"]
+        ["자동 업데이트"] = ["publishing-wpf-apps"],
+
+        // ─────────────────────────────────────────────────────────
+        // 3rd Party Libraries
+        // ─────────────────────────────────────────────────────────
+        // FlaUI cross-process input
+        ["flaui"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["cross-process"] = ["flaui-cross-process-input"],
+        ["크로스 프로세스"] = ["flaui-cross-process-input"],
+        ["sendinput"] = ["flaui-cross-process-input"],
+        ["keybd_event"] = ["flaui-cross-process-input"],
+        ["stuck key"] = ["flaui-cross-process-input"],
+        ["키 고착"] = ["flaui-cross-process-input"],
+        ["xunit.runner.json"] = ["flaui-cross-process-input"],
+        ["parallelizetestcollections"] = ["flaui-cross-process-input"],
+        ["parallelizeassembly"] = ["flaui-cross-process-input"],
+
+        // FlaUI element discovery
+        ["findalldescendants"] = ["flaui-wpf-element-discovery"],
+        ["automationid"] = ["flaui-wpf-element-discovery"],
+        ["byautomationid"] = ["flaui-wpf-element-discovery"],
+        ["automationpeer"] = ["flaui-wpf-element-discovery"],
+        ["uia tree"] = ["flaui-wpf-element-discovery"],
+        ["uia 트리"] = ["flaui-wpf-element-discovery"],
+
+        // Nodify
+        ["nodify"] = ["integrating-nodify"],
+        ["nodifyeditor"] = ["integrating-nodify"],
+        ["node graph"] = ["integrating-nodify"],
+        ["노드 에디터"] = ["integrating-nodify"],
+        ["노드 그래프"] = ["integrating-nodify"],
+
+        // WPF-UI (Fluent)
+        ["wpf-ui"] = ["integrating-wpfui-fluent"],
+        ["wpfui"] = ["integrating-wpfui-fluent"],
+        ["fluentwindow"] = ["integrating-wpfui-fluent"],
+        ["navigationview"] = ["integrating-wpfui-fluent"],
+
+        // LiveCharts2
+        ["livecharts"] = ["integrating-livecharts2"],
+        ["cartesianchart"] = ["integrating-livecharts2"],
+        ["piechart"] = ["integrating-livecharts2"],
+
+        // FluentValidation
+        ["fluentvalidation"] = ["validating-with-fluentvalidation"],
+        ["abstractvalidator"] = ["validating-with-fluentvalidation"],
+        ["rulefor"] = ["validating-with-fluentvalidation"],
+
+        // ErrorOr
+        ["erroror"] = ["handling-errors-with-erroror"],
+        ["result pattern"] = ["handling-errors-with-erroror"],
+        ["결과 패턴"] = ["handling-errors-with-erroror"]
     };
 
     // ============================================================

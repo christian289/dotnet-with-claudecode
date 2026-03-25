@@ -1,10 +1,42 @@
 ---
-description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, or canvas drag selection hits the wrong position. Covers stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, SetCursorPos vs SendInput hit-test issues, drag interpolation tuning, and UIA BoundingRectangle-based coordinate calculation."
+description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, canvas drag selection hits the wrong position, or FlaUI xUnit tests fail intermittently due to parallel execution. Covers xUnit parallel test disabling (xunit.runner.json), stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, SetCursorPos vs SendInput hit-test issues, drag interpolation tuning, and UIA BoundingRectangle-based coordinate calculation."
 ---
 
 # FlaUI Cross-Process Input for WPF
 
 When automating WPF applications with FlaUI from a separate test process, mouse gestures can fail silently due to cross-process input delivery timing. This skill covers the two most common causes and their fixes.
+
+## Prerequisite: Disable xUnit Parallel Execution
+
+FlaUI tests control a shared OS resource (mouse, keyboard, window focus). Parallel test execution causes tests to fight over these resources, producing random failures that are impossible to diagnose.
+
+**Create `xunit.runner.json` in the test project root:**
+
+```json
+{
+  "$schema": "https://xunit.net/schema/current/xunit.runner.schema.json",
+  "parallelizeAssembly": false,
+  "parallelizeTestCollections": false
+}
+```
+
+**Add to `.csproj`:**
+
+```xml
+<ItemGroup>
+  <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
+```
+
+| Setting | Purpose |
+|---------|---------|
+| `parallelizeAssembly: false` | 어셈블리 간 병렬 실행 비활성화 — 여러 테스트 프로젝트가 동시에 UI를 조작하는 것을 방지 |
+| | Disables cross-assembly parallelism — prevents multiple test projects from manipulating UI simultaneously |
+| `parallelizeTestCollections: false` | 컬렉션 간 병렬 실행 비활성화 — 하나의 테스트가 끝나야 다음 테스트가 마우스/키보드 사용 |
+| | Disables cross-collection parallelism — ensures one test finishes before the next uses mouse/keyboard |
+
+> **Warning:** 이 설정 없이 FlaUI 테스트를 실행하면, 테스트가 간헐적으로 실패하며 원인을 키보드 stuck key나 hit test 문제로 오진하기 쉽습니다.
+> Without this configuration, FlaUI tests fail intermittently and the root cause is easily misdiagnosed as stuck keys or hit test issues.
 
 ## Problem 1: Stuck Keys Block WPF Gesture Matching
 

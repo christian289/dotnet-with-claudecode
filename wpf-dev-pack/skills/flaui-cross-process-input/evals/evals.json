@@ -4,6 +4,8 @@
   {"query": "FlaUI drag shows adorner flickering rapidly during interpolation", "should_trigger": true},
   {"query": "SendInput click on WPF control is silently ignored", "should_trigger": true},
   {"query": "After FlaUI Keyboard.Press the next mouse click does not work", "should_trigger": true},
+  {"query": "FlaUI xUnit tests pass individually but fail randomly when run together", "should_trigger": true},
+  {"query": "xunit.runner.json parallelizeTestCollections setting for FlaUI UI tests", "should_trigger": true},
   {"query": "I want to implement drag and drop in my WPF app using DragDrop.DoDragDrop", "should_trigger": false},
   {"query": "How to handle PreviewMouseDown event in WPF UserControl", "should_trigger": false},
   {"query": "How to install FlaUI NuGet package and set up a test project", "should_trigger": false},
