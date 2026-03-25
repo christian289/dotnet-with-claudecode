@@ -1,5 +1,5 @@
 {
-  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, code formatting, version release check, and HandMirror API verification reminder (C# file-based apps, .NET 10 required)",
+  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, code formatting, and HandMirror API verification reminder (C# file-based apps, .NET 10 required)",
   "hooks": {
     "PreToolUse": [
       {
@@ -9,18 +9,6 @@
             "type": "command",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/HandMirrorReminder.cs\"",
             "timeout": 5
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/VersionReleaseChecker.cs\"",
-            "timeout": 15
           }
         ]
       }
