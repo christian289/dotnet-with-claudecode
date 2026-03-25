@@ -51,7 +51,30 @@
       "Bash(grep -rl \"^name:\" wpf-dev-pack/skills/*/SKILL.md | wc -l)",
       "Bash(cd /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills && grep -l \"ObservableProperty\\\\|RelayCommand\\\\|ObservableObject\\\\|ViewModel\\\\|MVVM\\\\|ICommand\\\\|DependencyInjection\\\\|navigation\\\\|dialog\" */SKILL.md | sort | uniq)",
       "Bash(grep -rl \"Prism 9 Alternative\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/SKILL.md | wc -l)",
-      "Bash(echo \"=== Rule files ===\" && ls /c/Users/chris/personal/dotnet-with-claudecode/.claude/rules/dotnet/wpf/ && echo \"\" && echo \"=== SKILL.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/SKILL.md | wc -l && echo \"\" && echo \"=== PRISM.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/PRISM.md | wc -l)"
+      "Bash(echo \"=== Rule files ===\" && ls /c/Users/chris/personal/dotnet-with-claudecode/.claude/rules/dotnet/wpf/ && echo \"\" && echo \"=== SKILL.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/SKILL.md | wc -l && echo \"\" && echo \"=== PRISM.md with framework rule reference ===\" && grep -rl \"MVVM Framework Rule\" /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/skills/*/PRISM.md | wc -l)",
+      "Bash(xargs -I {} basename {})",
+      "Bash(xargs grep:*)",
+      "Bash(xargs basename:*)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(git:*)",
+      "Bash(gh release:*)",
+      "Bash(for commit:*)",
+      "Bash(do git:*)",
+      "Bash(while read:*)",
+      "Bash(do echo:*)",
+      "Bash(bc)",
+      "Bash(CLAUDE_PLUGIN_ROOT=\"/c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack\" CLAUDE_PROJECT_DIR=\"/c/Users/chris/personal/dotnet-with-claudecode\" echo '{\"\"\"\"reason\"\"\"\":\"\"\"\"task_complete\"\"\"\"}')",
+      "Bash(export CLAUDE_PLUGIN_ROOT=\"/c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack\")",
+      "Bash(export CLAUDE_PROJECT_DIR=\"/c/Users/chris/personal/dotnet-with-claudecode\")",
+      "WebFetch(domain:forum.dotnetdev.kr)",
+      "Bash(2)",
+      "Bash(mkdir -p /c/Users/chris/personal/dotnet-with-claudecode/.claude/hooks)",
+      "Bash(mv /c/Users/chris/personal/dotnet-with-claudecode/wpf-dev-pack/hooks/VersionReleaseChecker.cs /c/Users/chris/personal/dotnet-with-claudecode/.claude/hooks/VersionReleaseChecker.cs)",
+      "Bash(CLAUDE_PROJECT_DIR=\"/c/Users/chris/personal/dotnet-with-claudecode\" echo '{\"\"\"\"tool_name\"\"\"\":\"\"\"\"Bash\"\"\"\",\"\"\"\"tool_input\"\"\"\":{\"\"\"\"command\"\"\"\":\"\"\"\"git push origin main\"\"\"\"}}')",
+      "Bash(grep -r \"VersionReleaseChecker\\\\|version.*sync\\\\|version.*update\" /c/Users/chris/personal/dotnet-with-claudecode/.claude --include=*.json --include=*.md)",
+      "Bash(python3 -c \"import sys,base64; print\\(base64.b64decode\\(sys.stdin.read\\(\\).strip\\(\\)\\).decode\\(\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(len\\(d.get\\(''''mcpServers'''',{}\\)\\)\\)\")"
     ]
   }
 }

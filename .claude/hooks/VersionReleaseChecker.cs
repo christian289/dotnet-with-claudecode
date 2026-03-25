@@ -3,8 +3,8 @@
 // Version Release Checker Hook (PostToolUse - Bash)
 // Runs after Bash tool execution. Checks if the command was 'git push'
 // and verifies: 1) GitHub release exists for current version
-//               2) README skill count matches actual
-//               3) GitHub profile skill count matches
+//               2) README counts match actual (Skills, Agents, MCP Servers)
+//               3) GitHub profile counts match actual (Skills, Agents, MCP Servers)
 // Input: stdin JSON with "tool_name" and "tool_input" fields
 
 using System.Diagnostics;
@@ -82,7 +82,7 @@ else
     Console.WriteLine($"  ✅ Release exists for '{tagName}'");
 }
 
-// Check 2: README skill count matches actual?
+// Count actual Skills, Agents, MCP Servers
 var skillsDir = Path.Combine(pluginRoot, "skills");
 int actualSkillCount = 0;
 if (Directory.Exists(skillsDir))
@@ -92,59 +92,59 @@ if (Directory.Exists(skillsDir))
         .Count(d => File.Exists(Path.Combine(d, "SKILL.md")));
 }
 
-Console.WriteLine($"  Checking README skill count (actual: {actualSkillCount})...");
-var readmePath = Path.Combine(pluginRoot, "README.md");
-if (File.Exists(readmePath) && actualSkillCount > 0)
+var agentsDir = Path.Combine(pluginRoot, "agents");
+int actualAgentCount = 0;
+if (Directory.Exists(agentsDir))
 {
-    var readmeContent = File.ReadAllText(readmePath);
-    var match = Regex.Match(readmeContent, @"\*\*(\d+)\s+Skills\*\*");
-    if (match.Success && int.TryParse(match.Groups[1].Value, out int readmeCount))
-    {
-        if (readmeCount != actualSkillCount)
-        {
-            Console.WriteLine($"  ❌ README says {readmeCount}, actual is {actualSkillCount}");
-            issues.Add($"[README MISMATCH] README.md says {readmeCount} Skills but actual count is {actualSkillCount}. Update both README.md and README.ko.md.");
-        }
-        else
-        {
-            Console.WriteLine($"  ✅ README skill count matches ({readmeCount})");
-        }
-    }
+    actualAgentCount = Directory.GetFiles(agentsDir, "*.md")
+        .Count(f => !Path.GetFileName(f).StartsWith("README", StringComparison.OrdinalIgnoreCase));
 }
 
-// Check 3: GitHub profile skill count matches?
-if (actualSkillCount > 0)
+var mcpJsonPath = Path.Combine(pluginRoot, ".mcp.json");
+int actualMcpCount = 0;
+if (File.Exists(mcpJsonPath))
 {
-    Console.WriteLine("  Checking GitHub profile skill count...");
-    var profileResult = RunCommand("gh", "api repos/christian289/christian289/contents/README.md --jq .content", projectDir);
-    if (profileResult.exitCode == 0 && !string.IsNullOrWhiteSpace(profileResult.output))
+    try
     {
-        try
-        {
-            var profileContent = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(profileResult.output.Trim()));
-            var profileMatch = Regex.Match(profileContent, @"\*\*(\d+)\s+Skills\*\*");
-            if (profileMatch.Success && int.TryParse(profileMatch.Groups[1].Value, out int profileCount))
-            {
-                if (profileCount != actualSkillCount)
-                {
-                    Console.WriteLine($"  ❌ GitHub profile says {profileCount}, actual is {actualSkillCount}");
-                    issues.Add($"[PROFILE MISMATCH] GitHub profile says {profileCount} Skills but actual count is {actualSkillCount}. Update christian289/christian289 README.md via gh api.");
-                }
-                else
-                {
-                    Console.WriteLine($"  ✅ GitHub profile skill count matches ({profileCount})");
-                }
-            }
-        }
-        catch
-        {
-            Console.WriteLine("  ⚠️ Failed to decode GitHub profile README, skipping.");
-        }
+        using var mcpDoc = JsonDocument.Parse(File.ReadAllText(mcpJsonPath));
+        if (mcpDoc.RootElement.TryGetProperty("mcpServers", out var servers))
+            actualMcpCount = servers.EnumerateObject().Count();
     }
-    else
+    catch { }
+}
+
+Console.WriteLine($"  Actual counts: Skills={actualSkillCount}, Agents={actualAgentCount}, MCP Servers={actualMcpCount}");
+
+// Check 2: README counts match actual?
+var readmePath = Path.Combine(pluginRoot, "README.md");
+if (File.Exists(readmePath))
+{
+    var readmeContent = File.ReadAllText(readmePath);
+    CheckReadmeCount(readmeContent, @"\*\*(\d+)\s+Skills\*\*", actualSkillCount, "Skills", "README.md", issues);
+    CheckReadmeCount(readmeContent, @"\*\*(\d+)\s+Specialized\s+Agents\*\*", actualAgentCount, "Agents", "README.md", issues);
+    CheckReadmeCount(readmeContent, @"\*\*(\d+)\s+MCP\s+Servers?\*\*", actualMcpCount, "MCP Servers", "README.md", issues);
+}
+
+// Check 3: GitHub profile counts match actual?
+Console.WriteLine("  Checking GitHub profile counts...");
+var profileResult = RunCommand("gh", "api repos/christian289/christian289/contents/README.md --jq .content", projectDir);
+if (profileResult.exitCode == 0 && !string.IsNullOrWhiteSpace(profileResult.output))
+{
+    try
     {
-        Console.WriteLine("  ⚠️ Could not fetch GitHub profile README, skipping.");
+        var profileContent = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(profileResult.output.Trim()));
+        CheckReadmeCount(profileContent, @"\*\*(\d+)\s+Skills\*\*", actualSkillCount, "Skills", "GitHub Profile", issues);
+        CheckReadmeCount(profileContent, @"\*\*(\d+)\s+.*?Agents?\*\*", actualAgentCount, "Agents", "GitHub Profile", issues);
+        CheckReadmeCount(profileContent, @"\*\*(\d+)\s+MCP\s+Servers?\*\*", actualMcpCount, "MCP Servers", "GitHub Profile", issues);
     }
+    catch
+    {
+        Console.WriteLine("  ⚠️ Failed to decode GitHub profile README, skipping.");
+    }
+}
+else
+{
+    Console.WriteLine("  ⚠️ Could not fetch GitHub profile README, skipping.");
 }
 
 if (issues.Count > 0)
@@ -159,6 +159,26 @@ else
 }
 
 // --- Helper methods ---
+
+static void CheckReadmeCount(string content, string pattern, int actual, string label, string source, List<string> issues)
+{
+    var match = Regex.Match(content, pattern);
+    if (match.Success && int.TryParse(match.Groups[1].Value, out int found))
+    {
+        if (found != actual)
+        {
+            Console.WriteLine($"  ❌ {source} {label}: says {found}, actual is {actual}");
+            var target = source == "GitHub Profile"
+                ? "Update christian289/christian289 README.md via gh api."
+                : "Update both README.md and README.ko.md.";
+            issues.Add($"[{source.ToUpper().Replace(" ", "_")} MISMATCH] {source} says {found} {label} but actual is {actual}. {target}");
+        }
+        else
+        {
+            Console.WriteLine($"  ✅ {source} {label} matches ({found})");
+        }
+    }
+}
 
 static (int exitCode, string output) RunCommand(string cmd, string args, string workingDir)
 {
