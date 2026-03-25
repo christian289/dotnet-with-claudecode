@@ -53,8 +53,7 @@ var tagName = $"wpf-dev-pack-v{currentVersion}";
 var releaseExists = RunCommand("gh", $"release view {tagName} --repo christian289/dotnet-with-claudecode --json tagName", projectDir);
 if (releaseExists.exitCode != 0)
 {
-    issues.Add($"[RELEASE MISSING] No GitHub release found for tag '{tagName}'. " +
-               $"Create a release with: gh release create {tagName} --title \"wpf-dev-pack v{currentVersion}\" --notes \"...\"");
+    issues.Add($"""[RELEASE MISSING] No GitHub release found for tag '{tagName}'. Create a release with: gh release create {tagName} --title "wpf-dev-pack v{currentVersion}" --notes "..." """);
 }
 
 // Check 2: README skill count matches actual?
@@ -77,8 +76,7 @@ if (File.Exists(readmePath) && actualSkillCount > 0)
     {
         if (readmeCount != actualSkillCount)
         {
-            issues.Add($"[README MISMATCH] README.md says {readmeCount} Skills but actual count is {actualSkillCount}. " +
-                       $"Update both README.md and README.ko.md.");
+            issues.Add($"[README MISMATCH] README.md says {readmeCount} Skills but actual count is {actualSkillCount}. Update both README.md and README.ko.md.");
         }
     }
 }
@@ -98,8 +96,7 @@ if (actualSkillCount > 0)
             {
                 if (profileCount != actualSkillCount)
                 {
-                    issues.Add($"[PROFILE MISMATCH] GitHub profile says {profileCount} Skills but actual count is {actualSkillCount}. " +
-                               $"Update christian289/christian289 README.md via gh api.");
+                    issues.Add($"[PROFILE MISMATCH] GitHub profile says {profileCount} Skills but actual count is {actualSkillCount}. Update christian289/christian289 README.md via gh api.");
                 }
             }
         }
@@ -128,12 +125,10 @@ static void Approve()
 
 static void Block(List<string> issues)
 {
-    var reason = "========================================\\n" +
-                 "[WPF Dev Pack] Version Release Check Failed\\n" +
-                 string.Join("\\n", issues.Select(i => $"  -> {EscapeJson(i)}")) + "\\n" +
-                 "========================================";
+    var issueLines = string.Join("\\n", issues.Select(i => $"  -> {EscapeJson(i)}"));
+    var reason = $"""========================================\n[WPF Dev Pack] Version Release Check Failed\n{issueLines}\n========================================""";
 
-    Console.WriteLine($$$"""{"decision":"block","reason":"{{{reason}}}"}""");
+    Console.WriteLine($$"""{"decision":"block","reason":"{{reason}}"}""");
 }
 
 static string EscapeJson(string s)
