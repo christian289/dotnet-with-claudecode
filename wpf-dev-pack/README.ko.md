@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**77개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
+**78개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -35,7 +35,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **77개 스킬**
+- WPF 전 영역을 다루는 **78개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -335,7 +335,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 ### 📚 카테고리별 스킬
 
 <details>
-<summary><b>🎨 UI & 컨트롤 (15개 스킬)</b></summary>
+<summary><b>🎨 UI & 컨트롤 (19개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -354,6 +354,10 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `binding-enum-command-parameters` | Enum 바인딩 패턴 |
 | `localizing-wpf-applications` | 지역화 |
 | `implementing-wpf-automation` | UI Automation |
+| `configuring-wpf-themeinfo` | ThemeInfo 설정 |
+| `formatting-culture-aware-data` | 문화권 인식 서식 |
+| `implementing-wpf-rtl-support` | RTL 레이아웃 지원 |
+| `localizing-wpf-with-baml` | BAML 지역화 |
 
 </details>
 
@@ -374,7 +378,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>⚡ 성능 & 렌더링 (10개 스킬)</b></summary>
+<summary><b>⚡ 성능 & 렌더링 (11개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -388,6 +392,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `optimizing-wpf-memory` | 메모리 최적화 |
 | `checking-image-bounds-transform` | 이미지 변환 |
 | `navigating-visual-logical-tree` | 트리 탐색 |
+| `creating-graphics-in-code` | C# 동적 그래픽 |
 
 </details>
 
@@ -415,29 +420,33 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🎨 스타일링 & 리소스 (3개 스킬)</b></summary>
+<summary><b>🎨 스타일링 & 리소스 (5개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
 | `managing-styles-resourcedictionary` | 스타일 & 리소스 |
 | `resolving-icon-font-inheritance` | 아이콘 폰트 |
 | `formatting-wpf-csharp-code` | 코드 서식 |
+| `creating-wpf-brushes` | 브러시 패턴 |
+| `creating-wpf-vector-icons` | 벡터 아이콘 |
 
 </details>
 
 <details>
-<summary><b>🔧 애플리케이션 & 스레딩 (3개 스킬)</b></summary>
+<summary><b>🔧 애플리케이션 & 스레딩 (5개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
 | `managing-wpf-application-lifecycle` | 앱 생명주기 |
 | `threading-wpf-dispatcher` | Dispatcher & 스레딩 |
 | `migrating-wpf-to-dotnet` | .NET 마이그레이션 |
+| `embedding-pdb-in-exe` | PDB 임베딩 |
+| `publishing-wpf-apps` | 배포 & 인스톨러 |
 
 </details>
 
 <details>
-<summary><b>📦 서드파티 라이브러리 (6개 스킬)</b></summary>
+<summary><b>📦 서드파티 라이브러리 (7개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -447,11 +456,12 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `handling-errors-with-erroror` | ErrorOr 결과 패턴 (서비스 계층) |
 | `integrating-nodify` | Nodify 노드 기반 에디터 컨트롤 |
 | `flaui-cross-process-input` | FlaUI 크로스 프로세스 입력 보정 |
+| `flaui-wpf-element-discovery` | FlaUI WPF 요소 탐색 문제 해결 |
 
 </details>
 
 <details>
-<summary><b>🔷 .NET 공통 (12개 스킬)</b></summary>
+<summary><b>🔷 .NET 공통 (11개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -527,7 +537,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 77개 스킬
+├── 📁 skills/                 # 78개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (MicrosoftDocs만)
 ├── 📄 README.md

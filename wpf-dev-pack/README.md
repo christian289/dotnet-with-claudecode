@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**77 Skills** · **11 Specialized Agents** · **1 MCP Server**
+**78 Skills** · **11 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -35,7 +35,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **77 Skills** covering all WPF aspects
+- **78 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -335,7 +335,7 @@ Some skills activate without notification:
 ### 📚 Skills by Category
 
 <details>
-<summary><b>🎨 UI & Controls (15 skills)</b></summary>
+<summary><b>🎨 UI & Controls (19 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -354,6 +354,10 @@ Some skills activate without notification:
 | `binding-enum-command-parameters` | Enum binding patterns |
 | `localizing-wpf-applications` | Localization |
 | `implementing-wpf-automation` | UI Automation |
+| `configuring-wpf-themeinfo` | ThemeInfo configuration |
+| `formatting-culture-aware-data` | Culture-aware formatting |
+| `implementing-wpf-rtl-support` | RTL layout support |
+| `localizing-wpf-with-baml` | BAML localization |
 
 </details>
 
@@ -374,7 +378,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>⚡ Performance & Rendering (10 skills)</b></summary>
+<summary><b>⚡ Performance & Rendering (11 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -388,6 +392,7 @@ Some skills activate without notification:
 | `optimizing-wpf-memory` | Memory optimization |
 | `checking-image-bounds-transform` | Image transforms |
 | `navigating-visual-logical-tree` | Tree navigation |
+| `creating-graphics-in-code` | Dynamic graphics in C# |
 
 </details>
 
@@ -415,29 +420,33 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🎨 Styling & Resources (3 skills)</b></summary>
+<summary><b>🎨 Styling & Resources (5 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-styles-resourcedictionary` | Styles & resources |
 | `resolving-icon-font-inheritance` | Icon fonts |
 | `formatting-wpf-csharp-code` | Code formatting |
+| `creating-wpf-brushes` | Brush patterns |
+| `creating-wpf-vector-icons` | Vector icons |
 
 </details>
 
 <details>
-<summary><b>🔧 Application & Threading (3 skills)</b></summary>
+<summary><b>🔧 Application & Threading (5 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-wpf-application-lifecycle` | App lifecycle |
 | `threading-wpf-dispatcher` | Dispatcher & threading |
 | `migrating-wpf-to-dotnet` | .NET migration |
+| `embedding-pdb-in-exe` | PDB embedding |
+| `publishing-wpf-apps` | Publishing & installers |
 
 </details>
 
 <details>
-<summary><b>📦 3rd Party Libraries (6 skills)</b></summary>
+<summary><b>📦 3rd Party Libraries (7 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -447,11 +456,12 @@ Some skills activate without notification:
 | `handling-errors-with-erroror` | ErrorOr result pattern for service layer |
 | `integrating-nodify` | Nodify node-based editor control |
 | `flaui-cross-process-input` | FlaUI cross-process input calibration |
+| `flaui-wpf-element-discovery` | FlaUI element discovery in WPF automation |
 
 </details>
 
 <details>
-<summary><b>🔷 .NET Common (12 skills)</b></summary>
+<summary><b>🔷 .NET Common (11 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -527,7 +537,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 77 Skills
+├── 📁 skills/                 # 78 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
 ├── 📄 README.md
