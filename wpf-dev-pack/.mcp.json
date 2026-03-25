@@ -5,6 +5,11 @@
     "MicrosoftDocs": {
       "type": "http",
       "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "HandMirrorMcp": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": ["HandMirrorMcp@0.1.1", "--yes"]
     }
   }
 }

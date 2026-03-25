@@ -37,15 +37,20 @@
 | `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
 | `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
-| `프로젝트 생성`, `scaffold`, `새 프로젝트` | `make-wpf-project` |
-| `customcontrol 생성`, `컨트롤 생성` | `make-wpf-custom-control` |
-| `usercontrol 생성`, `유저컨트롤` | `make-wpf-usercontrol` |
-| `converter 생성`, `컨버터` | `make-wpf-converter` |
-| `behavior 생성`, `비헤이비어` | `make-wpf-behavior` |
+
+### Scaffolding Keywords
+
+| Keyword | Skill |
+|---------|-------|
+| `create project`, `scaffold`, `new project` | `make-wpf-project` |
+| `create customcontrol`, `generate control` | `make-wpf-custom-control` |
+| `create usercontrol`, `generate usercontrol` | `make-wpf-usercontrol` |
+| `create converter`, `generate converter` | `make-wpf-converter` |
+| `create behavior`, `generate behavior` | `make-wpf-behavior` |
 
 ### Prism 9 Keywords
 
-| Keyword | Skill (PRISM.md 참조) |
+| Keyword | Skill (see PRISM.md) |
 |---------|----------------------|
 | `prism`, `bindablebase`, `delegatecommand` | `implementing-communitytoolkit-mvvm` |
 | `prismapplication`, `icontainerregistry` | `configuring-dependency-injection` |
@@ -75,6 +80,31 @@
 | `publish`, `deploy`, `release` | `publishing-wpf-apps` |
 | `self-contained`, `single-file` | `publishing-wpf-apps` |
 | `installer`, `velopack`, `msix`, `nsis` | `publishing-wpf-apps` |
+
+### HandMirror MCP - .NET API Verification
+
+When querying .NET API/NuGet package information, **also use HandMirrorMcp tools** to reduce hallucinations.
+
+**Trigger condition**: When using context7 or MicrosoftDocs MCP for .NET/NuGet related queries
+
+**Co-usage rules:**
+
+```
+WHEN using context7 or MicrosoftDocs for .NET/NuGet info:
+  ALSO use HandMirrorMcp to verify:
+    - inspect_nuget_package: List namespaces/types in a NuGet package
+    - inspect_nuget_package_type: Get exact method signatures
+    - search_nuget_packages: Search packages by keyword
+    - get_type_info: Inspect local assembly (.dll/.exe) types
+    - explain_build_error: Diagnose CS/NU build errors
+    - analyze_csproj: Analyze project file for issues
+```
+
+**Usage scenarios:**
+- Verify API name casing accuracy in NuGet packages (e.g., SQLite vs Sqlite)
+- Identify correct namespaces for extension methods
+- Check API breaking changes across package versions
+- Diagnose build errors (CS0246, NU1605, etc.) and recommend required packages
 
 ---
 

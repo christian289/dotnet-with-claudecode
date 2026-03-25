@@ -70,21 +70,22 @@ if (missingMcps.Count == 0)
     return;
 
 // Output warning message
-// 경고 메시지 출력
-Console.WriteLine();
-Console.WriteLine("⚠️ [WPF Dev Pack] REQUIRED MCP servers are missing!");
-Console.WriteLine($"⚠️ Missing: {string.Join(", ", missingMcps)}");
-Console.WriteLine();
-Console.WriteLine("❌ The following agents CANNOT be used without these MCPs:");
-Console.WriteLine("   - wpf-architect, wpf-architect-low");
-Console.WriteLine("   - wpf-code-reviewer, wpf-code-reviewer-low");
-Console.WriteLine("   - wpf-control-designer, wpf-xaml-designer");
-Console.WriteLine("   - wpf-mvvm-expert, wpf-data-binding-expert");
-Console.WriteLine("   - wpf-performance-optimizer, serena-initializer");
-Console.WriteLine();
-Console.WriteLine("⚠️ WARNING: If you proceed without installing these MCPs,");
-Console.WriteLine("   agent responses may be INACCURATE or INCOMPLETE.");
-Console.WriteLine();
-Console.WriteLine("📦 Install missing MCPs by adding to ~/.claude/.mcp.json:");
-Console.WriteLine("   See: https://github.com/christian289/dotnet-with-claudecode/tree/main/wpf-dev-pack#required-mcp-dependencies");
-Console.WriteLine();
+Console.WriteLine($$"""
+
+    ⚠️ [WPF Dev Pack] REQUIRED MCP servers are missing!
+    ⚠️ Missing: {{string.Join(", ", missingMcps)}}
+
+    ❌ The following agents CANNOT be used without these MCPs:
+       - wpf-architect, wpf-architect-low
+       - wpf-code-reviewer, wpf-code-reviewer-low
+       - wpf-control-designer, wpf-xaml-designer
+       - wpf-mvvm-expert, wpf-data-binding-expert
+       - wpf-performance-optimizer, serena-initializer
+
+    ⚠️ WARNING: If you proceed without installing these MCPs,
+       agent responses may be INACCURATE or INCOMPLETE.
+
+    📦 Install missing MCPs by adding to ~/.claude/.mcp.json:
+       See: https://github.com/christian289/dotnet-with-claudecode/tree/main/wpf-dev-pack#required-mcp-dependencies
+
+    """);
