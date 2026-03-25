@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "dotnet \".claude/hooks/VersionReleaseChecker.cs\"",
+            "command": "dotnet \"${CLAUDE_PROJECT_DIR}/.claude/hooks/VersionReleaseChecker.cs\"",
             "timeout": 30
           }
         ]
