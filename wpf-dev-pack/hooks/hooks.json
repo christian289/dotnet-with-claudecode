@@ -1,6 +1,18 @@
 {
-  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, and code formatting (C# file-based apps, .NET 10 required)",
+  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, code formatting, and version release check (C# file-based apps, .NET 10 required)",
   "hooks": {
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/VersionReleaseChecker.cs\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "matcher": "*",
