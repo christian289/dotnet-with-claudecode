@@ -37,6 +37,7 @@
 | `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
 | `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
+| `scottplot`, `mousewheel`, `focus`, `modifier` | `scottplot-syncing-modifier-keys-for-mousewheel` |
 
 ### Scaffolding Keywords
 
@@ -120,6 +121,6 @@ WHEN using context7 or MicrosoftDocs for .NET/NuGet info:
 | **Styling & Resources** | `managing-styles-resourcedictionary`, `creating-wpf-brushes`, `creating-wpf-vector-icons` |
 | **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `migrating-wpf-to-dotnet` |
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
-| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input` |
+| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `scottplot-syncing-modifier-keys-for-mousewheel` |
 | **.NET Common** | `handling-async-operations`, `processing-parallel-tasks`, `optimizing-memory-allocation`, `implementing-io-pipelines`, `implementing-pubsub-pattern`, `using-generated-regex` |
 | **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |

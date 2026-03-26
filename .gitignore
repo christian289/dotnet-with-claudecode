@@ -423,3 +423,4 @@ FodyWeavers.xsd
 
 # Serena MCP workspace
 .serena/
+.claude/settings.local.json

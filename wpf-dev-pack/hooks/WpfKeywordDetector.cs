@@ -473,7 +473,8 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         // ErrorOr
         ["erroror"] = ["handling-errors-with-erroror"],
         ["result pattern"] = ["handling-errors-with-erroror"],
-        ["결과 패턴"] = ["handling-errors-with-erroror"]
+        ["결과 패턴"] = ["handling-errors-with-erroror"],
+
     };
 
     // ============================================================
@@ -512,10 +513,29 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["theme"] = "wpf-xaml-designer"
     };
 
-    // Detect skills
+    // ============================================================
+    // COMPOUND KEYWORDS MAPPING (ALL keywords must match)
+    // ============================================================
+    (string[] requiredKeywords, string[] skills)[] compoundKeywordMap =
+    [
+        // ScottPlot — trigger only when scottplot + mousewheel + focus + modifier all present
+        (["scottplot", "mousewheel", "focus", "modifier"], ["scottplot-syncing-modifier-keys-for-mousewheel"])
+    ];
+
+    // Detect skills (single keyword)
     foreach (var (keyword, skills) in keywordSkillMap)
     {
         if (lowerPrompt.Contains(keyword))
+        {
+            foreach (var skill in skills)
+                detectedSkills.Add(skill);
+        }
+    }
+
+    // Detect skills (compound keywords — ALL must match)
+    foreach (var (requiredKeywords, skills) in compoundKeywordMap)
+    {
+        if (requiredKeywords.All(k => lowerPrompt.Contains(k)))
         {
             foreach (var skill in skills)
                 detectedSkills.Add(skill);

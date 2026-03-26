@@ -1,0 +1,12 @@
+[
+  {"query": "wpf-dev-pack 릴리스 해줘", "should_trigger": true},
+  {"query": "release wpf-dev-pack with tag and GitHub release note", "should_trigger": true},
+  {"query": "wpf-dev-pack 새 버전 배포하고 릴리스 노트 작성해줘", "should_trigger": true},
+  {"query": "wpf-dev-pack version bump하고 push, tag, release 다 해줘", "should_trigger": true},
+  {"query": "run VersionReleaseChecker and create GitHub release for wpf-dev-pack", "should_trigger": true},
+  {"query": "wpf-dev-pack에 새로운 스킬을 추가하고 싶어", "should_trigger": false},
+  {"query": "dotnet publish로 WPF 앱 배포하려면 어떻게 해?", "should_trigger": false},
+  {"query": "GitHub Actions CI/CD 파이프라인 설정해줘", "should_trigger": false},
+  {"query": "wpf-dev-pack plugin.json 버전만 수정해줘", "should_trigger": false},
+  {"query": "git tag 목록 보여줘", "should_trigger": false}
+]

@@ -1,16 +1,15 @@
 {
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "dotnet \"${CLAUDE_PROJECT_DIR}/.claude/hooks/VersionReleaseChecker.cs\"",
-            "timeout": 30
-          }
-        ]
-      }
+  "hooks": {},
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(gh:*)",
+      "Bash(git:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(grep:*)",
+      "Bash(dotnet:*)",
+      "Bash(cd:*)"
     ]
   }
 }
