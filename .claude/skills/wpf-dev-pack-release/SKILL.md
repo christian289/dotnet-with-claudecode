@@ -84,6 +84,8 @@ git push origin wpf-dev-pack-v{new-version}
 
 ## Step 7: Create GitHub Release Note
 
+**Scope rule**: Release note must only contain **wpf-dev-pack plugin** changes. Exclude changes to the dotnet-with-claudecode repository root, other plugins, or project-level configurations that are not part of wpf-dev-pack.
+
 Get previous tag and changelog:
 
 ```bash
