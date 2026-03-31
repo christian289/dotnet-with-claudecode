@@ -364,7 +364,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🔗 데이터 바인딩 & MVVM (8개 스킬)</b></summary>
+<summary><b>🔗 데이터 바인딩 & MVVM (7개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -447,7 +447,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>📦 서드파티 라이브러리 (7개 스킬)</b></summary>
+<summary><b>📦 서드파티 라이브러리 (8개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -456,6 +456,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo 브리지 |
 | `handling-errors-with-erroror` | ErrorOr 결과 패턴 (서비스 계층) |
 | `integrating-nodify` | Nodify 노드 기반 에디터 컨트롤 |
+| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot 마우스 휠 줌 수정자 키 동기화 |
 | `flaui-cross-process-input` | FlaUI 크로스 프로세스 입력 보정 |
 | `flaui-wpf-element-discovery` | FlaUI WPF 요소 탐색 문제 해결 |
 
@@ -481,7 +482,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🔄 Prism 9 컴패니언 (13개 PRISM.md 파일) — v1.4.1 신규</b></summary>
+<summary><b>🔄 Prism 9 컴패니언 (13개 PRISM.md 파일)</b></summary>
 
 12개 스킬에 Prism 9 (Community License) 대응 `PRISM.md` 컴패니언 파일을 제공합니다:
 
@@ -505,7 +506,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🧪 테스트 (1개 스킬) — 신규</b></summary>
+<summary><b>🧪 테스트 (1개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|

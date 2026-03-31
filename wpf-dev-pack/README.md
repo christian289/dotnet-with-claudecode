@@ -364,7 +364,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🔗 Data Binding & MVVM (8 skills)</b></summary>
+<summary><b>🔗 Data Binding & MVVM (7 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -447,7 +447,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>📦 3rd Party Libraries (7 skills)</b></summary>
+<summary><b>📦 3rd Party Libraries (8 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -456,6 +456,7 @@ Some skills activate without notification:
 | `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo bridge |
 | `handling-errors-with-erroror` | ErrorOr result pattern for service layer |
 | `integrating-nodify` | Nodify node-based editor control |
+| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot modifier key sync for mouse wheel zoom |
 | `flaui-cross-process-input` | FlaUI cross-process input calibration |
 | `flaui-wpf-element-discovery` | FlaUI element discovery in WPF automation |
 
@@ -481,7 +482,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🔄 Prism 9 Companion (13 PRISM.md files) — NEW in v1.4.1</b></summary>
+<summary><b>🔄 Prism 9 Companion (13 PRISM.md files)</b></summary>
 
 12 skills provide `PRISM.md` companion files with Prism 9 (Community License) equivalents:
 
@@ -505,7 +506,7 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🧪 Testing (1 skill) — NEW</b></summary>
+<summary><b>🧪 Testing (1 skill)</b></summary>
 
 | Skill | Description |
 |-------|-------------|

@@ -14,15 +14,15 @@ Claude Code를 활용한 .NET 개발 튜토리얼
 
 WPF 개발을 위한 Claude Code 확장 팩입니다.
 
-- **57개 스킬**: WPF 개발 패턴, MVVM, CustomControl, 성능 최적화 등
+- **81개 스킬**: WPF 개발 패턴, MVVM, CustomControl, 성능 최적화, 서드파티 라이브러리, 스캐폴딩 등
 - **11개 에이전트**: wpf-architect, wpf-code-reviewer, wpf-control-designer 등
-- **5개 명령어**: `/make-wpf-custom-control`, `/make-wpf-project`, `/make-wpf-converter` 등
+- **1개 MCP 서버**: HandMirrorMcp (.NET 어셈블리/NuGet 검사)
 
 자세한 내용은 [wpf-dev-pack/README.md](./wpf-dev-pack/README.md)를 참조하세요.
 
 ### .claude/skills
 
-AvaloniaUI 전용 스킬:
+#### AvaloniaUI 스킬
 
 - `configuring-avalonia-dependency-injection` - AvaloniaUI DI 설정
 - `designing-avalonia-customcontrol-architecture` - CustomControl 아키텍처
@@ -30,6 +30,19 @@ AvaloniaUI 전용 스킬:
 - `using-avalonia-collectionview` - DataGridCollectionView 패턴
 - `fixing-avaloniaui-radialgradientbrush` - RadialGradientBrush 호환성 수정
 - `converting-html-css-to-wpf-xaml` - HTML/CSS를 WPF XAML로 변환
+
+#### MewUI 프레임워크 스킬
+
+- `building-mewui-apps` - MewUI 앱 설정
+- `creating-mewui-controls` - MewUI 컨트롤 생성
+- `binding-mewui-data` - MewUI 데이터 바인딩
+- `using-mewui-layout` - MewUI 레이아웃 시스템
+- `rendering-mewui-elements` - MewUI 요소 렌더링
+- `navigating-mewui-tree` - MewUI 트리 탐색
+
+#### 프로젝트 관리 스킬
+
+- `wpf-dev-pack-release` - wpf-dev-pack 릴리스 워크플로우
 
 ## 요구사항
 

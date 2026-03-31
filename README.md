@@ -14,15 +14,15 @@ This repository provides skills, rules, and agent configurations for .NET/WPF de
 
 A Claude Code extension pack for WPF development.
 
-- **57 Skills**: WPF development patterns, MVVM, CustomControl, performance optimization, etc.
+- **81 Skills**: WPF development patterns, MVVM, CustomControl, performance optimization, 3rd-party libraries, scaffolding, etc.
 - **11 Agents**: wpf-architect, wpf-code-reviewer, wpf-control-designer, etc.
-- **5 Commands**: `/make-wpf-custom-control`, `/make-wpf-project`, `/make-wpf-converter`, etc.
+- **1 MCP Server**: HandMirrorMcp (.NET assembly/NuGet inspection)
 
 See [wpf-dev-pack/README.md](./wpf-dev-pack/README.md) for details.
 
 ### .claude/skills
 
-AvaloniaUI-specific skills:
+#### AvaloniaUI Skills
 
 - `configuring-avalonia-dependency-injection` - AvaloniaUI DI configuration
 - `designing-avalonia-customcontrol-architecture` - CustomControl architecture
@@ -30,6 +30,19 @@ AvaloniaUI-specific skills:
 - `using-avalonia-collectionview` - DataGridCollectionView patterns
 - `fixing-avaloniaui-radialgradientbrush` - RadialGradientBrush compatibility fix
 - `converting-html-css-to-wpf-xaml` - HTML/CSS to WPF XAML conversion
+
+#### MewUI Framework Skills
+
+- `building-mewui-apps` - MewUI application setup
+- `creating-mewui-controls` - MewUI control creation
+- `binding-mewui-data` - MewUI data binding
+- `using-mewui-layout` - MewUI layout system
+- `rendering-mewui-elements` - MewUI element rendering
+- `navigating-mewui-tree` - MewUI tree navigation
+
+#### Project Management Skills
+
+- `wpf-dev-pack-release` - wpf-dev-pack release workflow
 
 ## Requirements
 
