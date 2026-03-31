@@ -11,32 +11,38 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-var input = Console.In.ReadToEnd();
-if (string.IsNullOrWhiteSpace(input))
-    return;
+// Support two modes:
+// 1. Hook mode (default): reads stdin JSON, only runs for "git push" commands
+// 2. Standalone mode (--standalone arg): skips stdin check, runs immediately
+var standalone = args.Length > 0 && args[0] == "--standalone";
 
-// Parse tool input to check if this was a git push command
-string? command = null;
-try
+if (!standalone)
 {
-    using var doc = JsonDocument.Parse(input);
-    if (doc.RootElement.TryGetProperty("tool_input", out var ti))
+    var input = Console.In.ReadToEnd();
+    if (string.IsNullOrWhiteSpace(input))
+        return;
+
+    string? command = null;
+    try
     {
-        if (ti.TryGetProperty("command", out var cmd))
-            command = cmd.GetString();
+        using var doc = JsonDocument.Parse(input);
+        if (doc.RootElement.TryGetProperty("tool_input", out var ti))
+        {
+            if (ti.TryGetProperty("command", out var cmd))
+                command = cmd.GetString();
+        }
     }
-}
-catch
-{
-    return;
-}
+    catch
+    {
+        return;
+    }
 
-if (string.IsNullOrWhiteSpace(command))
-    return;
+    if (string.IsNullOrWhiteSpace(command))
+        return;
 
-// Only run for git push commands
-if (!command.Contains("git push", StringComparison.OrdinalIgnoreCase))
-    return;
+    if (!command.Contains("git push", StringComparison.OrdinalIgnoreCase))
+        return;
+}
 
 var projectDir = Environment.GetEnvironmentVariable("CLAUDE_PROJECT_DIR")
     ?? Environment.CurrentDirectory;

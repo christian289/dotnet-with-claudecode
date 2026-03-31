@@ -5,67 +5,80 @@ description: "Executes the wpf-dev-pack release workflow: runs VersionReleaseChe
 # wpf-dev-pack Release Workflow
 
 Owner-only release tool for the wpf-dev-pack plugin.
+Execute all steps sequentially without asking for confirmation at each step.
 
-## Workflow
-
-Run the following steps in order:
-
-### Step 0: Verify GitHub Account
-
-Ensure `christian289` is the active GitHub account:
+## Step 0: Verify GitHub Account
 
 ```bash
 gh auth status
 ```
 
-If not active, switch:
+If `christian289` is not the active account:
 
 ```bash
 gh auth switch --user christian289
 ```
 
-### Step 1: Run VersionReleaseChecker
-
-Execute the version release checker to verify consistency:
+## Step 1: Read Version
 
 ```bash
-dotnet ".claude/skills/wpf-dev-pack-release/scripts/VersionReleaseChecker.cs"
+cat wpf-dev-pack/.claude-plugin/plugin.json
 ```
 
-If issues are found, fix them before proceeding:
-- **RELEASE MISSING**: Expected — will be created in Step 5
-- **README MISMATCH**: Update README.md and README.ko.md counts to match actual
-- **GITHUB_PROFILE MISMATCH**: Update christian289/christian289 README.md via `gh api`
+Extract the `version` field. Use this as `{version}` throughout.
 
-### Step 2: Commit Changes
+## Step 2: Run VersionReleaseChecker
 
-Stage and commit all pending changes with an English commit message:
+```bash
+dotnet ".claude/skills/wpf-dev-pack-release/scripts/VersionReleaseChecker.cs" -- --standalone
+```
+
+Fix any issues before proceeding:
+- **README MISMATCH**: Update README.md and README.ko.md counts
+- **GITHUB_PROFILE MISMATCH**: Will be fixed in Step 7
+- **RELEASE MISSING**: Expected — will be created in Step 6
+
+If README fixes are needed, apply them now and re-run the checker until README checks pass.
+
+## Step 3: Commit Changes
+
+If there are unstaged changes:
 
 ```bash
 git add -A
-git commit -m "feat(wpf-dev-pack): v{version} - {summary of changes}"
+git commit -m "feat(wpf-dev-pack): v{version} - {summary} [skip-version]"
 ```
 
-- Commit message MUST be in English
-- Use conventional commit format: `feat`, `fix`, `refactor`, `chore`
-- Include `[skip-version]` if version was already manually bumped
+If no changes exist, skip to Step 4.
 
-### Step 3: Push to Remote
+## Step 4: Push to Remote
 
 ```bash
 git push origin main
 ```
 
-### Step 4: Create GitHub Tag
+## Step 5: Create GitHub Tag
 
 ```bash
 git tag wpf-dev-pack-v{version}
 git push origin wpf-dev-pack-v{version}
 ```
 
-Tag format: `wpf-dev-pack-v{version}` (e.g., `wpf-dev-pack-v1.4.7`)
+## Step 6: Create GitHub Release Note
 
-### Step 5: Create GitHub Release Note
+Generate changelog from previous tag:
+
+```bash
+git tag --sort=-v:refname | grep wpf-dev-pack | head -2
+```
+
+Use the second tag as the previous version, then:
+
+```bash
+git log {previous-tag}..wpf-dev-pack-v{version} --oneline
+```
+
+Create the release:
 
 ```bash
 gh release create wpf-dev-pack-v{version} \
@@ -74,31 +87,26 @@ gh release create wpf-dev-pack-v{version} \
   --notes "$(cat <<'EOF'
 ## What's New
 
-- {list changes since last release}
+- {changes from git log}
 
 ## Stats
 
-- **Skills**: {count}
-- **Agents**: {count}
-- **MCP Servers**: {count}
+- **Skills**: {actual count from checker}
+- **Agents**: {actual count from checker}
+- **MCP Servers**: {actual count from checker}
 EOF
 )"
 ```
 
-- Generate release notes by comparing with the previous tag
-- Use `git log` between previous tag and current to summarize changes
-- Include skill/agent/MCP server counts in Stats section
-
-### Step 6: Update GitHub Profile README
-
-Update the wpf-dev-pack section in `christian289/christian289` README.md:
+## Step 7: Update GitHub Profile README
 
 ```bash
-# Fetch current profile README
 gh api repos/christian289/christian289/contents/README.md --jq '.content' | base64 -d > /tmp/profile-readme.md
+```
 
-# Edit the file to update version badge and Stats counts
-# Then push back:
+Update Skills, Agents, MCP Servers counts to match actual values using `sed`, then push:
+
+```bash
 gh api repos/christian289/christian289/contents/README.md \
   --method PUT \
   --field message="chore: update wpf-dev-pack to v{version}" \
@@ -106,23 +114,12 @@ gh api repos/christian289/christian289/contents/README.md \
   --field sha="$(gh api repos/christian289/christian289/contents/README.md --jq '.sha')"
 ```
 
-- Update version number in the wpf-dev-pack badge/section
-- Update Skills, Agents, MCP Servers counts to match actual
+## Step 8: Final Verification
 
-## Reading the Version
+Re-run the checker to confirm all issues are resolved:
 
-Read the version from `wpf-dev-pack/.claude-plugin/plugin.json`:
-
-```json
-{ "version": "x.y.z" }
+```bash
+dotnet ".claude/skills/wpf-dev-pack-release/scripts/VersionReleaseChecker.cs" -- --standalone
 ```
 
-## Checklist
-
-- [ ] GitHub account switched to `christian289`
-- [ ] VersionReleaseChecker passes (no mismatches)
-- [ ] All changes committed with English message
-- [ ] Pushed to remote
-- [ ] Tag `wpf-dev-pack-v{version}` created and pushed
-- [ ] GitHub release created with changelog
-- [ ] GitHub profile README updated with new version and counts
+All checks must pass. Report the final result.
