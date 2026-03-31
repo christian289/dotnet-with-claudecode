@@ -2,6 +2,7 @@
 name: wpf-code-reviewer
 description: WPF code review specialist. Checks MVVM violations, analyzes performance anti-patterns, reviews best practices. Uses C# LSP for code intelligence. Provides analysis and feedback without modifying code.
 model: opus
+color: yellow
 tools: Read, Glob, Grep, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern, lsp__csharp__textDocument_definition, lsp__csharp__textDocument_references, lsp__csharp__textDocument_documentSymbol, lsp__csharp__textDocument_hover, lsp__csharp__textDocument_diagnostic
 permissionMode: plan
 skills:

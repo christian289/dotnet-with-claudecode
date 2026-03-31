@@ -1,5 +1,5 @@
 ---
-description: "Generates WPF UserControl with XAML and code-behind. Usage: /wpf-dev-pack:make-wpf-usercontrol <ControlName> [--with-viewmodel]"
+description: "Generates WPF UserControl with XAML and code-behind. Use when creating a new UserControl, scaffolding a composite UI component, or generating a UserControl with optional ViewModel. Usage: /wpf-dev-pack:make-wpf-usercontrol <ControlName> [--with-viewmodel]"
 ---
 
 # WPF UserControl Generator

@@ -99,166 +99,13 @@ public sealed class HighPerformanceCanvas : FrameworkElement
 
 ---
 
-## 3. Complex Shapes (Using StreamGeometry)
-
-Use StreamGeometry for complex shapes like triangles and polygons.
-
-### 3.1 Triangle Rendering Example
-
-```csharp
-namespace MyApp.Controls;
-
-using System.Windows;
-using System.Windows.Media;
-
-public sealed class TriangleCanvas : FrameworkElement
-{
-    private readonly record struct TriangleData(
-        Point Point1, Point Point2, Point Point3, Brush Fill);
-
-    private readonly List<TriangleData> _triangles = [];
-    private readonly Pen _pen = new(Brushes.Black, 1);
-
-    public TriangleCanvas()
-    {
-        _pen.Freeze();
-    }
-
-    public void AddTriangle(Point p1, Point p2, Point p3, Color color)
-    {
-        var brush = new SolidColorBrush(color);
-        brush.Freeze();
-
-        _triangles.Add(new TriangleData(p1, p2, p3, brush));
-    }
-
-    public void Render()
-    {
-        InvalidateVisual();
-    }
-
-    protected override void OnRender(DrawingContext dc)
-    {
-        base.OnRender(dc);
-
-        foreach (var triangle in _triangles)
-        {
-            // Create lightweight geometry using StreamGeometry
-            var geometry = new StreamGeometry();
-
-            using (var ctx = geometry.Open())
-            {
-                ctx.BeginFigure(triangle.Point1, isFilled: true, isClosed: true);
-                ctx.LineTo(triangle.Point2, isStroked: true, isSmoothJoin: false);
-                ctx.LineTo(triangle.Point3, isStroked: true, isSmoothJoin: false);
-            }
-
-            geometry.Freeze();  // Optimize by making immutable
-
-            dc.DrawGeometry(triangle.Fill, _pen, geometry);
-        }
-    }
-
-    public void Clear()
-    {
-        _triangles.Clear();
-        InvalidateVisual();
-    }
-}
-```
+> **Advanced**: See [ADVANCED.md](ADVANCED.md) for complex shapes (StreamGeometry triangles/polygons), async rendering with performance measurement, MVVM integration (delegate pattern), and Shape approach comparison.
 
 ---
 
-## 4. Pattern with Performance Measurement
+## 3. Key Optimization Techniques
 
-### 4.1 Async Rendering + Performance Measurement
-
-```csharp
-namespace MyApp.Controls;
-
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
-
-public sealed class BenchmarkCanvas : FrameworkElement
-{
-    private readonly record struct RectData(Rect Bounds, Brush Fill);
-
-    private readonly List<RectData> _items = [];
-    private readonly Pen _pen = new(Brushes.Black, 1);
-
-    public BenchmarkCanvas()
-    {
-        _pen.Freeze();
-    }
-
-    /// <summary>
-    /// Renders a large number of shapes and returns the elapsed time.
-    /// </summary>
-    public async Task<TimeSpan> DrawItemsAsync(int count)
-    {
-        _items.Clear();
-
-        double width = ActualWidth > 0 ? ActualWidth : 400;
-        double height = ActualHeight > 0 ? ActualHeight : 400;
-
-        var random = new Random();
-
-        // Step 1: Generate data only (before measurement)
-        for (int i = 0; i < count; i++)
-        {
-            double x = random.NextDouble() * (width - 20);
-            double y = random.NextDouble() * (height - 20);
-            double size = 10 + random.NextDouble() * 20;
-
-            var brush = new SolidColorBrush(Color.FromRgb(
-                (byte)random.Next(256),
-                (byte)random.Next(256),
-                (byte)random.Next(256)));
-            brush.Freeze();
-
-            _items.Add(new RectData(new Rect(x, y, size, size), brush));
-
-            // Yield periodically to prevent UI hang
-            if (i % 100 == 0)
-            {
-                await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Background);
-            }
-        }
-
-        // Step 2: Measure rendering only (call once)
-        var stopwatch = Stopwatch.StartNew();
-        InvalidateVisual();
-        await Dispatcher.InvokeAsync(() => { }, DispatcherPriority.Render);
-        stopwatch.Stop();
-
-        return stopwatch.Elapsed;
-    }
-
-    protected override void OnRender(DrawingContext dc)
-    {
-        base.OnRender(dc);
-
-        foreach (var item in _items)
-        {
-            dc.DrawRectangle(item.Fill, _pen, item.Bounds);
-        }
-    }
-
-    public void Clear()
-    {
-        _items.Clear();
-        InvalidateVisual();
-    }
-}
-```
-
----
-
-## 5. Key Optimization Techniques
-
-### 5.1 Freeze() - Making Objects Immutable
+### 3.1 Freeze() - Making Objects Immutable
 
 ```csharp
 // ✅ Pen optimization
@@ -278,7 +125,7 @@ var geometry = new StreamGeometry();
 geometry.Freeze();  // Rendering pipeline optimization
 ```
 
-### 5.2 Using record struct
+### 3.2 Using record struct
 
 ```csharp
 // ✅ Value type (stack allocation) → Memory efficient
@@ -291,7 +138,7 @@ private readonly record struct ShapeData(
 // Immutable semantics enforced
 ```
 
-### 5.3 StreamGeometry vs PathGeometry
+### 3.3 StreamGeometry vs PathGeometry
 
 ```csharp
 // ✅ StreamGeometry - Lightweight, write-only
@@ -310,7 +157,7 @@ figure.Segments.Add(new LineSegment(point2, true));
 
 ---
 
-## 6. InvalidateVisual() Cautions
+## 4. InvalidateVisual() Cautions
 
 ### O(n²) Complexity Pattern
 
@@ -346,132 +193,7 @@ InvalidateVisual();
 
 ---
 
-## 7. Integration with MVVM Pattern
-
-### 7.1 ViewModel - Delegate Pattern
-
-Pattern allowing ViewModel to call rendering methods without directly referencing View type:
-
-```csharp
-namespace MyApp.ViewModels;
-
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-
-public sealed partial class RenderViewModel : ObservableObject
-{
-    // Store only delegates without View type reference
-    private Func<int, Task<TimeSpan>>? _drawItems;
-    private Action? _clearCanvas;
-
-    [ObservableProperty] private bool _isRendering;
-
-    [ObservableProperty] private string _elapsedTime = "Waiting...";
-
-    // Inject required methods from View
-    public void SetRenderActions(
-        Func<int, Task<TimeSpan>> drawItems,
-        Action clearCanvas)
-    {
-        _drawItems = drawItems;
-        _clearCanvas = clearCanvas;
-    }
-
-    [RelayCommand]
-    private async Task RenderAsync()
-    {
-        if (_drawItems is null)
-        {
-            return;
-        }
-
-        IsRendering = true;
-        _clearCanvas?.Invoke();
-
-        var elapsed = await _drawItems(10000);
-        ElapsedTime = $"{elapsed.TotalMilliseconds:F2} ms";
-
-        IsRendering = false;
-    }
-}
-```
-
-### 7.2 View - Delegate Connection
-
-```csharp
-namespace MyApp.Views;
-
-using System.Windows;
-using MyApp.ViewModels;
-
-public partial class MainWindow : Window
-{
-    public MainWindow()
-    {
-        InitializeComponent();
-
-        Loaded += (_, _) =>
-        {
-            if (DataContext is RenderViewModel vm)
-            {
-                vm.SetRenderActions(
-                    MyCanvas.DrawItemsAsync,
-                    MyCanvas.Clear);
-            }
-        };
-    }
-}
-```
-
----
-
-## 8. Comparison with Shape Approach (Reference)
-
-There are cases where Shape approach is needed:
-
-```csharp
-// Shape approach - suitable for few shapes requiring interaction
-public sealed class ShapeBasedPanel : Canvas
-{
-    public void AddInteractiveShape()
-    {
-        var polygon = new Polygon
-        {
-            Points = [new Point(0, 0), new Point(50, 0), new Point(25, 50)],
-            Fill = Brushes.Blue,
-            Stroke = Brushes.Black,
-            StrokeThickness = 1
-        };
-
-        // Can attach events to individual shapes
-        polygon.MouseEnter += (s, e) => polygon.Fill = Brushes.Red;
-        polygon.MouseLeave += (s, e) => polygon.Fill = Brushes.Blue;
-
-        Children.Add(polygon);
-    }
-}
-```
-
-**When to Choose Shape Approach**:
-- Number of shapes is tens to hundreds or less
-- Mouse events needed on individual shapes
-- Drag and drop functionality required
-
----
-
-## 9. Performance Comparison Example
-
-**Based on 10,000 triangles**:
-
-| Method | Expected Time | Notes |
-|--------|---------------|-------|
-| Shape (Polygon) | 500-2000ms | Visual Tree overhead |
-| DrawingContext | 20-50ms | Direct drawing |
-| **Performance Ratio** | **10-50x** | Varies by environment |
-
----
-
-## 10. Checklist
+## 5. Checklist
 
 - [ ] Inherit from FrameworkElement (instead of Canvas)
 - [ ] Apply Freeze() to Pen, Brush
@@ -483,7 +205,7 @@ public sealed class ShapeBasedPanel : Canvas
 
 ---
 
-## 11. References
+## 6. References
 
 - [DrawingContext - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.drawingcontext)
 - [StreamGeometry - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.streamgeometry)

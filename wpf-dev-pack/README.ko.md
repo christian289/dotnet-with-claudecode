@@ -6,12 +6,12 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.4.7-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**79개 스킬** · **11개 전문 에이전트** · **2개 MCP 서버**
+**81개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -20,6 +20,8 @@
 </div>
 
 ## ✨ 하이라이트
+
+> **MVVM 방식**: wpf-dev-pack은 **View First MVVM**을 채택합니다. View가 먼저 생성되고 DataTemplate 매핑 또는 ViewModelLocator를 통해 ViewModel을 결정합니다. ViewModel First 방식(ViewModel이 View를 생성)은 사용하지 않습니다.
 
 <table>
 <tr>
@@ -35,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **79개 스킬**
+- WPF 전 영역을 다루는 **81개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -44,7 +46,7 @@
 <td width="50%">
 
 ### 📚 스마트 문서화
-- **MicrosoftDocs** 통합 (내장)
+- **Microsoft Learn** 플러그인 (마켓플레이스에서 설치)
 - 최신 문서를 위한 **Context7** (외부)
 - 시맨틱 코드 분석을 위한 **Serena** (외부)
 
@@ -320,7 +322,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 | 서버 | 용도 |
 |------|------|
-| **MicrosoftDocs** | 공식 Microsoft 문서 |
+| **Microsoft Learn** (마켓플레이스) | 공식 Microsoft 문서 |
 
 **필수 (외부):**
 
@@ -370,7 +372,6 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `advanced-data-binding` | 고급 바인딩 패턴 |
 | `implementing-wpf-validation` | 유효성 검사 전략 |
 | `managing-wpf-collectionview-mvvm` | MVVM에서 CollectionView |
-| `mapping-viewmodel-view-datatemplate` | View-ViewModel 매핑 |
 | `configuring-dependency-injection` | DI 설정 |
 | `defining-wpf-dependencyproperty` | DependencyProperty |
 | `structuring-wpf-projects` | 프로젝트 구조 |
@@ -482,14 +483,13 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 <details>
 <summary><b>🔄 Prism 9 컴패니언 (13개 PRISM.md 파일) — v1.4.1 신규</b></summary>
 
-13개 스킬에 Prism 9 (Community License) 대응 `PRISM.md` 컴패니언 파일을 제공합니다:
+12개 스킬에 Prism 9 (Community License) 대응 `PRISM.md` 컴패니언 파일을 제공합니다:
 
 | 스킬 | PRISM.md 주요 내용 |
 |------|-------------------|
 | `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
 | `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
 | `structuring-wpf-projects` | IModule 기반 모듈 아키텍처 |
-| `mapping-viewmodel-view-datatemplate` | RegionManager, ViewModelLocator |
 | `creating-wpf-dialogs` | IDialogService, IDialogAware |
 | `managing-wpf-application-lifecycle` | PrismApplication 라이프사이클 |
 | `binding-enum-command-parameters` | DelegateCommand\<T\> |
@@ -505,7 +505,16 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🏗️ 스캐폴딩 (5개 스킬) — Commands에서 마이그레이션</b></summary>
+<summary><b>🧪 테스트 (1개 스킬) — 신규</b></summary>
+
+| 스킬 | 설명 |
+|------|------|
+| `testing-wpf-viewmodels` | xUnit + NSubstitute로 ViewModel 단위 테스트 |
+
+</details>
+
+<details>
+<summary><b>🏗️ 스캐폴딩 (7개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
@@ -514,6 +523,8 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `make-wpf-usercontrol` | UserControl 생성 |
 | `make-wpf-converter` | IValueConverter 생성 |
 | `make-wpf-behavior` | Behavior<T> 생성 |
+| `make-wpf-viewmodel` | ViewModel + View + DI + DataTemplate 매핑 생성 |
+| `make-wpf-service` | 서비스 인터페이스 + 구현 + DI 등록 |
 
 </details>
 
@@ -537,9 +548,9 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 78개 스킬
+├── 📁 skills/                 # 81개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
-├── 📄 .mcp.json               # MCP 설정 (MicrosoftDocs만)
+├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp만)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```

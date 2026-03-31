@@ -2,12 +2,12 @@
 name: wpf-data-binding-expert
 description: WPF data binding specialist. Implements complex bindings (MultiBinding, PriorityBinding), custom converters, validation patterns, and debugging binding issues.
 model: sonnet
+color: cyan
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
 skills:
   - advanced-data-binding
   - implementing-wpf-validation
   - implementing-communitytoolkit-mvvm
-  - mapping-viewmodel-view-datatemplate
 ---
 
 # WPF Data Binding Expert - 데이터 바인딩 전문가
@@ -174,5 +174,6 @@ public sealed class DebugConverter : IValueConverter
 ## Related Skills
 
 - `implementing-communitytoolkit-mvvm` - MVVM 기본
-- `mapping-viewmodel-view-datatemplate` - DataTemplate 매핑
+- `rules/view-viewmodel-wiring-communitytoolkit.md` - DataTemplate 매핑 (CommunityToolkit.Mvvm)
+- `rules/view-viewmodel-wiring-prism.md` - View-ViewModel 매핑 (Prism 9)
 - `managing-wpf-collectionview-mvvm` - CollectionView 바인딩

@@ -1,5 +1,5 @@
 ---
-description: WPF CustomControl generation wizard. Specify control name and base class to auto-generate C# class and XAML style.
+description: "Generates WPF CustomControl C# class and XAML ControlTemplate style from a control name and base class. Use when creating a new custom control, scaffolding a templated control, or generating CustomControl boilerplate code. Usage: /wpf-dev-pack:make-wpf-custom-control <ControlName> <BaseClass>"
 ---
 
 # WPF CustomControl Generation

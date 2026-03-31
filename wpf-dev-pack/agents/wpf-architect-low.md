@@ -2,13 +2,13 @@
 name: wpf-architect-low
 description: WPF architecture advisor (Sonnet). Analyzes solution/project structure, reviews MVVM architecture, performs dependency analysis. Lightweight version for Claude Pro subscribers.
 model: sonnet
+color: blue
 tools: Read, Glob, Grep, WebSearch, AskUserQuestion, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
 permissionMode: plan
 skills:
   - structuring-wpf-projects
   - implementing-communitytoolkit-mvvm
   - managing-wpf-collectionview-mvvm
-  - mapping-viewmodel-view-datatemplate
   - configuring-dependency-injection
   - integrating-wpfui-fluent
   - integrating-livecharts2

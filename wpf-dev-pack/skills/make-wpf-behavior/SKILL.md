@@ -1,5 +1,5 @@
 ---
-description: "Generates WPF Behavior<T> classes using Microsoft.Xaml.Behaviors.Wpf. Usage: /wpf-dev-pack:make-wpf-behavior <BehaviorName> <TargetType>"
+description: "Generates WPF Behavior<T> classes using Microsoft.Xaml.Behaviors.Wpf. Use when adding reusable interaction logic to controls, creating drag behaviors, or scaffolding a new Behavior class. Usage: /wpf-dev-pack:make-wpf-behavior <BehaviorName> <TargetType>"
 ---
 
 # WPF Behavior Generator

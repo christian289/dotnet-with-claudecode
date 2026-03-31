@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.4.7-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**79 Skills** · **11 Specialized Agents** · **2 MCP Servers**
+**81 Skills** · **11 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -20,6 +20,8 @@
 </div>
 
 ## ✨ Highlights
+
+> **MVVM Approach**: wpf-dev-pack adopts **View First MVVM**. Views are created first and determine their own ViewModel via DataTemplate mapping or ViewModelLocator. ViewModel First (where ViewModel creates View) is not used.
 
 <table>
 <tr>
@@ -35,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **79 Skills** covering all WPF aspects
+- **81 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -44,7 +46,7 @@
 <td width="50%">
 
 ### 📚 Smart Documentation
-- **MicrosoftDocs** integration (included)
+- **Microsoft Learn** plugin (install from marketplace)
 - **Context7** for up-to-date docs (external)
 - **Semantic code analysis** with Serena (external)
 
@@ -320,7 +322,7 @@ Some skills activate without notification:
 
 | Server | Purpose |
 |--------|---------|
-| **MicrosoftDocs** | Official Microsoft documentation |
+| **Microsoft Learn** (marketplace) | Official Microsoft documentation |
 
 **Required (External):**
 
@@ -370,7 +372,6 @@ Some skills activate without notification:
 | `advanced-data-binding` | Advanced binding patterns |
 | `implementing-wpf-validation` | Validation strategies |
 | `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
-| `mapping-viewmodel-view-datatemplate` | View-ViewModel mapping |
 | `configuring-dependency-injection` | DI configuration |
 | `defining-wpf-dependencyproperty` | DependencyProperty |
 | `structuring-wpf-projects` | Project structure |
@@ -482,14 +483,13 @@ Some skills activate without notification:
 <details>
 <summary><b>🔄 Prism 9 Companion (13 PRISM.md files) — NEW in v1.4.1</b></summary>
 
-13 skills provide `PRISM.md` companion files with Prism 9 (Community License) equivalents:
+12 skills provide `PRISM.md` companion files with Prism 9 (Community License) equivalents:
 
 | Skill | PRISM.md Focus |
 |-------|----------------|
 | `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
 | `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
 | `structuring-wpf-projects` | IModule-based module architecture |
-| `mapping-viewmodel-view-datatemplate` | RegionManager, ViewModelLocator |
 | `creating-wpf-dialogs` | IDialogService, IDialogAware |
 | `managing-wpf-application-lifecycle` | PrismApplication lifecycle |
 | `binding-enum-command-parameters` | DelegateCommand\<T\> |
@@ -505,7 +505,16 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🏗️ Scaffolding (5 skills) — migrated from Commands</b></summary>
+<summary><b>🧪 Testing (1 skill) — NEW</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `testing-wpf-viewmodels` | ViewModel unit testing with xUnit + NSubstitute |
+
+</details>
+
+<details>
+<summary><b>🏗️ Scaffolding (7 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -514,6 +523,8 @@ Some skills activate without notification:
 | `make-wpf-usercontrol` | UserControl generation |
 | `make-wpf-converter` | IValueConverter generation |
 | `make-wpf-behavior` | Behavior<T> generation |
+| `make-wpf-viewmodel` | ViewModel + View + DI + DataTemplate mapping generation |
+| `make-wpf-service` | Service interface + implementation + DI registration |
 
 </details>
 
@@ -537,9 +548,9 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 78 Skills
+├── 📁 skills/                 # 81 Skills
 ├── 📁 hooks/                  # Event hooks
-├── 📄 .mcp.json               # MCP config (MicrosoftDocs only)
+├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```

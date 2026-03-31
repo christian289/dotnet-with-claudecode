@@ -4,6 +4,18 @@ Automatically activates relevant skills when WPF/C#/.NET keywords are detected.
 
 ---
 
+## MVVM Approach: View First
+
+wpf-dev-pack adopts **View First MVVM**.
+
+- View is created first and determines its own ViewModel.
+- View-ViewModel wiring strategy depends on the MVVM framework:
+  - CommunityToolkit.Mvvm → `rules/view-viewmodel-wiring-communitytoolkit.md`
+  - Prism 9 → `rules/view-viewmodel-wiring-prism.md`
+- See `rules/prohibitions.md` for banned alternatives (ViewModelLocator, etc.).
+
+---
+
 ## .NET Version Configuration
 
 ### Version Selection Rules

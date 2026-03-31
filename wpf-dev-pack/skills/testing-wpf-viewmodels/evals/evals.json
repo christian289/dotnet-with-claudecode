@@ -1,0 +1,12 @@
+[
+  {"query": "ViewModel의 PropertyChanged 이벤트를 테스트하는 방법을 알려줘", "should_trigger": true},
+  {"query": "RelayCommand의 CanExecute 로직을 단위 테스트하고 싶어", "should_trigger": true},
+  {"query": "xUnit으로 WPF ViewModel 테스트 프로젝트를 세팅해줘", "should_trigger": true},
+  {"query": "How to mock services in ViewModel unit tests using NSubstitute", "should_trigger": true},
+  {"query": "AsyncRelayCommand가 IsRunning 상태를 올바르게 변경하는지 테스트해줘", "should_trigger": true},
+  {"query": "WPF UI 자동화 테스트를 FlaUI로 작성하고 싶어", "should_trigger": false},
+  {"query": "ViewModel에 새 ObservableProperty를 추가해줘", "should_trigger": false},
+  {"query": "FluentValidation으로 입력 폼을 검증하는 방법", "should_trigger": false},
+  {"query": "xUnit으로 ASP.NET Controller를 테스트하고 싶어", "should_trigger": false},
+  {"query": "MVVM 패턴에서 Service Layer를 설계하는 방법", "should_trigger": false}
+]

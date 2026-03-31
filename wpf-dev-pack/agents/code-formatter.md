@@ -2,6 +2,7 @@
 name: code-formatter
 description: Formats WPF XAML and C# code automatically after file modifications. Runs XamlStyler for XAML and dotnet format for C# files in parallel.
 model: haiku
+color: green
 tools:
   - Bash
 permissionMode: default

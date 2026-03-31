@@ -1,5 +1,5 @@
 ---
-description: "Syncs WPF Keyboard.Modifiers with ScottPlot's internal keyboard state before processing MouseWheel events. Use when ScottPlot WPF control requires Ctrl+MouseWheel for zoom but only works after clicking to give focus. Use when ScottPlot MouseWheel zoom ignores modifier keys without keyboard focus."
+description: "Syncs WPF Keyboard.Modifiers with ScottPlot's internal keyboard state before processing MouseWheel events. Use when ScottPlot WPF control requires Ctrl+MouseWheel for zoom but only works after clicking to give focus, or when ScottPlot MouseWheel zoom ignores modifier keys without keyboard focus."
 ---
 
 # Syncing Modifier Keys for MouseWheel in ScottPlot WPF Control

@@ -2,6 +2,7 @@
 name: wpf-code-reviewer-low
 description: WPF code review specialist (Sonnet). Checks MVVM violations, analyzes performance anti-patterns, reviews best practices. Lightweight version for Claude Pro subscribers.
 model: sonnet
+color: yellow
 tools: Read, Glob, Grep, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
 permissionMode: plan
 skills:

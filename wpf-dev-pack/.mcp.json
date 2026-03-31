@@ -2,10 +2,6 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "MCP servers for WPF Dev Pack plugin",
   "mcpServers": {
-    "MicrosoftDocs": {
-      "type": "http",
-      "url": "https://learn.microsoft.com/api/mcp"
-    },
     "HandMirrorMcp": {
       "type": "stdio",
       "command": "dnx",

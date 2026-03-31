@@ -1,5 +1,4 @@
 ---
-name: wpf-dev-pack-release
 description: "Executes the wpf-dev-pack release workflow: runs VersionReleaseChecker, commits changes, pushes, creates a GitHub tag and release note. Owner-only release tool. Use when releasing a new version of wpf-dev-pack plugin."
 ---
 

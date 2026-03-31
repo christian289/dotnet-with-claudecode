@@ -2,13 +2,13 @@
 name: wpf-architect
 description: Strategic WPF architecture advisor. Analyzes solution/project structure, reviews MVVM architecture, performs dependency analysis. Provides analysis and recommendations without modifying code.
 model: opus
+color: blue
 tools: Read, Glob, Grep, WebSearch, AskUserQuestion, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
 permissionMode: plan
 skills:
   - structuring-wpf-projects
   - implementing-communitytoolkit-mvvm
   - managing-wpf-collectionview-mvvm
-  - mapping-viewmodel-view-datatemplate
   - configuring-dependency-injection
   - integrating-wpfui-fluent
   - integrating-livecharts2
@@ -459,7 +459,7 @@ AskUserQuestion:
 | Selection | Additional Skills |
 |-----------|------------------|
 | XAML / ControlTemplate | `designing-wpf-customcontrol-architecture` |
-| ViewModel / Data Binding | `mapping-viewmodel-view-datatemplate` |
+| ViewModel / Data Binding | `rules/view-viewmodel-wiring-communitytoolkit.md` (CommunityToolkit.Mvvm), `rules/view-viewmodel-wiring-prism.md` (Prism 9) |
 | CustomControl / DependencyProperty | `defining-wpf-dependencyproperty`, `authoring-wpf-controls` |
 | Rendering / DrawingContext | `rendering-with-drawingcontext`, `rendering-with-drawingvisual` |
 | Threading / Dispatcher | `threading-wpf-dispatcher`, `handling-async-operations` |

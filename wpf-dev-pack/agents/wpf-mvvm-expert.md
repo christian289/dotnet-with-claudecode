@@ -2,11 +2,11 @@
 name: wpf-mvvm-expert
 description: WPF MVVM pattern implementation expert. Implements ViewModel with CommunityToolkit.Mvvm, data binding, ICommand, CollectionView encapsulation.
 model: sonnet
+color: magenta
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__rename_symbol
 skills:
   - implementing-communitytoolkit-mvvm
   - managing-wpf-collectionview-mvvm
-  - mapping-viewmodel-view-datatemplate
   - binding-enum-command-parameters
   - implementing-repository-pattern
 ---

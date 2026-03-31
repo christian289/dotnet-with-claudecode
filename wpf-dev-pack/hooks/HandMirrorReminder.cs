@@ -1,7 +1,7 @@
 #!/usr/bin/env dotnet
 
 // HandMirror Reminder Hook (PreToolUse)
-// Detects context7 or MicrosoftDocs MCP tool calls related to .NET/NuGet,
+// Detects context7 or Microsoft Learn MCP tool calls related to .NET/NuGet,
 // and reminds Claude to also use HandMirrorMcp for API accuracy verification.
 // Input: stdin JSON with "tool_name" and "tool_input" fields
 
@@ -32,11 +32,12 @@ if (string.IsNullOrWhiteSpace(toolName))
 
 // Target MCP tool patterns
 var isContext7 = toolName.Contains("context7", StringComparison.OrdinalIgnoreCase);
-var isMicrosoftDocs = toolName.Contains("microsoft", StringComparison.OrdinalIgnoreCase)
-    && (toolName.Contains("docs", StringComparison.OrdinalIgnoreCase)
+var isMicrosoftLearn = toolName.Contains("microsoft", StringComparison.OrdinalIgnoreCase)
+    && (toolName.Contains("learn", StringComparison.OrdinalIgnoreCase)
+        || toolName.Contains("docs", StringComparison.OrdinalIgnoreCase)
         || toolName.Contains("code_sample", StringComparison.OrdinalIgnoreCase));
 
-if (!isContext7 && !isMicrosoftDocs)
+if (!isContext7 && !isMicrosoftLearn)
     return;
 
 // Check if the query is .NET/NuGet related

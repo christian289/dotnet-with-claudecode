@@ -1,0 +1,12 @@
+[
+  {"query": "ScottPlot WPF control Ctrl+MouseWheel zoom doesn't work until I click the control first", "should_trigger": true},
+  {"query": "ScottPlot MouseWheel zoom ignores Ctrl modifier key when the control doesn't have keyboard focus", "should_trigger": true},
+  {"query": "WPF ScottPlot wheel zoom only responds to Ctrl after clicking, how to fix focus issue", "should_trigger": true},
+  {"query": "ScottPlot FormsPlot Keyboard.Modifiers not synced with internal state on MouseWheel event", "should_trigger": true},
+  {"query": "How to sync WPF Keyboard.Modifiers with ScottPlot before processing scroll events", "should_trigger": true},
+  {"query": "ScottPlot WPF에서 Ctrl+마우스휠 줌이 포커스 없이 안 돼요", "should_trigger": true},
+  {"query": "How to add a ScottPlot chart to my WPF application with CartesianChart", "should_trigger": false},
+  {"query": "ScottPlot axis label formatting and title customization in WPF", "should_trigger": false},
+  {"query": "WPF MouseWheel event not firing on ScrollViewer with nested controls", "should_trigger": false},
+  {"query": "How to implement Ctrl+MouseWheel zoom on a WPF Canvas with RenderTransform", "should_trigger": false}
+]

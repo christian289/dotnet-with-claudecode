@@ -86,6 +86,18 @@ internal static partial class XamlValidationRules
         if (MissingPartPrefix().IsMatch(content))
             issues.Add(("Missing PART_ prefix for template parts", "Template parts should use PART_ prefix (e.g., PART_ContentHost)"));
 
+        // Rule 6: TextBox without UpdateSourceTrigger=PropertyChanged
+        if (TextBoxWithoutUpdateSourceTrigger().IsMatch(content))
+            issues.Add(("TextBox missing UpdateSourceTrigger", "TextBox Text binding should include UpdateSourceTrigger=PropertyChanged for real-time updates"));
+
+        // Rule 7: Binding with ElementName referencing unnamed element
+        if (BindingElementNameSelfRef().IsMatch(content))
+            issues.Add(("Suspicious ElementName binding", "ElementName binding references 'self' or 'this' — consider using RelativeSource Self instead"));
+
+        // Rule 8: Mode=TwoWay on read-only properties (TextBlock.Text)
+        if (TwoWayOnReadOnlyProperty().IsMatch(content))
+            issues.Add(("TwoWay binding on read-only property", "TextBlock.Text does not support TwoWay binding — use Mode=OneWay or remove Mode"));
+
         return issues;
     }
 
@@ -103,4 +115,16 @@ internal static partial class XamlValidationRules
 
     [GeneratedRegex(@"x:Name=""(?!PART_)[A-Z][^""]*"".*(?:ContentPresenter|Border|Grid)", RegexOptions.IgnoreCase)]
     private static partial Regex MissingPartPrefix();
+
+    // Rule 6: <TextBox Text="{Binding ...}" without UpdateSourceTrigger
+    [GeneratedRegex(@"<TextBox[^>]*Text\s*=\s*""\{Binding\s+(?!.*UpdateSourceTrigger)[^}]*\}""", RegexOptions.IgnoreCase)]
+    private static partial Regex TextBoxWithoutUpdateSourceTrigger();
+
+    // Rule 7: ElementName="self" or "this" (should use RelativeSource)
+    [GeneratedRegex(@"ElementName\s*=\s*(?:self|this)\b", RegexOptions.IgnoreCase)]
+    private static partial Regex BindingElementNameSelfRef();
+
+    // Rule 8: TextBlock with Mode=TwoWay
+    [GeneratedRegex(@"<TextBlock[^>]*Text\s*=\s*""\{Binding\s+[^}]*Mode\s*=\s*TwoWay[^}]*\}""", RegexOptions.IgnoreCase)]
+    private static partial Regex TwoWayOnReadOnlyProperty();
 }

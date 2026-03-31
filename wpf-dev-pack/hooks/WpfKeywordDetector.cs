@@ -175,9 +175,6 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["collectionviewsource"] = ["managing-wpf-collectionview-mvvm"],
         ["icollectionview"] = ["managing-wpf-collectionview-mvvm"],
         ["컬렉션뷰"] = ["managing-wpf-collectionview-mvvm"],
-        ["datatemplate"] = ["mapping-viewmodel-view-datatemplate"],
-        ["데이터 템플릿"] = ["mapping-viewmodel-view-datatemplate"],
-        ["hierarchicaldatatemplate"] = ["mapping-viewmodel-view-datatemplate"],
         ["binding"] = ["advanced-data-binding"],
         ["바인딩"] = ["advanced-data-binding"],
         ["데이터 바인딩"] = ["advanced-data-binding"],
@@ -474,6 +471,96 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["erroror"] = ["handling-errors-with-erroror"],
         ["result pattern"] = ["handling-errors-with-erroror"],
         ["결과 패턴"] = ["handling-errors-with-erroror"],
+
+        // ScottPlot (single keyword — compound match in compoundKeywordMap)
+        ["scottplot"] = ["scottplot-syncing-modifier-keys-for-mousewheel"],
+
+        // ─────────────────────────────────────────────────────────
+        // Scaffolding
+        // ─────────────────────────────────────────────────────────
+        ["viewmodel 생성"] = ["make-wpf-viewmodel"],
+        ["뷰모델 생성"] = ["make-wpf-viewmodel"],
+        ["generate viewmodel"] = ["make-wpf-viewmodel"],
+        ["create viewmodel"] = ["make-wpf-viewmodel"],
+        ["scaffold viewmodel"] = ["make-wpf-viewmodel"],
+        ["서비스 생성"] = ["make-wpf-service"],
+        ["generate service"] = ["make-wpf-service"],
+        ["create service"] = ["make-wpf-service"],
+        ["scaffold service"] = ["make-wpf-service"],
+
+        // ─────────────────────────────────────────────────────────
+        // Testing
+        // ─────────────────────────────────────────────────────────
+        ["viewmodel test"] = ["testing-wpf-viewmodels"],
+        ["뷰모델 테스트"] = ["testing-wpf-viewmodels"],
+        ["단위 테스트"] = ["testing-wpf-viewmodels"],
+        ["unit test"] = ["testing-wpf-viewmodels"],
+        ["xunit"] = ["testing-wpf-viewmodels"],
+        ["nsubstitute"] = ["testing-wpf-viewmodels"],
+
+        // ─────────────────────────────────────────────────────────
+        // Feature Intent Keywords (기능 의도)
+        // Users describe what they WANT, not technical terms
+        // ─────────────────────────────────────────────────────────
+        // Charts & Data Visualization
+        ["차트"] = ["integrating-livecharts2"],
+        ["chart"] = ["integrating-livecharts2"],
+        ["그래프"] = ["integrating-livecharts2"],
+        ["graph"] = ["integrating-livecharts2"],
+        ["데이터 시각화"] = ["integrating-livecharts2"],
+        ["data visualization"] = ["integrating-livecharts2"],
+        ["dashboard"] = ["integrating-livecharts2"],
+        ["대시보드"] = ["integrating-livecharts2"],
+
+        // Input Validation
+        ["입력 검증"] = ["validating-with-fluentvalidation", "implementing-wpf-validation"],
+        ["input validation"] = ["validating-with-fluentvalidation", "implementing-wpf-validation"],
+        ["폼 검증"] = ["validating-with-fluentvalidation", "implementing-wpf-validation"],
+        ["form validation"] = ["validating-with-fluentvalidation", "implementing-wpf-validation"],
+
+        // Modern UI / Fluent Design
+        ["모던 ui"] = ["integrating-wpfui-fluent"],
+        ["modern ui"] = ["integrating-wpfui-fluent"],
+        ["플루언트 디자인"] = ["integrating-wpfui-fluent"],
+        ["fluent design"] = ["integrating-wpfui-fluent"],
+
+        // Node Editor / Visual Scripting
+        ["노드 편집기"] = ["integrating-nodify"],
+        ["node editor"] = ["integrating-nodify"],
+        ["비주얼 스크립팅"] = ["integrating-nodify"],
+        ["visual scripting"] = ["integrating-nodify"],
+        ["워크플로우 편집기"] = ["integrating-nodify"],
+        ["workflow editor"] = ["integrating-nodify"],
+
+        // Error Handling
+        ["에러 처리"] = ["handling-errors-with-erroror"],
+        ["error handling"] = ["handling-errors-with-erroror"],
+        ["예외 처리 패턴"] = ["handling-errors-with-erroror"],
+
+        // Multi-language
+        ["다국어 지원"] = ["localizing-wpf-applications", "localizing-wpf-with-baml"],
+        ["multi-language"] = ["localizing-wpf-applications", "localizing-wpf-with-baml"],
+        ["internationalization"] = ["localizing-wpf-applications", "localizing-wpf-with-baml"],
+        ["i18n"] = ["localizing-wpf-applications", "localizing-wpf-with-baml"],
+
+        // Drag and Drop (intent)
+        ["끌어다 놓기"] = ["implementing-wpf-dragdrop"],
+        ["파일 드롭"] = ["implementing-wpf-dragdrop"],
+        ["file drop"] = ["implementing-wpf-dragdrop"],
+
+        // Large Data / Performance (intent)
+        ["대용량 데이터"] = ["virtualizing-wpf-ui", "rendering-wpf-high-performance"],
+        ["large data"] = ["virtualizing-wpf-ui", "rendering-wpf-high-performance"],
+        ["느려"] = ["rendering-wpf-high-performance", "optimizing-wpf-memory"],
+        ["slow"] = ["rendering-wpf-high-performance", "optimizing-wpf-memory"],
+        ["렉"] = ["rendering-wpf-high-performance", "optimizing-wpf-memory"],
+        ["lag"] = ["rendering-wpf-high-performance", "optimizing-wpf-memory"],
+
+        // UI Automation Testing (intent)
+        ["ui 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["ui test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["자동화 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["automation test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
 
     };
 

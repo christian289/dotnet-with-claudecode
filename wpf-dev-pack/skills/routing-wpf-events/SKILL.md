@@ -171,168 +171,13 @@ private void Element_MouseDown(object sender, MouseButtonEventArgs e)
 
 ## 6. Creating Custom Routed Events
 
-### 6.1 Bubbling Event
-
-```csharp
-namespace MyApp.Controls;
-
-using System.Windows;
-
-public class CustomSlider : Control
-{
-    // Register routed event
-    public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent(
-        name: "ValueChanged",
-        routingStrategy: RoutingStrategy.Bubble,
-        handlerType: typeof(RoutedPropertyChangedEventHandler<double>),
-        ownerType: typeof(CustomSlider));
-
-    // CLR event wrapper
-    public event RoutedPropertyChangedEventHandler<double> ValueChanged
-    {
-        add => AddHandler(ValueChangedEvent, value);
-        remove => RemoveHandler(ValueChangedEvent, value);
-    }
-
-    // Raise the event
-    protected virtual void OnValueChanged(double oldValue, double newValue)
-    {
-        var args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue, ValueChangedEvent);
-        RaiseEvent(args);
-    }
-}
-```
-
-### 6.2 Tunneling Event (with Preview)
-
-```csharp
-namespace MyApp.Controls;
-
-using System.Windows;
-
-public class CustomButton : Button
-{
-    // Tunneling (Preview) event
-    public static readonly RoutedEvent PreviewClickedEvent = EventManager.RegisterRoutedEvent(
-        name: "PreviewClicked",
-        routingStrategy: RoutingStrategy.Tunnel,
-        handlerType: typeof(RoutedEventHandler),
-        ownerType: typeof(CustomButton));
-
-    // Bubbling event
-    public static readonly RoutedEvent ClickedEvent = EventManager.RegisterRoutedEvent(
-        name: "Clicked",
-        routingStrategy: RoutingStrategy.Bubble,
-        handlerType: typeof(RoutedEventHandler),
-        ownerType: typeof(CustomButton));
-
-    public event RoutedEventHandler PreviewClicked
-    {
-        add => AddHandler(PreviewClickedEvent, value);
-        remove => RemoveHandler(PreviewClickedEvent, value);
-    }
-
-    public event RoutedEventHandler Clicked
-    {
-        add => AddHandler(ClickedEvent, value);
-        remove => RemoveHandler(ClickedEvent, value);
-    }
-
-    protected override void OnClick()
-    {
-        // Raise Preview (Tunneling) first
-        var previewArgs = new RoutedEventArgs(PreviewClickedEvent, this);
-        RaiseEvent(previewArgs);
-
-        // If not handled, raise Bubbling event
-        if (!previewArgs.Handled)
-        {
-            var args = new RoutedEventArgs(ClickedEvent, this);
-            RaiseEvent(args);
-        }
-
-        base.OnClick();
-    }
-}
-```
-
-### 6.3 Custom EventArgs
-
-```csharp
-namespace MyApp.Events;
-
-using System.Windows;
-
-public class ItemSelectedEventArgs : RoutedEventArgs
-{
-    public object SelectedItem { get; }
-    public int SelectedIndex { get; }
-
-    public ItemSelectedEventArgs(RoutedEvent routedEvent, object source, object selectedItem, int selectedIndex)
-        : base(routedEvent, source)
-    {
-        SelectedItem = selectedItem;
-        SelectedIndex = selectedIndex;
-    }
-}
-
-public delegate void ItemSelectedEventHandler(object sender, ItemSelectedEventArgs e);
-```
+> **Advanced**: See [ADVANCED.md](ADVANCED.md) for custom Bubbling/Tunneling event creation, custom EventArgs, class event handlers, and defining attached events.
 
 ---
 
-## 7. Class Event Handlers
+## 7. Attached Events
 
-### 7.1 Registering Class Handler
-
-```csharp
-namespace MyApp.Controls;
-
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-public class EnhancedTextBox : TextBox
-{
-    static EnhancedTextBox()
-    {
-        // Class handler - called before instance handlers
-        EventManager.RegisterClassHandler(
-            typeof(EnhancedTextBox),
-            PreviewKeyDownEvent,
-            new KeyEventHandler(OnPreviewKeyDownClass));
-
-        EventManager.RegisterClassHandler(
-            typeof(EnhancedTextBox),
-            GotFocusEvent,
-            new RoutedEventHandler(OnGotFocusClass));
-    }
-
-    private static void OnPreviewKeyDownClass(object sender, KeyEventArgs e)
-    {
-        // Called for all EnhancedTextBox instances
-        if (sender is EnhancedTextBox textBox)
-        {
-            // Common keyboard handling logic
-        }
-    }
-
-    private static void OnGotFocusClass(object sender, RoutedEventArgs e)
-    {
-        // Auto-select all text on focus
-        if (sender is EnhancedTextBox textBox)
-        {
-            textBox.SelectAll();
-        }
-    }
-}
-```
-
----
-
-## 8. Attached Events
-
-### 8.1 Using Attached Events
+### 7.1 Using Attached Events
 
 ```xml
 <!-- Handle Button.Click at Grid level (Bubbling) -->
@@ -356,51 +201,11 @@ private void Grid_ButtonClick(object sender, RoutedEventArgs e)
 }
 ```
 
-### 8.2 Defining Attached Events
-
-```csharp
-namespace MyApp.Behaviors;
-
-using System.Windows;
-
-public static class ValidationBehavior
-{
-    // Attached routed event
-    public static readonly RoutedEvent ValidationErrorEvent = EventManager.RegisterRoutedEvent(
-        name: "ValidationError",
-        routingStrategy: RoutingStrategy.Bubble,
-        handlerType: typeof(RoutedEventHandler),
-        ownerType: typeof(ValidationBehavior));
-
-    public static void AddValidationErrorHandler(DependencyObject d, RoutedEventHandler handler)
-    {
-        if (d is UIElement element)
-        {
-            element.AddHandler(ValidationErrorEvent, handler);
-        }
-    }
-
-    public static void RemoveValidationErrorHandler(DependencyObject d, RoutedEventHandler handler)
-    {
-        if (d is UIElement element)
-        {
-            element.RemoveHandler(ValidationErrorEvent, handler);
-        }
-    }
-
-    // Raise the attached event
-    public static void RaiseValidationError(UIElement element)
-    {
-        element.RaiseEvent(new RoutedEventArgs(ValidationErrorEvent, element));
-    }
-}
-```
-
 ---
 
-## 9. Common Event Handling Patterns
+## 8. Common Event Handling Patterns
 
-### 9.1 Event Aggregation
+### 8.1 Event Aggregation
 
 ```csharp
 // Handle events from multiple child elements at parent level
@@ -424,7 +229,7 @@ private void ParentPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
 }
 ```
 
-### 9.2 Event Suppression
+### 8.2 Event Suppression
 
 ```csharp
 // Suppress events for specific conditions
@@ -440,7 +245,7 @@ private void Element_PreviewMouseDown(object sender, MouseButtonEventArgs e)
 
 ---
 
-## 10. References
+## 9. References
 
 - [Routed Events Overview - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/routed-events-overview)
 - [How to: Create a Custom Routed Event - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/how-to-create-a-custom-routed-event)

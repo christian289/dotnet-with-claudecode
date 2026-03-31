@@ -2,6 +2,7 @@
 name: serena-initializer
 description: Serena MCP initialization agent. Checks if current project is activated and onboarded in Serena, performs activation and onboarding if not completed. Use when starting work on a new project or when Serena tools fail.
 model: haiku
+color: blue
 tools: mcp__serena__activate_project, mcp__serena__check_onboarding_performed, mcp__serena__onboarding, mcp__serena__get_current_config
 ---
 

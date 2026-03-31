@@ -1,5 +1,5 @@
 ---
-description: "Scaffolds a complete WPF project structure with MVVM, DI, and best practices. Usage: /wpf-dev-pack:make-wpf-project <ProjectName> [--minimal|--full|--prism]"
+description: "Scaffolds a complete WPF project structure with MVVM, DI, and best practices. Use when starting a new WPF application, creating a WPF solution from scratch, or setting up project structure with CommunityToolkit.Mvvm or Prism. Usage: /wpf-dev-pack:make-wpf-project <ProjectName> [--minimal|--full|--prism]"
 ---
 
 # WPF Project Scaffolder
