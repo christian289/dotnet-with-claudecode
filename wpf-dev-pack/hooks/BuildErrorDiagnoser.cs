@@ -92,7 +92,7 @@ static List<BuildDiagnostic> AnalyzeBuildErrors(string output)
     var diagnostics = new List<BuildDiagnostic>();
     var seen = new HashSet<string>();
 
-    foreach (Match match in ErrorPattern().Matches(output))
+    foreach (Match match in ErrorPatterns.ErrorPattern().Matches(output))
     {
         var code = match.Groups["code"].Value;
         var msg = match.Groups["msg"].Value.Trim();
@@ -167,4 +167,3 @@ internal static partial class ErrorPatterns
     internal static partial Regex ErrorPattern();
 }
 
-static Regex ErrorPattern() => ErrorPatterns.ErrorPattern();
