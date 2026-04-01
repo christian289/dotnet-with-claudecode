@@ -1,51 +1,51 @@
 ---
-description: "Generates WPF CustomControl C# class and XAML ControlTemplate style from a control name and base class. Use when creating a new custom control, scaffolding a templated control, or generating CustomControl boilerplate code. Usage: /wpf-dev-pack:make-wpf-custom-control <ControlName> <BaseClass>"
+description: "Generates WPF CustomControl C# class and XAML ControlTemplate style from a control name. Use when creating a new custom control, scaffolding a templated control, or generating CustomControl boilerplate code. Usage: /wpf-dev-pack:make-wpf-custom-control <ControlName>"
+argument-hint: [ControlName]
 ---
 
 # WPF CustomControl Generation
 
-User input: $ARGUMENTS
+**If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the CustomControl name (e.g., CircularProgress, RangeSlider)". Do NOT proceed until a valid name is provided. Use the response as the ControlName for all subsequent steps.**
+
+Generate a `$0` CustomControl.
+
+- Replace `{BaseClass}` with the appropriate WPF base class (e.g., Control, Button, ContentControl, ItemsControl) based on the control name and context.
+- Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
 
 ## Workflow
 
-### Step 1: Parse Arguments
+### Step 1: Validate Input
 
-Extract control name and base class from `$ARGUMENTS`:
-- Format: `ControlName BaseClass` (e.g., `MyButton Button`, `CircularProgress Control`)
-- If base class is omitted, default to `Control`
-
-### Step 2: Validate Input
-
-- Control name must be PascalCase
-- Base class must be valid WPF control (Button, Control, ContentControl, ItemsControl, etc.)
+- `$0` must be PascalCase
+- Determine the best BaseClass based on `$0` name and intended usage
 
 ### Step 3: Generate C# Class File
 
-Create `[ControlName].cs`:
+Create `$0.cs`:
 
 ```csharp
 using System.Windows;
 using System.Windows.Controls;
 
-namespace [ProjectNamespace].Controls;
+namespace {Namespace}.Controls;
 
 /// <summary>
-/// [ControlName] - Custom WPF control based on [BaseClass]
+/// $0 - Custom WPF control based on {BaseClass}
 /// </summary>
 [TemplatePart(Name = "PART_Root", Type = typeof(Border))]
 [TemplateVisualState(GroupName = "CommonStates", Name = "Normal")]
 [TemplateVisualState(GroupName = "CommonStates", Name = "MouseOver")]
 [TemplateVisualState(GroupName = "CommonStates", Name = "Pressed")]
 [TemplateVisualState(GroupName = "CommonStates", Name = "Disabled")]
-public class [ControlName] : [BaseClass]
+public class $0 : {BaseClass}
 {
     #region Static Constructor
 
-    static [ControlName]()
+    static $0()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
-            typeof([ControlName]),
-            new FrameworkPropertyMetadata(typeof([ControlName])));
+            typeof($0),
+            new FrameworkPropertyMetadata(typeof($0)));
     }
 
     #endregion
@@ -59,7 +59,7 @@ public class [ControlName] : [BaseClass]
         DependencyProperty.Register(
             nameof(Example),
             typeof(string),
-            typeof([ControlName]),
+            typeof($0),
             new FrameworkPropertyMetadata(
                 defaultValue: string.Empty,
                 flags: FrameworkPropertyMetadataOptions.AffectsRender,
@@ -73,7 +73,7 @@ public class [ControlName] : [BaseClass]
 
     private static void OnExampleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is [ControlName] control)
+        if (d is $0 control)
         {
             control.OnExampleChanged((string)e.OldValue, (string)e.NewValue);
         }
@@ -137,29 +137,29 @@ public class [ControlName] : [BaseClass]
 
 ### Step 4: Generate XAML Style File
 
-Create `Themes/[ControlName].xaml`:
+Create `Themes/$0.xaml`:
 
 ```xml
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:[ProjectNamespace].Controls">
+                    xmlns:local="clr-namespace:{Namespace}.Controls">
 
     <!-- Resources -->
-    <SolidColorBrush x:Key="[ControlName]Background" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="[ControlName]Foreground" Color="#000000"/>
-    <SolidColorBrush x:Key="[ControlName]BorderBrush" Color="#CCCCCC"/>
-    <SolidColorBrush x:Key="[ControlName]MouseOverBackground" Color="#E5F3FF"/>
+    <SolidColorBrush x:Key="$0Background" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="$0Foreground" Color="#000000"/>
+    <SolidColorBrush x:Key="$0BorderBrush" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="$0MouseOverBackground" Color="#E5F3FF"/>
 
     <!-- Style -->
-    <Style TargetType="{x:Type local:[ControlName]}">
-        <Setter Property="Background" Value="{StaticResource [ControlName]Background}"/>
-        <Setter Property="Foreground" Value="{StaticResource [ControlName]Foreground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource [ControlName]BorderBrush}"/>
+    <Style TargetType="{x:Type local:$0}">
+        <Setter Property="Background" Value="{StaticResource $0Background}"/>
+        <Setter Property="Foreground" Value="{StaticResource $0Foreground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource $0BorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="8,4"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:[ControlName]}">
+                <ControlTemplate TargetType="{x:Type local:$0}">
                     <Border x:Name="PART_Root"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -217,7 +217,7 @@ Add to `Themes/Generic.xaml` MergedDictionaries:
 ```xml
 <ResourceDictionary.MergedDictionaries>
     <!-- Existing entries -->
-    <ResourceDictionary Source="/Themes/[ControlName].xaml"/>
+    <ResourceDictionary Source="/Themes/$0.xaml"/>
 </ResourceDictionary.MergedDictionaries>
 ```
 
@@ -230,5 +230,5 @@ After generation, provide:
 
 ```xml
 <!-- Usage Example -->
-<local:[ControlName] Example="Hello World"/>
+<local:$0 Example="Hello World"/>
 ```

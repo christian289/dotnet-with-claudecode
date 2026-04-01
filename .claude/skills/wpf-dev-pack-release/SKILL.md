@@ -1,5 +1,7 @@
 ---
 description: "Executes the wpf-dev-pack release workflow: bumps version, updates all version references, commits, pushes, creates GitHub tag/release, and updates GitHub profile. Use when releasing a new version of wpf-dev-pack plugin. Usage: /wpf-dev-pack-release [version]"
+disable-model-invocation: true
+argument-hint: [update version e.g. 1.6.0]
 ---
 
 # wpf-dev-pack Release Workflow
@@ -9,7 +11,7 @@ Execute all steps sequentially without asking for confirmation at each step.
 
 ## Arguments
 
-- `$ARGUMENTS` contains the optional version argument.
+- `$0` contains the optional version argument.
 - **Version specified** (e.g., `1.6.0`): Use that exact version.
 - **No version specified**: Auto-increment **patch** from current version (e.g., `1.5.0` → `1.5.1`).
 
@@ -34,7 +36,7 @@ cat wpf-dev-pack/.claude-plugin/plugin.json
 ```
 
 Determine `{new-version}`:
-- If `$ARGUMENTS` contains a semver string → use it as `{new-version}`
+- If `$0` contains a semver string → use it as `{new-version}`
 - Otherwise → increment patch of current version (e.g., `1.5.0` → `1.5.1`)
 
 ## Step 2: Update Version in All Files

@@ -1,10 +1,17 @@
 ---
 description: "Generates WPF UserControl with XAML and code-behind. Use when creating a new UserControl, scaffolding a composite UI component, or generating a UserControl with optional ViewModel. Usage: /wpf-dev-pack:make-wpf-usercontrol <ControlName> [--with-viewmodel]"
+argument-hint: [ControlName]
 ---
 
 # WPF UserControl Generator
 
-Generates UserControl XAML and code-behind files.
+**If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the UserControl name (e.g., SearchBox, UserProfile)". Do NOT proceed until a valid name is provided. Use the response as the ControlName for all subsequent steps.**
+
+Generate a `$0Control` UserControl with XAML and code-behind.
+If `--with-viewmodel` is appended, also generate a corresponding ViewModel.
+
+- Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
+- Replace `{Project}` with the target project path.
 
 ## Usage
 
@@ -18,10 +25,10 @@ Generates UserControl XAML and code-behind files.
 
 ## Generated Files
 
-### {Name}Control.xaml
+### $0Control.xaml
 
 ```xml
-<UserControl x:Class="{Namespace}.Controls.{Name}Control"
+<UserControl x:Class="{Namespace}.Controls.$0Control"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -36,15 +43,15 @@ Generates UserControl XAML and code-behind files.
 </UserControl>
 ```
 
-### {Name}Control.xaml.cs
+### $0Control.xaml.cs
 
 ```csharp
 namespace {Namespace}.Controls;
 
 /// <summary>
-/// {Name} UserControl.
+/// $0 UserControl.
 /// </summary>
-public partial class {Name}Control : UserControl
+public partial class $0Control : UserControl
 {
     #region Dependency Properties
 
@@ -52,7 +59,7 @@ public partial class {Name}Control : UserControl
         DependencyProperty.Register(
             nameof(Header),
             typeof(string),
-            typeof({Name}Control),
+            typeof($0Control),
             new PropertyMetadata(string.Empty));
 
     /// <summary>
@@ -66,7 +73,7 @@ public partial class {Name}Control : UserControl
 
     #endregion
 
-    public {Name}Control()
+    public $0Control()
     {
         InitializeComponent();
     }
@@ -75,12 +82,12 @@ public partial class {Name}Control : UserControl
 
 ### With ViewModel Option
 
-**{Name}ControlViewModel.cs**
+**$0ControlViewModel.cs**
 
 ```csharp
 namespace {Namespace}.ViewModels;
 
-public partial class {Name}ControlViewModel : ObservableObject
+public partial class $0ControlViewModel : ObservableObject
 {
     [ObservableProperty] private string _title = string.Empty;
 
@@ -92,16 +99,16 @@ public partial class {Name}ControlViewModel : ObservableObject
 }
 ```
 
-**{Name}Control.xaml (with ViewModel)**
+**$0Control.xaml (with ViewModel)**
 
 ```xml
-<UserControl x:Class="{Namespace}.Controls.{Name}Control"
+<UserControl x:Class="{Namespace}.Controls.$0Control"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:{Namespace}.ViewModels">
 
     <UserControl.DataContext>
-        <vm:{Name}ControlViewModel/>
+        <vm:$0ControlViewModel/>
     </UserControl.DataContext>
 
     <Grid>
@@ -132,10 +139,10 @@ public partial class {Name}ControlViewModel : ObservableObject
 ```
 {Project}/
 ├── Controls/
-│   ├── {Name}Control.xaml
-│   └── {Name}Control.xaml.cs
+│   ├── $0Control.xaml
+│   └── $0Control.xaml.cs
 └── ViewModels/
-    └── {Name}ControlViewModel.cs  (with --with-viewmodel option)
+    └── $0ControlViewModel.cs  (with --with-viewmodel option)
 ```
 
 ## DependencyProperty Pattern
@@ -147,7 +154,7 @@ public static readonly DependencyProperty ValueProperty =
     DependencyProperty.Register(
         nameof(Value),
         typeof(string),
-        typeof({Name}Control),
+        typeof($0Control),
         new FrameworkPropertyMetadata(
             string.Empty,
             FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
@@ -161,7 +168,7 @@ public string Value
 
 private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-    if (d is {Name}Control control)
+    if (d is $0Control control)
     {
         // Handle value change
     }
@@ -170,5 +177,5 @@ private static void OnValueChanged(DependencyObject d, DependencyPropertyChanged
 
 ```xml
 <!-- Usage example -->
-<local:{Name}Control Value="{Binding MyValue, Mode=TwoWay}"/>
+<local:$0Control Value="{Binding MyValue, Mode=TwoWay}"/>
 ```

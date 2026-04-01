@@ -1,10 +1,18 @@
 ---
 description: "Generates WPF IValueConverter or IMultiValueConverter classes with MarkupExtension pattern. Use when creating a new value converter, scaffolding a MultiValueConverter, or adding a converter with direct XAML usage. Usage: /wpf-dev-pack:make-wpf-converter <ConverterName> [multi]"
+argument-hint: [ConverterName]
 ---
 
 # WPF Converter Generator
 
-Generates IValueConverter or IMultiValueConverter with MarkupExtension pattern for direct XAML usage.
+**If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the Converter name (e.g., BoolToVisibility, NullToVisibility)". Do NOT proceed until a valid name is provided. Use the response as the ConverterName for all subsequent steps.**
+
+Generate a `$0Converter` class with MarkupExtension pattern for direct XAML usage.
+If `multi` is appended to the arguments, generate IMultiValueConverter instead of IValueConverter.
+
+- Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
+- Replace `{SourceType}` and `{TargetType}` with the appropriate types based on the converter name (e.g., BoolToVisibility → bool, Visibility).
+- Replace `{Project}` with the target project path.
 
 ## Usage
 
@@ -102,7 +110,7 @@ namespace {Namespace}.Converters;
 /// <summary>
 /// Converts {SourceType} to {TargetType}.
 /// </summary>
-public sealed class {Name}Converter : ConverterMarkupExtension<{Name}Converter>
+public sealed class $0Converter : ConverterMarkupExtension<$0Converter>
 {
     public override object? Convert(
         object? value,
@@ -129,7 +137,7 @@ namespace {Namespace}.Converters;
 /// <summary>
 /// Combines multiple values into a single result.
 /// </summary>
-public sealed class {Name}Converter : MultiConverterMarkupExtension<{Name}Converter>
+public sealed class $0Converter : MultiConverterMarkupExtension<$0Converter>
 {
     public override object? Convert(
         object?[] values,
@@ -268,7 +276,7 @@ public sealed class InverseBoolConverter : ConverterMarkupExtension<InverseBoolC
     ├── MultiConverterMarkupExtension.cs  # Multi base class
     ├── BoolToVisibilityConverter.cs
     ├── NullToVisibilityConverter.cs
-    └── {Name}Converter.cs
+    └── $0Converter.cs
 ```
 
 ---

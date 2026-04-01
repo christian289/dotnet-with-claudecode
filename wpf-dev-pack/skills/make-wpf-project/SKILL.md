@@ -1,25 +1,28 @@
 ---
 description: "Scaffolds a complete WPF project structure with MVVM, DI, and best practices. Use when starting a new WPF application, creating a WPF solution from scratch, or setting up project structure with CommunityToolkit.Mvvm or Prism. Usage: /wpf-dev-pack:make-wpf-project <ProjectName> [--minimal|--full|--prism]"
+argument-hint: [ProjectName]
 ---
 
 # WPF Project Scaffolder
 
-Generates WPF project structure with MVVM, DI, and best practices.
+**If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the WPF project name (e.g., MyApp, Dashboard)". Do NOT proceed until a valid name is provided. Use the response as the ProjectName for all subsequent steps.**
+
+Scaffold a WPF project named `$0` with MVVM, DI, and best practices.
 
 ## Usage
 
 ```bash
 # Default project (recommended) - CommunityToolkit.Mvvm + GenericHost
-/wpf-dev-pack:make-wpf-project MyApp
+/wpf-dev-pack:make-wpf-project $0
 
 # Minimal structure
-/wpf-dev-pack:make-wpf-project MyApp --minimal
+/wpf-dev-pack:make-wpf-project $0 --minimal
 
 # Full structure (all layers separated)
-/wpf-dev-pack:make-wpf-project MyApp --full
+/wpf-dev-pack:make-wpf-project $0 --full
 
 # Prism framework (module-based architecture)
-/wpf-dev-pack:make-wpf-project MyApp --prism
+/wpf-dev-pack:make-wpf-project $0 --prism
 ```
 
 ### Framework Options
@@ -38,9 +41,9 @@ Generates WPF project structure with MVVM, DI, and best practices.
 ### Default Structure
 
 ```
-MyApp/
-├── MyApp.sln
-├── MyApp.App/                    # WPF Application
+$0/
+├── $0.sln
+├── $0.App/                    # WPF Application
 │   ├── App.xaml
 │   ├── App.xaml.cs
 │   ├── MainWindow.xaml
@@ -48,23 +51,23 @@ MyApp/
 │   ├── GlobalUsings.cs
 │   ├── Views/
 │   ├── Converters/
-│   └── MyApp.App.csproj
-├── MyApp.ViewModels/             # ViewModel (pure C#)
+│   └── $0.App.csproj
+├── $0.ViewModels/             # ViewModel (pure C#)
 │   ├── MainViewModel.cs
 │   ├── GlobalUsings.cs
-│   └── MyApp.ViewModels.csproj
-└── MyApp.Core/                   # Business logic
+│   └── $0.ViewModels.csproj
+└── $0.Core/                   # Business logic
     ├── Models/
     ├── Services/
-    └── MyApp.Core.csproj
+    └── $0.Core.csproj
 ```
 
 ### Minimal Structure
 
 ```
-MyApp/
-├── MyApp.sln
-└── MyApp/
+$0/
+├── $0.sln
+└── $0/
     ├── App.xaml
     ├── App.xaml.cs
     ├── MainWindow.xaml
@@ -74,24 +77,24 @@ MyApp/
     ├── Views/
     ├── Models/
     ├── Services/
-    └── MyApp.csproj
+    └── $0.csproj
 ```
 
 ### Full Structure
 
 ```
-MyApp/
-├── MyApp.slnx
+$0/
+├── $0.slnx
 ├── src/
-│   ├── MyApp.Abstractions/       # Interfaces, abstract classes
-│   ├── MyApp.Core/               # Business logic
-│   ├── MyApp.ViewModels/         # ViewModel
-│   ├── MyApp.WpfServices/        # WPF services (CollectionView etc.)
-│   ├── MyApp.UI/                 # CustomControl library
-│   └── MyApp.App/                # WPF Application
+│   ├── $0.Abstractions/       # Interfaces, abstract classes
+│   ├── $0.Core/               # Business logic
+│   ├── $0.ViewModels/         # ViewModel
+│   ├── $0.WpfServices/        # WPF services (CollectionView etc.)
+│   ├── $0.UI/                 # CustomControl library
+│   └── $0.App/                # WPF Application
 └── tests/
-    ├── MyApp.Core.Tests/
-    └── MyApp.ViewModels.Tests/
+    ├── $0.Core.Tests/
+    └── $0.ViewModels.Tests/
 ```
 
 ### Prism Structure (`--prism`)
@@ -102,7 +105,7 @@ See [PRISM.md](PRISM.md) for complete structure.
 
 ## Generated Files
 
-### MyApp.App.csproj
+### $0.App.csproj
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -122,8 +125,8 @@ See [PRISM.md](PRISM.md) for complete structure.
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyApp.ViewModels\MyApp.ViewModels.csproj" />
-    <ProjectReference Include="..\MyApp.Core\MyApp.Core.csproj" />
+    <ProjectReference Include="..\$0.ViewModels\$0.ViewModels.csproj" />
+    <ProjectReference Include="..\$0.Core\$0.Core.csproj" />
   </ItemGroup>
 
 </Project>
@@ -132,7 +135,7 @@ See [PRISM.md](PRISM.md) for complete structure.
 ### App.xaml.cs (with DI)
 
 ```csharp
-namespace MyApp;
+namespace $0;
 
 public partial class App : Application
 {
@@ -178,11 +181,11 @@ public partial class App : Application
 ### MainViewModel.cs
 
 ```csharp
-namespace MyApp.ViewModels;
+namespace $0.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty] private string _title = "MyApp";
+    [ObservableProperty] private string _title = "$0";
     [ObservableProperty] private string _statusMessage = "Ready";
 
     private readonly IDialogService _dialogService;
@@ -234,27 +237,27 @@ Commands to run after project generation:
 
 ```bash
 # Create solution
-dotnet new sln -n MyApp
+dotnet new sln -n $0
 
 # Create projects
-dotnet new wpf -n MyApp.App
-dotnet new classlib -n MyApp.ViewModels
-dotnet new classlib -n MyApp.Core
+dotnet new wpf -n $0.App
+dotnet new classlib -n $0.ViewModels
+dotnet new classlib -n $0.Core
 
 # Add projects to solution
-dotnet sln add MyApp.App/MyApp.App.csproj
-dotnet sln add MyApp.ViewModels/MyApp.ViewModels.csproj
-dotnet sln add MyApp.Core/MyApp.Core.csproj
+dotnet sln add $0.App/$0.App.csproj
+dotnet sln add $0.ViewModels/$0.ViewModels.csproj
+dotnet sln add $0.Core/$0.Core.csproj
 
 # Add project references
-dotnet add MyApp.App reference MyApp.ViewModels
-dotnet add MyApp.App reference MyApp.Core
-dotnet add MyApp.ViewModels reference MyApp.Core
+dotnet add $0.App reference $0.ViewModels
+dotnet add $0.App reference $0.Core
+dotnet add $0.ViewModels reference $0.Core
 
 # Add packages
-dotnet add MyApp.App package CommunityToolkit.Mvvm
-dotnet add MyApp.App package Microsoft.Extensions.Hosting
-dotnet add MyApp.ViewModels package CommunityToolkit.Mvvm
+dotnet add $0.App package CommunityToolkit.Mvvm
+dotnet add $0.App package Microsoft.Extensions.Hosting
+dotnet add $0.ViewModels package CommunityToolkit.Mvvm
 ```
 
 ---

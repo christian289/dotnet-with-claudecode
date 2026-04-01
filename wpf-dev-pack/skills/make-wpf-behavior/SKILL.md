@@ -1,33 +1,24 @@
 ---
-description: "Generates WPF Behavior<T> classes using Microsoft.Xaml.Behaviors.Wpf. Use when adding reusable interaction logic to controls, creating drag behaviors, or scaffolding a new Behavior class. Usage: /wpf-dev-pack:make-wpf-behavior <BehaviorName> <TargetType>"
+description: "Generates WPF Behavior<T> classes using Microsoft.Xaml.Behaviors.Wpf. Use when adding reusable interaction logic to controls, creating drag behaviors, or scaffolding a new Behavior class. Usage: /wpf-dev-pack:make-wpf-behavior <BehaviorName>"
+argument-hint: [BehaviorName]
 ---
 
 # WPF Behavior Generator
 
-Generates Behavior<T> classes based on Microsoft.Xaml.Behaviors.Wpf.
+**If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the Behavior name (e.g., SelectAllOnFocus, DragMove)". Do NOT proceed until a valid name is provided. Use the response as the BehaviorName for all subsequent steps.**
 
-## Usage
+Generate a `$0Behavior` class based on Microsoft.Xaml.Behaviors.Wpf.
 
-```bash
-# Behavior for TextBox
-/wpf-dev-pack:make-wpf-behavior SelectAllOnFocus TextBox
-
-# General behavior for UIElement
-/wpf-dev-pack:make-wpf-behavior DragDrop UIElement
-
-# Behavior for Window
-/wpf-dev-pack:make-wpf-behavior AutoClose Window
-```
+- Replace `{TargetType}` with the appropriate WPF type (e.g., TextBox, UIElement, Window) based on the behavior name and context.
+- Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
+- Replace `{Project}` with the target project path.
 
 ## Generated Code
 
 ```csharp
 namespace {Namespace}.Behaviors;
 
-/// <summary>
-/// {Description}
-/// </summary>
-public sealed class {Name}Behavior : Behavior<{TargetType}>
+public sealed class $0Behavior : Behavior<{TargetType}>
 {
     #region Dependency Properties
 
@@ -35,12 +26,9 @@ public sealed class {Name}Behavior : Behavior<{TargetType}>
         DependencyProperty.Register(
             nameof(IsEnabled),
             typeof(bool),
-            typeof({Name}Behavior),
+            typeof($0Behavior),
             new PropertyMetadata(true));
 
-    /// <summary>
-    /// Gets or sets whether the behavior is enabled.
-    /// </summary>
     public bool IsEnabled
     {
         get => (bool)GetValue(IsEnabledProperty);
@@ -54,19 +42,13 @@ public sealed class {Name}Behavior : Behavior<{TargetType}>
     protected override void OnAttached()
     {
         base.OnAttached();
-
-        // Subscribe to events
         AssociatedObject.Loaded += OnLoaded;
-        // TODO: Add more event subscriptions as needed
     }
 
     protected override void OnDetaching()
     {
         base.OnDetaching();
-
-        // IMPORTANT: Always unsubscribe to prevent memory leaks
         AssociatedObject.Loaded -= OnLoaded;
-        // TODO: Remove all event subscriptions
     }
 
     #endregion
@@ -91,13 +73,13 @@ public sealed class {Name}Behavior : Behavior<{TargetType}>
 
 ```xml
 <Window xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:behaviors="clr-namespace:MyApp.Behaviors">
+        xmlns:behaviors="clr-namespace:{Namespace}.Behaviors">
 
-    <TextBox>
+    <{TargetType}>
         <b:Interaction.Behaviors>
-            <behaviors:{Name}Behavior IsEnabled="{Binding IsBehaviorEnabled}"/>
+            <behaviors:$0Behavior IsEnabled="{Binding IsBehaviorEnabled}"/>
         </b:Interaction.Behaviors>
-    </TextBox>
+    </{TargetType}>
 
 </Window>
 ```
@@ -165,14 +147,14 @@ public sealed class EnterKeyBehavior : Behavior<TextBox>
 ```
 {Project}/
 └── Behaviors/
-    └── {Name}Behavior.cs
+    └── $0Behavior.cs
 ```
 
 ## Best Practices
 
 | DO | DON'T |
 |----|-------|
-| ✅ Unsubscribe events in OnDetaching | ❌ Missing event unsubscription (memory leak) |
-| ✅ Expose settings via DependencyProperty | ❌ Use hardcoded values |
-| ✅ Apply IsEnabled pattern | ❌ Always execute without condition |
-| ✅ Check AssociatedObject for null | ❌ Use without null check |
+| Unsubscribe events in OnDetaching | Missing event unsubscription (memory leak) |
+| Expose settings via DependencyProperty | Use hardcoded values |
+| Apply IsEnabled pattern | Always execute without condition |
+| Check AssociatedObject for null | Use without null check |
