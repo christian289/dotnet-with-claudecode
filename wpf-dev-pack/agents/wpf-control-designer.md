@@ -12,6 +12,8 @@ skills:
   - customizing-controltemplate
   - understanding-wpf-content-model
   - implementing-hit-testing
+  - configuring-wpf-themeinfo
+  - routing-wpf-events
 ---
 
 # WPF Control Designer - CustomControl Specialist

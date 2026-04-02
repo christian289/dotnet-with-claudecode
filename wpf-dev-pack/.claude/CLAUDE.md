@@ -71,7 +71,7 @@ RULE 5: wpf-architect MUST conduct Requirements Interview before analysis
 
 ## Requirements Interview System
 
-When `wpf-architect` or `wpf-architect-low` is invoked, conduct an **adaptive path-based interview** using AskUserQuestion:
+When `wpf-architect` is invoked, conduct an **adaptive path-based interview** using AskUserQuestion:
 
 | Path | Task Type | Steps | Focus |
 |------|-----------|-------|-------|

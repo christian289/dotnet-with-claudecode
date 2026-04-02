@@ -6,7 +6,7 @@ Delegate complex tasks to specialized agents.
 
 ## Requirements Interview System
 
-`wpf-architect` and `wpf-architect-low` use an **adaptive interview system** where Step 1 determines the entire interview path.
+`wpf-architect` uses an **adaptive interview system** where Step 1 determines the entire interview path.
 
 ### Path Overview
 
@@ -86,11 +86,3 @@ The interview starts automatically when `wpf-architect` is invoked. Users can:
 | Data binding | `wpf-data-binding-expert` | Complex bindings |
 | Performance optimization | `wpf-performance-optimizer` | Performance issues |
 
----
-
-## Claude Pro Alternatives
-
-| Default (Opus) | Alternative (Sonnet) |
-|----------------|---------------------|
-| `wpf-architect` | `wpf-architect-low` |
-| `wpf-code-reviewer` | `wpf-code-reviewer-low` |

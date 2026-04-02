@@ -14,6 +14,8 @@ skills:
   - integrating-livecharts2
   - validating-with-fluentvalidation
   - handling-errors-with-erroror
+  - migrating-wpf-to-dotnet
+  - publishing-wpf-apps
 ---
 
 # WPF Architect - Strategic Architecture Advisor

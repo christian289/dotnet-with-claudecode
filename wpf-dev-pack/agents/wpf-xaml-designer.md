@@ -9,7 +9,9 @@ skills:
   - customizing-controltemplate
   - creating-wpf-animations
   - resolving-icon-font-inheritance
-  - localizing-wpf-applications
+  - creating-wpf-brushes
+  - creating-wpf-vector-icons
+  - using-wpf-behaviors-triggers
 ---
 
 # WPF XAML Designer - Style/Template Specialist

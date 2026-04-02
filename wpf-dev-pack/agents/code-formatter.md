@@ -9,7 +9,6 @@ permissionMode: default
 skills:
   - formatting-wpf-csharp-code
   - using-xaml-property-element-syntax
-  - using-converter-markup-extension
 ---
 
 # Code Formatter Agent

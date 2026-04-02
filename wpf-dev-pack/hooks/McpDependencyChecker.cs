@@ -76,8 +76,8 @@ Console.WriteLine($$"""
     ⚠️ Missing: {{string.Join(", ", missingMcps)}}
 
     ❌ The following agents CANNOT be used without these MCPs:
-       - wpf-architect, wpf-architect-low
-       - wpf-code-reviewer, wpf-code-reviewer-low
+       - wpf-architect
+       - wpf-code-reviewer
        - wpf-control-designer, wpf-xaml-designer
        - wpf-mvvm-expert, wpf-data-binding-expert
        - wpf-performance-optimizer, serena-initializer

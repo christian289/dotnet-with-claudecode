@@ -9,6 +9,9 @@ skills:
   - managing-wpf-collectionview-mvvm
   - binding-enum-command-parameters
   - implementing-repository-pattern
+  - configuring-dependency-injection
+  - handling-wpf-input-commands
+  - testing-wpf-viewmodels
 ---
 
 # WPF MVVM Expert - MVVM Pattern Specialist
