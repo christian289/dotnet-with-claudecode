@@ -36,16 +36,19 @@
         "hooks": [
           {
             "type": "command",
+            "if": "Write(*.xaml)|Edit(*.xaml)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
             "timeout": 15
           },
           {
             "type": "command",
+            "if": "Write(*.cs)|Edit(*.cs)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/MvvmViolationDetector.cs\"",
             "timeout": 10
           },
           {
             "type": "command",
+            "if": "Write(*.xaml)|Edit(*.xaml)|Write(*.cs)|Edit(*.cs)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
             "timeout": 45
           }
