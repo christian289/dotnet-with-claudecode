@@ -6,12 +6,12 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.5.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**81개 스킬** · **11개 전문 에이전트** · **1개 MCP 서버**
+**81개 스킬** · **9개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -28,7 +28,7 @@
 <td width="50%">
 
 ### 🤖 AI 기반 개발
-- **11개 전문 에이전트**로 다양한 WPF 작업 수행
+- **9개 전문 에이전트**로 다양한 WPF 작업 수행
 - 전략적 결정을 위한 **Opus급** 아키텍트
 - WPF 키워드 **자동 감지**
 - 듀얼 프레임워크 지원을 위한 **Prism 9** 컴패니언 파일
@@ -276,14 +276,12 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | 에이전트 | 모델 | 전문 분야 |
 |----------|:----:|-----------|
 | 🏗️ **wpf-architect** | Opus | 전략적 아키텍처 및 설계 결정 |
-| 🏗️ **wpf-architect-low** | Sonnet | 아키텍처 분석 (Claude Pro) |
 | 🎨 **wpf-control-designer** | Sonnet | CustomControl 구현 |
 | 📐 **wpf-xaml-designer** | Sonnet | XAML 스타일 및 템플릿 |
 | 🔄 **wpf-mvvm-expert** | Sonnet | MVVM 패턴 및 CommunityToolkit |
 | 🔗 **wpf-data-binding-expert** | Sonnet | 복잡한 바인딩 및 유효성 검사 |
 | ⚡ **wpf-performance-optimizer** | Sonnet | 렌더링 및 성능 |
 | 🔍 **wpf-code-reviewer** | Opus | 코드 품질 분석 |
-| 🔍 **wpf-code-reviewer-low** | Sonnet | 코드 리뷰 (Claude Pro) |
 | 📝 **code-formatter** | Haiku | C# 서식 및 스타일 |
 | 🔧 **serena-initializer** | Haiku | 프로젝트 설정 |
 
@@ -503,11 +501,9 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # 플러그인 매니페스트
-├── 📁 agents/                 # 11개 전문 에이전트
+├── 📁 agents/                 # 9개 전문 에이전트
 │   ├── wpf-architect.md           # Opus
-│   ├── wpf-architect-low.md       # Sonnet (Claude Pro)
 │   ├── wpf-code-reviewer.md       # Opus
-│   ├── wpf-code-reviewer-low.md   # Sonnet (Claude Pro)
 │   ├── wpf-control-designer.md    # Sonnet
 │   ├── wpf-xaml-designer.md       # Sonnet
 │   ├── wpf-mvvm-expert.md         # Sonnet

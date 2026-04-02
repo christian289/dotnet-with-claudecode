@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.5.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**81 Skills** · **11 Specialized Agents** · **1 MCP Server**
+**81 Skills** · **9 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -28,7 +28,7 @@
 <td width="50%">
 
 ### 🤖 AI-Powered Development
-- **11 Specialized Agents** for different WPF tasks
+- **9 Specialized Agents** for different WPF tasks
 - **Opus-level** architects for strategic decisions
 - **Auto-detection** of WPF keywords
 - **Prism 9** companion files for dual-framework support
@@ -276,14 +276,12 @@ Some skills activate without notification:
 | Agent | Model | Specialty |
 |-------|:-----:|-----------|
 | 🏗️ **wpf-architect** | Opus | Strategic architecture & design decisions |
-| 🏗️ **wpf-architect-low** | Sonnet | Architecture analysis (Claude Pro) |
 | 🎨 **wpf-control-designer** | Sonnet | CustomControl implementation |
 | 📐 **wpf-xaml-designer** | Sonnet | XAML styles & templates |
 | 🔄 **wpf-mvvm-expert** | Sonnet | MVVM pattern & CommunityToolkit |
 | 🔗 **wpf-data-binding-expert** | Sonnet | Complex bindings & validation |
 | ⚡ **wpf-performance-optimizer** | Sonnet | Rendering & performance |
 | 🔍 **wpf-code-reviewer** | Opus | Code quality analysis |
-| 🔍 **wpf-code-reviewer-low** | Sonnet | Code review (Claude Pro) |
 | 📝 **code-formatter** | Haiku | C# formatting & style |
 | 🔧 **serena-initializer** | Haiku | Project setup |
 
@@ -503,11 +501,9 @@ Some skills activate without notification:
 wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # Plugin manifest
-├── 📁 agents/                 # 11 Specialized agents
+├── 📁 agents/                 # 9 Specialized agents
 │   ├── wpf-architect.md           # Opus
-│   ├── wpf-architect-low.md       # Sonnet (Claude Pro)
 │   ├── wpf-code-reviewer.md       # Opus
-│   ├── wpf-code-reviewer-low.md   # Sonnet (Claude Pro)
 │   ├── wpf-control-designer.md    # Sonnet
 │   ├── wpf-xaml-designer.md       # Sonnet
 │   ├── wpf-mvvm-expert.md         # Sonnet
