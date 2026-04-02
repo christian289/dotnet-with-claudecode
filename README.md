@@ -12,7 +12,7 @@ This repository provides skills, rules, and agent configurations for .NET/WPF de
 
 ### [wpf-dev-pack](./wpf-dev-pack)
 
-Claude Code plugin for WPF development — 81 Skills, 9 Agents, 1 MCP Server.
+Claude Code plugin for WPF development.
 
 ### .claude/skills
 

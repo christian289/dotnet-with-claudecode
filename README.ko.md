@@ -12,7 +12,7 @@ Claude Code를 활용한 .NET 개발 튜토리얼
 
 ### [wpf-dev-pack](./wpf-dev-pack)
 
-WPF 개발을 위한 Claude Code 플러그인 — 81개 스킬, 9개 에이전트, 1개 MCP 서버.
+WPF 개발을 위한 Claude Code 플러그인.
 
 ### .claude/skills
 
