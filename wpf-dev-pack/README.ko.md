@@ -111,10 +111,10 @@ wpf-dev-pack 에이전트는 다음 Claude Code 플러그인이 별도로 설치
 
 | 플러그인 | MCP 서버 | 용도 |
 |---------|----------|------|
-| **[context7](https://github.com/nicobailey/context7-mcp)** | context7 | 최신 라이브러리/프레임워크 문서 조회 |
+| **[context7](https://github.com/upstash/context7)** | context7 | 최신 라이브러리/프레임워크 문서 조회 |
 | **[serena](https://github.com/oraios/serena)** | serena | 시맨틱 코드 분석, 심볼 네비게이션 |
-| **[microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)** | microsoft-learn | 공식 Microsoft 문서 및 코드 샘플 조회 |
-| **[csharp-lsp](https://github.com/nicobailey/csharp-lsp)** | csharp | C# Language Server Protocol (정의, 참조, 진단) |
+| **[microsoft-docs](https://github.com/MicrosoftDocs/mcp)** | microsoft-learn | 공식 Microsoft 문서 및 코드 샘플 조회 |
+| **[csharp-lsp](https://github.com/razzmatazz/csharp-language-server)** | csharp | C# Language Server Protocol (정의, 참조, 진단) |
 
 > **참고:** wpf-dev-pack은 런타임에 플러그인 가용성을 확인하고 누락된 경우 경고합니다.
 

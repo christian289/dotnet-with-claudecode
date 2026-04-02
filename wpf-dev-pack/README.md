@@ -111,10 +111,10 @@ wpf-dev-pack agents require the following Claude Code plugins to be installed se
 
 | Plugin | MCP Server | Purpose |
 |--------|-----------|---------|
-| **[context7](https://github.com/nicobailey/context7-mcp)** | context7 | Up-to-date library/framework documentation |
+| **[context7](https://github.com/upstash/context7)** | context7 | Up-to-date library/framework documentation |
 | **[serena](https://github.com/oraios/serena)** | serena | Semantic code analysis, symbol navigation |
-| **[microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)** | microsoft-learn | Official Microsoft documentation and code samples |
-| **[csharp-lsp](https://github.com/nicobailey/csharp-lsp)** | csharp | C# Language Server Protocol (definition, references, diagnostics) |
+| **[microsoft-docs](https://github.com/MicrosoftDocs/mcp)** | microsoft-learn | Official Microsoft documentation and code samples |
+| **[csharp-lsp](https://github.com/razzmatazz/csharp-language-server)** | csharp | C# Language Server Protocol (definition, references, diagnostics) |
 
 > **Note:** wpf-dev-pack checks plugin availability at runtime and warns if missing.
 

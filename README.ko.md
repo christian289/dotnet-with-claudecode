@@ -19,10 +19,10 @@ WPF 개발을 위한 Claude Code 플러그인.
 - Claude Code CLI
 - .NET 10.0 SDK (wpf-dev-pack 훅 실행용)
 - wpf-dev-pack 필수 Claude Code 플러그인:
-  - [context7](https://github.com/nicobailey/context7-mcp)
+  - [context7](https://github.com/upstash/context7)
   - [serena](https://github.com/oraios/serena)
-  - [microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)
-  - [csharp-lsp](https://github.com/nicobailey/csharp-lsp)
+  - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)
+  - [csharp-lsp](https://github.com/razzmatazz/csharp-language-server)
 
 ## 설치
 

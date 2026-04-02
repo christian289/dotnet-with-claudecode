@@ -19,10 +19,10 @@ Claude Code plugin for WPF development.
 - Claude Code CLI
 - .NET 10.0 SDK (for wpf-dev-pack hooks)
 - Required Claude Code plugins for wpf-dev-pack:
-  - [context7](https://github.com/nicobailey/context7-mcp)
+  - [context7](https://github.com/upstash/context7)
   - [serena](https://github.com/oraios/serena)
-  - [microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)
-  - [csharp-lsp](https://github.com/nicobailey/csharp-lsp)
+  - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)
+  - [csharp-lsp](https://github.com/razzmatazz/csharp-language-server)
 
 ## Installation
 
