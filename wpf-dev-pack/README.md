@@ -105,49 +105,20 @@ claude plugin update wpf-dev-pack@dotnet-claude-plugins
 > **Target Framework vs SDK**: .NET 10 SDK is required to **run wpf-dev-pack** (hooks use file-based apps).
 > Generated WPF projects can **target .NET 8+** — install the corresponding SDK alongside .NET 10 if needed.
 
-### Required MCP Dependencies
+### Required Plugin Dependencies
 
-wpf-dev-pack requires the following MCP servers for full functionality:
+wpf-dev-pack agents require the following Claude Code plugins to be installed separately:
 
-| MCP Server | Purpose | Required By |
-|------------|---------|-------------|
-| **Context7** | Up-to-date library docs | Most agents |
-| **Sequential-thinking** | Step-by-step analysis | Opus-level agents |
-| **Serena** | Semantic code analysis | All agents |
+| Plugin | MCP Server | Purpose |
+|--------|-----------|---------|
+| **[context7](https://github.com/nicobailey/context7-mcp)** | context7 | Up-to-date library/framework documentation |
+| **[serena](https://github.com/oraios/serena)** | serena | Semantic code analysis, symbol navigation |
+| **[microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)** | microsoft-learn | Official Microsoft documentation and code samples |
+| **[csharp-lsp](https://github.com/nicobailey/csharp-lsp)** | csharp | C# Language Server Protocol (definition, references, diagnostics) |
 
-> **Note:** These are commonly used MCPs that you may already have installed.
-> wpf-dev-pack will check for their availability at runtime and warn if missing.
+> **Note:** wpf-dev-pack checks plugin availability at runtime and warns if missing.
 
-**If not installed, add to `~/.claude/.mcp.json`:**
-
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
-      }
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
-      }
-    },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
-    }
-  }
-}
-```
-
-> **Why external?** These MCPs are commonly used across many plugins. Including them in wpf-dev-pack would cause duplication for users who already have them configured.
+Install via Claude Code marketplace or `/install-plugin` command.
 
 ---
 
@@ -318,21 +289,16 @@ Some skills activate without notification:
 
 ### 🔌 MCP Servers
 
-**Included:**
+| Plugin | MCP Server | Purpose |
+|--------|-----------|---------|
+| **HandMirrorMcp** | HandMirrorMcp | .NET assembly/NuGet inspection (bundled) |
+| **context7** | context7 | Library/framework documentation |
+| **sequential-thinking** | sequential-thinking | Step-by-step analysis |
+| **serena** | serena | Semantic code analysis |
+| **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
+| **csharp-lsp** | csharp | C# LSP code intelligence |
 
-| Server | Purpose |
-|--------|---------|
-| **Microsoft Learn** (marketplace) | Official Microsoft documentation |
-
-**Required (External):**
-
-| Server | Purpose | Notes |
-|--------|---------|-------|
-| **Context7** | Up-to-date library docs | Install separately |
-| **Sequential-thinking** | Step-by-step analysis | Install separately |
-| **Serena** | Semantic code analysis | Install separately |
-
-> See [Required MCP Dependencies](#required-mcp-dependencies) for installation instructions.
+> See [Required Plugin Dependencies](#required-plugin-dependencies) for installation.
 
 ### 📚 Skills by Category
 

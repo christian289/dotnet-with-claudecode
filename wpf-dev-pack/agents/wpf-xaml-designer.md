@@ -3,7 +3,7 @@ name: wpf-xaml-designer
 description: WPF XAML Style/ControlTemplate designer. Configures ResourceDictionary, implements Trigger, VisualStateManager, animation Storyboard.
 model: sonnet
 color: cyan
-tools: Read, Glob, Grep, Edit, Write, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__search_for_pattern, mcp__serena__replace_content
+tools: Read, Glob, Grep, Edit, Write, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__search_for_pattern, mcp__serena__replace_content
 skills:
   - managing-styles-resourcedictionary
   - customizing-controltemplate

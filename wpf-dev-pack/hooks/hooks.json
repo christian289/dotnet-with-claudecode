@@ -32,23 +32,58 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Edit",
         "hooks": [
           {
             "type": "command",
-            "if": "Write(*.xaml)|Edit(*.xaml)",
+            "if": "Edit(*.xaml)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
             "timeout": 15
           },
           {
             "type": "command",
-            "if": "Write(*.cs)|Edit(*.cs)",
+            "if": "Edit(*.cs)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/MvvmViolationDetector.cs\"",
             "timeout": 10
           },
           {
             "type": "command",
-            "if": "Write(*.xaml)|Edit(*.xaml)|Write(*.cs)|Edit(*.cs)",
+            "if": "Edit(*.cs)",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
+            "timeout": 45
+          },
+          {
+            "type": "command",
+            "if": "Edit(*.xaml)",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
+            "timeout": 45
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Write(*.xaml)",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/XamlValidator.cs\"",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "if": "Write(*.cs)",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/MvvmViolationDetector.cs\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "if": "Write(*.cs)",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
+            "timeout": 45
+          },
+          {
+            "type": "command",
+            "if": "Write(*.xaml)",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CodeFormatter.cs\"",
             "timeout": 45
           }

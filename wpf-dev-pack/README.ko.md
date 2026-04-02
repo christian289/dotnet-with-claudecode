@@ -105,49 +105,20 @@ claude plugin update wpf-dev-pack@dotnet-claude-plugins
 > **대상 프레임워크 vs SDK**: .NET 10 SDK는 **wpf-dev-pack 실행**에 필요합니다 (훅이 file-based app 사용).
 > 생성되는 WPF 프로젝트는 **.NET 8 이상을 대상**으로 설정할 수 있습니다 — 필요시 .NET 10과 함께 해당 버전 SDK를 설치하세요.
 
-### 필수 MCP 종속성
+### 필수 플러그인 종속성
 
-wpf-dev-pack의 전체 기능을 사용하려면 다음 MCP 서버가 필요합니다:
+wpf-dev-pack 에이전트는 다음 Claude Code 플러그인이 별도로 설치되어야 합니다:
 
-| MCP 서버 | 용도 | 사용처 |
-|----------|------|--------|
-| **Context7** | 최신 라이브러리 문서 | 대부분의 에이전트 |
-| **Sequential-thinking** | 단계별 분석 | Opus급 에이전트 |
-| **Serena** | 시맨틱 코드 분석 | 모든 에이전트 |
+| 플러그인 | MCP 서버 | 용도 |
+|---------|----------|------|
+| **[context7](https://github.com/nicobailey/context7-mcp)** | context7 | 최신 라이브러리/프레임워크 문서 조회 |
+| **[serena](https://github.com/oraios/serena)** | serena | 시맨틱 코드 분석, 심볼 네비게이션 |
+| **[microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)** | microsoft-learn | 공식 Microsoft 문서 및 코드 샘플 조회 |
+| **[csharp-lsp](https://github.com/nicobailey/csharp-lsp)** | csharp | C# Language Server Protocol (정의, 참조, 진단) |
 
-> **참고:** 이미 설치되어 있을 수 있는 일반적으로 사용되는 MCP입니다.
-> wpf-dev-pack은 런타임에 가용성을 확인하고 누락된 경우 경고합니다.
+> **참고:** wpf-dev-pack은 런타임에 플러그인 가용성을 확인하고 누락된 경우 경고합니다.
 
-**설치되지 않은 경우 `~/.claude/.mcp.json`에 추가:**
-
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@upstash/context7-mcp@latest"]
-      }
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "windows": {
-        "command": "cmd",
-        "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
-      }
-    },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]
-    }
-  }
-}
-```
-
-> **왜 외부인가요?** 이 MCP들은 여러 플러그인에서 공통으로 사용됩니다. wpf-dev-pack에 포함하면 이미 설정한 사용자에게 중복이 발생합니다.
+Claude Code 마켓플레이스 또는 `/install-plugin` 명령으로 설치하세요.
 
 ---
 
@@ -318,21 +289,16 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 ### 🔌 MCP 서버
 
-**내장:**
+| 플러그인 | MCP 서버 | 용도 |
+|---------|----------|------|
+| **HandMirrorMcp** | HandMirrorMcp | .NET 어셈블리/NuGet 검사 (내장) |
+| **context7** | context7 | 라이브러리/프레임워크 문서 |
+| **sequential-thinking** | sequential-thinking | 단계별 분석 |
+| **serena** | serena | 시맨틱 코드 분석 |
+| **microsoft-docs** | microsoft-learn | 공식 Microsoft 문서 |
+| **csharp-lsp** | csharp | C# LSP 코드 인텔리전스 |
 
-| 서버 | 용도 |
-|------|------|
-| **Microsoft Learn** (마켓플레이스) | 공식 Microsoft 문서 |
-
-**필수 (외부):**
-
-| 서버 | 용도 | 비고 |
-|------|------|------|
-| **Context7** | 최신 라이브러리 문서 | 별도 설치 |
-| **Sequential-thinking** | 단계별 분석 | 별도 설치 |
-| **Serena** | 시맨틱 코드 분석 | 별도 설치 |
-
-> [필수 MCP 종속성](#필수-mcp-종속성)에서 설치 방법을 확인하세요.
+> [필수 플러그인 종속성](#필수-플러그인-종속성)에서 설치 방법을 확인하세요.
 
 ### 📚 카테고리별 스킬
 

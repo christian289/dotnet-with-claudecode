@@ -4,6 +4,19 @@ Automatically activates relevant skills when WPF/C#/.NET keywords are detected.
 
 ---
 
+## Required Plugin Dependencies
+
+All agents require these Claude Code plugins to be installed:
+
+| Plugin | MCP Server | Purpose |
+|--------|-----------|---------|
+| **context7** | context7 | Library/framework documentation |
+| **serena** | serena | Semantic code analysis, symbol navigation |
+| **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
+| **csharp-lsp** | csharp | C# LSP code intelligence |
+
+---
+
 ## MVVM Approach: View First
 
 wpf-dev-pack adopts **View First MVVM**.

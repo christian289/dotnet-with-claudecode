@@ -20,7 +20,7 @@ File.WriteAllText(cacheFile, DateTime.Now.ToString("o"));
 
 // Required MCP servers for wpf-dev-pack agents
 // wpf-dev-pack 에이전트에 필요한 MCP 서버
-var requiredMcps = new[] { "context7", "serena", "sequential-thinking" };
+var requiredMcps = new[] { "context7", "serena", "microsoft-learn", "csharp-lsp" };
 var missingMcps = new List<string>();
 
 // Search for MCP configuration in common locations

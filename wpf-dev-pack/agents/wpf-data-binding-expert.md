@@ -2,8 +2,8 @@
 name: wpf-data-binding-expert
 description: WPF data binding specialist. Implements complex bindings (MultiBinding, PriorityBinding), custom converters, validation patterns, and debugging binding issues.
 model: sonnet
-color: cyan
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
+color: green
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
 skills:
   - advanced-data-binding
   - implementing-wpf-validation

@@ -3,7 +3,7 @@ name: wpf-performance-optimizer
 description: WPF rendering and performance optimization specialist. Implements DrawingContext, DrawingVisual, VirtualizingStackPanel, Freezable patterns, memory optimization.
 model: sonnet
 color: red
-tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-docs, mcp__sequential-thinking__sequentialthinking, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
+tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__get_symbols_overview
 skills:
   - rendering-with-drawingcontext
   - rendering-with-drawingvisual
