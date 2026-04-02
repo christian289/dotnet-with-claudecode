@@ -1,5 +1,7 @@
 ---
 description: "Implements Zero Allocation patterns using Span, ArrayPool, and ObjectPool for memory efficiency in .NET. Use when reducing GC pressure or optimizing high-performance memory operations."
+user-invocable: false
+model: sonnet
 ---
 
 # .NET Memory Efficiency, Zero Allocation

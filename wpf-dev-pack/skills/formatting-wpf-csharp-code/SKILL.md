@@ -1,5 +1,7 @@
 ---
 description: Formats WPF XAML and C# code using XamlStyler and dotnet format. Generates Settings.XamlStyler and .editorconfig files automatically. Use when code formatting or style cleanup is needed.
+user-invocable: false
+model: haiku
 ---
 
 # WPF and C# Code Formatting

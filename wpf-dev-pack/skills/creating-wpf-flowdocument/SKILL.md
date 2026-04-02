@@ -1,5 +1,7 @@
 ---
 description: Creates WPF FlowDocument for rich text display with Paragraph, Table, List elements. Use when building document viewers, rich text editors, or printable reports.
+user-invocable: false
+model: haiku
 ---
 
 # WPF FlowDocument Patterns

@@ -1,5 +1,7 @@
 ---
 description: Covers WPF memory optimization including Freezable patterns, common memory leak causes, and diagnostic techniques. Use when experiencing memory growth, implementing resource caching, or debugging memory issues.
+user-invocable: false
+model: opus
 ---
 
 # WPF Memory Optimization

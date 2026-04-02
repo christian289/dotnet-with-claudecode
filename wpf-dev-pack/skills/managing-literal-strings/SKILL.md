@@ -1,5 +1,7 @@
 ---
 description: "Manages literal strings by pre-defining them as const string in C#. Use when organizing string constants, log messages, exception messages, or UI texts across the codebase."
+user-invocable: false
+model: haiku
 ---
 
 # Literal String Handling

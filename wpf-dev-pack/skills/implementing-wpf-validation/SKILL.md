@@ -1,5 +1,7 @@
 ---
 description: "Implements WPF data validation using ValidationRule, IDataErrorInfo, and INotifyDataErrorInfo. Use when building forms, validating user input, or displaying validation errors in UI."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Data Validation

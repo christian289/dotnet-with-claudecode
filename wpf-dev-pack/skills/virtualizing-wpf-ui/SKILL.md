@@ -1,5 +1,7 @@
 ---
 description: Implements WPF UI virtualization for large data sets using VirtualizingStackPanel. Use when displaying 1000+ items in ItemsControl, ListView, or DataGrid to prevent memory and performance issues.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF UI Virtualization

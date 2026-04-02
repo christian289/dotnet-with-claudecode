@@ -1,5 +1,7 @@
 ---
 description: "Creates WPF Brush patterns including SolidColorBrush, LinearGradientBrush, RadialGradientBrush, ImageBrush, and VisualBrush. Use when filling shapes with colors, gradients, images, or tile patterns."
+user-invocable: false
+model: haiku
 ---
 
 # WPF Brush Patterns

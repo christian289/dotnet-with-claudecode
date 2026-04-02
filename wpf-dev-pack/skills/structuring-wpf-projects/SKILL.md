@@ -1,5 +1,7 @@
 ---
 description: "Designs WPF solution and project structures based on Clean Architecture. Use when creating new WPF solutions, organizing layers, or establishing project naming conventions."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Solution and Project Structure

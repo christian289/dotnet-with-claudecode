@@ -1,5 +1,7 @@
 ---
 description: Creates WPF dialog windows including modal dialogs, MessageBox, and common dialogs. Use when implementing confirmation prompts, settings windows, or file/folder pickers.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Dialog Patterns

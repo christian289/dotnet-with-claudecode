@@ -1,5 +1,7 @@
 ---
 description: "Implements asynchronous programming patterns using Task, ValueTask, and ConfigureAwait in .NET. Use when building non-blocking I/O operations or improving application responsiveness."
+user-invocable: false
+model: sonnet
 ---
 
 # .NET Asynchronous Programming

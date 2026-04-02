@@ -1,5 +1,7 @@
 ---
 description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, canvas drag selection hits the wrong position, or FlaUI xUnit tests fail intermittently due to parallel execution. Covers xUnit parallel test disabling (xunit.runner.json), stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, SetCursorPos vs SendInput hit-test issues, drag interpolation tuning, and UIA BoundingRectangle-based coordinate calculation."
+user-invocable: false
+model: sonnet
 ---
 
 # FlaUI Cross-Process Input for WPF

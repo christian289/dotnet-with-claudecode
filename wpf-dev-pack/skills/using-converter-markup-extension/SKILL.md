@@ -1,5 +1,7 @@
 ---
 description: Implements IValueConverter as MarkupExtension for direct XAML usage without StaticResource. Use when creating converters to eliminate resource dictionary declarations.
+user-invocable: false
+model: haiku
 ---
 
 # Using Converter Markup Extension

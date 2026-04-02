@@ -1,5 +1,7 @@
 ---
 description: "Creates scalable vector icons in WPF using PathGeometry and GeometryGroup. Use when building resolution-independent icons, icon buttons, or symbol libraries."
+user-invocable: false
+model: haiku
 ---
 
 # WPF Vector Icons

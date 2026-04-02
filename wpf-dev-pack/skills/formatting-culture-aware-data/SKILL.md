@@ -1,5 +1,7 @@
 ---
 description: "Formats dates, numbers, and currency with culture awareness in WPF. Use when displaying localized data formats or building international applications."
+user-invocable: false
+model: haiku
 ---
 
 # Culture-Aware Data Formatting in WPF

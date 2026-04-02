@@ -1,5 +1,7 @@
 ---
 description: "Implements high-performance streaming using System.IO.Pipelines in .NET. Use when building network protocols, parsing binary data, or processing large streams efficiently."
+user-invocable: false
+model: sonnet
 ---
 
 # .NET Streaming (System.IO.Pipelines)

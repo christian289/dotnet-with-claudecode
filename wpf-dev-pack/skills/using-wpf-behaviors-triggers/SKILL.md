@@ -1,5 +1,7 @@
 ---
 description: "Implements XAML behaviors and triggers using Microsoft.Xaml.Behaviors.Wpf. Use when adding interactivity to XAML without code-behind, implementing EventToCommand patterns, or creating reusable behaviors."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Behaviors and Triggers

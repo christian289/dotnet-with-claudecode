@@ -1,5 +1,6 @@
 ---
 description: "Generates WPF CustomControl C# class and XAML ControlTemplate style from a control name. Use when creating a new custom control, scaffolding a templated control, or generating CustomControl boilerplate code. Usage: /wpf-dev-pack:make-wpf-custom-control <ControlName>"
+model: sonnet
 argument-hint: [ControlName]
 ---
 

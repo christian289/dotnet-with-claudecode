@@ -1,5 +1,7 @@
 ---
 description: "Customizes WPF control appearance using ControlTemplate with TemplateBinding and ContentPresenter. Use when completely changing control visuals, implementing state-based feedback, or TemplatedParent binding."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF ControlTemplate Patterns

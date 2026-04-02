@@ -1,5 +1,7 @@
 ---
 description: Implements lightweight rendering using WPF DrawingVisual with ContainerVisual, VisualCollection, and DrawingContext. Use when rendering large-scale graphics, charts, game graphics, or custom visuals.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF DrawingVisual Patterns

@@ -1,5 +1,7 @@
 ---
 description: Manages WPF Application lifecycle including Startup, Exit, SessionEnding events and single instance detection. Use when handling app initialization, shutdown, or preventing multiple instances.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Application Lifecycle Patterns

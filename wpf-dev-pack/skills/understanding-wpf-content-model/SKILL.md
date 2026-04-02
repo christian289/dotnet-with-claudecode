@@ -1,5 +1,7 @@
 ---
 description: "Explains WPF content model hierarchy including ContentControl, ItemsControl, and Headered variants. Use when selecting base classes for custom controls or understanding content/items properties."
+user-invocable: false
+model: haiku
 ---
 
 # WPF Content Model Patterns

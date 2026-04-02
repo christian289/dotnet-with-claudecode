@@ -1,5 +1,7 @@
 ---
 description: "Displays 0-based collection indices as 1-based numbers in WPF Slider controls. Use when showing user-friendly slice/page numbers while maintaining 0-based internal indexing."
+user-invocable: false
+model: haiku
 ---
 
 # WPF Slider 0-based Index Display Pattern

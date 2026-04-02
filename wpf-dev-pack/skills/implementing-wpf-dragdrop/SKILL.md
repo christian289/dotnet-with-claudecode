@@ -1,5 +1,7 @@
 ---
 description: Implements WPF drag and drop functionality using DragDrop.DoDragDrop, DataObject, and drag/drop events. Use when building file drop zones, list reordering, or inter-application data transfer.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Drag and Drop Patterns

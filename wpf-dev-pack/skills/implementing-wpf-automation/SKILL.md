@@ -1,5 +1,7 @@
 ---
 description: Implements WPF UI Automation for accessibility using AutomationPeer and AutomationProperties. Use when building accessible applications or enabling screen reader support.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF UI Automation Patterns

@@ -1,5 +1,7 @@
 ---
 description: Implements WPF Adorner decoration layers with AdornerLayer, AdornerDecorator, and custom Adorner patterns. Use when building drag handles, validation indicators, watermarks, selection visuals, or resize grips.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Adorner Patterns

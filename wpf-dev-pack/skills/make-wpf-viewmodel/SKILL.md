@@ -1,5 +1,6 @@
 ---
 description: "Generates WPF ViewModel with View, DI registration, and DataTemplate mapping in one step. Use when creating a new screen, adding a View-ViewModel pair, or scaffolding ViewModel boilerplate with DI wiring. Usage: /wpf-dev-pack:make-wpf-viewmodel <ViewModelName> [--with-view] [--no-mapping]"
+model: sonnet
 argument-hint: [ViewModelName]
 ---
 

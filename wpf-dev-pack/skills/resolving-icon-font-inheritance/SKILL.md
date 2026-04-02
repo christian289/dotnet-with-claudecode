@@ -1,5 +1,7 @@
 ---
 description: "Resolves text font inheritance issues when using Segoe Fluent Icons in WPF CustomControl. Use when TextBlocks inherit icon fonts unexpectedly within ControlTemplate."
+user-invocable: false
+model: haiku
 ---
 
 # WPF CustomControl Icon Font Inheritance Issue Resolution

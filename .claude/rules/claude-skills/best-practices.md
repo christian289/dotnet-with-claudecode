@@ -13,11 +13,101 @@
 
 ## 2. SKILL.md 구조
 
-### 메타데이터 요구사항
+### Frontmatter 전체 참조
 
-| 필드 | 제한 | 규칙 |
+모든 필드는 선택사항. `description`만 권장.
+
+| 필드 | 필수 | 설명 |
 |------|------|------|
-| `description` | 1024자 이내 | 비어있으면 안 됨. **3인칭**으로 작성 |
+| `name` | No | 스킬 표시 이름. 생략 시 디렉토리 이름 사용. 소문자, 숫자, 하이픈만 허용 (최대 64자) |
+| `description` | 권장 | 스킬의 용도 + 사용 시점. Claude가 자동 호출 판단에 사용. 250자 초과 시 목록에서 잘림 |
+| `argument-hint` | No | 자동완성 시 예상 인자 힌트 표시. 예: `[issue-number]`, `[filename] [format]` |
+| `disable-model-invocation` | No | `true` 설정 시 Claude 자동 호출 차단 → 사용자 `/name`으로만 실행. 기본값: `false` |
+| `user-invocable` | No | `false` 설정 시 `/` 메뉴에서 숨김 → Claude만 호출 가능. 기본값: `true` |
+| `allowed-tools` | No | 스킬 활성 시 승인 없이 사용할 수 있는 도구 목록 |
+| `model` | No | 스킬 활성 시 사용할 모델 |
+| `effort` | No | 스킬 활성 시 effort 수준 (`low`, `medium`, `high`, `max`) |
+| `context` | No | `fork` 설정 시 분리된 subagent 컨텍스트에서 실행 |
+| `agent` | No | `context: fork` 시 사용할 subagent 타입 |
+| `hooks` | No | 스킬 라이프사이클에 스코핑된 hooks |
+| `paths` | No | 스킬 활성화를 제한하는 glob 패턴 (YAML 리스트 또는 쉼표 구분 문자열) |
+| `shell` | No | `!`command`` 블록에 사용할 셸 (`bash` 기본, `powershell` 가능) |
+
+### 호출 주체별 설정 (Invocation Control)
+
+스킬을 **누가** 호출하느냐에 따라 `disable-model-invocation`과 `user-invocable`을 조합:
+
+| 사용 시나리오 | `disable-model-invocation` | `user-invocable` | 컨텍스트 로딩 |
+|--------------|---------------------------|-------------------|---------------|
+| **사람 + Claude 모두** (기본값) | 생략 (false) | 생략 (true) | description 항상 로드, 호출 시 전체 로드 |
+| **사람만** (deploy, commit 등) | `true` | 생략 (true) | description 미로드, 사용자 `/name` 호출 시만 로드 |
+| **Claude만** (배경 지식) | 생략 (false) | `false` | description 항상 로드, Claude 판단 시 전체 로드 |
+
+```yaml
+# 사람만: 부작용이 있는 워크플로우 (배포, 커밋, 메시지 전송)
+# Human only: Workflows with side effects (deploy, commit, send message)
+---
+name: deploy
+description: Deploy the application to production
+disable-model-invocation: true
+---
+
+# Claude만: 배경 지식 (사용자가 직접 실행할 의미 없음)
+# Claude only: Background knowledge (not meaningful as a user action)
+---
+name: legacy-system-context
+description: Explains legacy auth middleware architecture. Use when modifying auth-related code.
+user-invocable: false
+---
+
+# 둘 다: 일반적인 스킬 (기본값)
+# Both: General skill (default)
+---
+name: explain-code
+description: Explains code with visual diagrams and analogies. Use when explaining how code works.
+---
+```
+
+### 인자 전달 (Argument Passing)
+
+사용자가 직접 호출하는 스킬에 인자가 필요하면 `argument-hint`를 설정하고, 본문에서 `$0`, `$1`, `$2`... 로 참조:
+
+| 변수 | 설명 |
+|------|------|
+| `$ARGUMENTS` | 전달된 모든 인자 (전체 문자열) |
+| `$ARGUMENTS[N]` | 0-based 인덱스로 특정 인자 접근 |
+| `$0`, `$1`, `$2`... | `$ARGUMENTS[N]`의 축약형 |
+
+> ⚠️ 본문에 `$ARGUMENTS`가 없으면 인자가 자동으로 `ARGUMENTS: <value>`로 끝에 추가됨
+
+```yaml
+# 단일 인자 예시
+# Single argument example
+---
+name: fix-issue
+description: Fix a GitHub issue
+disable-model-invocation: true
+argument-hint: <issue-number>
+---
+
+Fix GitHub issue $0 following our coding standards.
+
+# 복수 인자 예시
+# Multiple arguments example
+---
+name: migrate-component
+description: Migrate a component from one framework to another
+disable-model-invocation: true
+argument-hint: <ComponentName> <from-framework> <to-framework>
+---
+
+Migrate the $0 component from $1 to $2.
+Preserve all existing behavior and tests.
+```
+
+**사용 예시:**
+- `/fix-issue 123` → `$0` = `123`
+- `/migrate-component SearchBar React Vue` → `$0` = `SearchBar`, `$1` = `React`, `$2` = `Vue`
 
 ### description 작성 규칙
 
@@ -256,53 +346,12 @@ Use the GitHub:create_issue tool to create issues.
 
 ---
 
-## 10. 트리거 평가 (evals/evals.json)
-
-스킬 생성 시 `evals/evals.json` 파일을 **반드시** 함께 생성한다.
-이 파일은 스킬의 description이 올바른 상황에서 트리거되는지 검증하는 평가 데이터이다.
-
-### 형식
-
-```json
-[
-  {"query": "realistic user prompt that SHOULD trigger this skill", "should_trigger": true},
-  {"query": "near-miss prompt that should NOT trigger this skill", "should_trigger": false}
-]
-```
-
-### 작성 규칙
-
-- **총 10개 쿼리**: should_trigger:true 5개 + should_trigger:false 5개
-- **should_trigger:true 쿼리**:
-  - 실제 개발자가 입력할 법한 구체적이고 현실적인 프롬프트
-  - 다양한 표현 방식 (격식체, 비격식체, 길이 다양화)
-  - 스킬명을 직접 언급하지 않지만 해당 스킬이 필요한 상황
-  - 파일 경로, 클래스명, 에러 메시지 등 구체적 디테일 포함
-- **should_trigger:false 쿼리**:
-  - **Near-miss** 필수 — 키워드가 겹치지만 다른 스킬이 적합한 케이스
-  - 명백히 무관한 쿼리는 금지 (예: PDF 스킬에 "fibonacci 함수 작성"은 부적절)
-  - 인접 도메인, 모호한 표현, 키워드 매칭만으로는 구분 어려운 케이스
-
-### 예시 (flaui-cross-process-input)
-
-```json
-[
-  {"query": "FlaUI connector drag is not working, Mouse.Down does nothing", "should_trigger": true},
-  {"query": "FlaUI Mouse.Down on a WPF control has no effect, no visual feedback", "should_trigger": true},
-  {"query": "After FlaUI Keyboard.Press the next mouse click does not work", "should_trigger": true},
-  {"query": "I want to implement drag and drop in my WPF app using DragDrop.DoDragDrop", "should_trigger": false},
-  {"query": "How to install FlaUI NuGet package and set up a test project", "should_trigger": false}
-]
-```
-
----
-
-## 11. 체크리스트
+## 10. 체크리스트
 
 ### 핵심 품질
 
 - [ ] description이 구체적이고 키 용어 포함
-- [ ] description에 무엇을 하는지 + 언제 사용하는지 포함
+- [ ] description에 무엇을 하는지 + 언제 사용하는지 포함 (250자 이내 권장)
 - [ ] SKILL.md 본문 500줄 이내
 - [ ] 추가 세부사항은 별도 파일로 분리
 - [ ] 시간 의존적 정보 없음 (또는 "old patterns" 섹션에)
@@ -311,6 +360,14 @@ Use the GitHub:create_issue tool to create issues.
 - [ ] 파일 참조 1단계 깊이
 - [ ] 점진적 공개 적절히 사용
 - [ ] 워크플로우에 명확한 단계
+
+### 호출 제어 (Invocation Control)
+
+- [ ] 호출 주체 결정: 사람만 / Claude만 / 둘 다
+- [ ] 부작용 있는 스킬에 `disable-model-invocation: true` 설정
+- [ ] 배경 지식 스킬에 `user-invocable: false` 설정
+- [ ] 사용자 호출 스킬에 인자 필요 시 `argument-hint` 설정
+- [ ] 인자 참조 시 `$0`, `$1`, `$2`... 축약형 사용
 
 ### 코드 및 스크립트
 
@@ -322,22 +379,9 @@ Use the GitHub:create_issue tool to create issues.
 - [ ] 중요 작업에 검증/확인 단계
 - [ ] 품질 중요 작업에 피드백 루프
 
-### 트리거 평가
-
-- [ ] `evals/evals.json` 파일 생성
-- [ ] should_trigger:true 쿼리 5개 (구체적, 현실적)
-- [ ] should_trigger:false 쿼리 5개 (near-miss, 인접 도메인)
-- [ ] 명백히 무관한 쿼리 없음 (모든 false 케이스가 near-miss)
-
-### 테스트
-
-- [ ] 최소 3개 평가 생성
-- [ ] Haiku, Sonnet, Opus로 테스트
-- [ ] 실제 사용 시나리오로 테스트
-
 ---
 
-## 12. 공식 문서
+## 11. 공식 문서
 
 - [Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Skills Quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart)

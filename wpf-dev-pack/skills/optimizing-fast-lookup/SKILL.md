@@ -1,5 +1,7 @@
 ---
 description: "Implements fast O(1) lookup patterns using HashSet, FrozenSet, and optimized Dictionary in .NET. Use when building high-performance search or membership testing operations."
+user-invocable: false
+model: haiku
 ---
 
 # .NET Fast Lookup

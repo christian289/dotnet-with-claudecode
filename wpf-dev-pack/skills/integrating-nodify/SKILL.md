@@ -1,5 +1,7 @@
 ---
 description: "Integrates Nodify library for building node-based editors in WPF with MVVM. Use when creating visual scripting, workflow editors, state machines, or any node graph UI with NodifyEditor, Node, Connector, and Connection controls. Covers EditorGestures configuration, multi-selection with CanSelectMultipleItems, SelectedItems null pitfall, keyboard event handling via Window PreviewKeyDown Behavior pattern, and ItemContainerGenerator-based selection state reading."
+user-invocable: false
+model: sonnet
 ---
 
 # Nodify Node-Based Editor Guide

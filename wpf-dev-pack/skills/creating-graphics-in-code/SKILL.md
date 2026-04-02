@@ -1,5 +1,7 @@
 ---
 description: "Creates WPF graphics dynamically in C# code using Shape, PathGeometry, and PathFigure classes. Use when building charts, diagrams, or procedurally generated graphics."
+user-invocable: false
+model: sonnet
 ---
 
 # Creating WPF Graphics in Code

@@ -1,5 +1,7 @@
 ---
 description: "Embeds PDB debugging symbols into EXE/DLL files. Use when configuring embedded debug symbols, single-file deployment, Source Link integration, or dotnet publish settings."
+user-invocable: false
+model: haiku
 ---
 
 # PDB Embedded Debugging Symbols

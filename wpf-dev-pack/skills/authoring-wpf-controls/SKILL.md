@@ -1,5 +1,7 @@
 ---
 description: "Guides decision-making for WPF control authoring including UserControl vs Control vs FrameworkElement selection. Use when creating new controls or evaluating Style/Template/Trigger alternatives."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Control Authoring Guide

@@ -1,5 +1,7 @@
 ---
 description: Localizes WPF applications using resource files, x:Uid, and BAML localization. Use when building multi-language applications or supporting right-to-left layouts.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Localization Patterns

@@ -1,5 +1,7 @@
 ---
 description: "Optimizes standard I/O and file operations for high-performance data processing in .NET. Use when building high-throughput file processing or competitive programming solutions."
+user-invocable: false
+model: sonnet
 ---
 
 # .NET High-Performance I/O

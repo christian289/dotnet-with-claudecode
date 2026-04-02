@@ -1,5 +1,7 @@
 ---
 description: "Implements xUnit unit tests for WPF ViewModels with CommunityToolkit.Mvvm. Covers PropertyChanged verification, RelayCommand testing, CanExecute logic, and service mocking with NSubstitute. Use when writing ViewModel tests or setting up a test project for WPF MVVM."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF ViewModel Unit Testing

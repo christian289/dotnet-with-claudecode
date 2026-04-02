@@ -1,5 +1,7 @@
 ---
 description: "Implements parallel processing using Parallel, PLINQ, and ConcurrentCollections in .NET. Use when processing CPU-bound tasks in parallel or improving multi-core utilization."
+user-invocable: false
+model: sonnet
 ---
 
 # .NET Parallel Processing

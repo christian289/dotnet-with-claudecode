@@ -1,5 +1,7 @@
 ---
 description: Implements WPF input handling with RoutedCommand, ICommand, CommandBinding, and InputBinding patterns. Use when creating keyboard shortcuts, menu commands, or custom command implementations.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF Input and Commands Patterns

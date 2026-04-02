@@ -1,5 +1,7 @@
 ---
 description: "Migrates WPF applications from .NET Framework to .NET 6+. Use when upgrading legacy WPF apps, resolving compatibility issues, or modernizing project files."
+user-invocable: false
+model: opus
 ---
 
 # WPF .NET Framework → .NET Migration

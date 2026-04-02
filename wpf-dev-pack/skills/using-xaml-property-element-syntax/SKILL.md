@@ -1,5 +1,7 @@
 ---
 description: Converts long inline XAML bindings to Property Element Syntax for better readability. Use when XAML binding expressions become too long or complex.
+user-invocable: false
+model: haiku
 ---
 
 # Using XAML Property Element Syntax

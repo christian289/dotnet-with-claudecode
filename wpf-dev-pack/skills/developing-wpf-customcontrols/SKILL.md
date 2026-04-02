@@ -1,5 +1,7 @@
 ---
 description: "Develops WPF CustomControls using Parts and States Model best practices. Use when creating templatable controls with TemplatePart, TemplateVisualState, OnApplyTemplate, or VisualStateManager."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF CustomControl Development - Parts and States Model

@@ -1,5 +1,7 @@
 ---
 description: Implements compile-time regex using GeneratedRegexAttribute Source Generator. Use when working with Regex patterns for better performance and AOT compatibility.
+user-invocable: false
+model: haiku
 ---
 
 # Using GeneratedRegex (Source Generator)

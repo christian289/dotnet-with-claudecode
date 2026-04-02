@@ -1,5 +1,6 @@
 ---
 description: "Generates WPF service interface, implementation class, and DI registration. Use when adding a new service layer, creating a service with interface separation, or scaffolding a service class with DI wiring. Usage: /wpf-dev-pack:make-wpf-service <ServiceName> [--no-interface]"
+model: sonnet
 argument-hint: [ServiceName]
 ---
 

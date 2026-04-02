@@ -1,5 +1,7 @@
 ---
 description: Defines WPF DependencyProperty with Register, PropertyMetadata, callbacks, and validation. Use when creating custom controls, attached properties, or properties that support data binding and styling.
+user-invocable: false
+model: sonnet
 ---
 
 # WPF DependencyProperty Patterns

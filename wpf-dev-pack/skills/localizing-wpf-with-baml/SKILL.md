@@ -1,5 +1,7 @@
 ---
 description: "Localizes WPF applications using BAML localization with x:Uid attributes and LocBaml tool. Use when building enterprise multi-language applications requiring satellite assemblies."
+user-invocable: false
+model: sonnet
 ---
 
 # WPF BAML Localization

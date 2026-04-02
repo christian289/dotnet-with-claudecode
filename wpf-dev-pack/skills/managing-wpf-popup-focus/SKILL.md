@@ -1,5 +1,7 @@
 ---
 description: "Manages focus behavior for WPF Popup controls using PreviewMouseDown events. Use when Popup loses focus unexpectedly or needs to stay open during user interaction."
+user-invocable: false
+model: haiku
 ---
 
 # 5.7 Popup Control Usage Considerations
