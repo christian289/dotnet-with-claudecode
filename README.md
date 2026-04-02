@@ -10,15 +10,9 @@ This repository provides skills, rules, and agent configurations for .NET/WPF de
 
 ## Contents
 
-### wpf-dev-pack
+### [wpf-dev-pack](./wpf-dev-pack)
 
-A Claude Code extension pack for WPF development.
-
-- **81 Skills**: WPF development patterns, MVVM, CustomControl, performance optimization, 3rd-party libraries, scaffolding, etc.
-- **11 Agents**: wpf-architect, wpf-code-reviewer, wpf-control-designer, etc.
-- **1 MCP Server**: HandMirrorMcp (.NET assembly/NuGet inspection)
-
-See [wpf-dev-pack/README.md](./wpf-dev-pack/README.md) for details.
+Claude Code plugin for WPF development — 81 Skills, 9 Agents, 1 MCP Server.
 
 ### .claude/skills
 
@@ -47,7 +41,12 @@ See [wpf-dev-pack/README.md](./wpf-dev-pack/README.md) for details.
 ## Requirements
 
 - Claude Code CLI
-- .NET 10.0 SDK (for wpf-dev-pack)
+- .NET 10.0 SDK (for wpf-dev-pack hooks)
+- Required Claude Code plugins for wpf-dev-pack:
+  - [context7](https://github.com/nicobailey/context7-mcp)
+  - [serena](https://github.com/oraios/serena)
+  - [microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)
+  - [csharp-lsp](https://github.com/nicobailey/csharp-lsp)
 
 ## Installation
 

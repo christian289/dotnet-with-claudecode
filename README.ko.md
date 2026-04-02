@@ -10,15 +10,9 @@ Claude Code를 활용한 .NET 개발 튜토리얼
 
 ## 콘텐츠
 
-### wpf-dev-pack
+### [wpf-dev-pack](./wpf-dev-pack)
 
-WPF 개발을 위한 Claude Code 확장 팩입니다.
-
-- **81개 스킬**: WPF 개발 패턴, MVVM, CustomControl, 성능 최적화, 서드파티 라이브러리, 스캐폴딩 등
-- **11개 에이전트**: wpf-architect, wpf-code-reviewer, wpf-control-designer 등
-- **1개 MCP 서버**: HandMirrorMcp (.NET 어셈블리/NuGet 검사)
-
-자세한 내용은 [wpf-dev-pack/README.md](./wpf-dev-pack/README.md)를 참조하세요.
+WPF 개발을 위한 Claude Code 플러그인 — 81개 스킬, 9개 에이전트, 1개 MCP 서버.
 
 ### .claude/skills
 
@@ -47,7 +41,12 @@ WPF 개발을 위한 Claude Code 확장 팩입니다.
 ## 요구사항
 
 - Claude Code CLI
-- .NET 10.0 SDK (wpf-dev-pack용)
+- .NET 10.0 SDK (wpf-dev-pack 훅 실행용)
+- wpf-dev-pack 필수 Claude Code 플러그인:
+  - [context7](https://github.com/nicobailey/context7-mcp)
+  - [serena](https://github.com/oraios/serena)
+  - [microsoft-docs](https://github.com/nicobailey/microsoft-docs-mcp)
+  - [csharp-lsp](https://github.com/nicobailey/csharp-lsp)
 
 ## 설치
 
