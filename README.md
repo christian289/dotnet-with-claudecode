@@ -14,30 +14,6 @@ This repository provides skills, rules, and agent configurations for .NET/WPF de
 
 Claude Code plugin for WPF development.
 
-### .claude/skills
-
-#### AvaloniaUI Skills
-
-- `configuring-avalonia-dependency-injection` - AvaloniaUI DI configuration
-- `designing-avalonia-customcontrol-architecture` - CustomControl architecture
-- `structuring-avalonia-projects` - Project structure design
-- `using-avalonia-collectionview` - DataGridCollectionView patterns
-- `fixing-avaloniaui-radialgradientbrush` - RadialGradientBrush compatibility fix
-- `converting-html-css-to-wpf-xaml` - HTML/CSS to WPF XAML conversion
-
-#### MewUI Framework Skills
-
-- `building-mewui-apps` - MewUI application setup
-- `creating-mewui-controls` - MewUI control creation
-- `binding-mewui-data` - MewUI data binding
-- `using-mewui-layout` - MewUI layout system
-- `rendering-mewui-elements` - MewUI element rendering
-- `navigating-mewui-tree` - MewUI tree navigation
-
-#### Project Management Skills
-
-- `wpf-dev-pack-release` - wpf-dev-pack release workflow
-
 ## Requirements
 
 - Claude Code CLI

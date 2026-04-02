@@ -14,30 +14,6 @@ Claude Code를 활용한 .NET 개발 튜토리얼
 
 WPF 개발을 위한 Claude Code 플러그인.
 
-### .claude/skills
-
-#### AvaloniaUI 스킬
-
-- `configuring-avalonia-dependency-injection` - AvaloniaUI DI 설정
-- `designing-avalonia-customcontrol-architecture` - CustomControl 아키텍처
-- `structuring-avalonia-projects` - 프로젝트 구조 설계
-- `using-avalonia-collectionview` - DataGridCollectionView 패턴
-- `fixing-avaloniaui-radialgradientbrush` - RadialGradientBrush 호환성 수정
-- `converting-html-css-to-wpf-xaml` - HTML/CSS를 WPF XAML로 변환
-
-#### MewUI 프레임워크 스킬
-
-- `building-mewui-apps` - MewUI 앱 설정
-- `creating-mewui-controls` - MewUI 컨트롤 생성
-- `binding-mewui-data` - MewUI 데이터 바인딩
-- `using-mewui-layout` - MewUI 레이아웃 시스템
-- `rendering-mewui-elements` - MewUI 요소 렌더링
-- `navigating-mewui-tree` - MewUI 트리 탐색
-
-#### 프로젝트 관리 스킬
-
-- `wpf-dev-pack-release` - wpf-dev-pack 릴리스 워크플로우
-
 ## 요구사항
 
 - Claude Code CLI
