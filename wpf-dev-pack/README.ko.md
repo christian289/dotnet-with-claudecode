@@ -6,12 +6,12 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.5.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.3-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**81개 스킬** · **9개 전문 에이전트** · **1개 MCP 서버**
+**82개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -28,7 +28,7 @@
 <td width="50%">
 
 ### 🤖 AI 기반 개발
-- **9개 전문 에이전트**로 다양한 WPF 작업 수행
+- **10개 전문 에이전트**로 다양한 WPF 작업 수행
 - 전략적 결정을 위한 **Opus급** 아키텍트
 - WPF 키워드 **자동 감지**
 - 듀얼 프레임워크 지원을 위한 **Prism 9** 컴패니언 파일
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **81개 스킬**
+- WPF 전 영역을 다루는 **82개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -501,7 +501,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # 플러그인 매니페스트
-├── 📁 agents/                 # 9개 전문 에이전트
+├── 📁 agents/                 # 10개 전문 에이전트
 │   ├── wpf-architect.md           # Opus
 │   ├── wpf-code-reviewer.md       # Opus
 │   ├── wpf-control-designer.md    # Sonnet
@@ -511,7 +511,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 81개 스킬
+├── 📁 skills/                 # 82개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp만)
 ├── 📄 README.md

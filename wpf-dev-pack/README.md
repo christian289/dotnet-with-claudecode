@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.5.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.5.3-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**81 Skills** · **9 Specialized Agents** · **1 MCP Server**
+**82 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -28,7 +28,7 @@
 <td width="50%">
 
 ### 🤖 AI-Powered Development
-- **9 Specialized Agents** for different WPF tasks
+- **10 Specialized Agents** for different WPF tasks
 - **Opus-level** architects for strategic decisions
 - **Auto-detection** of WPF keywords
 - **Prism 9** companion files for dual-framework support
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **81 Skills** covering all WPF aspects
+- **82 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -501,7 +501,7 @@ Some skills activate without notification:
 wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # Plugin manifest
-├── 📁 agents/                 # 9 Specialized agents
+├── 📁 agents/                 # 10 Specialized agents
 │   ├── wpf-architect.md           # Opus
 │   ├── wpf-code-reviewer.md       # Opus
 │   ├── wpf-control-designer.md    # Sonnet
@@ -511,7 +511,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 81 Skills
+├── 📁 skills/                 # 82 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md
