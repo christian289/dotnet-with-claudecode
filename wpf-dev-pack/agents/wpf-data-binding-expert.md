@@ -30,9 +30,9 @@ WPF 데이터 바인딩 관련 모든 작업을 담당합니다:
 
 ## Critical Constraints
 
-- ❌ Code-behind에서 직접 데이터 조작 금지
-- ✅ MVVM 패턴 준수
-- ✅ Converter는 순수 함수로 구현 (side-effect 없음)
+- ❌ No direct data manipulation in code-behind
+- ✅ Follow MVVM pattern
+- ✅ Converters must be pure functions (no side-effects)
 
 ## Core Patterns
 
