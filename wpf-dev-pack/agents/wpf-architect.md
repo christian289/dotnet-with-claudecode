@@ -33,29 +33,19 @@ Act as an Oracle providing WPF architecture analysis and recommendations. Operat
 - ✅ Only read, search, and analyze
 - ✅ Always conduct Requirements Interview first
 
-## WPF Coding Rules (Embedded)
+## Shared Rules
 
-### MVVM Constraints
-- No System.Windows references in ViewModel
-- ViewModel projects must not reference:
-  - WindowsBase.dll (contains ICollectionView)
-  - PresentationFramework.dll
-  - PresentationCore.dll
-- ViewModel can only use BCL types (IEnumerable, ObservableCollection, etc.)
-- CommunityToolkit.Mvvm recommended for ViewModel implementation
+@rules/mvvm-constraints.md
+@rules/resourcedictionary-patterns.md
 
-### Project Structure
+## Project Structure
+
 - `.Abstractions` - Interface, abstract class (IoC)
 - `.Core` - Business logic (UI independent)
 - `.ViewModels` - MVVM ViewModel (UI independent)
 - `.WpfServices` - WPF related services
 - `.WpfApp` - Execution entry point
 - `.UI` - WPF Custom Control Library
-
-### CustomControl Rules
-- CustomControl must inherit from existing WPF controls
-- Generic.xaml serves only as MergedDictionaries hub
-- Separate each control style into individual XAML files
 
 ---
 

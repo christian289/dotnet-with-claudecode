@@ -89,42 +89,17 @@ public class VisualHost : FrameworkElement
 }
 ```
 
-### Freezable Pattern (Memory & Performance)
-```csharp
-// ALWAYS freeze Brushes, Pens, Geometries
+### Freezable Pattern
 
-// Correct
-var brush = new SolidColorBrush(Colors.Blue);
-brush.Freeze();
+@rules/freezable-performance.md
 
-var pen = new Pen(brush, 1);
-pen.Freeze();
+### Rendering Best Practices
 
-var geometry = new EllipseGeometry(new Point(0, 0), 10, 10);
-geometry.Freeze();
-
-// Wrong - unfrozen resources consume more memory
-var brush = new SolidColorBrush(Colors.Blue); // Not frozen
-```
+@rules/rendering-antipatterns.md
 
 ### VirtualizingStackPanel Pattern
-```xml
-<ItemsControl ItemsSource="{Binding LargeCollection}">
-    <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-            <VirtualizingStackPanel
-                VirtualizationMode="Recycling"
-                IsVirtualizing="True"/>
-        </ItemsPanelTemplate>
-    </ItemsControl.ItemsPanel>
-</ItemsControl>
 
-<ListView ItemsSource="{Binding Items}"
-          VirtualizingPanel.IsVirtualizing="True"
-          VirtualizingPanel.VirtualizationMode="Recycling"
-          VirtualizingPanel.ScrollUnit="Pixel">
-</ListView>
-```
+@rules/virtualization-patterns.md
 
 ### BitmapCache Pattern
 ```xml

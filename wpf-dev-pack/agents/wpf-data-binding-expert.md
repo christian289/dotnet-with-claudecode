@@ -23,12 +23,16 @@ WPF 데이터 바인딩 관련 모든 작업을 담당합니다:
 - ValidationRule, INotifyDataErrorInfo 구현
 - 바인딩 디버깅 및 성능 최적화
 
+## Shared Rules
+
+@rules/mvvm-constraints.md
+@rules/converter-patterns.md
+
 ## Critical Constraints
 
-- ❌ ViewModel에서 System.Windows 참조 금지 (Converter, ValidationRule은 예외)
-- ❌ Code-behind에서 직접 데이터 조작 금지
-- ✅ MVVM 패턴 준수
-- ✅ Converter는 순수 함수로 구현 (side-effect 없음)
+- ❌ No direct data manipulation in code-behind
+- ✅ Follow MVVM pattern
+- ✅ Converters must be pure functions (no side-effects)
 
 ## Core Patterns
 

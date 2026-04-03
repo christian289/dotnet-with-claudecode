@@ -20,12 +20,15 @@ skills:
 
 Design and implement ViewModel following strict MVVM pattern with CommunityToolkit.Mvvm.
 
+## Shared Rules
+
+@rules/mvvm-constraints.md
+
 ## Critical Constraints
 
-- ❌ No System.Windows references in ViewModel
-- ❌ No WindowsBase.dll, PresentationFramework.dll, PresentationCore.dll references
-- ✅ Use only BCL types (IEnumerable, ObservableCollection, etc.)
 - ✅ Use CommunityToolkit.Mvvm
+- ✅ Collections use ObservableCollection<T>
+- ✅ CollectionView operations in Service Layer
 
 ## WPF Coding Rules (Embedded)
 

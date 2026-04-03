@@ -102,12 +102,6 @@ static MyControl()
 - [ ] Register style in Themes/Generic.xaml
 - [ ] Create individual XAML style file
 
-## File Structure Pattern
+## File Structure
 
-```
-MyControl/
-├── MyControl.cs           # Control logic
-├── Themes/
-│   ├── Generic.xaml       # MergedDictionaries hub only
-│   └── MyControl.xaml     # Control style/template
-```
+See `@rules/resourcedictionary-patterns.md` for Generic.xaml hub pattern and individual style file organization.

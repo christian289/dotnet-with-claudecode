@@ -23,20 +23,8 @@ Design XAML styles, ControlTemplate, ResourceDictionary organization, and animat
 ## WPF Coding Rules (Embedded)
 
 ### ResourceDictionary Structure
-- Generic.xaml serves only as MergedDictionaries hub
-- Each control style in separate XAML file
-- x:Key resources defined before referencing Style
 
-### Generic.xaml Pattern (Hub Only)
-```xml
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/CustomButton.xaml"/>
-        <ResourceDictionary Source="/Themes/CustomTextBox.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
-</ResourceDictionary>
-```
+@rules/resourcedictionary-patterns.md
 
 ### Individual Control Style Pattern
 ```xml
