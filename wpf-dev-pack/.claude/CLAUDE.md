@@ -29,6 +29,19 @@ wpf-dev-pack adopts **View First MVVM**.
 
 ---
 
+## Essential (Post-Compact)
+
+These rules MUST survive context compression. If prior context is lost, re-read this section:
+
+1. **ViewModelLocator 금지** — DI + DataTemplate 매핑만 사용 (`rules/prohibitions.md`)
+2. **ViewModel에 System.Windows 참조 금지** — BCL 타입만 사용 (`rules/mvvm-constraints.md`)
+3. **Freezable 객체는 반드시 Freeze()** — Brush, Pen, Geometry (`rules/freezable-performance.md`)
+4. **Generic.xaml = MergedDictionaries hub 전용** (`rules/resourcedictionary-patterns.md`)
+5. **HandMirror로 API 시그니처 검증 후 코드 작성**
+6. **View First MVVM** — framework별 wiring은 `rules/` 참조
+
+---
+
 ## .NET Version Configuration
 
 ### Version Selection Rules

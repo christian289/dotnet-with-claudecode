@@ -50,22 +50,20 @@ Use the csharp-lsp tools for enhanced code analysis:
 
 > **Prerequisite**: Requires `csharp-lsp` plugin from Claude Code marketplace.
 
+## Shared Rules
+
+@rules/mvvm-constraints.md
+@rules/freezable-performance.md
+@rules/rendering-antipatterns.md
+@rules/virtualization-patterns.md
+@rules/converter-patterns.md
+@rules/resourcedictionary-patterns.md
+
 ## Review Checklist
 
 ### 1. MVVM Violation Check
 
-#### ViewModel References
-```csharp
-// VIOLATION: System.Windows namespace in ViewModel
-using System.Windows;           // ❌
-using System.Windows.Controls;  // ❌
-using System.Windows.Media;     // ❌
-using System.Windows.Data;      // ❌ (contains ICollectionView)
-
-// ALLOWED
-using System.Collections.ObjectModel;  // ✅ BCL
-using CommunityToolkit.Mvvm;           // ✅ MVVM toolkit
-```
+Apply rules from `@rules/mvvm-constraints.md`. Additionally check:
 
 #### Direct UI Manipulation in ViewModel
 ```csharp
@@ -98,50 +96,7 @@ private void Button_Click(object sender, RoutedEventArgs e)
 
 ### 2. Performance Anti-Patterns
 
-#### Unfrozen Freezable
-```csharp
-// ANTI-PATTERN
-var brush = new SolidColorBrush(Colors.Blue);  // Not frozen
-
-// CORRECT
-var brush = new SolidColorBrush(Colors.Blue);
-brush.Freeze();  // ✅
-```
-
-#### Repeated InvalidateVisual
-```csharp
-// ANTI-PATTERN
-foreach (var point in points)
-{
-    _data.Add(point);
-    InvalidateVisual();  // ❌ Called in loop
-}
-
-// CORRECT
-_data.AddRange(points);
-InvalidateVisual();  // ✅ Called once after all changes
-```
-
-#### Missing Virtualization
-```xml
-<!-- ANTI-PATTERN: Large list without virtualization -->
-<ItemsControl ItemsSource="{Binding ThousandsOfItems}">
-    <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-            <StackPanel/>  <!-- ❌ No virtualization -->
-        </ItemsPanelTemplate>
-    </ItemsControl.ItemsPanel>
-</ItemsControl>
-
-<!-- CORRECT -->
-<ItemsControl ItemsSource="{Binding ThousandsOfItems}">
-    <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-            <VirtualizingStackPanel/>  <!-- ✅ -->
-        </ItemsPanelTemplate>
-    </ItemsControl.ItemsPanel>
-</ItemsControl>
-```
+Apply rules from `@rules/freezable-performance.md`, `@rules/rendering-antipatterns.md`, `@rules/virtualization-patterns.md`.
 
 ### 3. Best Practices
 
@@ -158,25 +113,7 @@ private static void OnValueChanged(DependencyObject d, DependencyPropertyChanged
 }
 ```
 
-#### TemplateBinding vs Binding
-```xml
-<!-- Use TemplateBinding in ControlTemplate (faster) -->
-<Border Background="{TemplateBinding Background}"/>  <!-- ✅ -->
-
-<!-- Use Binding only when TemplateBinding doesn't work -->
-<Border Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"/>
-```
-
-#### ResourceDictionary Structure
-```xml
-<!-- BEST PRACTICE: Generic.xaml as hub only -->
-<ResourceDictionary>
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/Button.xaml"/>
-        <ResourceDictionary Source="/Themes/TextBox.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
-</ResourceDictionary>
-```
+Apply rules from `@rules/converter-patterns.md` (TemplateBinding preference) and `@rules/resourcedictionary-patterns.md` (Generic.xaml hub pattern).
 
 ## Review Output Format
 
