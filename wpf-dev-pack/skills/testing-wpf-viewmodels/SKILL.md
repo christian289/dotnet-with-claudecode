@@ -8,6 +8,62 @@ model: sonnet
 
 Unit test patterns for WPF ViewModels using xUnit and CommunityToolkit.Mvvm.
 
+> For inventory-driven **governance** of these tests (classification, naming, coverage tracking), see the [`managing-unit-tests`](../managing-unit-tests/SKILL.md) skill.
+
+---
+
+## Testing Principles
+
+These principles apply to every test class in this guide, regardless of which pattern is being demonstrated.
+
+### Classification — Happy / Boundary / Error
+
+Organize tests into three groups, each as its own `#region`:
+
+| Group | Definition | Example |
+|-------|------------|---------|
+| **Happy** | Valid input / normal state → expected success result | `Setting_UserName_Raises_PropertyChanged` |
+| **Boundary** | Edge conditions (empty, zero, min/max, inactive state, null-safe paths) | `Setting_Same_Value_Does_Not_Raise_PropertyChanged` |
+| **Error** | Invalid input / exceptions / detection events | `Submit_InvalidEmail_ReportsValidationError` |
+
+For validators and detectors, the "successful detection" case is classified as **Error** — surfacing a failure state *is* the error path of such logic.
+
+Omit a region entirely if no cases exist for it — never leave an empty region.
+
+### Method Naming — `Method_Scenario_Expected`
+
+| Good | Bad |
+|------|-----|
+| `Activate_EmptyString_ReturnsError` | `TestActivate1` |
+| `LoadCommand_Canceled_StopsExecution` | `ShouldCancel` |
+| `Validate_PartiallyConnectedInputs_ReportsError` | `PartialConnection` |
+
+- Method segment: the public method or property under test. Constructor tests use the `Ctor_*` prefix.
+- Scenario segment: input or state condition (PascalCase).
+- Expected segment: return value / state change / exception (`ReturnsX`, `ThrowsX`, `RaisesX`, `UpdatesX`).
+
+### Mocking Policy
+
+- Mocking libraries (Moq / NSubstitute / FakeItEasy) are only for **external dependencies** — I/O, database, network, system APIs, P/Invoke.
+- For internal domain objects use real instances or hand-written fakes. Mocking domain objects hides real bugs.
+- Reserve randomized / bulk data generators (Bogus) for scenarios that genuinely need volume or randomness.
+
+### Forbidden Test Shapes
+
+- **POCO default-value checks** — e.g. `Assert.Null(new Foo().Prop)`. Skip unless the default is part of the business contract, and then document the rationale inline.
+- **Inheritance-relation assertions** — e.g. `Assert.IsType<Base>(instance, exactMatch: false)`. Tautological; the compiler already guarantees this.
+- **Hard-coded collection counts** — e.g. `Assert.Equal(3, items.Count)`. Assert on meaningful shape (contents, ordering) instead.
+- **Private-method tests** — reach them through the public contract. Unreachable branches indicate a design defect.
+
+### Resource & Timing Discipline
+
+- Hold disposables? Implement `IDisposable` and clean up.
+- File I/O? Use `Path.GetTempPath()` combined with `Guid.NewGuid():N` directories.
+- Time-sensitive logic? Use relative time (`AddDays(-N)`) or a time abstraction — never `DateTime.Now` directly.
+- Async tests use `async Task`, never `async void`. Guard external signals with `Task.WhenAny(target, Task.Delay(timeout))` to avoid hangs.
+
+---
+
 ## NuGet Packages
 
 ```xml
