@@ -138,3 +138,60 @@ dotnet ".claude/skills/wpf-dev-pack-release/scripts/VersionReleaseChecker.cs" --
 ```
 
 All checks must pass. Report the final result.
+
+## Step 10: Output Korean Release Notes to Console
+
+After all previous steps pass, **print the Korean-language release notes directly to the session console** (not a file).
+
+**Purpose**: The user copies this output and posts it to the [닷넷데브](https://forum.dotnetdev.kr/) Discourse forum as an update announcement.
+
+**Requirements**:
+- Translate the GitHub release note (Step 7) contents into Korean
+- Use **Discourse-compatible Markdown**: headings (`#`, `##`, `###`), bullet lists, `**bold**`, inline code (`` ` ``), fenced code blocks
+- Do NOT use raw HTML tags (Discourse Markdown only)
+- Include the GitHub release URL at the top for reference
+- Tone: 정중하고 명료한 문체 (polite and clear)
+- Length: compact enough to fit a forum post but complete enough to convey all notable changes
+- Keep English identifiers (skill names, API names, library names) as-is — do not translate them
+
+**Required sections**:
+1. **소개 문단**: 1-2 문장으로 릴리스 핵심 요약 + GitHub 릴리스 링크
+2. **주요 변경사항**: GitHub 릴리스 노트의 "What's New"를 한글로 옮긴 항목
+3. **통계**: Skills / Agents / MCP Servers 개수
+4. **설치/업데이트 방법**: `/plugin install wpf-dev-pack@dotnet-claude-plugins` 안내
+5. **마이그레이션 노트** (해당 시): 사용자가 알아야 할 주의사항
+
+**Output format**: Print the entire Korean note inside a fenced code block with triple backticks so the user can copy it cleanly:
+
+````markdown
+```markdown
+# wpf-dev-pack v{new-version} 업데이트
+
+[GitHub 릴리스 링크](https://github.com/christian289/dotnet-with-claudecode/releases/tag/wpf-dev-pack-v{new-version})
+
+{소개 문단}
+
+## 주요 변경사항
+
+### {카테고리 1}
+- {항목}
+
+...
+
+## 통계
+
+- **Skills**: {count}
+- **Agents**: {count}
+- **MCP Servers**: {count}
+
+## 설치 / 업데이트
+
+```
+/plugin install wpf-dev-pack@dotnet-claude-plugins
+```
+
+{마이그레이션 안내 있으면 포함}
+```
+````
+
+After printing, briefly note to the user: "위 내용을 복사해서 닷넷데브 포럼(https://forum.dotnetdev.kr/)에 게시하시면 됩니다."
