@@ -5,11 +5,9 @@ model: sonnet
 color: green
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
 skills:
-  - advanced-data-binding
   - implementing-wpf-validation
   - implementing-communitytoolkit-mvvm
   - validating-with-fluentvalidation
-  - using-converter-markup-extension
   - binding-enum-command-parameters
 ---
 

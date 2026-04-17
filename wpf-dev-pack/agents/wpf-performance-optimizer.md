@@ -12,7 +12,6 @@ skills:
   - optimizing-wpf-memory
   - virtualizing-wpf-ui
   - threading-wpf-dispatcher
-  - implementing-2d-graphics
 ---
 
 # WPF Performance Optimizer - Rendering Optimization Specialist

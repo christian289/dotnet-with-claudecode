@@ -6,12 +6,7 @@ color: cyan
 tools: Read, Glob, Grep, Edit, Write, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__search_for_pattern, mcp__serena__replace_content
 skills:
   - managing-styles-resourcedictionary
-  - customizing-controltemplate
-  - creating-wpf-animations
   - resolving-icon-font-inheritance
-  - creating-wpf-brushes
-  - creating-wpf-vector-icons
-  - using-wpf-behaviors-triggers
 ---
 
 # WPF XAML Designer - Style/Template Specialist

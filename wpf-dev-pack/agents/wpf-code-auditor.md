@@ -6,10 +6,8 @@ color: red
 tools: Read, Glob, Grep, Edit, Write, Bash, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
 permissionMode: default
 skills:
-  - advanced-data-binding
   - optimizing-wpf-memory
   - managing-styles-resourcedictionary
-  - handling-async-operations
   - threading-wpf-dispatcher
 ---
 

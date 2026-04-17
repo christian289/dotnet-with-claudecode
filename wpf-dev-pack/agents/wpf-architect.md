@@ -14,7 +14,6 @@ skills:
   - integrating-livecharts2
   - validating-with-fluentvalidation
   - handling-errors-with-erroror
-  - migrating-wpf-to-dotnet
   - publishing-wpf-apps
 ---
 
@@ -163,7 +162,7 @@ AskUserQuestion:
 | Selection | Activate Skills | Agents |
 |-----------|-----------------|--------|
 | Simple | Basic WPF, simple bindings | - |
-| Balanced | `authoring-wpf-controls`, `customizing-controltemplate` | `wpf-control-designer` |
+| Balanced | `authoring-wpf-controls`, ~~`customizing-controltemplate`~~ (archived) | `wpf-control-designer` |
 | Advanced | `rendering-with-drawingcontext`, `virtualizing-wpf-ui` | `wpf-performance-optimizer` |
 
 ### A-6: Open Source Libraries (Multi-Select, Keyword-Based Recommendations)
@@ -216,10 +215,10 @@ AskUserQuestion:
 
 | Selection | Skills | Recommended Agent |
 |-----------|--------|-------------------|
-| UI/Controls | `authoring-wpf-controls`, `developing-wpf-customcontrols` | `wpf-control-designer` |
-| Data Binding | `advanced-data-binding`, `implementing-wpf-validation` | `wpf-data-binding-expert` |
+| UI/Controls | `authoring-wpf-controls`, ~~`developing-wpf-customcontrols`~~ (archived) | `wpf-control-designer` |
+| Data Binding | ~~`advanced-data-binding`~~ (archived), `implementing-wpf-validation` | `wpf-data-binding-expert` |
 | Rendering | `rendering-with-drawingcontext`, `rendering-with-drawingvisual` | `wpf-performance-optimizer` |
-| Animation | `creating-wpf-animations`, `integrating-wpf-media` | `wpf-xaml-designer` |
+| Animation | ~~`creating-wpf-animations`~~ (archived), ~~`integrating-wpf-media`~~ (archived) | `wpf-xaml-designer` |
 
 ### A-Summary → 프로젝트 스캐폴딩 실행
 
@@ -421,8 +420,8 @@ AskUserQuestion:
 
 | Selection | Activate Skills | Agents |
 |-----------|-----------------|--------|
-| UI 표시 문제 | `customizing-controltemplate`, `managing-styles-resourcedictionary`, `navigating-visual-logical-tree` | `wpf-xaml-designer` |
-| 데이터 문제 | `advanced-data-binding`, `implementing-wpf-validation`, `implementing-communitytoolkit-mvvm` | `wpf-data-binding-expert` |
+| UI 표시 문제 | ~~`customizing-controltemplate`~~ (archived), `managing-styles-resourcedictionary`, `navigating-visual-logical-tree` | `wpf-xaml-designer` |
+| 데이터 문제 | ~~`advanced-data-binding`~~ (archived), `implementing-wpf-validation`, `implementing-communitytoolkit-mvvm` | `wpf-data-binding-expert` |
 | 성능 문제 | `rendering-wpf-high-performance`, `optimizing-wpf-memory`, `virtualizing-wpf-ui`, `threading-wpf-dispatcher` | `wpf-performance-optimizer` |
 | 크래시/예외 | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher` | `wpf-code-reviewer` |
 | 빌드/설정 오류 | `configuring-wpf-themeinfo`, `configuring-dependency-injection` | `wpf-code-reviewer` |
@@ -452,9 +451,9 @@ AskUserQuestion:
 |-----------|------------------|
 | XAML / ControlTemplate | `designing-wpf-customcontrol-architecture` |
 | ViewModel / Data Binding | `rules/view-viewmodel-wiring-communitytoolkit.md` (CommunityToolkit.Mvvm), `rules/view-viewmodel-wiring-prism.md` (Prism 9) |
-| CustomControl / DependencyProperty | `defining-wpf-dependencyproperty`, `authoring-wpf-controls` |
+| CustomControl / DependencyProperty | ~~`defining-wpf-dependencyproperty`~~ (archived), `authoring-wpf-controls` |
 | Rendering / DrawingContext | `rendering-with-drawingcontext`, `rendering-with-drawingvisual` |
-| Threading / Dispatcher | `threading-wpf-dispatcher`, `handling-async-operations` |
+| Threading / Dispatcher | `threading-wpf-dispatcher`, ~~`handling-async-operations`~~ (archived) |
 | 3rd Party Library | `integrating-wpfui-fluent`, `integrating-livecharts2` (해당 라이브러리에 따라) |
 
 ### D-Summary → 디버깅 시작

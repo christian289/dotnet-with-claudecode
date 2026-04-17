@@ -10,7 +10,6 @@ skills:
   - binding-enum-command-parameters
   - implementing-repository-pattern
   - configuring-dependency-injection
-  - handling-wpf-input-commands
   - testing-wpf-viewmodels
 ---
 

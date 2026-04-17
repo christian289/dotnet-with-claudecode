@@ -11,10 +11,8 @@ skills:
   - optimizing-wpf-memory
   - virtualizing-wpf-ui
   - managing-styles-resourcedictionary
-  - handling-async-operations
   - threading-wpf-dispatcher
   - configuring-dependency-injection
-  - using-converter-markup-extension
 ---
 
 # WPF Code Reviewer - Code Quality Specialist

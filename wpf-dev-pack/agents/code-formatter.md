@@ -8,7 +8,6 @@ tools:
 permissionMode: default
 skills:
   - formatting-wpf-csharp-code
-  - using-xaml-property-element-syntax
 ---
 
 # Code Formatter Agent
@@ -135,7 +134,7 @@ When XAML binding expressions exceed 100 characters or contain nested markup ext
 </CheckBox>
 ```
 
-> **Details**: See `using-xaml-property-element-syntax` skill.
+> **Details**: See `archive-skills/using-xaml-property-element-syntax/` (archived).
 
 ---
 
@@ -157,7 +156,7 @@ Use `ConverterMarkupExtension<T>` pattern for converters to eliminate resource d
 <Button Visibility="{Binding IsVisible, Converter={local:BoolToVisibilityConverter}}"/>
 ```
 
-> **Details**: See `using-converter-markup-extension` skill.
+> **Details**: See `archive-skills/using-converter-markup-extension/` (archived). Active rule: `.claude/rules/converter-patterns.md`.
 
 ---
 
