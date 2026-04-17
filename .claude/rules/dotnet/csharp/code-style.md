@@ -31,19 +31,19 @@
 
 ## 7. Advanced .NET API
 
-고성능 .NET API는 각 주제별 skill을 참조:
+고성능 .NET API 주제는 **`microsoft-docs` MCP 플러그인**으로 조회할 것:
 
-| 주제 | Skill |
-|------|-------|
-| 메모리 효율화 | `/optimizing-memory-allocation` |
-| 비동기 프로그래밍 | `/handling-async-operations` |
-| 병렬 처리 | `/processing-parallel-tasks` |
-| 고속 탐색 | `/optimizing-fast-lookup` |
-| Pub-Sub 패턴 | `/implementing-pubsub-pattern` |
-| 고속 입출력 | `/optimizing-io-operations` |
-| Streaming | `/implementing-io-pipelines` |
+| 주제 | 조회 키워드 |
+|------|------------|
+| 메모리 효율화 | `Span<T>`, `ArrayPool`, `stackalloc` |
+| 비동기 프로그래밍 | `Task`, `ValueTask`, `ConfigureAwait`, `IAsyncEnumerable` |
+| 병렬 처리 | `Parallel`, `PLINQ`, `ConcurrentDictionary` |
+| 고속 탐색 | `HashSet`, `FrozenSet`, `Dictionary` |
+| Pub-Sub 패턴 | `System.Threading.Channels`, `System.Reactive` |
+| 고속 입출력 | `FileStream`, `StreamWriter` buffering |
+| Streaming | `System.IO.Pipelines`, `PipeReader`, `PipeWriter` |
 
-- 각 스킬에는 **QUICKREF.md** (빠른 참조)와 **SKILL.md** (상세 가이드) 포함
+> 이전 스킬(`/optimizing-memory-allocation` 등)은 `archive-skills/`로 이동됨. 공식 문서 조회가 더 최신 정보를 제공함.
 
 ## 8. 파일 구조
 
@@ -75,7 +75,7 @@ public IReadOnlyList ReadOnlyReturnFunc()
 
 ## 11. Span<T> 사용 주의사항
 
-> **📌 상세 가이드**: `/optimizing-memory-allocation` skill 참조
+> **📌 상세 가이드**: `microsoft-docs` MCP로 `Span<T>`, `ReadOnlySpan<T>` 조회
 
 - ⚠️ Span<T>, ReadOnlySpan<T>는 **async-await와 함께 사용 불가**
 - ref struct이므로 Boxing 불가, 클래스 필드 저장 불가, 람다 캡처 불가

@@ -73,6 +73,5 @@ MVVM 관련 스킬 사용 시 **SKILL.md**의 코드 예제를 따릅니다.
 | `configuring-dependency-injection` | SKILL.md |
 | `structuring-wpf-projects` | SKILL.md |
 | `mapping-viewmodel-view-datatemplate` | SKILL.md |
-| `creating-wpf-dialogs` | SKILL.md |
 | `managing-wpf-application-lifecycle` | SKILL.md |
 | 기타 MVVM 관련 스킬 | SKILL.md |

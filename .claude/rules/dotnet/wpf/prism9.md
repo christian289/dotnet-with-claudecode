@@ -105,7 +105,6 @@ MVVM 관련 스킬 사용 시 **PRISM.md**의 코드 예제를 따릅니다.
 | `configuring-dependency-injection` | PRISM.md |
 | `structuring-wpf-projects` | PRISM.md |
 | `mapping-viewmodel-view-datatemplate` | PRISM.md |
-| `creating-wpf-dialogs` | PRISM.md |
 | `managing-wpf-application-lifecycle` | PRISM.md |
 | 기타 MVVM 관련 스킬 | PRISM.md (있을 경우) |
 
