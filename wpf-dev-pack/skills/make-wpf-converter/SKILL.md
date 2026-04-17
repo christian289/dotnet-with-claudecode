@@ -306,8 +306,8 @@ global using System.Windows.Markup;
 
 ---
 
-## Related
+## Related Skills
 
+- `using-converter-markup-extension` - Detailed MarkupExtension pattern
+- `advanced-data-binding` - MultiBinding patterns
 - Plugin rule: `.claude/rules/converter-patterns.md` — Singleton `Instance`, null/UnsetValue handling, TemplateBinding guidance
-- Archived reference: `archive-skills/using-converter-markup-extension/` — MarkupExtension pattern
-- Archived reference: `archive-skills/advanced-data-binding/` — MultiBinding patterns

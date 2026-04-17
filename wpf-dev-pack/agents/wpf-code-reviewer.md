@@ -13,6 +13,7 @@ skills:
   - managing-styles-resourcedictionary
   - threading-wpf-dispatcher
   - configuring-dependency-injection
+  - using-converter-markup-extension
 ---
 
 # WPF Code Reviewer - Code Quality Specialist

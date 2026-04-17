@@ -216,7 +216,7 @@ AskUserQuestion:
 | Selection | Skills | Recommended Agent |
 |-----------|--------|-------------------|
 | UI/Controls | `authoring-wpf-controls`, ~~`developing-wpf-customcontrols`~~ (archived) | `wpf-control-designer` |
-| Data Binding | ~~`advanced-data-binding`~~ (archived), `implementing-wpf-validation` | `wpf-data-binding-expert` |
+| Data Binding | `advanced-data-binding`, `implementing-wpf-validation` | `wpf-data-binding-expert` |
 | Rendering | `rendering-with-drawingcontext`, `rendering-with-drawingvisual` | `wpf-performance-optimizer` |
 | Animation | ~~`creating-wpf-animations`~~ (archived), ~~`integrating-wpf-media`~~ (archived) | `wpf-xaml-designer` |
 
@@ -421,7 +421,7 @@ AskUserQuestion:
 | Selection | Activate Skills | Agents |
 |-----------|-----------------|--------|
 | UI 표시 문제 | ~~`customizing-controltemplate`~~ (archived), `managing-styles-resourcedictionary`, `navigating-visual-logical-tree` | `wpf-xaml-designer` |
-| 데이터 문제 | ~~`advanced-data-binding`~~ (archived), `implementing-wpf-validation`, `implementing-communitytoolkit-mvvm` | `wpf-data-binding-expert` |
+| 데이터 문제 | `advanced-data-binding`, `implementing-wpf-validation`, `implementing-communitytoolkit-mvvm` | `wpf-data-binding-expert` |
 | 성능 문제 | `rendering-wpf-high-performance`, `optimizing-wpf-memory`, `virtualizing-wpf-ui`, `threading-wpf-dispatcher` | `wpf-performance-optimizer` |
 | 크래시/예외 | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher` | `wpf-code-reviewer` |
 | 빌드/설정 오류 | `configuring-wpf-themeinfo`, `configuring-dependency-injection` | `wpf-code-reviewer` |

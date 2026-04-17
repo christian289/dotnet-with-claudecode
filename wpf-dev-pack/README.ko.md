@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**49개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
+**52개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -21,7 +21,7 @@
 
 ## ✨ 하이라이트
 
-> **MVVM 방식**: wpf-dev-pack은 **View First MVVM**을 채택합니다. View가 먼저 생성되고 DataTemplate 매핑 또는 ViewModelLocator를 통해 ViewModel을 결정합니다. ViewModel First 방식(ViewModel이 View를 생성)은 사용하지 않습니다.
+> **MVVM 방식**: wpf-dev-pack은 **View First MVVM**을 채택합니다. View가 먼저 생성되고 **DataTemplate 매핑** 또는 **DI 컨테이너 직접 resolve**로 ViewModel을 결정합니다. ViewModelLocator는 금지입니다(`.claude/rules/prohibitions.md` 참조). ViewModel First 방식(ViewModel이 View를 생성)은 사용하지 않습니다.
 
 <table>
 <tr>
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **49개 스킬**
+- WPF 전 영역을 다루는 **52개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -232,6 +232,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 일부 스킬은 알림 없이 활성화됩니다:
 - `formatting-wpf-csharp-code` - 코드 서식
+- `using-xaml-property-element-syntax` - XAML 구문
 - `managing-literal-strings` - 문자열 관리
 
 ### 키워드 카테고리
@@ -313,11 +314,13 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🔗 데이터 바인딩 & MVVM (5개 스킬)</b></summary>
+<summary><b>🔗 데이터 바인딩 & MVVM (7개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
+| `advanced-data-binding` | 고급 바인딩 패턴 (MultiBinding, PriorityBinding) |
+| `using-converter-markup-extension` | Converter MarkupExtension 패턴 |
 | `implementing-wpf-validation` | 유효성 검사 전략 |
 | `managing-wpf-collectionview-mvvm` | MVVM에서 CollectionView |
 | `configuring-dependency-injection` | DI 설정 |
@@ -353,12 +356,13 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 </details>
 
 <details>
-<summary><b>🎨 스타일링 & 리소스 (3개 스킬)</b></summary>
+<summary><b>🎨 스타일링 & 리소스 (4개 스킬)</b></summary>
 
 | 스킬 | 설명 |
 |------|------|
 | `managing-styles-resourcedictionary` | 스타일 & 리소스 |
 | `resolving-icon-font-inheritance` | 아이콘 폰트 |
+| `using-xaml-property-element-syntax` | XAML 속성 요소 구문 |
 | `formatting-wpf-csharp-code` | 코드 서식 |
 
 </details>
@@ -466,7 +470,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 49개 스킬
+├── 📁 skills/                 # 52개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp만)
 ├── 📄 README.md

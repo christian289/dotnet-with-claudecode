@@ -23,6 +23,8 @@ Specialized skills for WPF and .NET development.
 | Skill | Description |
 |-------|-------------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
+| `advanced-data-binding` | Advanced binding patterns (MultiBinding, PriorityBinding) |
+| `using-converter-markup-extension` | Converter MarkupExtension pattern |
 | `implementing-wpf-validation` | Validation strategies |
 | `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
 | `mapping-viewmodel-view-datatemplate` | View-ViewModel mapping |
@@ -56,6 +58,7 @@ Specialized skills for WPF and .NET development.
 |-------|-------------|
 | `managing-styles-resourcedictionary` | Styles & resources |
 | `resolving-icon-font-inheritance` | Icon fonts |
+| `using-xaml-property-element-syntax` | XAML property element syntax |
 | `formatting-wpf-csharp-code` | Code formatting |
 
 ### 🔧 Application & Threading

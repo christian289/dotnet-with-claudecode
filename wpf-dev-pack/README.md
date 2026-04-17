@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**49 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**52 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -21,7 +21,7 @@
 
 ## ✨ Highlights
 
-> **MVVM Approach**: wpf-dev-pack adopts **View First MVVM**. Views are created first and determine their own ViewModel via DataTemplate mapping or ViewModelLocator. ViewModel First (where ViewModel creates View) is not used.
+> **MVVM Approach**: wpf-dev-pack adopts **View First MVVM**. Views are created first and determine their own ViewModel via **DataTemplate mapping** or **direct DI container resolve**. ViewModelLocator is prohibited (see `.claude/rules/prohibitions.md`). ViewModel First (where ViewModel creates View) is not used.
 
 <table>
 <tr>
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **49 Skills** covering all WPF aspects
+- **52 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -232,6 +232,7 @@ wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-cla
 
 Some skills activate without notification:
 - `formatting-wpf-csharp-code` - Code formatting
+- `using-xaml-property-element-syntax` - XAML syntax
 - `managing-literal-strings` - String management
 
 ### Keyword Categories
@@ -313,11 +314,13 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🔗 Data Binding & MVVM (5 skills)</b></summary>
+<summary><b>🔗 Data Binding & MVVM (7 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
+| `advanced-data-binding` | Advanced binding patterns (MultiBinding, PriorityBinding) |
+| `using-converter-markup-extension` | Converter MarkupExtension pattern |
 | `implementing-wpf-validation` | Validation strategies |
 | `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
 | `configuring-dependency-injection` | DI configuration |
@@ -353,12 +356,13 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🎨 Styling & Resources (3 skills)</b></summary>
+<summary><b>🎨 Styling & Resources (4 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-styles-resourcedictionary` | Styles & resources |
 | `resolving-icon-font-inheritance` | Icon fonts |
+| `using-xaml-property-element-syntax` | XAML property element syntax |
 | `formatting-wpf-csharp-code` | Code formatting |
 
 </details>
@@ -466,7 +470,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 49 Skills
+├── 📁 skills/                 # 52 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md

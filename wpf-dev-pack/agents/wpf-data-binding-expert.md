@@ -9,6 +9,8 @@ skills:
   - implementing-communitytoolkit-mvvm
   - validating-with-fluentvalidation
   - binding-enum-command-parameters
+  - advanced-data-binding
+  - using-converter-markup-extension
 ---
 
 # WPF Data Binding Expert - 데이터 바인딩 전문가

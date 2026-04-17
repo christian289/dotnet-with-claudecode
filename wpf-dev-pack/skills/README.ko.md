@@ -23,6 +23,8 @@ WPF 및 .NET 개발을 위한 전문 스킬입니다.
 | 스킬 | 설명 |
 |------|------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
+| `advanced-data-binding` | 고급 바인딩 패턴 (MultiBinding, PriorityBinding) |
+| `using-converter-markup-extension` | Converter MarkupExtension 패턴 |
 | `implementing-wpf-validation` | 유효성 검사 전략 |
 | `managing-wpf-collectionview-mvvm` | MVVM의 CollectionView |
 | `mapping-viewmodel-view-datatemplate` | View-ViewModel 매핑 |
@@ -56,6 +58,7 @@ WPF 및 .NET 개발을 위한 전문 스킬입니다.
 |------|------|
 | `managing-styles-resourcedictionary` | 스타일 & 리소스 |
 | `resolving-icon-font-inheritance` | 아이콘 폰트 |
+| `using-xaml-property-element-syntax` | XAML 속성 요소 구문 |
 | `formatting-wpf-csharp-code` | 코드 포매팅 |
 
 ### 🔧 애플리케이션 & 스레딩

@@ -19,6 +19,9 @@
 | `resourcedictionary` | `managing-styles-resourcedictionary` |
 | `generic.xaml` | `designing-wpf-customcontrol-architecture`, `configuring-wpf-themeinfo` |
 | `collectionview` | `managing-wpf-collectionview-mvvm` |
+| `binding`, `multibinding`, `prioritybinding`, `relativesource` | `advanced-data-binding` |
+| `converter`, `ivalueconverter`, `markupextension` | `using-converter-markup-extension` |
+| `property element`, `속성 요소 구문` | `using-xaml-property-element-syntax` |
 | `routed event` | `routing-wpf-events` |
 | `dispatcher` | `threading-wpf-dispatcher` |
 | `virtualizing` | `virtualizing-wpf-ui` |
@@ -122,10 +125,10 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 | Category | Skills |
 |----------|--------|
 | **UI & Controls** | `authoring-wpf-controls`, `configuring-wpf-themeinfo` |
-| **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `configuring-dependency-injection` |
+| **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `using-converter-markup-extension`, `configuring-dependency-injection` |
 | **Performance & Rendering** | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `rendering-wpf-high-performance`, `virtualizing-wpf-ui`, `optimizing-wpf-memory`, `implementing-hit-testing` |
 | **Input & Events** | `routing-wpf-events` |
-| **Styling & Resources** | `managing-styles-resourcedictionary` |
+| **Styling & Resources** | `managing-styles-resourcedictionary`, `using-xaml-property-element-syntax` |
 | **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher` |
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
 | **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `scottplot-syncing-modifier-keys-for-mousewheel` |
