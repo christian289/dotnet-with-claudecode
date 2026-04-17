@@ -47,7 +47,7 @@ public sealed partial class EmailValidationRule : ValidationRule
 }
 ```
 
-> **Note**: Uses `GeneratedRegexAttribute` for compile-time regex. See `using-generated-regex` skill.
+> **Note**: Uses `GeneratedRegexAttribute` for compile-time regex. See Microsoft Docs for `System.Text.RegularExpressions.GeneratedRegexAttribute`.
 
 ### 2.2 XAML Usage
 

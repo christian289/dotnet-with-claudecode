@@ -2,44 +2,34 @@
 
 # Skills
 
-57 specialized skills for WPF and .NET development.
+Specialized skills for WPF and .NET development.
+
+> **📦 Archived**: Doc-mirror skills have been moved to `../../archive-skills/`. Topics covered by the `microsoft-docs` MCP plugin (e.g., DependencyProperty, ControlTemplate, Storyboard, DragDrop, async/await, Span<T>, GeneratedRegex) are no longer active skills.
 
 ## Skills by Category
 
-### 🎨 UI & Controls (16 skills)
+### 🎨 UI & Controls
 
 | Skill | Description |
 |-------|-------------|
-| `authoring-wpf-controls` | Control authoring patterns |
-| `customizing-controltemplate` | ControlTemplate customization |
+| `authoring-wpf-controls` | Control authoring decision guide (UserControl vs Control vs FrameworkElement) |
 | `designing-wpf-customcontrol-architecture` | CustomControl architecture |
-| `developing-wpf-customcontrols` | CustomControl development |
-| `defining-wpf-dependencyproperty` | DependencyProperty definition |
-| `understanding-wpf-content-model` | Content model patterns |
-| `implementing-wpf-adorners` | Adorner implementation |
-| `creating-wpf-dialogs` | Dialog windows |
-| `creating-wpf-flowdocument` | FlowDocument creation |
-| `using-wpf-behaviors-triggers` | Behaviors & triggers |
-| `using-converter-markup-extension` | Converter patterns |
-| `using-xaml-property-element-syntax` | XAML syntax patterns |
+| `configuring-wpf-themeinfo` | ThemeInfo configuration |
 | `binding-enum-command-parameters` | Enum binding patterns |
 | `displaying-slider-index` | Slider UI patterns |
-| `localizing-wpf-applications` | Localization |
-| `implementing-wpf-automation` | UI Automation |
 
-### 🔗 Data Binding & MVVM (8 skills)
+### 🔗 Data Binding & MVVM
 
 | Skill | Description |
 |-------|-------------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
-| `advanced-data-binding` | Advanced binding patterns |
 | `implementing-wpf-validation` | Validation strategies |
 | `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
 | `mapping-viewmodel-view-datatemplate` | View-ViewModel mapping |
 | `configuring-dependency-injection` | DI configuration |
 | `structuring-wpf-projects` | Project structure |
 
-### ⚡ Performance & Rendering (11 skills)
+### ⚡ Performance & Rendering
 
 | Skill | Description |
 |-------|-------------|
@@ -47,72 +37,87 @@
 | `rendering-with-drawingvisual` | DrawingVisual rendering |
 | `rendering-wpf-architecture` | Rendering architecture |
 | `rendering-wpf-high-performance` | High-performance rendering |
-| `implementing-2d-graphics` | 2D graphics |
 | `implementing-hit-testing` | Hit testing |
 | `virtualizing-wpf-ui` | UI virtualization |
-| `optimizing-wpf-memory` | Memory optimization |
+| `optimizing-wpf-memory` | Memory optimization (leak patterns) |
 | `checking-image-bounds-transform` | Image transforms |
-| `navigating-visual-logical-tree` | Tree navigation |
-| `creating-graphics-in-code` | Code-based graphics |
+| `navigating-visual-logical-tree` | Tree navigation helpers |
 
-### 🎬 Animation & Media (3 skills)
-
-| Skill | Description |
-|-------|-------------|
-| `creating-wpf-animations` | Animation creation |
-| `integrating-wpf-media` | Media integration |
-| `using-wpf-clipboard` | Clipboard operations |
-
-### ⌨️ Input & Events (4 skills)
+### ⌨️ Input & Events
 
 | Skill | Description |
 |-------|-------------|
-| `handling-wpf-input-commands` | Input & commands |
-| `routing-wpf-events` | Routed events |
-| `implementing-wpf-dragdrop` | Drag & drop |
+| `routing-wpf-events` | Routed events (custom event creation) |
 | `managing-wpf-popup-focus` | Popup focus management |
 
-### 🎨 Styling & Resources (5 skills)
+### 🎨 Styling & Resources
 
 | Skill | Description |
 |-------|-------------|
 | `managing-styles-resourcedictionary` | Styles & resources |
 | `resolving-icon-font-inheritance` | Icon fonts |
 | `formatting-wpf-csharp-code` | Code formatting |
-| `creating-wpf-brushes` | Brush patterns |
-| `creating-wpf-vector-icons` | Vector icons |
 
-### 🔧 Application & Threading (6 skills)
+### 🔧 Application & Threading
 
 | Skill | Description |
 |-------|-------------|
-| `managing-wpf-application-lifecycle` | App lifecycle |
+| `managing-wpf-application-lifecycle` | App lifecycle (Single Instance, IPC) |
 | `threading-wpf-dispatcher` | Dispatcher & threading |
-| `migrating-wpf-to-dotnet` | .NET migration |
-| `localizing-wpf-with-baml` | BAML localization |
-| `implementing-wpf-rtl-support` | RTL support |
-| `formatting-culture-aware-data` | Culture-aware formatting |
 
-### 🔷 .NET Common (11 skills)
+### 🔷 .NET Common
 
 | Skill | Description |
 |-------|-------------|
 | `configuring-console-app-di` | Console app DI |
-| `handling-async-operations` | Async patterns |
-| `implementing-io-pipelines` | I/O pipelines |
-| `implementing-pubsub-pattern` | Pub/Sub pattern |
 | `implementing-repository-pattern` | Repository pattern |
 | `managing-literal-strings` | String management |
-| `optimizing-fast-lookup` | Fast lookup |
-| `optimizing-io-operations` | I/O optimization |
-| `optimizing-memory-allocation` | Memory allocation |
-| `processing-parallel-tasks` | Parallel processing |
-| `using-generated-regex` | Source-generated regex |
+
+### 🧪 Testing
+
+| Skill | Description |
+|-------|-------------|
+| `testing-wpf-viewmodels` | ViewModel xUnit testing |
+| `managing-unit-tests` | Unit test strategy |
+
+### 🛠️ Scaffolding
+
+| Skill | Description |
+|-------|-------------|
+| `make-wpf-project` | Scaffold WPF project |
+| `make-wpf-custom-control` | Scaffold CustomControl |
+| `make-wpf-usercontrol` | Scaffold UserControl |
+| `make-wpf-converter` | Scaffold IValueConverter |
+| `make-wpf-behavior` | Scaffold Behavior |
+| `make-wpf-viewmodel` | Scaffold ViewModel + View + DataTemplate |
+| `make-wpf-service` | Scaffold service class |
+
+### 🔌 3rd Party Libraries
+
+| Skill | Description |
+|-------|-------------|
+| `integrating-wpfui-fluent` | WPF-UI Fluent Design |
+| `integrating-livecharts2` | LiveCharts2 data visualization |
+| `integrating-nodify` | Nodify node editor |
+| `validating-with-fluentvalidation` | FluentValidation integration |
+| `handling-errors-with-erroror` | ErrorOr result pattern |
+| `flaui-cross-process-input` | FlaUI cross-process input fixes |
+| `flaui-prism-dialog-discovery` | FlaUI + Prism dialog discovery |
+| `flaui-wpf-element-discovery` | FlaUI WPF element discovery |
+| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot modifier key sync |
+
+### 📦 Build & Deployment
+
+| Skill | Description |
+|-------|-------------|
+| `embedding-pdb-in-exe` | PDB embedding |
+| `publishing-wpf-apps` | Publish & installer guidance |
 
 ## Skill Structure
 
 Each skill directory contains:
 - `SKILL.md` - Main skill documentation
+- `PRISM.md` - Prism 9 companion (where applicable)
 - `QUICKREF.md` - Quick reference (optional)
 - Additional resources (scripts, templates)
 
