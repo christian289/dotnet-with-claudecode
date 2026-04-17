@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**82 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**49 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **82 Skills** covering all WPF aspects
+- **49 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -222,7 +222,7 @@ wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-cla
 
 | You Say | Auto-Activates |
 |---------|----------------|
-| "Create a CustomControl" | `authoring-wpf-controls`, `developing-wpf-customcontrols` |
+| "Create a CustomControl" | `authoring-wpf-controls` |
 | "Apply MVVM pattern" | `implementing-communitytoolkit-mvvm` |
 | "Render with DrawingContext" | `rendering-with-drawingcontext` |
 | "Need performance optimization" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` agent |
@@ -232,7 +232,6 @@ wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-cla
 
 Some skills activate without notification:
 - `formatting-wpf-csharp-code` - Code formatting
-- `using-xaml-property-element-syntax` - XAML syntax
 - `managing-literal-strings` - String management
 
 ### Keyword Categories
@@ -301,49 +300,33 @@ Some skills activate without notification:
 ### 📚 Skills by Category
 
 <details>
-<summary><b>🎨 UI & Controls (19 skills)</b></summary>
+<summary><b>🎨 UI & Controls (5 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `authoring-wpf-controls` | Control authoring patterns |
-| `customizing-controltemplate` | ControlTemplate customization |
 | `designing-wpf-customcontrol-architecture` | CustomControl architecture |
-| `developing-wpf-customcontrols` | CustomControl development |
-| `implementing-wpf-adorners` | Adorner implementation |
-| `understanding-wpf-content-model` | Content model patterns |
-| `creating-wpf-dialogs` | Dialog windows |
-| `creating-wpf-flowdocument` | FlowDocument creation |
-| `using-wpf-behaviors-triggers` | Behaviors & triggers |
-| `using-xaml-property-element-syntax` | XAML syntax patterns |
-| `using-converter-markup-extension` | Converter patterns |
 | `displaying-slider-index` | Slider UI patterns |
 | `binding-enum-command-parameters` | Enum binding patterns |
-| `localizing-wpf-applications` | Localization |
-| `implementing-wpf-automation` | UI Automation |
 | `configuring-wpf-themeinfo` | ThemeInfo configuration |
-| `formatting-culture-aware-data` | Culture-aware formatting |
-| `implementing-wpf-rtl-support` | RTL layout support |
-| `localizing-wpf-with-baml` | BAML localization |
 
 </details>
 
 <details>
-<summary><b>🔗 Data Binding & MVVM (7 skills)</b></summary>
+<summary><b>🔗 Data Binding & MVVM (5 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
-| `advanced-data-binding` | Advanced binding patterns |
 | `implementing-wpf-validation` | Validation strategies |
 | `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
 | `configuring-dependency-injection` | DI configuration |
-| `defining-wpf-dependencyproperty` | DependencyProperty |
 | `structuring-wpf-projects` | Project structure |
 
 </details>
 
 <details>
-<summary><b>⚡ Performance & Rendering (11 skills)</b></summary>
+<summary><b>⚡ Performance & Rendering (9 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
@@ -351,60 +334,42 @@ Some skills activate without notification:
 | `rendering-with-drawingvisual` | DrawingVisual rendering |
 | `rendering-wpf-architecture` | Rendering architecture |
 | `rendering-wpf-high-performance` | High-performance rendering |
-| `implementing-2d-graphics` | 2D graphics |
 | `implementing-hit-testing` | Hit testing |
 | `virtualizing-wpf-ui` | UI virtualization |
 | `optimizing-wpf-memory` | Memory optimization |
 | `checking-image-bounds-transform` | Image transforms |
 | `navigating-visual-logical-tree` | Tree navigation |
-| `creating-graphics-in-code` | Dynamic graphics in C# |
 
 </details>
 
 <details>
-<summary><b>🎬 Animation & Media (3 skills)</b></summary>
+<summary><b>⌨️ Input & Events (2 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
-| `creating-wpf-animations` | Animation creation |
-| `integrating-wpf-media` | Media integration |
-| `using-wpf-clipboard` | Clipboard operations |
-
-</details>
-
-<details>
-<summary><b>⌨️ Input & Events (4 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `handling-wpf-input-commands` | Input & commands |
 | `routing-wpf-events` | Routed events |
-| `implementing-wpf-dragdrop` | Drag & drop |
 | `managing-wpf-popup-focus` | Popup focus management |
 
 </details>
 
 <details>
-<summary><b>🎨 Styling & Resources (5 skills)</b></summary>
+<summary><b>🎨 Styling & Resources (3 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-styles-resourcedictionary` | Styles & resources |
 | `resolving-icon-font-inheritance` | Icon fonts |
 | `formatting-wpf-csharp-code` | Code formatting |
-| `creating-wpf-brushes` | Brush patterns |
-| `creating-wpf-vector-icons` | Vector icons |
 
 </details>
 
 <details>
-<summary><b>🔧 Application & Threading (5 skills)</b></summary>
+<summary><b>🔧 Application & Threading (4 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-wpf-application-lifecycle` | App lifecycle |
 | `threading-wpf-dispatcher` | Dispatcher & threading |
-| `migrating-wpf-to-dotnet` | .NET migration |
 | `embedding-pdb-in-exe` | PDB embedding |
 | `publishing-wpf-apps` | Publishing & installers |
 
@@ -427,21 +392,13 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🔷 .NET Common (11 skills)</b></summary>
+<summary><b>🔷 .NET Common (3 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `configuring-console-app-di` | Console app DI |
-| `handling-async-operations` | Async patterns |
-| `implementing-io-pipelines` | I/O pipelines |
-| `implementing-pubsub-pattern` | Pub/Sub pattern |
 | `implementing-repository-pattern` | Repository pattern |
 | `managing-literal-strings` | String management |
-| `optimizing-fast-lookup` | Fast lookup |
-| `optimizing-io-operations` | I/O optimization |
-| `optimizing-memory-allocation` | Memory allocation |
-| `processing-parallel-tasks` | Parallel processing |
-| `using-generated-regex` | Source-generated regex |
 
 </details>
 
@@ -455,10 +412,8 @@ Some skills activate without notification:
 | `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
 | `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
 | `structuring-wpf-projects` | IModule-based module architecture |
-| `creating-wpf-dialogs` | IDialogService, IDialogAware |
 | `managing-wpf-application-lifecycle` | PrismApplication lifecycle |
 | `binding-enum-command-parameters` | DelegateCommand\<T\> |
-| `handling-wpf-input-commands` | DelegateCommand, CompositeCommand |
 | `implementing-wpf-validation` | ValidatableBindableBase |
 | `managing-wpf-collectionview-mvvm` | BindableBase + IContainerRegistry |
 | `validating-with-fluentvalidation` | ValidatableBindableBase\<T\> bridge |
@@ -511,7 +466,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 82 Skills
+├── 📁 skills/                 # 49 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md

@@ -128,7 +128,6 @@ See `agents/wpf-architect.md` for full interview specification.
 
 **Silent Triggers** (no announcement):
 - `formatting-wpf-csharp-code`
-- `using-xaml-property-element-syntax`
 - `managing-literal-strings`
 
 **Multiple Keywords:**
