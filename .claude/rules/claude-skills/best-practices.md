@@ -127,6 +127,13 @@ description: Extract text and tables from PDF files, fill forms, merge documents
 description: Helps with documents
 ```
 
+### Skill 콘텐츠 언어 정책
+
+- **SKILL.md 본문, description frontmatter, 코드 예시 주석: 영문 단일**
+- 이유: 기존 wpf-dev-pack, avalonia 스킬이 모두 영문으로 통일. 국제 재사용성 및 일관성 유지
+- `.claude/rules/preferences.md`의 한글 답변 규칙은 **사용자와의 대화 응답**에만 적용되며, skill 콘텐츠에는 적용되지 않음
+- `.claude/rules/dotnet/preferences.md` §2.5의 한글+영문 병기 규칙은 **조건부** (한글을 먼저 쓰는 경우에만 영문 병기). 영문이 기본인 skill 코드 예시에는 영문 단일 주석
+
 ---
 
 ## 3. 명명 규칙

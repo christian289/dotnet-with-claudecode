@@ -135,3 +135,14 @@ See `agents/wpf-architect.md` for full interview specification.
 1. Most specific first (e.g., "drawingcontext" > "performance")
 2. Related skills can be referenced in parallel
 3. Ask user if conflict
+
+---
+
+## Adding a New Skill — Required Co-updates
+
+새 skill을 `skills/<skill-name>/SKILL.md`로 추가할 때 반드시 함께 업데이트할 항목:
+
+1. **`skills/.claude/CLAUDE.md`** — Keyword-Skill Mapping 표에 키워드 행 추가, Skill Category Index의 해당 카테고리에 skill 이름 추가
+2. **연관된 기존 SKILL.md** — 토픽이 겹치는 기존 skill에 새 skill로의 cross-link(See [...](../skill-name/SKILL.md)) 추가
+3. **Prism 9 분기가 필요한 skill** — `PRISM.md` 컴패니언 파일 작성 (mvvm-framework.md 규칙 참조)
+4. **Foundation + Application 쌍 skill** — 두 skill을 별도로 만들고 상호 참조. Foundation skill은 메커니즘·일반 원칙, Application skill은 구체 시나리오 적용 (예: `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`)

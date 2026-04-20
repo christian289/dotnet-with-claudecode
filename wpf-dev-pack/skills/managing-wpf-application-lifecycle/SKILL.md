@@ -111,6 +111,8 @@ public partial class App : Application
 
 ## 3. Shutdown Handling
 
+> **Async cleanup on shutdown?** If you need to `await` anything during shutdown (flushing buffers, `IHost.StopAsync`, closing network connections), do not use `.GetAwaiter().GetResult()` inside `OnExit` — it deadlocks the Dispatcher. See the [`shutting-down-wpf-gracefully`](../shutting-down-wpf-gracefully/SKILL.md) skill for the `OnMainWindowClose` and `OnExplicitShutdown` strategies, and [`preventing-dispatcher-deadlock`](../preventing-dispatcher-deadlock/SKILL.md) for the underlying mechanism.
+
 ### 3.1 ShutdownMode
 
 ```xml

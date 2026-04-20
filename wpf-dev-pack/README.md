@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.6.1-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.6.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**53 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**55 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -37,7 +37,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **53 Skills** covering all WPF aspects
+- **55 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -368,12 +368,14 @@ Some skills activate without notification:
 </details>
 
 <details>
-<summary><b>🔧 Application & Threading (4 skills)</b></summary>
+<summary><b>🔧 Application & Threading (6 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `managing-wpf-application-lifecycle` | App lifecycle |
 | `threading-wpf-dispatcher` | Dispatcher & threading |
+| `preventing-dispatcher-deadlock` | Avoid sync-over-async deadlocks in event handlers |
+| `shutting-down-wpf-gracefully` | OnMainWindowClose / OnExplicitShutdown with async cleanup |
 | `embedding-pdb-in-exe` | PDB embedding |
 | `publishing-wpf-apps` | Publishing & installers |
 
@@ -470,7 +472,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md # Sonnet
 │   ├── code-formatter.md          # Haiku
 │   └── serena-initializer.md      # Haiku
-├── 📁 skills/                 # 53 Skills
+├── 📁 skills/                 # 55 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md
