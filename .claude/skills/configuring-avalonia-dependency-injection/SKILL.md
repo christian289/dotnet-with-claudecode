@@ -1,37 +1,32 @@
 ---
 name: configuring-avalonia-dependency-injection
-description: "Configures GenericHost and Dependency Injection in AvaloniaUI applications. Use when setting up DI container, registering services, or implementing IoC patterns in AvaloniaUI projects."
+description: "Configures GenericHost and Dependency Injection in AvaloniaUI applications. Registers service lifetimes (singleton, transient, scoped), wires ViewModels to Views, and sets up hosted services. Use when setting up DI container, registering services, or implementing IoC patterns in AvaloniaUI projects."
 ---
 
-# 6.6 Dependency Injection and GenericHost Usage
+# AvaloniaUI Dependency Injection with GenericHost
 
-Apply the same GenericHost pattern in AvaloniaUI as in WPF
+Apply the same GenericHost pattern in AvaloniaUI as in WPF.
 
-## Project Structure
+## Setup Workflow
 
-The templates folder contains a .NET 9 AvaloniaUI project example.
+1. Add NuGet packages to the App project
+2. Configure `App.axaml.cs` with GenericHost
+3. Register services and ViewModels
+4. Use constructor injection in Views and ViewModels
+5. Verify: app launches and resolves dependencies without exceptions
 
-```
-templates/
-├── AvaloniaDISample.App/           ← Avalonia Application Project
-│   ├── Views/
-│   │   ├── MainWindow.axaml
-│   │   └── MainWindow.axaml.cs
-│   ├── App.axaml
-│   ├── App.axaml.cs
-│   ├── Program.cs
-│   ├── GlobalUsings.cs
-│   └── AvaloniaDISample.App.csproj
-└── AvaloniaDISample.ViewModels/    ← ViewModel Class Library (UI framework independent)
-    ├── MainViewModel.cs
-    ├── GlobalUsings.cs
-    └── AvaloniaDISample.ViewModels.csproj
+## Required NuGet Packages
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.*" />
+  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.*" />
+</ItemGroup>
 ```
 
-## App.axaml.cs Example:
+## App.axaml.cs — GenericHost Configuration
 
 ```csharp
-// App.axaml.cs
 namespace MyApp;
 
 using Avalonia;
@@ -50,19 +45,14 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // Create GenericHost and register services
         _host = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
-                // Register services
                 services.AddSingleton<IUserRepository, UserRepository>();
                 services.AddSingleton<IUserService, UserService>();
                 services.AddTransient<IDialogService, DialogService>();
 
-                // Register ViewModels
                 services.AddTransient<MainViewModel>();
-
-                // Register Views
                 services.AddSingleton<MainWindow>();
             })
             .Build();
@@ -77,3 +67,23 @@ public partial class App : Application
 }
 ```
 
+## Constructor Injection in Views
+
+```csharp
+namespace MyApp.Views;
+
+using Avalonia.Controls;
+
+public partial class MainWindow : Window
+{
+    public MainWindow(MainViewModel viewModel)
+    {
+        InitializeComponent();
+        DataContext = viewModel;
+    }
+}
+```
+
+## Template Project
+
+The `templates/` folder contains a complete .NET 9 AvaloniaUI DI example project with App, Views, and ViewModels.

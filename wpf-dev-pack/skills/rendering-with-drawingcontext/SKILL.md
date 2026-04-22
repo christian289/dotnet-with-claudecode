@@ -1,5 +1,6 @@
 ---
-description: "Renders high-performance graphics using WPF DrawingContext for 10-50x improvement over Shape. Use when drawing large numbers of shapes or optimizing rendering performance."
+name: rendering-with-drawingcontext
+description: "Renders high-performance graphics using WPF DrawingContext: draws geometries, renders text, composites images, and batches visual operations for 10-50x improvement over Shape elements. Use when drawing large numbers of shapes, optimizing slow WPF rendering, replacing Shape-based Canvas with StreamGeometry, or diagnosing rendering bottlenecks."
 user-invocable: false
 model: sonnet
 ---
@@ -20,13 +21,6 @@ A pattern for achieving 10-50x performance improvement over Shape objects when r
 | **Memory usage** | Very high (WPF object overhead) | Very low (data only) |
 | **Performance** | Baseline | **10-50x faster** |
 | **Suitable for** | Few interactive shapes (tens to hundreds) | Large static shapes (thousands to tens of thousands) |
-
-### Why is DrawingContext Fast?
-
-1. **Single Visual**: Only 1 FrameworkElement registered in Visual Tree
-2. **Layout bypass**: No Measure/Arrange calculations needed
-3. **Batch rendering**: Sent to GPU as single batch
-4. **Memory efficiency**: Only stores shape metadata
 
 ---
 

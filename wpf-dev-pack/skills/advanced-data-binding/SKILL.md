@@ -1,5 +1,6 @@
 ---
-description: "Implements advanced WPF data binding patterns including MultiBinding, PriorityBinding, and complex converters. Use when combining multiple values, fallback values, or implementing complex binding scenarios."
+name: advanced-data-binding
+description: "Implements advanced WPF data binding patterns including MultiBinding, PriorityBinding, IMultiValueConverter, and chained converters. Use when combining multiple values with XAML binding expressions, implementing async fallback values, chaining IValueConverter instances, or debugging binding failures."
 user-invocable: false
 model: sonnet
 ---
@@ -7,8 +8,6 @@ model: sonnet
 # WPF Advanced Data Binding
 
 ## 1. MultiBinding
-
-`MultiBinding` is used to combine multiple source values into a single binding target.
 
 ### 1.1 Basic Pattern
 
@@ -91,8 +90,6 @@ public sealed class AllTrueConverter : IMultiValueConverter
 ---
 
 ## 2. PriorityBinding
-
-`PriorityBinding` uses the first successful value among multiple bindings. Useful for async data loading.
 
 ### 2.1 Basic Pattern
 

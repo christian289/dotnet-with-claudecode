@@ -66,6 +66,14 @@ description: Converts HTML/CSS to WPF CustomControl XAML with correct patterns a
 </Grid>
 ```
 
+## Conversion Workflow
+
+1. Map HTML structure to XAML panels (Grid, StackPanel, Canvas) using the table above
+2. Convert CSS styles to XAML properties and resources
+3. Replace CSS animations with Storyboard/DoubleAnimation (Duration inline only)
+4. Apply clipping for `border-radius` using `Border.Clip` + `RectangleGeometry`
+5. Verify: visual output matches the HTML/CSS reference at each step
+
 ## 참조 문서
 
 | 파일                                                       | 내용                                                    |
