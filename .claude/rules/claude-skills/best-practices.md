@@ -20,7 +20,7 @@
 | 필드 | 필수 | 설명 |
 |------|------|------|
 | `name` | No | 스킬 표시 이름. 생략 시 디렉토리 이름 사용. 소문자, 숫자, 하이픈만 허용 (최대 64자) |
-| `description` | 권장 | 스킬의 용도 + 사용 시점. Claude가 자동 호출 판단에 사용. 250자 초과 시 목록에서 잘림 |
+| `description` | 권장 | 스킬의 용도 + 사용 시점. Claude가 자동 호출 판단에 사용. **Claude API**: 최대 1,024자. **Claude Code**: `description` + `when_to_use` 합산이 **1,536자** 초과 시 목록에서 잘림 (Claude Code 2.1.105, 2026-04-13에 250 → 1,536자 상향, front-load key use case) |
 | `argument-hint` | No | 자동완성 시 예상 인자 힌트 표시. 예: `[issue-number]`, `[filename] [format]` |
 | `disable-model-invocation` | No | `true` 설정 시 Claude 자동 호출 차단 → 사용자 `/name`으로만 실행. 기본값: `false` |
 | `user-invocable` | No | `false` 설정 시 `/` 메뉴에서 숨김 → Claude만 호출 가능. 기본값: `true` |
@@ -358,7 +358,7 @@ Use the GitHub:create_issue tool to create issues.
 ### 핵심 품질
 
 - [ ] description이 구체적이고 키 용어 포함
-- [ ] description에 무엇을 하는지 + 언제 사용하는지 포함 (250자 이내 권장)
+- [ ] description에 무엇을 하는지 + 언제 사용하는지 포함 (Claude API 1,024자 / Claude Code listing 1,536자 이내 — CC 2.1.105+ 기준)
 - [ ] SKILL.md 본문 500줄 이내
 - [ ] 추가 세부사항은 별도 파일로 분리
 - [ ] 시간 의존적 정보 없음 (또는 "old patterns" 섹션에)
