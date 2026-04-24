@@ -1,5 +1,5 @@
 ---
-description: "Solves FlaUI element discovery failures in WPF UI automation. Use when FindAllDescendants returns empty or missing elements, AutomationId is set but not visible in UIA tree, ByAutomationId finds nothing, connector/node elements can't be located, or Shape-based controls (Connection, Path) don't appear in automation tree. Covers AutomationId placement on ItemContainer vs content elements, FindAllDescendants depth limitations, and Shape/AutomationPeer visibility rules."
+description: "Solves FlaUI element discovery failures in WPF UI automation. Use when FindAllDescendants returns empty or missing elements, AutomationId is set but not visible in UIA tree, ByAutomationId finds nothing, connector/node elements can't be located, Shape-based controls (Connection, Path) don't appear in automation tree, or native Common Dialog (OpenFileDialog/SaveFileDialog) can't be found via a single search path. Covers AutomationId placement on ItemContainer vs content elements, FindAllDescendants depth limitations, Shape/AutomationPeer visibility rules, and 3-tier fallback search for Microsoft.Win32 common dialogs with ProcessId filtering."
 user-invocable: false
 model: sonnet
 ---
@@ -168,3 +168,60 @@ Check for:
 - **AutomationId** — is it on the expected element or its container?
 - **ClassName** — `ItemsControlItem` vs the control type you expect
 - **Missing elements** — compare with what you see visually
+
+## Problem 4: Native Common Dialogs (OpenFileDialog / SaveFileDialog) Fail Single-Path Search
+
+`Microsoft.Win32.OpenFileDialog` and `SaveFileDialog` use the Vista+ `IFileDialog` COM (Windows Common File Dialog). Their UIA tree placement is **inconsistent** — sometimes they appear as a modal child of the owner window, sometimes as a top-level window of the host process, and sometimes under the desktop root without a clear process affinity. A single-path lookup (e.g., only `Application.GetAllTopLevelWindows`) often misses them even when the dialog is clearly visible to the user.
+
+**Symptoms:**
+- The file dialog opens visually but `Application.GetAllTopLevelWindows(...)` returns nothing matching
+- `_mainWindow.ModalWindows` is empty while the dialog is showing
+- Substring title match (`title.Contains("Save")`) accidentally returns the Visual Studio / IDE window (e.g. `"SomeTest.cs - Microsoft Visual Studio"`) because the IDE happens to have "Save" in its title
+
+**Fix — 3-tier fallback search with PID filter and exact title match:**
+
+```csharp
+private AutomationElement? WaitForFileDialog(string exactTitle, TimeSpan? timeout = null)
+{
+    var hostProcessId = _fixture.Application.ProcessId;
+
+    return RetryHelper.WaitForElement(
+        () =>
+        {
+            // 1) Modal children of the main window — most common placement
+            foreach (var modal in _mainWindow.ModalWindows)
+            {
+                if (string.Equals(modal.Title, exactTitle, StringComparison.Ordinal))
+                    return modal;
+            }
+
+            // 2) Top-level windows of the automated process
+            foreach (var win in _fixture.Application.GetAllTopLevelWindows(_fixture.Automation))
+            {
+                if (string.Equals(win.Title, exactTitle, StringComparison.Ordinal))
+                    return win;
+            }
+
+            // 3) UIA desktop root — native common dialogs sometimes land here.
+            //    Filter by ProcessId to avoid matching other processes (e.g., Visual Studio).
+            var desktop = _fixture.Automation.GetDesktop();
+            var rootWindows = desktop.FindAllChildren(cf => cf.ByControlType(ControlType.Window));
+            foreach (var win in rootWindows)
+            {
+                if (win.Properties.ProcessId.ValueOrDefault != hostProcessId)
+                    continue;
+                if (string.Equals(win.Properties.Name.ValueOrDefault, exactTitle, StringComparison.Ordinal))
+                    return win;
+            }
+
+            return null;
+        },
+        timeout ?? TimeSpan.FromSeconds(5));
+}
+```
+
+**Rules:**
+- Set a specific `Title` on the dialog from your app code (e.g., `fileDialog.Title = "Save Task Config";`) and match that exact string — don't rely on Windows-provided default titles which vary by locale.
+- Avoid `Contains()` — it false-matches the IDE window that hosts the test runner (VS, Rider).
+- Use all 3 tiers; any single one is insufficient depending on how the COM dialog attaches to its owner.
+- Always filter tier 3 by `ProcessId` to stay within the automated app's process.

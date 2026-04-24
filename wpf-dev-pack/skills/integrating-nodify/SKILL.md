@@ -382,8 +382,44 @@ public class EditorDeleteBehavior : Behavior<NodifyEditor>
 | ViewModel에 `Point` 사용 | `System.Windows.Point`는 WPF 타입 — ViewModel 분리 시 주의 |
 | `PendingConnection` 미설정 | 드래그로 연결 생성이 동작하지 않음 |
 | `IsConnected` 미갱신 | 연결 추가/제거 시 양쪽 커넥터의 `IsConnected` 반드시 갱신 |
+| Showing Disconnect on a disconnected socket | In the right-click handler, check `connector.IsConnected`. For disconnected sockets, fall back to the node-level menu (Delete etc.). Avoids the illogical UX of offering Disconnect on a socket that has nothing to disconnect. |
+| Guessing gesture defaults without consulting `Nodify.xml` | Grep `{NuGet}\nodify\{ver}\lib\net472\Nodify.xml` directly — all `SelectionGestures`/`EditorGestures` defaults and `ModifierKeys` combinations are specified in the official XML doc comments. |
 
 > ⚠️ `System.Windows.Point`는 `WindowsBase.dll` 소속. ViewModel 프로젝트를 순수 BCL로 유지하려면 `double X, Y` 프로퍼티로 분리하고 Converter에서 변환.
+
+### Disconnect Menu Branching Example
+
+```csharp
+private void OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+{
+    var (node, connector) = FindNodeAndConnector(e.OriginalSource as DependencyObject, AssociatedObject);
+    if (node == null) return;
+
+    var menu = new ContextMenu();
+
+    // Only show Disconnect when the socket is actually connected.
+    // For disconnected sockets, fall back to the node-level menu (Delete / SimpleView / AddInput etc.).
+    if (connector is { IsConnected: true } && DisconnectConnectorCommand != null)
+    {
+        menu.Items.Add(new MenuItem
+        {
+            Header = "Disconnect",
+            Command = DisconnectConnectorCommand,
+            CommandParameter = connector
+        });
+    }
+    else
+    {
+        // Node-level menu items: Delete, ToggleSimpleView, AddInputSocket, etc.
+    }
+
+    if (menu.Items.Count > 0)
+    {
+        menu.IsOpen = true;
+        e.Handled = true;
+    }
+}
+```
 
 ## Key Rules
 

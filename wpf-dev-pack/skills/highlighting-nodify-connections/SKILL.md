@@ -285,7 +285,9 @@ public void RestoreConnection(ConnectionItem connection)
 
 **문제:** Nodify 7.x의 기본 `ControlTemplate`은 내부에 `<Border x:Name="Highlight">` + `<Trigger Property="IsMouseOver" Value="True"> <Setter TargetName="Highlight" ... /> </Trigger>`를 가진다. 외부 `Style.Trigger`는 `TargetName`을 지정할 수 없어 template 내부 파트에 접근 불가. 결과적으로 mouse-over 쪽은 `Highlight`가 보이지만 peer 쪽은 보이지 않아 **시각이 비대칭**.
 
-**해결:** Nodify의 `ControlTemplate`을 로컬에 복사해 `IsMouseOver` Trigger를 `IsHighlighted` DataTrigger로 교체. DataTrigger는 template 내부에서도 `TargetName`을 지정할 수 있다.
+**해결:** Copy Nodify's `ControlTemplate` locally and **add** an `IsHighlighted` DataTrigger. Unlike a plain `Style.Trigger`, a `DataTrigger` inside a `ControlTemplate.Triggers` collection **can** target `TargetName` parts.
+
+⚠️ **Keep the original `IsMouseOver` Trigger — do not replace it, coexist with it.** The original trigger drives the **default hover feedback on unconnected sockets**. If you keep only `IsHighlighted` (peer propagation) and drop `IsMouseOver`, connected sockets still glow via peer propagation but **hovering an unconnected socket produces no visual feedback at all** — a regression. Both triggers target the same `Highlight.Visibility` but fire under different conditions, so they coexist cleanly: `IsMouseOver` paints the default theme-colored hover, `IsHighlighted` paints the neon peer color.
 
 Nodify 원본 템플릿 참조: `https://github.com/miroiu/nodify/blob/v{version}/Nodify/Themes/Styles/NodeInput.xaml` (NodeOutput도 동일 구조, 좌우 방향만 반전).
 
@@ -321,7 +323,14 @@ Nodify 원본 템플릿 참조: `https://github.com/miroiu/nodify/blob/v{version
                                     Value="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"/>
                         </Trigger>
 
-                        <!-- ★ 원본의 IsMouseOver 트리거 제거하고 IsHighlighted로 교체 ★ -->
+                        <!-- Keep original IsMouseOver trigger: restores default hover on unconnected sockets -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Highlight"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </Trigger>
+
+                        <!-- Add IsHighlighted DataTrigger for peer propagation. Coexist with IsMouseOver; do not replace it. -->
                         <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                             <Setter TargetName="Highlight"
                                     Property="Visibility"
