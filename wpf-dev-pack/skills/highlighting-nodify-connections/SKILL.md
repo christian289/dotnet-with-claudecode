@@ -18,7 +18,6 @@ description: >
     - Replacing the entire node visual (not just socket/connection highlight) — use the `designing-wpf-customcontrol-architecture` skill
     - Not using Nodify — use `customizing-controltemplate` skill instead
 user-invocable: false
-model: sonnet
 ---
 
 # Highlighting Nodify Connections

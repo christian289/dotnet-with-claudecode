@@ -1,7 +1,6 @@
 ---
 description: "Configures ThemeInfo attribute in AssemblyInfo.cs for WPF CustomControl Generic.xaml auto-loading. Use when creating WPF Custom Control Library projects or troubleshooting missing control styles."
 user-invocable: false
-model: haiku
 ---
 
 # WPF ThemeInfo Configuration

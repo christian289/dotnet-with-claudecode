@@ -28,7 +28,6 @@ description: >
     - The codebase has no test project yet — first scaffold one via
       `testing-wpf-viewmodels` or an equivalent setup skill.
 user-invocable: false
-model: sonnet
 ---
 
 # Managing Unit Tests

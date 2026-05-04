@@ -6,7 +6,7 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.6.2-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
@@ -29,7 +29,7 @@
 
 ### 🤖 AI-Powered Development
 - **10 Specialized Agents** for different WPF tasks
-- **Opus-level** architects for strategic decisions
+- **Session-model agnostic** — agents inherit your current model
 - **Auto-detection** of WPF keywords
 - **Prism 9** companion files for dual-framework support
 
@@ -271,19 +271,19 @@ Some skills activate without notification:
 
 ### 🤖 Specialized Agents
 
-> **Claude Pro users**: Use `-low` versions for `wpf-architect` and `wpf-code-reviewer` (Opus → Sonnet)
+> All agents inherit the current session model. Run `/model` to switch (e.g. Opus 1M ↔ Sonnet ↔ Haiku).
 
-| Agent | Model | Specialty |
-|-------|:-----:|-----------|
-| 🏗️ **wpf-architect** | Opus | Strategic architecture & design decisions |
-| 🎨 **wpf-control-designer** | Sonnet | CustomControl implementation |
-| 📐 **wpf-xaml-designer** | Sonnet | XAML styles & templates |
-| 🔄 **wpf-mvvm-expert** | Sonnet | MVVM pattern & CommunityToolkit |
-| 🔗 **wpf-data-binding-expert** | Sonnet | Complex bindings & validation |
-| ⚡ **wpf-performance-optimizer** | Sonnet | Rendering & performance |
-| 🔍 **wpf-code-reviewer** | Opus | Code quality analysis |
-| 📝 **code-formatter** | Haiku | C# formatting & style |
-| 🔧 **serena-initializer** | Haiku | Project setup |
+| Agent | Specialty |
+|-------|-----------|
+| 🏗️ **wpf-architect** | Strategic architecture & design decisions |
+| 🎨 **wpf-control-designer** | CustomControl implementation |
+| 📐 **wpf-xaml-designer** | XAML styles & templates |
+| 🔄 **wpf-mvvm-expert** | MVVM pattern & CommunityToolkit |
+| 🔗 **wpf-data-binding-expert** | Complex bindings & validation |
+| ⚡ **wpf-performance-optimizer** | Rendering & performance |
+| 🔍 **wpf-code-reviewer** | Code quality analysis |
+| 📝 **code-formatter** | C# formatting & style |
+| 🔧 **serena-initializer** | Project setup |
 
 ### 🔌 MCP Servers
 
@@ -463,15 +463,15 @@ wpf-dev-pack/
 ├── 📁 .claude-plugin/
 │   └── plugin.json           # Plugin manifest
 ├── 📁 agents/                 # 10 Specialized agents
-│   ├── wpf-architect.md           # Opus
-│   ├── wpf-code-reviewer.md       # Opus
-│   ├── wpf-control-designer.md    # Sonnet
-│   ├── wpf-xaml-designer.md       # Sonnet
-│   ├── wpf-mvvm-expert.md         # Sonnet
-│   ├── wpf-data-binding-expert.md # Sonnet
-│   ├── wpf-performance-optimizer.md # Sonnet
-│   ├── code-formatter.md          # Haiku
-│   └── serena-initializer.md      # Haiku
+│   ├── wpf-architect.md
+│   ├── wpf-code-reviewer.md
+│   ├── wpf-control-designer.md
+│   ├── wpf-xaml-designer.md
+│   ├── wpf-mvvm-expert.md
+│   ├── wpf-data-binding-expert.md
+│   ├── wpf-performance-optimizer.md
+│   ├── code-formatter.md
+│   └── serena-initializer.md
 ├── 📁 skills/                 # 55 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)

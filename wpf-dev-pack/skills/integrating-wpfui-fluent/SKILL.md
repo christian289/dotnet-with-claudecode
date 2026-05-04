@@ -1,7 +1,6 @@
 ---
 description: "Integrates WPF-UI (Wpf.Ui) library for Fluent Design in WPF applications. Use when building modern UI with FluentWindow, NavigationView, SnackbarService, or theme management."
 user-invocable: false
-model: sonnet
 ---
 
 # WPF-UI (Wpf.Ui) Integration Guide

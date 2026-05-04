@@ -1,7 +1,6 @@
 ---
 name: wpf-code-auditor
 description: WPF code audit specialist. Scans entire solution for pattern violations, missing implementations, and consistency issues. Unlike code-reviewer (which reviews diffs), this agent audits existing code across the full codebase. Use when checking for BindingProxy missing in CLR collections, orphan resources, missing JsonIgnore on non-serializable properties, GCHandle Free leaks, or any codebase-wide pattern consistency check.
-model: opus
 color: red
 tools: Read, Glob, Grep, Edit, Write, Bash, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
 permissionMode: default

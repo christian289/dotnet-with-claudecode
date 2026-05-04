@@ -1,7 +1,6 @@
 ---
 description: Provides high-performance WPF rendering techniques including DrawingVisual, WriteableBitmap, CompositionTarget.Rendering, and BitmapCache. Use when implementing real-time graphics, game loops, particle systems, charts, or when Shape controls cause performance issues.
 user-invocable: false
-model: opus
 ---
 
 # High-Performance WPF Rendering

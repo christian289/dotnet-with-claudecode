@@ -1,7 +1,6 @@
 ---
 description: "Implements MVVM pattern using CommunityToolkit.Mvvm 8.4+ with ObservableProperty attributes and source generators. Use when building ViewModels, implementing commands, or setting up MVVM structure in WPF."
 user-invocable: false
-model: sonnet
 ---
 
 # CommunityToolkit.Mvvm Code Guidelines

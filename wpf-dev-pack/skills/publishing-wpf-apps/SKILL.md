@@ -1,7 +1,6 @@
 ---
 description: "Guides WPF application publishing and installer options. Use when user mentions publish, deploy, release, packaging, or installer to help choose deployment method and installer technology."
 user-invocable: false
-model: sonnet
 ---
 
 # WPF Application Publishing Guide

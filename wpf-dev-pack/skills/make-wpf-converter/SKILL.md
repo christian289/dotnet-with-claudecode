@@ -1,6 +1,5 @@
 ---
 description: "Generates WPF IValueConverter or IMultiValueConverter classes with MarkupExtension pattern. Use when creating a new value converter, scaffolding a MultiValueConverter, or adding a converter with direct XAML usage. Usage: /wpf-dev-pack:make-wpf-converter <ConverterName> [multi]"
-model: haiku
 argument-hint: [ConverterName]
 ---
 

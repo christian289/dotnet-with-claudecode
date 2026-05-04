@@ -6,17 +6,19 @@ Specialized AI agents for WPF development tasks.
 
 ## Agent List
 
-| Agent | Model | Specialty |
-|-------|:-----:|-----------|
-| 🏗️ **wpf-architect** | Opus | Strategic architecture & design decisions |
-| 🎨 **wpf-control-designer** | Sonnet | CustomControl implementation |
-| 📐 **wpf-xaml-designer** | Sonnet | XAML styles & templates |
-| 🔄 **wpf-mvvm-expert** | Sonnet | MVVM pattern & CommunityToolkit |
-| 🔗 **wpf-data-binding-expert** | Sonnet | Complex bindings & validation |
-| ⚡ **wpf-performance-optimizer** | Sonnet | Rendering & performance |
-| 🔍 **wpf-code-reviewer** | Opus | Code quality analysis |
-| 📝 **code-formatter** | Haiku | C# formatting & style |
-| 🔧 **serena-initializer** | Haiku | Project setup |
+> All agents inherit the current session model. Run `/model` to switch.
+
+| Agent | Specialty |
+|-------|-----------|
+| 🏗️ **wpf-architect** | Strategic architecture & design decisions |
+| 🎨 **wpf-control-designer** | CustomControl implementation |
+| 📐 **wpf-xaml-designer** | XAML styles & templates |
+| 🔄 **wpf-mvvm-expert** | MVVM pattern & CommunityToolkit |
+| 🔗 **wpf-data-binding-expert** | Complex bindings & validation |
+| ⚡ **wpf-performance-optimizer** | Rendering & performance |
+| 🔍 **wpf-code-reviewer** | Code quality analysis |
+| 📝 **code-formatter** | C# formatting & style |
+| 🔧 **serena-initializer** | Project setup |
 
 ## Usage
 

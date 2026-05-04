@@ -1,7 +1,6 @@
 ---
 description: "Discovers and interacts with Prism IDialogAware modal windows in FlaUI UI automation. Use when testing Prism dialogs that use TitlelessWindow style, CommonWindow with empty Title, modal Progress dialogs without title bar, or when ModalWindows search returns unexpected results. Covers child-control-based dialog identification, IsCancel button ESC key verification, and Status Bar message assertion patterns."
 user-invocable: false
-model: sonnet
 ---
 
 # FlaUI Prism Dialog Discovery

@@ -1,7 +1,6 @@
 ---
 description: "Binds enum values to WPF CommandParameter using x:Static markup extension. Use when passing enum types to commands or avoiding string-based command parameter errors."
 user-invocable: false
-model: haiku
 ---
 
 # WPF Command Parameter Enum Type Binding

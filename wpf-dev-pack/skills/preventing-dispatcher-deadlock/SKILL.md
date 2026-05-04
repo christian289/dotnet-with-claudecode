@@ -1,7 +1,6 @@
 ---
 description: Prevents WPF Dispatcher deadlocks caused by sync-over-async patterns in event handlers, Command callbacks, and virtual method overrides. Use when calling async methods from Button.Click, Window.Loaded, Window.Closing, Application.OnExit, ItemsControl.SelectionChanged, or any callback that runs on the Dispatcher thread. Covers the DispatcherSynchronizationContext capture mechanism that causes .GetAwaiter().GetResult(), .Wait(), and .Result to deadlock, explains why Task.Run wrapping is not a real fix, enforces async void with try/catch as the only safe event-handler pattern, and provides reentrancy guards plus CommunityToolkit.Mvvm and Prism 9 command alternatives. Apply whenever code calls an async method from WPF UI thread code, especially when the method signature cannot be changed to async Task (overrides, interface implementations, event handlers).
 user-invocable: false
-model: sonnet
 ---
 
 # Preventing Dispatcher Deadlock in WPF Event Handlers

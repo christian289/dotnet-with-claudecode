@@ -1,7 +1,6 @@
 ---
 description: "Encapsulates CollectionView in Service Layer to maintain MVVM principles in WPF. Use when implementing filtering, sorting, or grouping while keeping ViewModels free of WPF dependencies."
 user-invocable: false
-model: sonnet
 ---
 
 # 5.6 MVVM Pattern with CollectionView

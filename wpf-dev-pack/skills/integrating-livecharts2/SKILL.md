@@ -1,7 +1,6 @@
 ---
 description: "Integrates LiveCharts2 for data visualization in WPF with SkiaSharp rendering. Use when building charts, graphs, or dashboards with CartesianChart, PieChart, or real-time data updates."
 user-invocable: false
-model: sonnet
 ---
 
 # LiveCharts2 Integration Guide

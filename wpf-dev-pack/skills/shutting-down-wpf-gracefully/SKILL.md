@@ -1,7 +1,6 @@
 ---
 description: Shuts down a WPF application gracefully when cleanup requires awaiting async work (flushing buffers, closing connections, IHost.StopAsync, disposing DI scopes). Use whenever App.OnExit or Window.Closing needs to run async code and the naive .GetAwaiter().GetResult() pattern would deadlock the Dispatcher. Explains why App.OnExit cannot be made async void, then presents two fully worked strategies — ShutdownMode=OnMainWindowClose with an async Window.OnClosing that cancels, awaits, and re-closes, and ShutdownMode=OnExplicitShutdown with an async MainWindow.Closed handler that ends with Application.Current.Shutdown(). Covers cancellation-token guards against hangs, IHost.StopAsync teardown for CommunityToolkit.Mvvm + GenericHost, and container disposal for Prism 9. Apply together with the preventing-dispatcher-deadlock skill, which this skill builds on for shutdown-specific scenarios.
 user-invocable: false
-model: sonnet
 ---
 
 # Shutting Down WPF Gracefully with Async Cleanup

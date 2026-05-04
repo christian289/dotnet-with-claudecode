@@ -1,7 +1,6 @@
 ---
 description: "Solves FlaUI element discovery failures in WPF UI automation. Use when FindAllDescendants returns empty or missing elements, AutomationId is set but not visible in UIA tree, ByAutomationId finds nothing, connector/node elements can't be located, Shape-based controls (Connection, Path) don't appear in automation tree, or native Common Dialog (OpenFileDialog/SaveFileDialog) can't be found via a single search path. Covers AutomationId placement on ItemContainer vs content elements, FindAllDescendants depth limitations, Shape/AutomationPeer visibility rules, and 3-tier fallback search for Microsoft.Win32 common dialogs with ProcessId filtering."
 user-invocable: false
-model: sonnet
 ---
 
 # FlaUI WPF Element Discovery
