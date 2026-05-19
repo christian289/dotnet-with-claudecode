@@ -20,6 +20,7 @@ dotnet-with-claudecode/
 │       ├── secure-coding/        # 시큐어 코딩 지침
 │       └── preferences.md        # 답변 언어 등 기본 지침
 ├── wpf-dev-pack/                 # WPF 전용 플러그인 (현재 유일한 호스팅 대상)
+├── FeedbackDocs/                 # 외부 세션 wpf-dev-pack 피드백 md 누적 폴더
 ├── archive-skills/               # microsoft-docs MCP로 대체되어 보관된 구 skill
 └── docs/                         # 프로젝트 문서
 ```

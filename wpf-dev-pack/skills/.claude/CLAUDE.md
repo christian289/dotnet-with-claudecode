@@ -147,3 +147,4 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 | **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `flaui-wpf-element-discovery`, `flaui-prism-dialog-discovery`, `scottplot-syncing-modifier-keys-for-mousewheel` |
 | **Testing** | `testing-wpf-viewmodels`, `managing-unit-tests` |
 | **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior`, `make-wpf-viewmodel`, `make-wpf-service` |
+| **Meta / Maintenance** | `collecting-wpf-dev-pack-feedback` |
