@@ -21,7 +21,13 @@
 
 ## ✨ Highlights
 
-> **MVVM Approach**: wpf-dev-pack adopts **View First MVVM**. Views are created first and determine their own ViewModel via **DataTemplate mapping** or **direct DI container resolve**. ViewModelLocator is prohibited (see `.claude/rules/prohibitions.md`). ViewModel First (where ViewModel creates View) is not used.
+> **MVVM Composition Style**: wpf-dev-pack enforces a single matching path per MVVM framework, both with **Stateful ViewModel**:
+> - **CommunityToolkit.Mvvm** (default) → **ViewModel First Composition** via `Mappings.xaml` + implicit DataTemplate.
+> - **Prism 9** (alternative) → **View First Composition** via `RegisterForNavigation` + `IRegionManager.RequestNavigate`.
+>
+> Prism `ViewModelLocator.AutoWireViewModel`, code-behind `DataContext = new VM()`, inline XAML `DataContext`, and Stateless-VM patterns are prohibited (see [`.claude/rules/prohibitions.md`](./.claude/rules/prohibitions.md) and [`docs/TERMINOLOGY.md`](./docs/TERMINOLOGY.md)).
+>
+> Pre-v1.6.4 docs labeled this uniformly as "View First MVVM" — that label conflicted with Microsoft's official definition (lookup key for `Mappings.xaml` is the ViewModel type → ViewModel First). v1.6.4 corrects the labels per path; the enforced code rules are unchanged.
 
 <table>
 <tr>

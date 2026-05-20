@@ -8,7 +8,7 @@ argument-hint: [ViewModelName]
 **If `$0` is empty, use the AskUserQuestion tool to ask: "Enter the ViewModel name (e.g., Dashboard, Settings)". Do NOT proceed until a valid name is provided. Use the response as the ViewModelName for all subsequent steps.**
 
 Generate a `$0ViewModel` class with optional View, DI registration, and DataTemplate mapping.
-Follows **View First MVVM** pattern — View determines its ViewModel.
+Follows the wpf-dev-pack composition style: **ViewModel First Composition + Stateful ViewModel** when using CommunityToolkit.Mvvm (`Mappings.xaml` + implicit DataTemplate resolves the View from the ViewModel type), or **View First Composition + Stateful ViewModel** when using Prism 9 (`RegisterForNavigation` + `IRegionManager`). `ViewModelLocator`, code-behind `DataContext = new VM()`, and inline XAML `DataContext` are prohibited (see `prohibitions.md` and `docs/TERMINOLOGY.md`).
 
 - Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
 - Replace `{ViewModelNamespace}` with the ViewModel project's CLR namespace for XAML xmlns declaration.

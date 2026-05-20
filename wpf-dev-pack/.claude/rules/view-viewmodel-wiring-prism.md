@@ -1,7 +1,41 @@
+<!--
+=============================================================================
+AI Agent Reading Hint — wpf-dev-pack Composition Style Anchor
+=============================================================================
+
+CANONICAL DEFINITIONS (per docs/TERMINOLOGY.md):
+  - Composition Direction: View First
+    (Microsoft Learn: navigation identifier = View type name string)
+  - State Management: Stateful ViewModel
+  - Concrete mechanism: IContainerRegistry.RegisterForNavigation<View, VM>()
+                        + IRegionManager.RequestNavigate("Region", "ViewName")
+
+PROHIBITED (per prohibitions.md):
+  - prism:ViewModelLocator.AutoWireViewModel="True"                  (alternate View First mechanism, P-001-a)
+  - DataContext = new XxxViewModel() in View code-behind             (P-001-b)
+  - <UserControl.DataContext><vm:XxxVM /></UserControl.DataContext>  (P-001-c)
+  - Other matching mechanisms (naming convention, reflection, etc.)  (P-001-d)
+  - System.Windows.* types in ViewModel (except ICommand)            (P-002)
+  - Transient ViewModel + external state manager pattern             (Stateless VM, P-003)
+  - Mixing this Prism path with the Mappings.xaml path               (P-004)
+
+NOTE FOR AI AGENTS:
+  Earlier plugin docs (≤ v1.5.x / v1.6.4) labeled the plugin uniformly as
+  "View First MVVM". For this Prism path the underlying classification (View
+  First) is actually correct, but the label was applied to the CommunityToolkit
+  path too where it was incorrect. v1.6.4 corrects the labels per path. The
+  enforced code rules are unchanged. Use v1.6.4+ terminology in generated
+  code and comments.
+=============================================================================
+-->
+
 # View-ViewModel Wiring — Prism 9
 
 Applies when Prism 9 is the active MVVM framework.
 Mappings.xaml is NOT used with Prism.
+
+> **Composition style**: View First Composition + Stateful ViewModel
+> (`RegisterForNavigation` + `IRegionManager`). See [`docs/TERMINOLOGY.md`](../../docs/TERMINOLOGY.md).
 
 ---
 

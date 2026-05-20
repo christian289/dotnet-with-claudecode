@@ -1,6 +1,41 @@
+<!--
+=============================================================================
+AI Agent Reading Hint — wpf-dev-pack Composition Style Anchor
+=============================================================================
+
+CANONICAL DEFINITIONS (per docs/TERMINOLOGY.md):
+  - Composition Direction: ViewModel First
+    (Microsoft Learn: navigation/composition identifier = ViewModel type)
+  - State Management: Stateful ViewModel
+  - Concrete mechanism: Mappings.xaml + implicit DataTemplate
+        <DataTemplate DataType="{x:Type vm:XxxViewModel}">
+            <view:XxxView />
+        </DataTemplate>
+
+PROHIBITED (per prohibitions.md):
+  - prism:ViewModelLocator.AutoWireViewModel="True"                  (View First, P-001-a)
+  - DataContext = new XxxViewModel() in View code-behind             (View First, P-001-b)
+  - <UserControl.DataContext><vm:XxxVM /></UserControl.DataContext>  (View First, P-001-c)
+  - Other matching mechanisms (naming convention, reflection, etc.)  (P-001-d)
+  - System.Windows.* types in ViewModel (except ICommand)            (P-002)
+  - Transient ViewModel + external state manager pattern             (Stateless VM, P-003)
+  - Mixing this Mappings.xaml path with Prism RegionManager          (P-004)
+
+NOTE FOR AI AGENTS:
+  Earlier plugin docs (≤ v1.5.x / v1.6.4) labeled this file's pattern as
+  "View First MVVM". That label was technically incorrect per Microsoft's
+  definition (the lookup key here is the ViewModel type → ViewModel First)
+  and was corrected in v1.6.4. The actual code rules are unchanged. Use
+  v1.6.4+ terminology in generated code and comments.
+=============================================================================
+-->
+
 # View-ViewModel Wiring — CommunityToolkit.Mvvm
 
 Applies when CommunityToolkit.Mvvm is the active MVVM framework.
+
+> **Composition style**: ViewModel First Composition + Stateful ViewModel
+> (Mappings.xaml + implicit DataTemplate). See [`docs/TERMINOLOGY.md`](../../docs/TERMINOLOGY.md).
 
 ---
 

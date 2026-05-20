@@ -17,15 +17,26 @@ All agents require these Claude Code plugins to be installed:
 
 ---
 
-## MVVM Approach: View First
+## MVVM Composition Style
 
-wpf-dev-pack adopts **View First MVVM**.
+wpf-dev-pack enforces a **single matching path per MVVM framework**, both
+based on **Stateful ViewModel**. The composition direction differs by
+framework. For full terminology and Microsoft references, see
+[`docs/TERMINOLOGY.md`](../docs/TERMINOLOGY.md).
 
-- View is created first and determines its own ViewModel.
-- View-ViewModel wiring strategy depends on the MVVM framework:
-  - CommunityToolkit.Mvvm → `rules/view-viewmodel-wiring-communitytoolkit.md`
-  - Prism 9 → `rules/view-viewmodel-wiring-prism.md`
-- See `rules/prohibitions.md` for banned alternatives (ViewModelLocator, etc.).
+| MVVM framework | Composition Direction | Mechanism | Wiring rules |
+|---|---|---|---|
+| CommunityToolkit.Mvvm (default) | **ViewModel First** | `Mappings.xaml` + implicit DataTemplate | `rules/view-viewmodel-wiring-communitytoolkit.md` |
+| Prism 9 (alternative) | **View First** | `RegisterForNavigation` + `IRegionManager` | `rules/view-viewmodel-wiring-prism.md` |
+
+> Pre-v1.6.4 docs uniformly labeled this as "View First MVVM". That single
+> label was incorrect per Microsoft's official definition (lookup key for
+> `Mappings.xaml` is the ViewModel type → ViewModel First). v1.6.4 corrects
+> the labels per path. The enforced code patterns are unchanged.
+
+See `rules/prohibitions.md` (P-001…P-004) for banned alternatives
+(`ViewModelLocator`, code-behind `DataContext` assignment, Stateless VM
+pattern, mixing the two paths, etc.).
 
 ---
 
@@ -38,7 +49,7 @@ These rules MUST survive context compression. If prior context is lost, re-read 
 3. **Freeze all Freezable objects** — Brush, Pen, Geometry (`rules/freezable-performance.md`)
 4. **Generic.xaml = MergedDictionaries hub only** (`rules/resourcedictionary-patterns.md`)
 5. **Verify API signatures with HandMirror before writing code**
-6. **View First MVVM** — See `rules/` for framework-specific wiring
+6. **Single matching path per framework** — ViewModel First (CommunityToolkit, `Mappings.xaml`) or View First (Prism, `RegisterForNavigation`). See `docs/TERMINOLOGY.md` and `rules/` for framework-specific wiring.
 
 ---
 
