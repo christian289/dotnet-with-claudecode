@@ -25,7 +25,7 @@
 > - **CommunityToolkit.Mvvm** (기본) → **ViewModel First Composition**, `Mappings.xaml` + implicit DataTemplate.
 > - **Prism 9** (대안) → **View First Composition**, `RegisterForNavigation` + `IRegionManager.RequestNavigate`.
 >
-> Prism `ViewModelLocator.AutoWireViewModel`, View code-behind `DataContext = new VM()`, XAML 인라인 `DataContext`, Stateless-VM 패턴은 모두 금지됩니다 ([`.claude/rules/prohibitions.md`](./.claude/rules/prohibitions.md) 및 [`docs/TERMINOLOGY.md`](./docs/TERMINOLOGY.md) 참조).
+> Prism `ViewModelLocator.AutoWireViewModel`, View code-behind `DataContext = new VM()`, XAML 인라인 `DataContext`, Stateless-VM 패턴은 모두 금지됩니다 ([`.claude/rules/prohibitions.md`](./.claude/rules/prohibitions.md) 및 [`docs/TERMINOLOGY.ko.md`](./docs/TERMINOLOGY.ko.md) 참조).
 >
 > v1.6.4 이전 문서는 이 둘을 일괄적으로 "View First MVVM"으로 라벨링했으나, 이는 Microsoft 공식 정의와 충돌했습니다 (`Mappings.xaml`의 lookup key는 ViewModel 타입이므로 ViewModel First). v1.6.4에서 경로별 라벨로 정정되었으며, 강제되는 코드 규칙은 변경되지 않았습니다.
 
