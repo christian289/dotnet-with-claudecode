@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.6.4-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.6.5-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**55 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**57 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **55 Skills** covering all WPF aspects
+- **57 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -485,7 +485,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 55 Skills
+├── 📁 skills/                 # 57 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md

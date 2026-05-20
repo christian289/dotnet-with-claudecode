@@ -1,7 +1,7 @@
 {
   "name": "wpf-dev-pack",
   "description": "WPF development toolkit for Claude Code with specialized agents and skills for CustomControl, XAML styling, high-performance rendering, and MVVM (ViewModel First Composition + Stateful ViewModel via Mappings.xaml for CommunityToolkit.Mvvm; View First Composition + Stateful ViewModel via RegisterForNavigation for Prism 9)",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "author": {
     "name": "vincent lee"
   },
