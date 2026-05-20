@@ -1,6 +1,5 @@
 ---
-description: "Analyzes the current WPF working session and produces an accumulable wpf-dev-pack improvement-feedback markdown file in the current directory. Use when, after doing WPF work with wpf-dev-pack skills/scaffolders in a project OUTSIDE the dotnet-with-claudecode repo, you want to capture anti-patterns you hand-fixed, missing or outdated skill guidance, mistaken or missed triggers, and scaffolder gaps — without editing wpf-dev-pack directly. The output md is meant to be contributed to dotnet-with-claudecode/FeedbackDocs via a pull request. User-invocable only."
-disable-model-invocation: true
+description: "Analyzes the current WPF working session and produces an accumulable wpf-dev-pack improvement-feedback markdown file in the current directory. Use when, after doing WPF work with wpf-dev-pack skills/scaffolders in a project OUTSIDE the dotnet-with-claudecode repo, you want to capture anti-patterns you hand-fixed, missing or outdated skill guidance, mistaken or missed triggers, and scaffolder gaps — without editing wpf-dev-pack directly. The output md is meant to be contributed to dotnet-with-claudecode/FeedbackDocs via a pull request."
 argument-hint: "[topic]"
 ---
 

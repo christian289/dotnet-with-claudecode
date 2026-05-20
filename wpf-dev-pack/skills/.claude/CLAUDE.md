@@ -47,6 +47,7 @@
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
 | `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
 | `scottplot`, `mousewheel`, `focus`, `modifier` | `scottplot-syncing-modifier-keys-for-mousewheel` |
+| `focus ring clipped`, `hover glow cut`, `decorative overflow`, `clip to bounds ancestor`, `thumb cut at edge` | `containing-control-decorative-overflow` |
 
 ### Scaffolding Keywords
 
@@ -134,7 +135,7 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 
 | Category | Skills |
 |----------|--------|
-| **UI & Controls** | `authoring-wpf-controls`, `configuring-wpf-themeinfo` |
+| **UI & Controls** | `authoring-wpf-controls`, `configuring-wpf-themeinfo`, `containing-control-decorative-overflow` |
 | **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `using-converter-markup-extension`, `configuring-dependency-injection` |
 | **Performance & Rendering** | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `rendering-wpf-high-performance`, `virtualizing-wpf-ui`, `optimizing-wpf-memory`, `implementing-hit-testing` |
 | **Input & Events** | `routing-wpf-events` |

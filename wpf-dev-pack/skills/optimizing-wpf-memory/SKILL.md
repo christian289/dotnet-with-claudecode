@@ -148,6 +148,49 @@ public static class MemoryMonitor
 }
 ```
 
+### Native Resources Already Copied During Conversion
+
+When a native or large unmanaged resource is **converted by copying** into
+a different representation (e.g. `OpenCvSharp.Mat` → `BitmapSource` via
+pixel copy, frozen for thread-safe sharing), do NOT keep the source
+alive for the control's lifetime. The copy already owns the pixels.
+
+```csharp
+// ❌ Anti-pattern: hold Mat as a field, dispose in Unloaded.
+// Wastes memory because the BitmapSource already owns the pixels.
+private Mat? _rampMat;
+
+private void RebuildColormapBrush()
+{
+    _rampMat?.Dispose();
+    _rampMat = BuildColormapMat(_colormap);
+    var source = _rampMat.ToBitmapSource();
+    source.Freeze();
+    ColormapBrush = new ImageBrush(source);
+}
+
+// In ctor:
+Unloaded += (_, _) => _rampMat?.Dispose();
+```
+
+```csharp
+// ✅ Correct: convert and dispose inside one local using.
+// No field, no Unloaded subscription to manage.
+private void RebuildColormapBrush()
+{
+    using var mat = BuildColormapMat(_colormap);   // owned locally
+    var source = mat.ToBitmapSource();             // pixels are copied
+    source.Freeze();                               // safe to share / cross threads
+    ColormapBrush = new ImageBrush(source);
+}                                                   // mat disposed here
+```
+
+**Rule of thumb:** if the converted representation owns its own copy and
+can be frozen, the native source's lifetime should be the converting
+method's lifetime — not the control's. The "field + Unloaded.Dispose"
+pattern is correct only when the source is **read repeatedly** between
+events; for one-shot conversions it is a memory leak waiting to happen.
+
 ## 4. Resource Factory Pattern
 ```csharp
 public static class FrozenResources

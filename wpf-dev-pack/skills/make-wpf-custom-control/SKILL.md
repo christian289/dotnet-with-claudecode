@@ -11,6 +11,7 @@ Generate a `$0` CustomControl.
 
 - Replace `{BaseClass}` with the appropriate WPF base class (e.g., Control, Button, ContentControl, ItemsControl) based on the control name and context.
 - Replace `{Namespace}` with the project's root namespace detected from csproj or existing code.
+- If the host project follows a non-default style convention (e.g. block-scoped namespaces, custom usings), conform to it.
 
 ## Workflow
 
@@ -19,26 +20,48 @@ Generate a `$0` CustomControl.
 - `$0` must be PascalCase
 - Determine the best BaseClass based on `$0` name and intended usage
 
-### Step 3: Generate C# Class File
+### Step 2: Generate C# Class File
 
 Create `$0.cs`:
 
 ```csharp
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace {Namespace}.Controls;
 
 /// <summary>
-/// $0 - Custom WPF control based on {BaseClass}
+/// $0 - Custom WPF control based on {BaseClass}.
 /// </summary>
-[TemplatePart(Name = "PART_Root", Type = typeof(Border))]
-[TemplateVisualState(GroupName = "CommonStates", Name = "Normal")]
-[TemplateVisualState(GroupName = "CommonStates", Name = "MouseOver")]
-[TemplateVisualState(GroupName = "CommonStates", Name = "Pressed")]
-[TemplateVisualState(GroupName = "CommonStates", Name = "Disabled")]
+[TemplatePart(Name = TemplateParts.Root, Type = typeof(Border))]
+[TemplateVisualState(GroupName = VisualStates.CommonStates, Name = VisualStates.Normal)]
+[TemplateVisualState(GroupName = VisualStates.CommonStates, Name = VisualStates.MouseOver)]
+[TemplateVisualState(GroupName = VisualStates.CommonStates, Name = VisualStates.Pressed)]
+[TemplateVisualState(GroupName = VisualStates.CommonStates, Name = VisualStates.Disabled)]
 public class $0 : {BaseClass}
 {
+    // Single source of truth for Template Part names.
+    // XAML <Border x:Name="…"> literals MUST match these constants.
+    private static class TemplateParts
+    {
+        public const string Root = "PART_Root";
+    }
+
+    // Single source of truth for VSM group/state names.
+    // XAML <VisualStateGroup x:Name="…"> / <VisualState x:Name="…"> literals
+    // MUST match these constants exactly. The compiler will not catch a mismatch
+    // and runtime GoToState will return false silently.
+    private static class VisualStates
+    {
+        public const string CommonStates = "CommonStates";
+        public const string Normal       = "Normal";
+        public const string MouseOver    = "MouseOver";
+        public const string Pressed      = "Pressed";
+        public const string Disabled     = "Disabled";
+    }
+
     #region Static Constructor
 
     static $0()
@@ -53,48 +76,117 @@ public class $0 : {BaseClass}
     #region Dependency Properties
 
     /// <summary>
-    /// Example dependency property
+    /// Example dependency property.
     /// </summary>
-    public static readonly DependencyProperty ExampleProperty =
+    public static readonly DependencyProperty ValueProperty =
         DependencyProperty.Register(
-            nameof(Example),
-            typeof(string),
+            nameof(Value),
+            typeof(int),
             typeof($0),
             new FrameworkPropertyMetadata(
-                defaultValue: string.Empty,
+                defaultValue: 0,
                 flags: FrameworkPropertyMetadataOptions.AffectsRender,
-                propertyChangedCallback: OnExampleChanged));
+                propertyChangedCallback: OnValueChanged,
+                coerceValueCallback: CoerceValue));
 
-    public string Example
+    public int Value
     {
-        get => (string)GetValue(ExampleProperty);
-        set => SetValue(ExampleProperty, value);
+        get => (int)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
     }
 
-    private static void OnExampleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is $0 control)
         {
-            control.OnExampleChanged((string)e.OldValue, (string)e.NewValue);
+            control.OnValueChanged((int)e.OldValue, (int)e.NewValue);
         }
     }
 
-    protected virtual void OnExampleChanged(string oldValue, string newValue)
+    protected virtual void OnValueChanged(int oldValue, int newValue)
     {
         // Handle property change
     }
+
+    // Multi-constraint coerce: relational constraints first, hard domain LAST.
+    // See authoring-wpf-controls §4 "Multi-Constraint Coerce Ordering".
+    private static object CoerceValue(DependencyObject d, object baseValue)
+    {
+        var control = ($0)d;
+        var v = (int)baseValue;
+
+        // (Add any relational constraints that depend on other properties first.)
+
+        // Hard domain clamp LAST so transient cross-property states cannot leak
+        // a value outside the legal domain.
+        v = Math.Clamp(v, 0, 100);
+
+        return v;
+    }
+
+    #endregion
+
+    #region Read-only Dependency Property (optional)
+
+    // Read-only DPs expose internal state for binding while preventing external writes.
+    // Replace with your real read-only property or remove this region.
+    private static readonly DependencyPropertyKey IsBusyPropertyKey =
+        DependencyProperty.RegisterReadOnly(
+            nameof(IsBusy),
+            typeof(bool),
+            typeof($0),
+            new PropertyMetadata(false));
+
+    public static readonly DependencyProperty IsBusyProperty = IsBusyPropertyKey.DependencyProperty;
+
+    public bool IsBusy
+    {
+        get => (bool)GetValue(IsBusyProperty);
+        private set => SetValue(IsBusyPropertyKey, value);
+    }
+
+    #endregion
+
+    #region Routed Event (optional)
+
+    // Replace with your real routed event or remove this region.
+    public static readonly RoutedEvent ValueChangedEvent =
+        EventManager.RegisterRoutedEvent(
+            nameof(ValueChanged),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<int>),
+            typeof($0));
+
+    public event RoutedPropertyChangedEventHandler<int> ValueChanged
+    {
+        add    => AddHandler(ValueChangedEvent, value);
+        remove => RemoveHandler(ValueChangedEvent, value);
+    }
+
+    protected virtual void OnValueChanged(RoutedPropertyChangedEventArgs<int> e)
+        => RaiseEvent(e);
 
     #endregion
 
     #region Template Parts
 
     private Border? _partRoot;
+    private bool _isPressed;
 
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
-        _partRoot = GetTemplateChild("PART_Root") as Border;
+        // OnApplyTemplate fires BEFORE Loaded. Avoid duplicating init logic in both —
+        // do template-binding setup here, and only do Loaded-time work in Loaded.
+        _partRoot = GetTemplateChild(TemplateParts.Root) as Border;
+
+        // Template-Part tolerance: if PART_Root is missing, disable only the
+        // feature that depends on it. Do NOT throw — see authoring-wpf-controls §3.1.
+        if (_partRoot is null)
+        {
+            // Optional: log a designer-only warning here if you want.
+        }
 
         UpdateVisualState(false);
     }
@@ -105,29 +197,46 @@ public class $0 : {BaseClass}
 
     private void UpdateVisualState(bool useTransitions)
     {
-        if (!IsEnabled)
-        {
-            VisualStateManager.GoToState(this, "Disabled", useTransitions);
-        }
-        else if (IsMouseOver)
-        {
-            VisualStateManager.GoToState(this, "MouseOver", useTransitions);
-        }
-        else
-        {
-            VisualStateManager.GoToState(this, "Normal", useTransitions);
-        }
+        // States declared via [TemplateVisualState] MUST be reachable here,
+        // otherwise the attribute is a documentation lie and the state never fires.
+        string state =
+            !IsEnabled  ? VisualStates.Disabled  :
+            _isPressed  ? VisualStates.Pressed   :
+            IsMouseOver ? VisualStates.MouseOver :
+                          VisualStates.Normal;
+
+        VisualStateManager.GoToState(this, state, useTransitions);
     }
 
-    protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e)
+    protected override void OnMouseEnter(MouseEventArgs e)
     {
         base.OnMouseEnter(e);
         UpdateVisualState(true);
     }
 
-    protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
+    protected override void OnMouseLeave(MouseEventArgs e)
     {
         base.OnMouseLeave(e);
+        UpdateVisualState(true);
+    }
+
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        base.OnMouseLeftButtonDown(e);
+        _isPressed = true;
+        UpdateVisualState(true);
+    }
+
+    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    {
+        base.OnMouseLeftButtonUp(e);
+        _isPressed = false;
+        UpdateVisualState(true);
+    }
+
+    protected override void OnIsEnabledChanged(DependencyPropertyChangedEventArgs e)
+    {
+        base.OnIsEnabledChanged(e);
         UpdateVisualState(true);
     }
 
@@ -135,7 +244,7 @@ public class $0 : {BaseClass}
 }
 ```
 
-### Step 4: Generate XAML Style File
+### Step 3: Generate XAML Style File
 
 Create `Themes/$0.xaml`:
 
@@ -144,64 +253,101 @@ Create `Themes/$0.xaml`:
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:{Namespace}.Controls">
 
-    <!-- Resources -->
-    <SolidColorBrush x:Key="$0Background" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="$0Foreground" Color="#000000"/>
-    <SolidColorBrush x:Key="$0BorderBrush" Color="#CCCCCC"/>
-    <SolidColorBrush x:Key="$0MouseOverBackground" Color="#E5F3FF"/>
+    <!--
+        Color/brush resources.
+        Prefer host theme tokens (ThemeResource / implicit Style) for colors that
+        should follow the host app's theme; use signature-only x:Key brushes
+        for colors that uniquely identify THIS control's visual identity.
+        Hard-coded hex values like below are placeholders.
+    -->
+    <SolidColorBrush x:Key="$0DefaultBackground"      Color="#FFFFFF" />
+    <SolidColorBrush x:Key="$0DefaultForeground"     Color="#000000" />
+    <SolidColorBrush x:Key="$0DefaultBorderBrush"    Color="#CCCCCC" />
+    <SolidColorBrush x:Key="$0MouseOverOverlayBrush" Color="#1A2196F3" />
+    <SolidColorBrush x:Key="$0PressedOverlayBrush"   Color="#332196F3" />
 
-    <!-- Style -->
     <Style TargetType="{x:Type local:$0}">
-        <Setter Property="Background" Value="{StaticResource $0Background}"/>
-        <Setter Property="Foreground" Value="{StaticResource $0Foreground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource $0BorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="Background"   Value="{StaticResource $0DefaultBackground}" />
+        <Setter Property="Foreground"   Value="{StaticResource $0DefaultForeground}" />
+        <Setter Property="BorderBrush"  Value="{StaticResource $0DefaultBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding"      Value="8,4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:$0}">
+
+                    <!--
+                        x:Name literals MUST match the const TemplateParts/VisualStates
+                        on the C# side ($0.cs). VSM is a name-based contract: a
+                        mismatch is a silent runtime no-op.
+                    -->
                     <Border x:Name="PART_Root"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
                             CornerRadius="4">
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" />
+
+                                <!--
+                                    Animate Opacity of a dedicated overlay layer instead of
+                                    (Border.Background).(SolidColorBrush.Color). The latter
+                                    explodes silently if Background is a shared/frozen
+                                    brush (e.g. from a theme dictionary) or a DynamicResource.
+                                -->
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="PART_Root"
-                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                            To="#E5F3FF"
-                                            Duration="0:0:0.2"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_MouseOverOverlay"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1.0"
+                                            Duration="0:0:0.15" />
                                     </Storyboard>
                                 </VisualState>
+
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="PART_Root"
-                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                            To="#CCE4FF"
-                                            Duration="0:0:0.1"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PART_PressedOverlay"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1.0"
+                                            Duration="0:0:0.10" />
                                     </Storyboard>
                                 </VisualState>
+
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation
                                             Storyboard.TargetName="PART_Root"
                                             Storyboard.TargetProperty="Opacity"
                                             To="0.5"
-                                            Duration="0:0:0"/>
+                                            Duration="0:0:0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
-                        <ContentPresenter
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Grid>
+                            <!-- MouseOver / Pressed overlays: each is an opaque-controllable
+                                 layer that animates Opacity, not the underlying brush color. -->
+                            <Border x:Name="PART_MouseOverOverlay"
+                                    Background="{StaticResource $0MouseOverOverlayBrush}"
+                                    CornerRadius="4"
+                                    Opacity="0"
+                                    IsHitTestVisible="False" />
+                            <Border x:Name="PART_PressedOverlay"
+                                    Background="{StaticResource $0PressedOverlayBrush}"
+                                    CornerRadius="4"
+                                    Opacity="0"
+                                    IsHitTestVisible="False" />
+
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -210,14 +356,14 @@ Create `Themes/$0.xaml`:
 </ResourceDictionary>
 ```
 
-### Step 5: Update Generic.xaml
+### Step 4: Update Generic.xaml
 
 Add to `Themes/Generic.xaml` MergedDictionaries:
 
 ```xml
 <ResourceDictionary.MergedDictionaries>
     <!-- Existing entries -->
-    <ResourceDictionary Source="/Themes/$0.xaml"/>
+    <ResourceDictionary Source="/Themes/$0.xaml" />
 </ResourceDictionary.MergedDictionaries>
 ```
 
@@ -225,10 +371,17 @@ Add to `Themes/Generic.xaml` MergedDictionaries:
 
 After generation, provide:
 1. Created files list
-2. Next steps for customization
+2. Next steps for customization (which DPs/events to keep, which to remove)
 3. Usage example in XAML
 
 ```xml
 <!-- Usage Example -->
-<local:$0 Example="Hello World"/>
+<local:$0 Value="42" />
 ```
+
+## Related Skills
+
+- `authoring-wpf-controls` — §3.4 Visual State Naming Contract, §4 Multi-Constraint Coerce Ordering, §3.1 Template-Part tolerance
+- `containing-control-decorative-overflow` — when focus ring / hover glow gets clipped at an ancestor boundary
+- `managing-styles-resourcedictionary` — Generic.xaml hub pattern
+- `managing-literal-strings` — general rule for consolidating literal strings (VSM names are a notable WPF-specific case)

@@ -111,3 +111,14 @@ Console.WriteLine(string.Format(LogMessages.UserLoggedIn, userName));
 4. **Performance**: Eliminates string literal duplication
 5. **Consistency**: Messages can be managed in pairs (e.g., Korean/English)
 
+## WPF-Specific Case: VisualState Names
+
+WPF's `VisualStateManager` is a name-based contract between C# and XAML
+where `[TemplateVisualState(Name = …)]` and `VisualStateManager.GoToState`
+accept `const string`, but XAML `<VisualState x:Name="…">` cannot reference
+a C# `const` — so the XAML half is unavoidably a literal that must match
+the C# constant exactly. A mismatch is a silent runtime no-op (no
+exception, no compiler error). See
+[`authoring-wpf-controls` §3.4 "Visual State Naming Contract"](../authoring-wpf-controls/SKILL.md)
+for the consolidation pattern and pitfalls.
+

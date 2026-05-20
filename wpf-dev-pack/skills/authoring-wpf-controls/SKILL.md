@@ -125,6 +125,92 @@ Prefer higher items:
 7. **Bubbled Event** - Event bubbling from Named element
 8. **Custom OnRender** - `ButtonChrome` in `Button`
 
+### 3.4 Visual State Naming Contract
+
+`VisualStateManager` (VSM) is a **name-based** contract between the C#
+control and its XAML template. Mismatched names produce a **silent
+no-op** — `GoToState` returns `false` and no exception is thrown.
+Three WPF-specific facts make this trap easy to fall into:
+
+1. **`[TemplateVisualState]` attribute arguments and
+   `VisualStateManager.GoToState(...)` string arguments accept
+   `const string`** (compile-time constants, not just literals). Use a
+   nested `VisualStates` class so the attribute and the call site share
+   one source of truth.
+2. **XAML `<VisualStateGroup x:Name="…">` / `<VisualState x:Name="…">`
+   cannot reference a C# `const`.** The XAML side is forced to be a
+   literal. That literal **must exactly match** the const used in the C#
+   side. Add a comment on the XAML side pointing at the const that mirrors it.
+3. **An attribute declaring a state does not make `GoToState` transition
+   to it.** If `[TemplateVisualState(Name = "Pressed")]` is declared but
+   `UpdateVisualState` never calls `GoToState(this, "Pressed", …)`, the
+   state never fires. The compiler is silent, the runtime is silent.
+
+When two groups share a simple state name (e.g. both thumbs of a range
+slider have a "Normal" state), use compound names per group
+(`LowNormal`, `HighNormal`) so each `GoToState` call is unambiguous.
+
+```csharp
+public class ColormapRangeSliderThumb : Control
+{
+    // Single source of truth for VSM names.
+    // The XAML <VisualStateGroup x:Name="…"> / <VisualState x:Name="…">
+    // literals MUST equal these values exactly.
+    private static class VisualStates
+    {
+        public const string Group         = "ThumbStates";
+        public const string Normal        = "Normal";
+        public const string MouseOver     = "MouseOver";
+        public const string Pressed       = "Pressed";
+        public const string Disabled      = "Disabled";
+    }
+
+    static ColormapRangeSliderThumb()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(
+            typeof(ColormapRangeSliderThumb),
+            new FrameworkPropertyMetadata(typeof(ColormapRangeSliderThumb)));
+    }
+}
+
+// Attribute arguments accept const string — share them.
+[TemplateVisualState(GroupName = VisualStates.Group, Name = VisualStates.Normal)]
+[TemplateVisualState(GroupName = VisualStates.Group, Name = VisualStates.MouseOver)]
+[TemplateVisualState(GroupName = VisualStates.Group, Name = VisualStates.Pressed)]
+[TemplateVisualState(GroupName = VisualStates.Group, Name = VisualStates.Disabled)]
+public partial class ColormapRangeSliderThumb
+{
+    private void UpdateVisualState(bool useTransitions)
+    {
+        string state =
+            !IsEnabled  ? VisualStates.Disabled  :
+            _isPressed  ? VisualStates.Pressed   :
+            IsMouseOver ? VisualStates.MouseOver :
+                          VisualStates.Normal;
+
+        // Same const here as in the [TemplateVisualState] attributes above.
+        VisualStateManager.GoToState(this, state, useTransitions);
+    }
+}
+```
+
+```xml
+<!-- XAML literals MUST match VisualStates.* constants on the C# side. -->
+<VisualStateManager.VisualStateGroups>
+    <VisualStateGroup x:Name="ThumbStates">
+        <VisualState x:Name="Normal" />
+        <VisualState x:Name="MouseOver" />
+        <VisualState x:Name="Pressed" />
+        <VisualState x:Name="Disabled" />
+    </VisualStateGroup>
+</VisualStateManager.VisualStateGroups>
+```
+
+> See [`managing-literal-strings`](../managing-literal-strings/SKILL.md) for
+> the general rule on consolidating literal strings. VSM names are the
+> notable WPF-specific case where the XAML half is forced to remain a
+> literal.
+
 ---
 
 ## 4. DependencyProperty Implementation
@@ -156,6 +242,53 @@ private static void OnValueChanged(DependencyObject d,
 private static object CoerceValue(DependencyObject d, object value)
     => Math.Clamp((int)value, 0, 100);
 ```
+
+### Multi-Constraint Coerce Ordering
+
+When a property is constrained by **both** a relational rule (depends on
+another property) and a domain rule (hard min/max), the domain clamp must
+run **last**. Otherwise a transient state where the relational rule pushes
+the value outside the domain can leak through.
+
+Common example — a dual-thumb `RangeSlider` whose `LowValue` must not
+cross `HighValue` (relational, with a `MinimumGap`) and must stay inside
+`[Minimum, Maximum]` (domain):
+
+```csharp
+// ❌ Wrong: domain first, relational last
+// During transient states (e.g. Minimum/Maximum just changed),
+// (HighValue - MinimumGap) can be below Minimum,
+// so the final result can fall below Minimum.
+private static object CoerceLowValueWrong(DependencyObject d, object baseValue)
+{
+    var c = (RangeSlider)d;
+    var v = (double)baseValue;
+    v = Math.Max(c.Minimum, v);                  // hard domain (too early)
+    v = Math.Min(v, c.HighValue - c.MinimumGap); // no-cross (may push below Minimum)
+    return v;
+}
+
+// ✅ Correct: relational first, hard domain LAST
+private static object CoerceLowValue(DependencyObject d, object baseValue)
+{
+    var c = (RangeSlider)d;
+    var v = (double)baseValue;
+    v = Math.Min(v, c.HighValue - c.MinimumGap); // no-cross (relational)
+    v = Math.Max(c.Minimum, v);                  // hard domain (LAST)
+    return v;
+}
+```
+
+**Rules:**
+
+- Relational / dependent constraints first; domain (hard min/max) clamp
+  **last**. WPF's own `RangeBase` follows this order.
+- Hand-offs and design specs often write the order the other way around.
+  Do not transcribe them verbatim.
+- When two properties are mutually constrained (e.g. `LowValue` /
+  `HighValue` with no-cross), call
+  `CoerceValue(OtherProperty)` from `OnXxxChanged` so bidirectional
+  consistency is restored after every change.
 
 ---
 

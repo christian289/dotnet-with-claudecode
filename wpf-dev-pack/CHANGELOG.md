@@ -6,7 +6,46 @@ and this project adheres to Semantic Versioning.
 
 ---
 
-## v1.6.4 — MVVM Terminology Standardization
+## v1.6.4 — MVVM Terminology Standardization + CustomControl Authoring Upgrades
+
+### CustomControl Authoring Upgrades (from FeedbackDocs/2026-05-18-customcontrol-authoring-upgrade-design.md)
+
+- **U1 — `skills/containing-control-decorative-overflow/` (new)**: diagnoses
+  and fixes WPF custom-control decorations (focus ring, hover glow,
+  selection halo) being clipped by ancestor `ClipToBounds`/`CornerRadius`
+  or an undersized control layout box, plus z-order asymmetry at slider
+  extremes.
+- **U2 — `skills/authoring-wpf-controls/SKILL.md` §4**: added
+  "Multi-Constraint Coerce Ordering" — relational constraints first, hard
+  domain clamp LAST. With a dual-thumb `RangeSlider` example.
+- **U3 — `skills/make-wpf-custom-control/SKILL.md`** modernized:
+  fixed Step numbering (1→2→3→4); consolidated VSM and Template Part names
+  through nested `VisualStates` / `TemplateParts` const classes;
+  `UpdateVisualState` actually transitions to every declared state
+  (`Pressed` included); coerce example with multi-constraint ordering;
+  hard-coded color comment about theme-token vs signature brushes;
+  `ColorAnimation` replaced by `DoubleAnimation` on dedicated overlay
+  layers (avoids the shared/frozen `(Background).(SolidColorBrush.Color)`
+  trap); read-only DP + RoutedEvent stubs; Template-Part tolerance note;
+  `OnApplyTemplate` vs `Loaded` ordering note.
+- **U4 — `skills/authoring-wpf-controls/SKILL.md` §3.4 (new) + cross-link
+  in `skills/managing-literal-strings/SKILL.md`**: "Visual State Naming
+  Contract" — VSM is a name-based silent contract between C# and XAML.
+  Attributes and `GoToState` accept `const string`; XAML `x:Name` cannot
+  reference a C# const, so the XAML literal MUST equal the const.
+- **U5 — `skills/managing-wpf-popup-focus/SKILL.md` §5.8 / §5.9 (new)**:
+  closing a Popup on `SelectionChanged` of an inner selector via the
+  owning `ToggleButton.IsChecked` (TwoWay) — `StaysOpen="False"` closes on
+  outside clicks only. Plus the acrylic-vs-solid surface brush choice for
+  pickers.
+- **U6 — `skills/optimizing-wpf-memory/SKILL.md` §2 (new subsection)**:
+  native/large resources already copied into another representation
+  (e.g. `Mat` → `BitmapSource` via pixel copy + `Freeze`) must NOT be
+  retained as a field — convert and dispose inside a local `using`.
+- **Index — `skills/.claude/CLAUDE.md`**: keyword mapping +
+  "UI & Controls" Category Index updated for the new skill.
+
+### MVVM Terminology Standardization
 
 ### Documentation
 - `docs/TERMINOLOGY.md` 신규 추가: 4축 분리 모델(Composition Direction ×
