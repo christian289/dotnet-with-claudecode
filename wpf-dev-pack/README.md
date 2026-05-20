@@ -118,11 +118,18 @@ wpf-dev-pack agents require the following Claude Code plugins to be installed se
 | Plugin | MCP Server | Purpose |
 |--------|-----------|---------|
 | **[context7](https://github.com/upstash/context7)** | context7 | Up-to-date library/framework documentation |
-| **[serena](https://github.com/oraios/serena)** | serena | Semantic code analysis, symbol navigation |
 | **[microsoft-docs](https://github.com/MicrosoftDocs/mcp)** | microsoft-learn | Official Microsoft documentation and code samples |
 | **[csharp-lsp](https://github.com/razzmatazz/csharp-language-server)** | csharp | C# Language Server Protocol (definition, references, diagnostics) |
 
-> **Note:** wpf-dev-pack checks plugin availability at runtime and warns if missing.
+### Required MCPs
+
+The following MCP server is required by wpf-dev-pack agents but **must NOT be installed as a Claude Code plugin** — install it directly as an MCP server via `uv` instead.
+
+| MCP Server | Purpose | Installation |
+|---|---|---|
+| **[serena](https://github.com/oraios/serena)** | Semantic code analysis, symbol navigation | Install directly via `uv` per the [Quick Start](https://github.com/oraios/serena#quick-start). Do **not** use a Claude Code plugin path — see the [Attention note in the Serena Claude Code docs](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code) for the rationale (Claude Code's built-in tool descriptions strongly bias the model away from invoking Serena's tools when registered through the plugin path). |
+
+> **Note:** wpf-dev-pack checks Claude Code plugin availability at runtime and warns if missing. The Serena MCP must be set up separately as described above.
 
 Install via Claude Code marketplace or `/install-plugin` command.
 
@@ -298,11 +305,11 @@ Some skills activate without notification:
 | **HandMirrorMcp** | HandMirrorMcp | .NET assembly/NuGet inspection (bundled) |
 | **context7** | context7 | Library/framework documentation |
 | **sequential-thinking** | sequential-thinking | Step-by-step analysis |
-| **serena** | serena | Semantic code analysis |
+| _(direct MCP via `uv`)_ | **serena** | Semantic code analysis |
 | **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
 | **csharp-lsp** | csharp | C# LSP code intelligence |
 
-> See [Required Plugin Dependencies](#required-plugin-dependencies) for installation.
+> See [Required Plugin Dependencies](#required-plugin-dependencies) and [Required MCPs](#required-mcps) for installation. Serena is **not** a Claude Code plugin — install it directly as an MCP server via `uv`.
 
 ### 📚 Skills by Category
 

@@ -20,9 +20,10 @@ Claude Code plugin for WPF development.
 - .NET 10.0 SDK (for wpf-dev-pack hooks)
 - Required Claude Code plugins for wpf-dev-pack:
   - [context7](https://github.com/upstash/context7)
-  - [serena](https://github.com/oraios/serena)
   - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)
   - [csharp-lsp](https://github.com/razzmatazz/csharp-language-server)
+- Required MCPs for wpf-dev-pack:
+  - [serena](https://github.com/oraios/serena) — install **directly as an MCP server via `uv`, not as a Claude Code plugin**. Claude Code's built-in tool descriptions strongly bias the model away from using Serena's tools when Serena is registered via the plugin path; see the [Attention note in the Serena Claude Code docs](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code) for the rationale, and follow the [Quick Start](https://github.com/oraios/serena#quick-start) for installation.
 
 ## Installation
 

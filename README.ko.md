@@ -20,9 +20,10 @@ WPF 개발을 위한 Claude Code 플러그인.
 - .NET 10.0 SDK (wpf-dev-pack 훅 실행용)
 - wpf-dev-pack 필수 Claude Code 플러그인:
   - [context7](https://github.com/upstash/context7)
-  - [serena](https://github.com/oraios/serena)
   - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)
   - [csharp-lsp](https://github.com/razzmatazz/csharp-language-server)
+- wpf-dev-pack 필수 MCP:
+  - [serena](https://github.com/oraios/serena) — **Claude Code 플러그인이 아니라 `uv`를 통해 MCP 서버로 직접 설치**해야 합니다. Serena를 플러그인 경로로 등록하면 Claude Code 내장 도구 description이 ~16k 토큰을 차지하면서 모델이 Serena 도구를 사용하지 않는 강한 편향이 생깁니다. 자세한 이유는 [Serena Claude Code 문서의 Attention 안내](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code)를 참고하고, 설치는 [Quick Start](https://github.com/oraios/serena#quick-start)를 따르세요.
 
 ## 설치
 

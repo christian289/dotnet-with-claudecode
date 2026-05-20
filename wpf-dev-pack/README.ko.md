@@ -118,11 +118,18 @@ wpf-dev-pack 에이전트는 다음 Claude Code 플러그인이 별도로 설치
 | 플러그인 | MCP 서버 | 용도 |
 |---------|----------|------|
 | **[context7](https://github.com/upstash/context7)** | context7 | 최신 라이브러리/프레임워크 문서 조회 |
-| **[serena](https://github.com/oraios/serena)** | serena | 시맨틱 코드 분석, 심볼 네비게이션 |
 | **[microsoft-docs](https://github.com/MicrosoftDocs/mcp)** | microsoft-learn | 공식 Microsoft 문서 및 코드 샘플 조회 |
 | **[csharp-lsp](https://github.com/razzmatazz/csharp-language-server)** | csharp | C# Language Server Protocol (정의, 참조, 진단) |
 
-> **참고:** wpf-dev-pack은 런타임에 플러그인 가용성을 확인하고 누락된 경우 경고합니다.
+### 필수 MCP
+
+wpf-dev-pack 에이전트가 필요로 하는 다음 MCP 서버는 **Claude Code 플러그인으로 설치하면 안 되며**, `uv`를 통해 MCP 서버로 직접 설치해야 합니다.
+
+| MCP 서버 | 용도 | 설치 방법 |
+|---|---|---|
+| **[serena](https://github.com/oraios/serena)** | 시맨틱 코드 분석, 심볼 네비게이션 | [Quick Start](https://github.com/oraios/serena#quick-start) 절차에 따라 `uv`로 직접 설치하세요. Claude Code 플러그인 경로를 사용하지 **마세요** — 그 이유는 [Serena Claude Code 문서의 Attention 안내](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code)를 참고하세요 (Claude Code 내장 도구 description이 ~16k 토큰을 차지하면서 플러그인 경로로 등록한 Serena의 도구 사용을 강하게 편향시킵니다). |
+
+> **참고:** wpf-dev-pack은 런타임에 Claude Code 플러그인 가용성을 확인하고 누락된 경우 경고합니다. Serena MCP는 위 절차대로 별도 설정이 필요합니다.
 
 Claude Code 마켓플레이스 또는 `/install-plugin` 명령으로 설치하세요.
 
@@ -298,11 +305,11 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | **HandMirrorMcp** | HandMirrorMcp | .NET 어셈블리/NuGet 검사 (내장) |
 | **context7** | context7 | 라이브러리/프레임워크 문서 |
 | **sequential-thinking** | sequential-thinking | 단계별 분석 |
-| **serena** | serena | 시맨틱 코드 분석 |
+| _(`uv`로 직접 설치한 MCP)_ | **serena** | 시맨틱 코드 분석 |
 | **microsoft-docs** | microsoft-learn | 공식 Microsoft 문서 |
 | **csharp-lsp** | csharp | C# LSP 코드 인텔리전스 |
 
-> [필수 플러그인 종속성](#필수-플러그인-종속성)에서 설치 방법을 확인하세요.
+> 설치 방법은 [필수 플러그인 종속성](#필수-플러그인-종속성) 및 [필수-mcp](#필수-mcp) 섹션을 참고하세요. Serena는 Claude Code 플러그인이 **아니며**, `uv`로 MCP 서버로 직접 설치해야 합니다.
 
 ### 📚 카테고리별 스킬
 

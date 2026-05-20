@@ -11,9 +11,16 @@ All agents require these Claude Code plugins to be installed:
 | Plugin | MCP Server | Purpose |
 |--------|-----------|---------|
 | **context7** | context7 | Library/framework documentation |
-| **serena** | serena | Semantic code analysis, symbol navigation |
 | **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
 | **csharp-lsp** | csharp | C# LSP code intelligence |
+
+## Required MCPs (NOT installed as Claude Code plugins)
+
+The following MCP server is required by agents but **must NOT be registered through the Claude Code plugin path** — Claude Code's built-in tool descriptions strongly bias the model away from using its tools when registered that way. Install directly as an MCP server via `uv`.
+
+| MCP Server | Purpose | Installation |
+|---|---|---|
+| **serena** | Semantic code analysis, symbol navigation | Install directly via `uv` per the [Quick Start](https://github.com/oraios/serena#quick-start). See the [Attention note in the Serena Claude Code docs](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code) for the rationale. |
 
 ---
 
