@@ -135,3 +135,9 @@ The sync must happen **before** `processor.Process(wheelAction)`.
 - [ ] Sync only the modifier keys used by ScottPlot's interaction responses
 - [ ] Verify Ctrl+Wheel zoom works without clicking the ScottPlot control first
 - [ ] Verify Ctrl+Wheel zoom still works after clicking elsewhere and returning
+
+---
+
+## 6. Related Skills
+
+- `scottplot-axes-margins-destructive` — covers a separate ScottPlot 5 WPF integration footgun where `plot.Axes.Margins(x, y)` replaces the AutoScaler and immediately re-scales, wiping `InvertedY` when the same setup runs in a reactive converter or PropertyChanged hot path. Both skills share the pattern: **ScottPlot 5 APIs are designed for cookbook-once setup and need bridging code when reused on a WPF reactive hot path**.

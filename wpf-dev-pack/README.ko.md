@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**57개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
+**58개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **57개 스킬**
+- WPF 전 영역을 다루는 **58개 스킬**
 - **모범 사례** 내장
 
 </td>
@@ -485,7 +485,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 57개 스킬
+├── 📁 skills/                 # 58개 스킬
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp만)
 ├── 📄 README.md

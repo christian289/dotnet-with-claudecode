@@ -47,6 +47,7 @@
 | `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
 | `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
 | `scottplot`, `mousewheel`, `focus`, `modifier` | `scottplot-syncing-modifier-keys-for-mousewheel` |
+| `scottplot margins`, `autoscaler`, `invertedy`, `fractionalautoscaler`, `axis flip`, `scottplot reactive`, `scottplot converter`, `imagerect overlay flip` | `scottplot-axes-margins-destructive` |
 | `focus ring clipped`, `hover glow cut`, `decorative overflow`, `clip to bounds ancestor`, `thumb cut at edge` | `containing-control-decorative-overflow` |
 
 ### Scaffolding Keywords
@@ -145,7 +146,7 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 | **Data Access** | `implementing-repository-pattern`, `configuring-console-app-di` |
 | **Architecture & Tree Navigation** | `navigating-visual-logical-tree`, `rendering-wpf-architecture`, `structuring-wpf-projects`, `designing-wpf-customcontrol-architecture` |
 | **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
-| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `flaui-wpf-element-discovery`, `flaui-prism-dialog-discovery`, `scottplot-syncing-modifier-keys-for-mousewheel` |
+| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `flaui-wpf-element-discovery`, `flaui-prism-dialog-discovery`, `scottplot-syncing-modifier-keys-for-mousewheel`, `scottplot-axes-margins-destructive` |
 | **Testing** | `testing-wpf-viewmodels`, `managing-unit-tests` |
 | **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior`, `make-wpf-viewmodel`, `make-wpf-service` |
 | **Meta / Maintenance** | `collecting-wpf-dev-pack-feedback` |

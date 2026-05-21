@@ -10,6 +10,8 @@ and this project adheres to Semantic Versioning.
 
 ### Added
 - New skill: `containing-control-decorative-overflow` (focus-ring / hover-glow clipping diagnosis).
+- New skill: `scottplot-axes-margins-destructive` — documents that ScottPlot 5's `plot.Axes.Margins(double, double)` replaces the `AutoScaler` instance and immediately calls `AutoScale()`, wiping prior state such as `InvertedY`. Provides the in-place `FractionalAutoScaler.SetMarginsX/Y` fix for WPF reactive hot paths (IValueConverter, PropertyChanged, slider drag) where the same setup runs many times.
+- `scottplot-syncing-modifier-keys-for-mousewheel` §6 Related Skills cross-link to the new skill (shared theme: ScottPlot 5 cookbook-once APIs vs WPF reactive re-entry).
 - `docs/TERMINOLOGY.md` and `docs/TERMINOLOGY.ko.md` — single source of truth for MVVM composition terms.
 - `CHANGELOG.md` — this file.
 - `Required MCPs` section in `README.md`, `README.ko.md`, and `.claude/CLAUDE.md` (Serena listed as direct-MCP install via `uv`, not as a Claude Code plugin).

@@ -11,7 +11,7 @@
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**57 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**58 Skills** · **10 Specialized Agents** · **1 MCP Server**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **57 Skills** covering all WPF aspects
+- **58 Skills** covering all WPF aspects
 - **Best practices** built-in
 
 </td>
@@ -485,7 +485,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 57 Skills
+├── 📁 skills/                 # 58 Skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
 ├── 📄 README.md
