@@ -1,50 +1,54 @@
-# Claude Agent Skills 작성 지침
+# Claude Agent Skills — Authoring Guidelines
 
-## 1. 핵심 원칙
+## 1. Core Principles
 
-- **간결함 우선**: Context window는 공유 자원 (시스템 프롬프트, 대화 기록, 다른 Skills 메타데이터와 공유)
-- **Claude가 이미 아는 내용은 생략**: "Claude가 정말 이 설명이 필요한가?" 질문할 것
-- **적절한 자유도 설정**:
-  - High: 텍스트 기반 지침 (여러 접근법이 유효할 때)
-  - Medium: 매개변수가 있는 pseudocode (선호 패턴 존재, 변형 허용)
-  - Low: 특정 스크립트, 매개변수 최소화 (작업이 취약하고 일관성 중요할 때)
+- **Conciseness first**: the context window is a shared resource (system
+  prompt, conversation history, other skill metadata all share it).
+- **Skip what Claude already knows**: ask yourself "does Claude really
+  need this explanation?"
+- **Set the right freedom level**:
+  - High: text-based guidance (when multiple approaches are valid)
+  - Medium: pseudocode with parameters (preferred pattern exists,
+    variations allowed)
+  - Low: specific scripts with minimized parameters (when the task is
+    fragile and consistency matters)
 
 ---
 
-## 2. SKILL.md 구조
+## 2. SKILL.md Structure
 
-### Frontmatter 전체 참조
+### Full Frontmatter Reference
 
-모든 필드는 선택사항. `description`만 권장.
+All fields are optional. Only `description` is recommended.
 
-| 필드 | 필수 | 설명 |
-|------|------|------|
-| `name` | No | 스킬 표시 이름. 생략 시 디렉토리 이름 사용. 소문자, 숫자, 하이픈만 허용 (최대 64자) |
-| `description` | 권장 | 스킬의 용도 + 사용 시점. Claude가 자동 호출 판단에 사용. **Claude API**: 최대 1,024자. **Claude Code**: `description` + `when_to_use` 합산이 **1,536자** 초과 시 목록에서 잘림 (Claude Code 2.1.105, 2026-04-13에 250 → 1,536자 상향, front-load key use case) |
-| `argument-hint` | No | 자동완성 시 예상 인자 힌트 표시. 예: `[issue-number]`, `[filename] [format]` |
-| `disable-model-invocation` | No | `true` 설정 시 Claude 자동 호출 차단 → 사용자 `/name`으로만 실행. 기본값: `false` |
-| `user-invocable` | No | `false` 설정 시 `/` 메뉴에서 숨김 → Claude만 호출 가능. 기본값: `true` |
-| `allowed-tools` | No | 스킬 활성 시 승인 없이 사용할 수 있는 도구 목록 |
-| `model` | No | 스킬 활성 시 사용할 모델 |
-| `effort` | No | 스킬 활성 시 effort 수준 (`low`, `medium`, `high`, `max`) |
-| `context` | No | `fork` 설정 시 분리된 subagent 컨텍스트에서 실행 |
-| `agent` | No | `context: fork` 시 사용할 subagent 타입 |
-| `hooks` | No | 스킬 라이프사이클에 스코핑된 hooks |
-| `paths` | No | 스킬 활성화를 제한하는 glob 패턴 (YAML 리스트 또는 쉼표 구분 문자열) |
-| `shell` | No | `!`command`` 블록에 사용할 셸 (`bash` 기본, `powershell` 가능) |
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | No | The skill's display name. Defaults to the directory name if omitted. Lowercase, digits, and hyphens only (max 64 characters). |
+| `description` | Recommended | What the skill does and when to use it. Claude uses it to decide whether to auto-invoke. **Claude API**: max 1,024 chars. **Claude Code**: when `description` + `when_to_use` together exceed **1,536 chars**, the listing is truncated (Claude Code 2.1.105, 2026-04-13 raised this from 250 → 1,536; front-load key use cases). |
+| `argument-hint` | No | Argument hint shown during autocomplete. Examples: `[issue-number]`, `[filename] [format]`. |
+| `disable-model-invocation` | No | When `true`, blocks Claude from auto-invoking → user must run `/name`. Default: `false`. |
+| `user-invocable` | No | When `false`, the skill is hidden from the `/` menu → only Claude can invoke. Default: `true`. |
+| `allowed-tools` | No | Tools that can be used without prompts while the skill is active. |
+| `model` | No | The model to use while the skill is active. |
+| `effort` | No | Effort level while the skill is active (`low`, `medium`, `high`, `max`). |
+| `context` | No | When set to `fork`, the skill runs in a separate subagent context. |
+| `agent` | No | The subagent type to use when `context: fork`. |
+| `hooks` | No | Hooks scoped to the skill's lifecycle. |
+| `paths` | No | Glob patterns that restrict where the skill activates (YAML list or comma-separated string). |
+| `shell` | No | The shell used for `` !`command` `` blocks (`bash` by default; `powershell` supported). |
 
-### 호출 주체별 설정 (Invocation Control)
+### Invocation Control (who invokes)
 
-스킬을 **누가** 호출하느냐에 따라 `disable-model-invocation`과 `user-invocable`을 조합:
+Combine `disable-model-invocation` and `user-invocable` based on who
+should be able to invoke the skill:
 
-| 사용 시나리오 | `disable-model-invocation` | `user-invocable` | 컨텍스트 로딩 |
-|--------------|---------------------------|-------------------|---------------|
-| **사람 + Claude 모두** (기본값) | 생략 (false) | 생략 (true) | description 항상 로드, 호출 시 전체 로드 |
-| **사람만** (deploy, commit 등) | `true` | 생략 (true) | description 미로드, 사용자 `/name` 호출 시만 로드 |
-| **Claude만** (배경 지식) | 생략 (false) | `false` | description 항상 로드, Claude 판단 시 전체 로드 |
+| Scenario | `disable-model-invocation` | `user-invocable` | Context Loading |
+|----------|---------------------------|------------------|-----------------|
+| **Both human and Claude** (default) | omit (false) | omit (true) | description always loaded; full content loaded on invocation |
+| **Human only** (deploy, commit, etc.) | `true` | omit (true) | description NOT loaded; full content loads only when user runs `/name` |
+| **Claude only** (background knowledge) | omit (false) | `false` | description always loaded; full content loads when Claude decides |
 
 ```yaml
-# 사람만: 부작용이 있는 워크플로우 (배포, 커밋, 메시지 전송)
 # Human only: Workflows with side effects (deploy, commit, send message)
 ---
 name: deploy
@@ -52,7 +56,6 @@ description: Deploy the application to production
 disable-model-invocation: true
 ---
 
-# Claude만: 배경 지식 (사용자가 직접 실행할 의미 없음)
 # Claude only: Background knowledge (not meaningful as a user action)
 ---
 name: legacy-system-context
@@ -60,7 +63,6 @@ description: Explains legacy auth middleware architecture. Use when modifying au
 user-invocable: false
 ---
 
-# 둘 다: 일반적인 스킬 (기본값)
 # Both: General skill (default)
 ---
 name: explain-code
@@ -68,20 +70,21 @@ description: Explains code with visual diagrams and analogies. Use when explaini
 ---
 ```
 
-### 인자 전달 (Argument Passing)
+### Argument Passing
 
-사용자가 직접 호출하는 스킬에 인자가 필요하면 `argument-hint`를 설정하고, 본문에서 `$0`, `$1`, `$2`... 로 참조:
+For user-invocable skills that take arguments, set `argument-hint` and
+reference them in the body via `$0`, `$1`, `$2`, etc.:
 
-| 변수 | 설명 |
-|------|------|
-| `$ARGUMENTS` | 전달된 모든 인자 (전체 문자열) |
-| `$ARGUMENTS[N]` | 0-based 인덱스로 특정 인자 접근 |
-| `$0`, `$1`, `$2`... | `$ARGUMENTS[N]`의 축약형 |
+| Variable | Description |
+|----------|-------------|
+| `$ARGUMENTS` | All arguments (full string) |
+| `$ARGUMENTS[N]` | Specific argument by 0-based index |
+| `$0`, `$1`, `$2`... | Shortcuts for `$ARGUMENTS[N]` |
 
-> ⚠️ 본문에 `$ARGUMENTS`가 없으면 인자가 자동으로 `ARGUMENTS: <value>`로 끝에 추가됨
+> ⚠️ If `$ARGUMENTS` does not appear in the body, the arguments are
+> automatically appended at the end as `ARGUMENTS: <value>`.
 
 ```yaml
-# 단일 인자 예시
 # Single argument example
 ---
 name: fix-issue
@@ -92,7 +95,6 @@ argument-hint: <issue-number>
 
 Fix GitHub issue $0 following our coding standards.
 
-# 복수 인자 예시
 # Multiple arguments example
 ---
 name: migrate-component
@@ -105,141 +107,143 @@ Migrate the $0 component from $1 to $2.
 Preserve all existing behavior and tests.
 ```
 
-**사용 예시:**
+**Usage examples:**
+
 - `/fix-issue 123` → `$0` = `123`
 - `/migrate-component SearchBar React Vue` → `$0` = `SearchBar`, `$1` = `React`, `$2` = `Vue`
 
-### description 작성 규칙
+### Description Authoring Rules
 
-- **3인칭 필수**: description은 시스템 프롬프트에 주입됨
+- **Third person is mandatory**: the description is injected into the
+  system prompt.
   - ✅ "Processes Excel files and generates reports"
   - ❌ "I can help you process Excel files"
   - ❌ "You can use this to process Excel files"
-- **구체적으로 작성**: 무엇을 하는지 + 언제 사용하는지 포함
+- **Be specific**: include both what it does and when to use it.
 
 ```yaml
-# 좋은 예시
 # Good example
 description: Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
 
-# 나쁜 예시
 # Bad example
 description: Helps with documents
 ```
 
-### Skill 콘텐츠 언어 정책
+### Skill Content Language Policy
 
-- **SKILL.md 본문, description frontmatter, 코드 예시 주석: 영문 단일**
-- 이유: 기존 wpf-dev-pack, avalonia 스킬이 모두 영문으로 통일. 국제 재사용성 및 일관성 유지
-- `.claude/rules/preferences.md`의 한글 답변 규칙은 **사용자와의 대화 응답**에만 적용되며, skill 콘텐츠에는 적용되지 않음
-- `.claude/rules/dotnet/preferences.md` §2.5의 한글+영문 병기 규칙은 **조건부** (한글을 먼저 쓰는 경우에만 영문 병기). 영문이 기본인 skill 코드 예시에는 영문 단일 주석
+- **SKILL.md body, description frontmatter, and code-example comments
+  are English-only.**
+- Reason: the existing wpf-dev-pack and Avalonia skills are all
+  English. International reusability and consistency matter.
+- The Korean-response rule in `.claude/rules/preferences.md` applies
+  **only to user-facing conversational responses**, not to skill
+  content.
+- The Korean + inline-English rule in
+  `.claude/rules/dotnet/preferences.md` §2.5 is **conditional** —
+  applies only when Korean is the chosen primary language. In an
+  English-first skill code example, keep comments English-only.
 
 ---
 
-## 3. 명명 규칙
+## 3. Naming Conventions
 
-- **gerund 형식 권장** (동사 + ing):
+- **Prefer gerund form** (verb + ing):
   - ✅ `processing-pdfs`, `analyzing-spreadsheets`, `managing-databases`
-- **대안 허용**:
-  - 명사구: `pdf-processing`, `spreadsheet-analysis`
-  - 동작 지향: `process-pdfs`, `analyze-spreadsheets`
-- **피할 것**:
-  - 모호한 이름: `helper`, `utils`, `tools`
-  - 과도하게 일반적: `documents`, `data`, `files`
-  - 예약어: `anthropic-helper`, `claude-tools`
+- **Alternatives allowed**:
+  - Noun phrases: `pdf-processing`, `spreadsheet-analysis`
+  - Action-oriented: `process-pdfs`, `analyze-spreadsheets`
+- **Avoid**:
+  - Ambiguous names: `helper`, `utils`, `tools`
+  - Overly generic: `documents`, `data`, `files`
+  - Reserved-feeling names: `anthropic-helper`, `claude-tools`
 
 ---
 
-## 4. 점진적 공개 (Progressive Disclosure)
+## 4. Progressive Disclosure
 
-- SKILL.md는 **목차 역할** (500줄 이내 권장)
-- 상세 내용은 별도 파일로 분리
-- **참조는 1단계 깊이만** (SKILL.md → reference.md ✅, SKILL.md → advanced.md → details.md ❌)
+- SKILL.md acts as a **table of contents** (≤ 500 lines recommended).
+- Move detail into separate files.
+- **References must be one level deep** (SKILL.md → reference.md ✅,
+  SKILL.md → advanced.md → details.md ❌).
 
-### 디렉토리 구조 예시
+### Example Directory Layout
 
 ```
 pdf/
-├── SKILL.md              # 메인 지침 (트리거 시 로드)
-├── FORMS.md              # 폼 작성 가이드 (필요 시 로드)
-├── reference.md          # API 참조 (필요 시 로드)
-├── examples.md           # 사용 예시 (필요 시 로드)
+├── SKILL.md              # main guidance (loaded on trigger)
+├── FORMS.md              # form-filling guide (loaded on demand)
+├── reference.md          # API reference (loaded on demand)
+├── examples.md           # usage examples (loaded on demand)
 ├── evals/
-│   └── evals.json        # 트리거 평가 데이터 (필수)
+│   └── evals.json        # trigger evaluation data (required)
 └── scripts/
-    ├── analyze_form.py   # 유틸리티 스크립트 (실행, 로드 X)
-    └── validate.py       # 검증 스크립트
+    ├── analyze_form.py   # utility script (executed, not loaded)
+    └── validate.py       # validation script
 ```
 
-### 참조 패턴
+### Reference Pattern
 
 ```markdown
 # SKILL.md
 
-**기본 사용**: [SKILL.md 내 지침]
-**고급 기능**: See [advanced.md](advanced.md)
-**API 참조**: See [reference.md](reference.md)
-**예시**: See [examples.md](examples.md)
+**Basic usage**: [inline guidance in SKILL.md]
+**Advanced features**: See [advanced.md](advanced.md)
+**API reference**: See [reference.md](reference.md)
+**Examples**: See [examples.md](examples.md)
 ```
 
 ---
 
-## 5. 워크플로우 패턴
+## 5. Workflow Patterns
 
-### 복잡한 작업은 체크리스트로 분리
+### Break Complex Work Into a Checklist
 
 ```markdown
-## PDF 폼 작성 워크플로우
 ## PDF Form Filling Workflow
 
-다음 체크리스트를 복사하여 진행 상황을 추적하세요:
 Copy this checklist and track your progress:
 
 ```
 Task Progress:
-- [ ] Step 1: 폼 분석 (analyze_form.py 실행)
-- [ ] Step 2: 필드 매핑 생성 (fields.json 편집)
-- [ ] Step 3: 매핑 검증 (validate_fields.py 실행)
-- [ ] Step 4: 폼 작성 (fill_form.py 실행)
-- [ ] Step 5: 출력 검증 (verify_output.py 실행)
+- [ ] Step 1: Analyze the form (run analyze_form.py)
+- [ ] Step 2: Build the field mapping (edit fields.json)
+- [ ] Step 3: Validate the mapping (run validate_fields.py)
+- [ ] Step 4: Fill the form (run fill_form.py)
+- [ ] Step 5: Verify the output (run verify_output.py)
 ```
 ```
 
-### 피드백 루프 구현
+### Implement Feedback Loops
 
-- **일반 패턴**: 검증기 실행 → 오류 수정 → 반복
-- 검증이 실패하면 이전 단계로 돌아가도록 명시
+- **General pattern**: run validator → fix errors → repeat.
+- State explicitly that on validation failure, the workflow goes back
+  to the previous step.
 
 ---
 
-## 6. 공통 패턴
+## 6. Common Patterns
 
-### 템플릿 패턴
+### Template Pattern
 
 ```markdown
-## 보고서 구조
 ## Report Structure
 
 ALWAYS use this exact template structure:
 
 ```markdown
-# [분석 제목]
 # [Analysis Title]
 
 ## Executive summary
-[핵심 발견 사항 한 문단 요약]
 [One-paragraph overview of key findings]
 
 ## Key findings
-- 발견 1 (지원 데이터 포함)
 - Finding 1 with supporting data
 ```
 ```
 
-### 예시 패턴 (input/output 쌍)
+### Example Pattern (input/output pairs)
 
 ```markdown
-## 커밋 메시지 형식
 ## Commit Message Format
 
 **Example 1:**
@@ -252,67 +256,56 @@ Add login endpoint and token validation middleware
 ```
 ```
 
-### 조건부 워크플로우
+### Conditional Workflow
 
 ```markdown
-## 문서 수정 워크플로우
 ## Document Modification Workflow
 
-1. 수정 유형 결정:
 1. Determine the modification type:
 
-   **새 콘텐츠 생성?** → "생성 워크플로우" 따르기
    **Creating new content?** → Follow "Creation workflow" below
-   **기존 콘텐츠 편집?** → "편집 워크플로우" 따르기
    **Editing existing content?** → Follow "Editing workflow" below
 ```
 
 ---
 
-## 7. 피해야 할 패턴
+## 7. Patterns to Avoid
 
-| 패턴 | 문제 | 해결책 |
-|------|------|--------|
-| Windows 경로 (`\`) | Unix에서 오류 발생 | 항상 `/` 사용 |
-| 시간 의존적 정보 | 곧 outdated 됨 | "old patterns" 섹션 사용 |
-| 너무 많은 옵션 | 혼란 유발 | 기본값 제공 + 대안 하나만 |
-| 깊은 참조 중첩 | 부분 읽기 위험 | 1단계 깊이만 |
-| 도구 설치 가정 | 실행 실패 | 명시적으로 설치 지침 포함 |
+| Pattern | Problem | Fix |
+|---------|---------|-----|
+| Windows paths (`\`) | Breaks on Unix | Always use `/` |
+| Time-dependent info | Becomes outdated quickly | Use an "old patterns" section |
+| Too many options | Causes confusion | Give a default + one alternative |
+| Deep reference nesting | Risk of partial reads | One level deep only |
+| Tool-installation assumption | Execution fails | Include install steps explicitly |
 
-### 옵션 제시 예시
+### Option Presentation Example
 
 ```markdown
-# 나쁜 예시 (너무 많은 선택지)
 # Bad example (too many choices)
-"pypdf, pdfplumber, PyMuPDF, pdf2image 중 하나 사용..."
 "You can use pypdf, or pdfplumber, or PyMuPDF, or pdf2image..."
 
-# 좋은 예시 (기본값 + 대안)
 # Good example (default + alternative)
-"텍스트 추출에는 pdfplumber 사용:
 "Use pdfplumber for text extraction:
 ```python
 import pdfplumber
 ```
-OCR이 필요한 스캔된 PDF는 pdf2image와 pytesseract 사용."
 For scanned PDFs requiring OCR, use pdf2image with pytesseract instead."
 ```
 
 ---
 
-## 8. 실행 가능한 코드 포함 시
+## 8. When Embedding Executable Code
 
-### 에러 처리 명시
+### Explicit Error Handling
 
 ```python
 def process_file(path):
-    """파일 처리, 없으면 생성"""
     """Process a file, creating it if it doesn't exist."""
     try:
         with open(path) as f:
             return f.read()
     except FileNotFoundError:
-        # 실패하지 않고 기본 콘텐츠로 파일 생성
         # Create file with default content instead of failing
         print(f"File {path} not found, creating default")
         with open(path, 'w') as f:
@@ -320,31 +313,27 @@ def process_file(path):
         return ''
 ```
 
-### 매직 넘버 금지
+### No Magic Numbers
 
 ```python
-# 좋은 예시: 자체 문서화
 # Good example: Self-documenting
-REQUEST_TIMEOUT = 30  # HTTP 요청은 보통 30초 내 완료
-                      # HTTP requests typically complete within 30 seconds
-MAX_RETRIES = 3       # 3회 재시도로 안정성과 속도 균형
-                      # Three retries balances reliability vs speed
+REQUEST_TIMEOUT = 30  # HTTP requests typically complete within 30 seconds
+MAX_RETRIES = 3       # Three retries balances reliability vs speed
 
-# 나쁜 예시: 매직 넘버
 # Bad example: Magic numbers
-TIMEOUT = 47  # 왜 47? / Why 47?
+TIMEOUT = 47  # Why 47?
 ```
 
-### 검증 가능한 중간 출력
+### Verifiable Intermediate Output
 
-- **패턴**: 계획 생성 → 계획 검증 → 실행 → 확인
-- 검증 스크립트는 구체적인 오류 메시지 제공
+- **Pattern**: produce a plan → validate the plan → execute → confirm.
+- Validation scripts should return specific error messages.
 
 ---
 
-## 9. MCP 도구 참조
+## 9. MCP Tool References
 
-- **완전한 도구 이름 사용**: `ServerName:tool_name`
+- **Use the full tool name**: `ServerName:tool_name`.
 
 ```markdown
 Use the BigQuery:bigquery_schema tool to retrieve table schemas.
@@ -353,92 +342,99 @@ Use the GitHub:create_issue tool to create issues.
 
 ---
 
-## 10. 체크리스트
+## 10. Checklist
 
-### 핵심 품질
+### Core Quality
 
-- [ ] description이 구체적이고 키 용어 포함
-- [ ] description에 무엇을 하는지 + 언제 사용하는지 포함 (Claude API 1,024자 / Claude Code listing 1,536자 이내 — CC 2.1.105+ 기준)
-- [ ] SKILL.md 본문 500줄 이내
-- [ ] 추가 세부사항은 별도 파일로 분리
-- [ ] 시간 의존적 정보 없음 (또는 "old patterns" 섹션에)
-- [ ] 일관된 용어 사용
-- [ ] 예시가 구체적 (추상적 X)
-- [ ] 파일 참조 1단계 깊이
-- [ ] 점진적 공개 적절히 사용
-- [ ] 워크플로우에 명확한 단계
+- [ ] description is specific and includes key terms.
+- [ ] description states what it does AND when to use it (within Claude
+      API 1,024 chars / Claude Code listing 1,536 chars — CC 2.1.105+).
+- [ ] SKILL.md body is within 500 lines.
+- [ ] Additional details live in separate files.
+- [ ] No time-dependent information (or it lives under an "old
+      patterns" section).
+- [ ] Terminology is consistent.
+- [ ] Examples are concrete (not abstract).
+- [ ] File references are one level deep.
+- [ ] Progressive disclosure is used appropriately.
+- [ ] The workflow has clear steps.
 
-### 호출 제어 (Invocation Control)
+### Invocation Control
 
-- [ ] 호출 주체 결정: 사람만 / Claude만 / 둘 다
-- [ ] 부작용 있는 스킬에 `disable-model-invocation: true` 설정
-- [ ] 배경 지식 스킬에 `user-invocable: false` 설정
-- [ ] 사용자 호출 스킬에 인자 필요 시 `argument-hint` 설정
-- [ ] 인자 참조 시 `$0`, `$1`, `$2`... 축약형 사용
+- [ ] Decided who invokes: human only / Claude only / both.
+- [ ] Side-effect skills set `disable-model-invocation: true`.
+- [ ] Background-knowledge skills set `user-invocable: false`.
+- [ ] User-invocable skills with arguments set `argument-hint`.
+- [ ] Argument references use the shortcut form `$0`, `$1`, `$2`...
 
-### 코드 및 스크립트
+### Code and Scripts
 
-- [ ] 스크립트가 Claude에 떠넘기지 않고 문제 해결
-- [ ] 에러 처리 명시적이고 도움됨
-- [ ] 매직 넘버 없음 (모든 값 정당화)
-- [ ] 필수 패키지 지침에 나열
-- [ ] Windows 경로 없음 (모두 `/`)
-- [ ] 중요 작업에 검증/확인 단계
-- [ ] 품질 중요 작업에 피드백 루프
+- [ ] Scripts solve the problem instead of offloading it to Claude.
+- [ ] Error handling is explicit and helpful.
+- [ ] No magic numbers (every value is justified).
+- [ ] Required packages are listed in the guidance.
+- [ ] No Windows paths (everything uses `/`).
+- [ ] Critical operations include validation / confirmation steps.
+- [ ] Quality-critical operations include a feedback loop.
 
 ---
 
-## 11. Compaction 생존 — 중요 콘텐츠는 위로
+## 11. Compaction Survival — Critical Content Goes First
 
-### 11.1 배경: 무엇이 compaction에서 살아남는가
+### 11.1 Background: What Survives Compaction
 
-Claude Code 대화가 길어지면 `/compact`로 자동/수동 압축됩니다. 압축 후
-컨텍스트에 남는 것과 사라지는 것은 [공식
-문서](https://code.claude.com/docs/en/context-window#what-survives-compaction)에
-명시되어 있고, **skill 작성에 직결되는 핵심 사실은 다음과 같습니다**:
+When a Claude Code conversation grows long, `/compact` runs (manually or
+automatically) and replaces the history with a summary. What does and
+does not survive compaction is documented officially at
+<https://code.claude.com/docs/en/context-window#what-survives-compaction>.
+The key facts for skill authoring:
 
-| 항목 | compaction 후 |
-|------|---------------|
-| 시스템 프롬프트 | 재주입됨 |
-| Auto memory (`MEMORY.md`, 첫 200줄 / 25KB) | 재주입됨 |
-| `~/.claude/CLAUDE.md`, 프로젝트 `CLAUDE.md` 계층 | 재주입됨 |
-| 환경 정보 | 재주입됨 |
-| MCP 도구 이름 (deferred) | 재주입됨 |
-| **Skill description 목록** | **재주입 안 됨**. 실제로 호출했던 skill만 보존됨 (`noSurviveCompact: true`) |
-| 대화의 verbatim 본문 | 구조화된 summary로 대체 (사용자 의도·핵심 기술·수정 파일·에러와 해결·미완 작업만 보존) |
-| Tool 출력·중간 추론 | 사라짐 |
+| Item | After compaction |
+|------|------------------|
+| System prompt | Re-injected |
+| Auto memory (`MEMORY.md`, first 200 lines / 25KB) | Re-injected |
+| `~/.claude/CLAUDE.md` and the project `CLAUDE.md` hierarchy | Re-injected |
+| Environment info | Re-injected |
+| MCP tool names (deferred) | Re-injected |
+| **Skill description listing** | **NOT re-injected.** Only skills you actually invoked are preserved (`noSurviveCompact: true`). |
+| Verbatim conversation body | Replaced by a structured summary (preserves: user requests/intent, key technical concepts, files examined/modified with important code snippets, errors and fixes, pending tasks, current work). |
+| Tool outputs and intermediate reasoning | Lost |
 
-### 11.2 Skill 저자가 알아야 할 함의
+### 11.2 Implications for Skill Authors
 
-- Skill description은 사용자가 그 skill을 명시적으로 호출하기 전엔
-  compaction 후 사라짐 → description은 **첫 호출을 유도하기 위한
-  미끼**로 설계해야 함
-- SKILL.md 본문은 호출 시점에 컨텍스트로 들어오지만, compaction 후엔
-  conversation summary로 압축됨. summary가 **verbatim으로 보존하는 것은
-  핵심 코드 스니펫·파일 경로·구체적 결정사항**이고, 줄글로 풀어쓴
-  지침·하단 예시·장황한 표 본문은 잘려나감
+- Skill descriptions disappear after compaction unless the user
+  explicitly invoked that skill → design descriptions as **bait for
+  the first invocation**, not as ongoing reminders.
+- SKILL.md body is in context when the skill is invoked, but after
+  compaction it becomes part of the conversation summary. The summary
+  retains **specific code snippets, file paths, and decisions
+  verbatim**; long prose guidance, bottom-of-file examples, and
+  verbose table bodies are dropped.
 
-### 11.3 Critical-first 작성 규칙
+### 11.3 Critical-First Authoring Rule
 
-skill을 작성할 때 **중요한 콘텐츠일수록 위에 두어야** compaction
-summary에 verbatim으로 살아남거나 "key technical concepts"로 인식될
-가능성이 높아집니다.
+When you write a skill, **put the most important content near the
+top**. Higher placement gives content a better chance of surviving
+verbatim in the summary or of being captured as a "key technical
+concept".
 
-#### 권장 섹션 순서
+#### Recommended Section Order
 
 ```
 1. Frontmatter
-2. (선택) Essential / Post-Compact 섹션 ← 가장 위에, non-negotiable 규칙
-3. 핵심 워크플로우 (번호 매김된 단계)
-4. 단계별 상세 (간결한 표 + 직접 명령형 문장)
-5. 예시 / 케이스별 패턴
-6. Notes / 미주
-7. 참조 (See [reference.md])
+2. (Optional) Essential / Post-Compact section ← at the very top, for
+   non-negotiable rules
+3. Core workflow (numbered steps)
+4. Per-step detail (concise tables + direct imperative sentences)
+5. Examples / case-specific patterns
+6. Notes / footnotes
+7. References (See [reference.md])
 ```
 
-#### `Essential (Post-Compact)` 패턴
+#### The `Essential (Post-Compact)` Pattern
 
-비협상 규칙은 본문 상단(권장: 100줄 이내)에 다음 형태로 명시적 표기:
+State non-negotiable rules near the top (recommended: within the first
+100 lines) in this explicit form:
 
 ```markdown
 ## Essential (Post-Compact)
@@ -451,39 +447,44 @@ re-read this section.
 ...
 ```
 
-이 패턴은 `wpf-dev-pack/.claude/CLAUDE.md`의 "Essential (Post-Compact)"
-섹션을 그대로 본뜬 것입니다. 헤더 텍스트 자체가 summary에 인용될 가능성
-을 높이는 신호 역할을 합니다.
+This pattern is modeled after the "Essential (Post-Compact)" section in
+`wpf-dev-pack/.claude/CLAUDE.md`. The header text itself signals to the
+summary that the contents should be preserved.
 
-#### 피해야 할 형태
+#### Forms to Avoid
 
-- 핵심 규칙을 본문 하단의 "Notes" 영역에만 두기 → summary에서 사라질
-  가능성 높음
-- 규칙을 *예시 코드 안에만* 표현 (예시 코드는 summary가 잘 안 잡음)
-- 규칙을 한 단락 줄글로 풀어쓰기 → 번호·표·짧은 imperative 문장이 더
-  생존력 강함
-- 규칙을 다른 파일 참조로만 대체 (`자세한 내용은 reference.md 참조`만 두고
-  본문에는 규칙 미기재) → reference는 점진적 공개용이지 규칙 위임용 아님
+- Putting critical rules only inside a bottom "Notes" section — high
+  chance of being dropped from the summary.
+- Expressing rules *only* inside example code (examples are weakly
+  retained).
+- Phrasing rules as flowing paragraphs — numbered/table/imperative
+  forms survive better.
+- Replacing rules with references to other files ("See
+  `reference.md`") without restating the rule in the body — references
+  are for progressive disclosure, not for delegating the rule itself.
 
-### 11.4 체크리스트 (compaction-aware authoring)
+### 11.4 Checklist (compaction-aware authoring)
 
-- [ ] 가장 중요한 hard rule이 본문 첫 100줄 안에 등장
-- [ ] 비협상 규칙이 있다면 `Essential (Post-Compact)` 헤더 아래 명시
-- [ ] 규칙이 *예시 코드에만* 표현되지 않음 (별도 imperative 문장으로
-      먼저 기술)
-- [ ] 워크플로우는 번호 단계로 (산문 X)
-- [ ] 표 본문에 핵심 규칙을 두지 않음 (표는 보조용; 규칙은 표 위에
-      한 줄로 먼저)
-- [ ] 외부 파일 참조는 규칙을 *대신*하지 않고 *보충*함
+- [ ] The most important hard rules appear within the first 100 lines.
+- [ ] If there are non-negotiable rules, they are stated under an
+      `Essential (Post-Compact)` header.
+- [ ] No rule is expressed *only* in example code (each rule has its
+      own imperative sentence first).
+- [ ] Workflows are written as numbered steps (not prose).
+- [ ] Tables do not carry the rule alone (tables are auxiliary; the
+      rule is stated above the table).
+- [ ] External-file references *supplement* rules instead of replacing
+      them.
 
-### 11.5 참고
+### 11.5 References
 
-- 공식 문서: <https://code.claude.com/docs/en/context-window#what-survives-compaction>
-- 참고 패턴: `wpf-dev-pack/.claude/CLAUDE.md`의 `Essential (Post-Compact)` 섹션
+- Official docs: <https://code.claude.com/docs/en/context-window#what-survives-compaction>
+- Reference pattern: the `Essential (Post-Compact)` section of
+  `wpf-dev-pack/.claude/CLAUDE.md`.
 
 ---
 
-## 12. 공식 문서
+## 12. Official Documentation
 
 - [Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Skills Quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart)

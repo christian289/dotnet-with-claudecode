@@ -1,29 +1,31 @@
-# Prism 9 코드 규칙
+# Prism 9 Coding Rules
 
-> `mvvm-framework.md`에서 Prism 9이 선택된 경우 적용됩니다.
+> Applies when Prism 9 is the active MVVM framework (see
+> `mvvm-framework.md`).
 
 ---
 
-## NuGet 패키지
+## NuGet Packages
 
-| 프로젝트 | 패키지 |
-|----------|--------|
+| Project | Package |
+|---------|---------|
 | Shell (WPF App) | `Prism.DryIoc` (9.0.537) |
-| Core (공유) | `Prism.Core` (9.0.537) |
+| Core (shared) | `Prism.Core` (9.0.537) |
 | Module | `Prism.DryIoc` (9.0.537) |
 
-> ⚠️ **Prism.Magician** (유료 소스 제너레이터)은 사용하지 않습니다. 모든 코드는 수동 작성합니다.
+> ⚠️ **Prism.Magician** (paid source generator) is not used. All code is
+> written by hand.
 
 ---
 
-## ViewModel 작성 규칙
+## ViewModel Authoring Rules
 
 ### Base Class
 
-- `BindableBase` 상속
-- `partial class` 불필요 (소스 제너레이터 미사용)
+- Inherit from `BindableBase`.
+- `partial class` is not required (no source generator).
 
-### 속성 (SetProperty)
+### Properties (`SetProperty`)
 
 ```csharp
 private string _userName = string.Empty;
@@ -34,7 +36,7 @@ public string UserName
 }
 ```
 
-### 연관 속성 알림
+### Notifying Related Properties
 
 ```csharp
 set
@@ -46,7 +48,7 @@ set
 }
 ```
 
-### Command (DelegateCommand)
+### Commands (`DelegateCommand`)
 
 ```csharp
 private DelegateCommand? _saveCommand;
@@ -55,23 +57,23 @@ public DelegateCommand SaveCommand =>
         .ObservesProperty(() => Email);
 ```
 
-- Async: `AsyncDelegateCommand`
-- 제네릭: `DelegateCommand<T?>` (값 타입은 Nullable)
-- CanExecute 자동 재평가: `.ObservesProperty(() => Xxx)`
-- 수동 재평가: `RaiseCanExecuteChanged()`
+- Async: `AsyncDelegateCommand`.
+- Generic: `DelegateCommand<T?>` (use Nullable for value types).
+- Automatic CanExecute re-evaluation: `.ObservesProperty(() => Xxx)`.
+- Manual re-evaluation: `RaiseCanExecuteChanged()`.
 
 ---
 
-## DI 패턴
+## DI Pattern
 
-- `PrismApplication` 상속 (GenericHost 불필요)
-- `RegisterTypes(IContainerRegistry)` 오버라이드에서 서비스 등록
-- `CreateShell()`에서 MainWindow 반환 (자동 표시)
+- Inherit from `PrismApplication` (GenericHost is not used).
+- Register services in the `RegisterTypes(IContainerRegistry)` override.
+- Return the MainWindow from `CreateShell()` (it is shown automatically).
 
-### 등록 API
+### Registration APIs
 
-| 용도 | API |
-|------|-----|
+| Purpose | API |
+|---------|-----|
 | Singleton | `containerRegistry.RegisterSingleton<I, T>()` |
 | Transient | `containerRegistry.Register<I, T>()` |
 | Navigation | `containerRegistry.RegisterForNavigation<V, VM>()` |
@@ -79,33 +81,34 @@ public DelegateCommand SaveCommand =>
 
 ---
 
-## 네비게이션
+## Navigation
 
-- `IRegionManager.RequestNavigate()` 사용
-- `ViewModelLocator.AutoWireViewModel="True"` XAML 설정
-- `INavigationAware` 인터페이스로 네비게이션 수명주기 관리
-
----
-
-## 모듈 아키텍처
-
-- `IModule` 인터페이스 구현
-- `ConfigureModuleCatalog()`에서 모듈 등록
-- 모듈 간 통신: `IEventAggregator` + `PubSubEvent<T>`
+- Use `IRegionManager.RequestNavigate()`.
+- Set `ViewModelLocator.AutoWireViewModel="True"` in XAML.
+- Manage the navigation lifecycle via the `INavigationAware` interface.
 
 ---
 
-## 스킬 참조
+## Module Architecture
 
-MVVM 관련 스킬 사용 시 **PRISM.md**의 코드 예제를 따릅니다.
+- Implement the `IModule` interface.
+- Register modules in `ConfigureModuleCatalog()`.
+- For inter-module communication: `IEventAggregator` + `PubSubEvent<T>`.
 
-| 스킬 | 참조 파일 |
-|------|----------|
+---
+
+## Skill References
+
+When using an MVVM-related skill, follow the **PRISM.md** code examples.
+
+| Skill | Reference File |
+|-------|----------------|
 | `implementing-communitytoolkit-mvvm` | PRISM.md |
 | `configuring-dependency-injection` | PRISM.md |
 | `structuring-wpf-projects` | PRISM.md |
 | `mapping-viewmodel-view-datatemplate` | PRISM.md |
 | `managing-wpf-application-lifecycle` | PRISM.md |
-| 기타 MVVM 관련 스킬 | PRISM.md (있을 경우) |
+| Other MVVM-related skills | PRISM.md (if present) |
 
-> PRISM.md가 없는 스킬 (XAML, 렌더링, 3rd-party 등)은 SKILL.md를 그대로 사용합니다.
+> Skills without a PRISM.md companion (XAML, rendering, 3rd-party
+> integrations, etc.) keep using SKILL.md unchanged.

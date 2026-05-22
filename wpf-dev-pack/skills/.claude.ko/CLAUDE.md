@@ -1,19 +1,22 @@
-# WPF Dev Pack Skills - Keyword Mapping & Index
+# WPF Dev Pack Skills - 키워드 매핑 & 인덱스
 
-> **📦 Archived skills**: doc-mirror skills have been moved to `../../archive-skills/`.
-> See `../../archive-skills/` for topics covered by the `microsoft-docs` MCP plugin
-> (e.g., DependencyProperty, ControlTemplate, Storyboard, DragDrop, async/await, Span<T>).
+> 본 파일은 `wpf-dev-pack/skills/.claude/CLAUDE.md`의 한국어 미러입니다.
+> AI는 영문 원본을 읽으며, 본 파일은 사람을 위한 참고용입니다.
+
+> **📦 보관 처리된 skill**: doc-mirror 계열 skill은 `../../archive-skills/`로
+> 이동되었습니다. `microsoft-docs` MCP 플러그인으로 대체된 주제
+> (DependencyProperty, ControlTemplate, Storyboard, DragDrop,
+> async/await, Span<T> 등)는 `../../archive-skills/` 참조.
 
 ---
 
-## Korean Keywords Are Intentional
+## 한글 키워드는 의도된 설계
 
-Some skill mappings list Korean keywords (`차트`, `대시보드`,
-`뷰모델 테스트`, `속성 요소 구문`, etc.). These are **functional
-triggers**, not translation gaps: they let Claude activate the matching
-skill when a Korean-speaking user types those phrases. Do not
-"translate" them away. They are exempt from the repository bilingual
-convention because they act as data, not documentation.
+일부 skill 매핑에는 한글 키워드(`차트`, `대시보드`, `뷰모델 테스트`,
+`속성 요소 구문` 등)가 포함되어 있습니다. 이는 **번역 누락이 아니라
+기능적 트리거**입니다 — 한국어 사용자가 해당 표현을 입력할 때 Claude가
+대응 skill을 활성화하도록 합니다. "번역"으로 제거하지 마세요. 데이터
+역할이지 문서 역할이 아니므로 저장소 이중 언어 컨벤션에서 제외됩니다.
 
 ---
 
@@ -93,11 +96,11 @@ convention because they act as data, not documentation.
 
 ### Prism 9 Keywords
 
-| Keyword | Skill (see PRISM.md) |
+| Keyword | Skill (PRISM.md 참조) |
 |---------|----------------------|
 | `prism`, `bindablebase`, `delegatecommand` | `implementing-communitytoolkit-mvvm` |
 | `prismapplication`, `icontainerregistry` | `configuring-dependency-injection` |
-| `regionmanager`, `iregionmanager` | (see `rules/view-viewmodel-wiring-prism.md`) |
+| `regionmanager`, `iregionmanager` | (`rules/view-viewmodel-wiring-prism.md` 참조) |
 | `imodule`, `modulecatalog` | `structuring-wpf-projects` |
 | `validatablebindablebase` | `implementing-wpf-validation` |
 
@@ -122,36 +125,38 @@ convention because they act as data, not documentation.
 | `self-contained`, `single-file` | `publishing-wpf-apps` |
 | `installer`, `velopack`, `msix`, `nsis` | `publishing-wpf-apps` |
 
-### HandMirror MCP - .NET API Verification
+### HandMirror MCP - .NET API 검증
 
-When querying .NET API/NuGet package information, **also use HandMirrorMcp tools** to reduce hallucinations.
+.NET API/NuGet 패키지 정보를 조회할 때, **HandMirrorMcp 도구도 함께
+사용**하여 환각을 줄입니다.
 
-**Trigger condition**: When using context7 or Microsoft Learn MCP for .NET/NuGet related queries
+**트리거 조건**: .NET/NuGet 관련 조회로 context7 또는 Microsoft Learn
+MCP를 사용할 때
 
-**Co-usage rules:**
+**공동 사용 규칙:**
 
 ```
-WHEN using context7 or Microsoft Learn for .NET/NuGet info:
-  ALSO use HandMirrorMcp to verify:
-    - inspect_nuget_package: List namespaces/types in a NuGet package
-    - inspect_nuget_package_type: Get exact method signatures
-    - search_nuget_packages: Search packages by keyword
-    - get_type_info: Inspect local assembly (.dll/.exe) types
-    - explain_build_error: Diagnose CS/NU build errors
-    - analyze_csproj: Analyze project file for issues
+WHEN context7 또는 Microsoft Learn으로 .NET/NuGet 정보 조회:
+  ALSO HandMirrorMcp 사용해 검증:
+    - inspect_nuget_package: NuGet 패키지 내 namespace/type 목록
+    - inspect_nuget_package_type: 정확한 메서드 시그니처 조회
+    - search_nuget_packages: 키워드로 패키지 검색
+    - get_type_info: 로컬 assembly (.dll/.exe) 타입 조사
+    - explain_build_error: CS/NU 빌드 에러 진단
+    - analyze_csproj: 프로젝트 파일 이슈 분석
 ```
 
-**Usage scenarios:**
-- Verify API name casing accuracy in NuGet packages (e.g., SQLite vs Sqlite)
-- Identify correct namespaces for extension methods
-- Check API breaking changes across package versions
-- Diagnose build errors (CS0246, NU1605, etc.) and recommend required packages
+**사용 시나리오:**
+- NuGet 패키지의 API 이름 케이싱 정확성 검증 (예: SQLite vs Sqlite)
+- 확장 메서드의 정확한 namespace 식별
+- 패키지 버전 간 breaking change 점검
+- 빌드 에러(CS0246, NU1605 등) 진단 및 필수 패키지 권고
 
 ---
 
-## Skill Category Index
+## Skill 카테고리 인덱스
 
-| Category | Skills |
+| 카테고리 | Skills |
 |----------|--------|
 | **UI & Controls** | `authoring-wpf-controls`, `configuring-wpf-themeinfo`, `containing-control-decorative-overflow` |
 | **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `using-converter-markup-extension`, `configuring-dependency-injection` |

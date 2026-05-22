@@ -1,10 +1,11 @@
-# CommunityToolkit.Mvvm 코드 규칙
+# CommunityToolkit.Mvvm Coding Rules
 
-> `mvvm-framework.md`에서 CommunityToolkit.Mvvm이 선택된 경우 적용됩니다.
+> Applies when CommunityToolkit.Mvvm is the active MVVM framework (see
+> `mvvm-framework.md`).
 
 ---
 
-## NuGet 패키지
+## NuGet Packages
 
 ```xml
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.*" />
@@ -13,24 +14,26 @@
 
 ---
 
-## ViewModel 작성 규칙
+## ViewModel Authoring Rules
 
 ### Base Class
 
-- `ObservableObject` 상속
-- `partial class` 필수 (소스 제너레이터)
+- Inherit from `ObservableObject`.
+- The class must be declared `partial` (required by the source
+  generator).
 
-### 속성 (ObservableProperty)
+### Properties (`ObservableProperty`)
 
-- **단일 속성**: `[ObservableProperty]`를 필드와 같은 줄에 inline 작성
-- **다중 속성**: 다른 attribute는 별도 줄, `[ObservableProperty]`는 **항상 마지막 줄에 inline**
+- **Single property**: place `[ObservableProperty]` on the same line as
+  the backing field (inline).
+- **Multiple attributes**: put the other attributes on their own lines
+  and **always keep `[ObservableProperty]` last, inline** with the
+  field declaration.
 
 ```csharp
-// 단일 속성
 // Single attribute
 [ObservableProperty] private string _userName = string.Empty;
 
-// 다중 속성
 // Multiple attributes
 [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
 [ObservableProperty] private string _email = string.Empty;
@@ -42,36 +45,38 @@
 [ObservableProperty] public partial string UserName { get; set; }
 ```
 
-### Command (RelayCommand)
+### Commands (`RelayCommand`)
 
-- `[RelayCommand]` attribute로 소스 제너레이터 사용
-- CanExecute는 `[RelayCommand(CanExecute = nameof(CanXxx))]`
-- Async는 `Task` 반환 메서드에 자동 적용
+- Use the `[RelayCommand]` attribute (source generator).
+- For CanExecute: `[RelayCommand(CanExecute = nameof(CanXxx))]`.
+- Async commands are automatically wired up when the method returns
+  `Task`.
 
-### 연관 속성 알림
+### Notifying Related Properties
 
-- `[NotifyPropertyChangedFor(nameof(Xxx))]` 사용
-- `[NotifyCanExecuteChangedFor(nameof(XxxCommand))]` 사용
-
----
-
-## DI 패턴
-
-- GenericHost (`Host.CreateDefaultBuilder()`) 사용
-- `IServiceCollection`에 서비스 등록
-- `App()` 생성자에서 Host 생성, `OnStartup`에서 시작
+- Use `[NotifyPropertyChangedFor(nameof(Xxx))]`.
+- Use `[NotifyCanExecuteChangedFor(nameof(XxxCommand))]`.
 
 ---
 
-## 스킬 참조
+## DI Pattern
 
-MVVM 관련 스킬 사용 시 **SKILL.md**의 코드 예제를 따릅니다.
+- Use GenericHost (`Host.CreateDefaultBuilder()`).
+- Register services on `IServiceCollection`.
+- Create the host inside the `App()` constructor; start it from
+  `OnStartup`.
 
-| 스킬 | 참조 파일 |
-|------|----------|
+---
+
+## Skill References
+
+When using an MVVM-related skill, follow the **SKILL.md** code examples.
+
+| Skill | Reference File |
+|-------|----------------|
 | `implementing-communitytoolkit-mvvm` | SKILL.md |
 | `configuring-dependency-injection` | SKILL.md |
 | `structuring-wpf-projects` | SKILL.md |
 | `mapping-viewmodel-view-datatemplate` | SKILL.md |
 | `managing-wpf-application-lifecycle` | SKILL.md |
-| 기타 MVVM 관련 스킬 | SKILL.md |
+| Other MVVM-related skills | SKILL.md |

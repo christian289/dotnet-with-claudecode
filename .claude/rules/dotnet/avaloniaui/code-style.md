@@ -1,119 +1,125 @@
-# AvaloniaUI Project 코드 생성 지침
+# AvaloniaUI Project Code Generation Guidelines
 
-## 핵심 원칙
+## Core Principles
 
-- .NET CSharp 코드 생성 지침을 기본으로 할 것
-- WPF 지침의 MVVM 원칙을 동일하게 적용
-- UI 커스터마이징 시 Avalonia Custom Control Library 프로젝트 사용
-- Converter, AvaloniaUI Service Layer는 Avalonia Class Library 프로젝트 사용
-- CommunityToolkit.Mvvm NuGet Package 사용
+- Use the general .NET C# code guidelines as the baseline.
+- Apply the same MVVM principles as the WPF guidelines.
+- For UI customization, use an Avalonia Custom Control Library project.
+- For Converters and AvaloniaUI service layers, use an Avalonia Class
+  Library project.
+- Use the **CommunityToolkit.Mvvm** NuGet package.
 
 ---
 
 ## 1. Dependency Injection
 
-> **📌 상세 가이드**: `/configuring-avalonia-dependency-injection` skill 참조
+> **📌 Detailed guide**: see the `/configuring-avalonia-dependency-injection` skill.
 
-- 기본적으로 AddSingleton()만 사용
-- GenericHost로 DI 컨테이너 구성
-
----
-
-## 2. 솔루션 및 프로젝트 구조
-
-> **📌 상세 가이드**: `/structuring-avalonia-projects` skill 참조
-
-**프로젝트 명명 규칙:**
-
-| 접미사 | 타입 | 용도 |
-|--------|------|------|
-| `.Abstractions` | .NET Class Library | Interface, abstract class (IoC) |
-| `.Core` | .NET Class Library | 비즈니스 로직 (UI 독립) |
-| `.ViewModels` | .NET Class Library | MVVM ViewModel (UI 독립) |
-| `.AvaloniaServices` | Avalonia Class Library | Avalonia 관련 서비스 |
-| `.AvaloniaLib` | Avalonia Class Library | 재사용 가능한 컴포넌트 |
-| `.AvaloniaApp` | Avalonia Application | 실행 진입점 |
-| `.UI` | Avalonia Custom Control Library | 커스텀 컨트롤 |
+- By default, use `AddSingleton()` only.
+- Compose the DI container via GenericHost.
 
 ---
 
-## 3. MVVM 패턴
+## 2. Solution and Project Structure
 
-> **📌 상세 가이드**: `/implementing-communitytoolkit-mvvm` skill 참조
+> **📌 Detailed guide**: see the `/structuring-avalonia-projects` skill.
 
-### 핵심 제약
+**Project naming conventions:**
 
-- **ViewModel 클래스에 UI 프레임워크 의존성 금지**
-  - `Avalonia`로 시작하는 네임스페이스 참조 금지
-  - 예외: Custom Control 프로젝트 내부 ViewModel
-- **MVVM 제약은 ViewModel에만 적용**
-  - Converter, Service, Manager는 UI 프레임워크 참조 가능
+| Suffix | Type | Purpose |
+|--------|------|---------|
+| `.Abstractions` | .NET Class Library | Interfaces, abstract classes (IoC) |
+| `.Core` | .NET Class Library | Business logic (UI-independent) |
+| `.ViewModels` | .NET Class Library | MVVM ViewModels (UI-independent) |
+| `.AvaloniaServices` | Avalonia Class Library | Avalonia-related services |
+| `.AvaloniaLib` | Avalonia Class Library | Reusable Avalonia components |
+| `.AvaloniaApp` | Avalonia Application | Entry point |
+| `.UI` | Avalonia Custom Control Library | Custom controls |
 
-### 참조 어셈블리 규칙
+---
 
-**ViewModel 프로젝트 참조 금지:**
+## 3. MVVM Pattern
+
+> **📌 Detailed guide**: see the `/implementing-communitytoolkit-mvvm` skill.
+
+### Hard Constraints
+
+- **ViewModel classes must not depend on the UI framework.**
+  - References to any namespace starting with `Avalonia` are forbidden.
+  - Exception: ViewModels declared inside a Custom Control project.
+- **MVVM constraints apply to ViewModels only.**
+  - Converters, Services, and Managers may reference the UI framework.
+
+### Reference Assembly Rules
+
+**Prohibited references in ViewModel projects:**
+
 - ❌ `Avalonia.Base.dll`
 - ❌ `Avalonia.Controls.dll`
 - ❌ `Avalonia.Markup.Xaml.dll`
 
-**ViewModel 프로젝트 참조 가능:**
-- ✅ BCL 타입만 (IEnumerable, ObservableCollection 등)
-- ✅ CommunityToolkit.Mvvm
+**Allowed references in ViewModel projects:**
+
+- ✅ BCL types only (`IEnumerable`, `ObservableCollection`, etc.)
+- ✅ `CommunityToolkit.Mvvm`
 
 ---
 
-## 4. AXAML 코드 작성
+## 4. AXAML Authoring
 
-> **📌 상세 가이드**: `/designing-avalonia-customcontrol-architecture` skill 참조
+> **📌 Detailed guide**: see the `/designing-avalonia-customcontrol-architecture` skill.
 
-- CustomControl + ControlTheme을 통한 Stand-Alone Control Style 사용
-- Generic.axaml은 MergedDictionaries 허브로만 사용
-- 각 컨트롤 ControlTheme을 개별 AXAML 파일로 분리
-- StyledProperty 사용 (DependencyProperty 대신)
-- CSS Class 기반 스타일 적용 (Classes 속성)
-- Pseudo Classes를 사용한 상태 관리 (:pointerover, :pressed 등)
-
----
-
-## 5. CollectionView 패턴
-
-> **📌 상세 가이드**: `/using-avalonia-collectionview` skill 참조
-
-**⚠️ AvaloniaUI는 WPF의 CollectionViewSource를 지원하지 않음**
-
-- DataGridCollectionView 사용 (권장)
-- 또는 ReactiveUI + DynamicData 사용
+- Use a stand-alone control style via CustomControl + ControlTheme.
+- Use `Generic.axaml` only as a `MergedDictionaries` hub.
+- Split each control's ControlTheme into its own AXAML file.
+- Use `StyledProperty` (not `DependencyProperty`).
+- Apply styles via the CSS-like `Classes` property.
+- Manage state via pseudo-classes (`:pointerover`, `:pressed`, etc.).
 
 ---
 
-## 6. DataTemplate View-ViewModel 매핑
+## 5. CollectionView Patterns
 
-> **📌 상세 가이드**: `/mapping-viewmodel-view-datatemplate` skill 참조
+> **📌 Detailed guide**: see the `/using-avalonia-collectionview` skill.
 
-- Mappings.axaml에 ViewModel-View DataTemplate 정의
-- ContentControl.Content에 ViewModel 바인딩하여 자동 View 렌더링
+**⚠️ AvaloniaUI does not support WPF's `CollectionViewSource`.**
+
+- Use `DataGridCollectionView` (recommended).
+- Alternatively, use ReactiveUI + DynamicData.
 
 ---
 
-## 7. WPF vs AvaloniaUI 주요 차이점
+## 6. View ↔ ViewModel Mapping via DataTemplate
 
-| 항목 | WPF | AvaloniaUI |
-|------|-----|------------|
-| 파일 확장자 | .xaml | .axaml |
-| 스타일 정의 | Style + ControlTemplate | ControlTheme |
-| 상태 관리 | Trigger, DataTrigger | Pseudo Classes, Style Selector |
-| CSS 지원 | ❌ | ✅ (Classes 속성) |
-| 리소스 병합 | MergedDictionaries + ResourceDictionary | MergedDictionaries + ResourceInclude |
-| 의존성 속성 | DependencyProperty | StyledProperty, DirectProperty |
-| CollectionView | CollectionViewSource | DataGridCollectionView, ReactiveUI |
+> **📌 Detailed guide**: see the `/mapping-viewmodel-view-datatemplate` skill.
+
+- Define ViewModel-to-View `DataTemplate` mappings in `Mappings.axaml`.
+- Bind a ViewModel to `ContentControl.Content` to have its View
+  rendered automatically.
+
+---
+
+## 7. WPF vs AvaloniaUI — Key Differences
+
+| Item | WPF | AvaloniaUI |
+|------|-----|-----------|
+| File extension | `.xaml` | `.axaml` |
+| Style definition | `Style` + `ControlTemplate` | `ControlTheme` |
+| State management | `Trigger`, `DataTrigger` | Pseudo-classes, Style Selectors |
+| CSS support | ❌ | ✅ (`Classes` property) |
+| Resource merging | `MergedDictionaries` + `ResourceDictionary` | `MergedDictionaries` + `ResourceInclude` |
+| Dependency properties | `DependencyProperty` | `StyledProperty`, `DirectProperty` |
+| CollectionView | `CollectionViewSource` | `DataGridCollectionView`, ReactiveUI |
 
 **⚠️ ResourceInclude vs MergeResourceInclude:**
-- **ResourceInclude**: 일반 ResourceDictionary 파일에서 사용
-- **MergeResourceInclude**: App.axaml의 Application.Resources에서만 사용
+
+- **`ResourceInclude`**: used inside a regular `ResourceDictionary` file.
+- **`MergeResourceInclude`**: used only inside `Application.Resources`
+  in `App.axaml`.
 
 ---
 
-## 8. 필수 NuGet 패키지
+## 8. Required NuGet Packages
 
 ```xml
 <!-- AvaloniaUI Application -->
@@ -139,39 +145,44 @@
 
 ---
 
-## 9. 체크리스트
+## 9. Checklist
 
-### AvaloniaUI 프로젝트
+### AvaloniaUI Project
 
-- [ ] ViewModel에 Avalonia 참조 없음 확인
-- [ ] ViewModel은 순수 BCL 타입만 사용
-- [ ] CustomControl은 기존 Avalonia 컨트롤 상속
-- [ ] CustomControl에서 StyledProperty 사용
-- [ ] Generic.axaml은 MergedDictionaries 허브로만 사용
-- [ ] 각 컨트롤 ControlTheme을 개별 AXAML 파일로 분리
-- [ ] CSS Class 기반 스타일 적용
-- [ ] Pseudo Classes를 사용한 상태 관리
-- [ ] CollectionView 대신 DataGridCollectionView 사용
-- [ ] App.axaml.cs에서 GenericHost 설정 및 DI 컨테이너 구성
-
----
-
-## 10. 주의사항
-
-### ⚠️ 자주 발생하는 실수
-
-1. ViewModel에 Avalonia 네임스페이스 참조 - MVVM 위반
-2. ViewModel에서 Avalonia.Base.dll, Avalonia.Controls.dll 참조
-3. CustomControl을 TemplatedControl에서 직접 상속 - 기존 컨트롤 상속 필요
-4. WPF의 DependencyProperty를 그대로 사용 - StyledProperty 사용 필요
-5. WPF의 Trigger를 그대로 사용 - Pseudo Classes와 Style Selector 사용 필요
-6. WPF의 CollectionViewSource 사용 - DataGridCollectionView 또는 ReactiveUI 사용 필요
-7. Generic.axaml에 직접 ControlTheme 작성 - 개별 파일로 분리 후 ResourceInclude
-8. App.axaml.cs에서 GenericHost 설정 누락
+- [ ] ViewModels do not reference Avalonia.
+- [ ] ViewModels use BCL types only.
+- [ ] CustomControls inherit from an existing Avalonia control.
+- [ ] CustomControls use `StyledProperty`.
+- [ ] `Generic.axaml` is used only as a `MergedDictionaries` hub.
+- [ ] Each control's ControlTheme lives in its own AXAML file.
+- [ ] Styles are applied via the `Classes` property.
+- [ ] State management uses pseudo-classes.
+- [ ] `DataGridCollectionView` is used instead of `CollectionView`.
+- [ ] `App.axaml.cs` wires up GenericHost and the DI container.
 
 ---
 
-## 11. 공식 문서
+## 10. Cautions
+
+### ⚠️ Common Mistakes
+
+1. Referencing the `Avalonia` namespace from a ViewModel — MVVM violation.
+2. Referencing `Avalonia.Base.dll` / `Avalonia.Controls.dll` from a
+   ViewModel project.
+3. Inheriting CustomControls directly from `TemplatedControl` — they
+   should inherit from an existing control.
+4. Using WPF's `DependencyProperty` verbatim — use `StyledProperty`.
+5. Using WPF's `Trigger` verbatim — use pseudo-classes and Style
+   Selectors.
+6. Using WPF's `CollectionViewSource` — use `DataGridCollectionView`
+   or ReactiveUI.
+7. Writing ControlThemes directly inside `Generic.axaml` — split into
+   per-control files and pull them in via `ResourceInclude`.
+8. Forgetting to configure GenericHost in `App.axaml.cs`.
+
+---
+
+## 11. Official Documentation
 
 - [AvaloniaUI Documentation](https://docs.avaloniaui.net/)
 - [Styled Properties](https://docs.avaloniaui.net/docs/guides/custom-controls/defining-properties)

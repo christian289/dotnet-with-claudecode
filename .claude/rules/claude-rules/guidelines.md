@@ -1,81 +1,82 @@
-# Claude Rules 작성 지침
+# Claude Rules — Authoring Guidelines
 
-## 핵심 원칙
+## Core Principles
 
-- **모듈화**: 하나의 파일에 하나의 주제
-- **명확성**: 구체적이고 실행 가능한 지침
-- **계층 구조**: 하위 디렉토리로 관련 규칙 그룹화
-- **조건부 적용**: 필요시 `paths` 필드로 적용 범위 제한
-
----
-
-## 1. Memory 계층 구조
-
-| 우선순위 | 위치 | 용도 | 범위 |
-|---------|------|------|------|
-| 1 (최고) | `./CLAUDE.local.md` | 개인 프로젝트 설정 | 개인 (gitignore) |
-| 2 | `./.claude/rules/*.md` | 모듈화된 규칙 | 팀 공유 |
-| 3 | `./.claude/CLAUDE.md` | 프로젝트 메인 설정 | 팀 공유 |
-| 4 | `./CLAUDE.md` | 프로젝트 루트 설정 | 팀 공유 |
-| 5 | `~/.claude/rules/*.md` | 개인 전역 규칙 | 개인 |
-| 6 (최저) | `~/.claude/CLAUDE.md` | 개인 전역 설정 | 개인 |
-
-**규칙:** 하위 레벨 설정이 상위 레벨을 오버라이드
+- **Modularity**: one topic per file.
+- **Clarity**: concrete, actionable instructions.
+- **Hierarchy**: group related rules under subdirectories.
+- **Conditional application**: when appropriate, use the `paths` field
+  to restrict the rule's scope.
 
 ---
 
-## 2. 디렉토리 구조
+## 1. Memory Hierarchy
 
-### 2.1 권장 구조
+| Priority | Location | Purpose | Scope |
+|----------|----------|---------|-------|
+| 1 (highest) | `./CLAUDE.local.md` | Personal project settings | Personal (gitignored) |
+| 2 | `./.claude/rules/*.md` | Modularized rules | Team-shared |
+| 3 | `./.claude/CLAUDE.md` | Project main configuration | Team-shared |
+| 4 | `./CLAUDE.md` | Project root configuration | Team-shared |
+| 5 | `~/.claude/rules/*.md` | Personal global rules | Personal |
+| 6 (lowest) | `~/.claude/CLAUDE.md` | Personal global configuration | Personal |
+
+**Rule:** lower-level settings override higher-level ones.
+
+---
+
+## 2. Directory Structure
+
+### 2.1 Recommended Layout
 
 ```
 your-project/
 ├── .claude/
-│   ├── CLAUDE.md              # 프로젝트 메인 설정
+│   ├── CLAUDE.md              # project main configuration
 │   ├── rules/
-│   │   ├── code-style.md      # 코드 스타일
-│   │   ├── testing.md         # 테스트 규칙
-│   │   ├── security.md        # 보안 규칙
-│   │   ├── frontend/          # 프론트엔드 규칙
+│   │   ├── code-style.md      # code style
+│   │   ├── testing.md         # testing rules
+│   │   ├── security.md        # security rules
+│   │   ├── frontend/          # frontend rules
 │   │   │   ├── react.md
 │   │   │   └── styles.md
-│   │   └── backend/           # 백엔드 규칙
+│   │   └── backend/           # backend rules
 │   │       ├── api.md
 │   │       └── database.md
 │   └── skills/                # Agent Skills
 │       └── my-skill/
 │           └── SKILL.md
-└── CLAUDE.local.md            # 개인 설정 (gitignore)
+└── CLAUDE.local.md            # personal settings (gitignore)
 ```
 
-### 2.2 파일 자동 로드
+### 2.2 Automatic File Loading
 
-- `.claude/rules/` 하위 모든 `.md` 파일 재귀적 로드
-- 하위 디렉토리도 자동 탐색
-- 심볼릭 링크 지원 (순환 참조 자동 감지)
+- All `.md` files under `.claude/rules/` are loaded recursively.
+- Subdirectories are traversed automatically.
+- Symbolic links are supported (cycles are detected automatically).
 
 ---
 
-## 3. 규칙 파일 작성
+## 3. Writing a Rule File
 
-### 3.1 기본 형식
+### 3.1 Basic Form
 
 ```markdown
-# [주제] 지침
+# [Topic] Guidelines
 
-## 1. 섹션명
+## 1. Section Name
 
-- 구체적인 지침 1
-- 구체적인 지침 2
+- Concrete instruction 1
+- Concrete instruction 2
 
-## 2. 다음 섹션
+## 2. Next Section
 
-- 관련 지침
+- Related instruction
 ```
 
-### 3.2 조건부 규칙 (Path-Specific)
+### 3.2 Conditional Rules (Path-Specific)
 
-YAML frontmatter로 적용 범위 지정:
+Use YAML frontmatter to scope a rule:
 
 ```markdown
 ---
@@ -84,184 +85,184 @@ paths:
   - "src/controllers/**/*.ts"
 ---
 
-# API 개발 규칙
+# API Development Rules
 
-- 모든 엔드포인트에 입력 검증 필수
-- 표준 에러 응답 형식 사용
-- OpenAPI 문서 주석 포함
+- Input validation is required on every endpoint.
+- Use the standard error response format.
+- Include OpenAPI documentation comments.
 ```
 
-**주의:** `paths` 필드가 없으면 모든 파일에 적용
+**Note:** Without a `paths` field the rule applies to all files.
 
-### 3.3 Glob 패턴
+### 3.3 Glob Patterns
 
-| 패턴 | 설명 |
-|------|------|
-| `**/*.ts` | 모든 TypeScript 파일 |
-| `src/**/*` | src 하위 모든 파일 |
-| `*.md` | 루트의 마크다운 파일 |
-| `src/components/*.tsx` | 특정 디렉토리 |
-| `**/*.{ts,tsx}` | 다중 확장자 |
-| `{src,lib}/**/*.ts` | 다중 디렉토리 |
+| Pattern | Meaning |
+|---------|---------|
+| `**/*.ts` | All TypeScript files |
+| `src/**/*` | Every file under `src` |
+| `*.md` | Markdown files in the root |
+| `src/components/*.tsx` | Files in a specific directory |
+| `**/*.{ts,tsx}` | Multiple extensions |
+| `{src,lib}/**/*.ts` | Multiple base directories |
 
 ---
 
-## 4. Import 문법
+## 4. Import Syntax
 
-### 4.1 파일 참조
+### 4.1 File References
 
-`@path/to/file` 문법으로 다른 파일 참조:
+Reference other files via `@path/to/file`:
 
 ```markdown
-# 프로젝트 설정
+# Project Configuration
 
-프로젝트 개요는 @README.md 참조
-사용 가능한 명령어는 @package.json 참조
+For a project overview, see @README.md.
+For available commands, see @package.json.
 
-## 추가 지침
+## Additional Instructions
 
-- Git 워크플로우: @docs/git-instructions.md
-- 개인 설정: @~/.claude/my-preferences.md
+- Git workflow: @docs/git-instructions.md
+- Personal settings: @~/.claude/my-preferences.md
 ```
 
-### 4.2 Import 규칙
+### 4.2 Import Rules
 
-- 상대 경로, 절대 경로 모두 지원
-- 코드 블록 내부에서는 평가되지 않음
-- 재귀 import 지원 (최대 5단계 깊이)
-- `/memory` 명령으로 로드된 메모리 확인
+- Both relative and absolute paths are supported.
+- Imports inside code blocks are NOT evaluated.
+- Recursive imports are supported (max depth: 5).
+- Use the `/memory` command to inspect currently loaded memory.
 
 ---
 
-## 5. 작성 모범 사례
+## 5. Authoring Best Practices
 
-### 5.1 DO (권장)
+### 5.1 DO
 
 ```markdown
-# 코드 스타일 지침
+# Code Style Guidelines
 
-## 1. 들여쓰기
+## 1. Indentation
 
-- 2칸 스페이스 사용
-- 탭 문자 금지
+- Use two spaces.
+- Do not use tab characters.
 
-## 2. 네이밍
+## 2. Naming
 
-- 변수: camelCase
-- 상수: UPPER_SNAKE_CASE
-- 클래스: PascalCase
+- Variables: camelCase
+- Constants: UPPER_SNAKE_CASE
+- Classes: PascalCase
 ```
 
-### 5.2 DON'T (피해야 할 것)
+### 5.2 DON'T
 
 ```markdown
-# 지침
+# Guidelines
 
-코드를 잘 작성하세요.
-포맷을 맞추세요.
+Write code well.
+Match the formatting.
 ```
 
-**문제점:** 모호하고 실행 불가능한 지침
+**Why this is bad:** vague, non-actionable.
 
 ---
 
-## 6. 파일명 규칙
+## 6. File Naming Convention
 
-### 6.1 권장 패턴
+### 6.1 Recommended Pattern
 
-| 파일명 | 용도 |
-|--------|------|
-| `code-style.md` | 코드 스타일 규칙 |
-| `testing.md` | 테스트 규칙 |
-| `security.md` | 보안 규칙 |
-| `api-design.md` | API 설계 규칙 |
-| `preferences.md` | 개인 환경설정 |
+| Filename | Purpose |
+|----------|---------|
+| `code-style.md` | Code style rules |
+| `testing.md` | Testing rules |
+| `security.md` | Security rules |
+| `api-design.md` | API design rules |
+| `preferences.md` | Personal preferences |
 
-### 6.2 명명 규칙
+### 6.2 Naming Rules
 
-- 소문자와 하이픈 사용: `code-style.md`
-- 내용을 설명하는 이름 사용
-- 일반적인 규칙: 단수형 (`testing.md`, `security.md`)
+- Use lowercase and hyphens: `code-style.md`.
+- Use a name that describes the contents.
+- Use the singular form for general rules: `testing.md`, `security.md`.
 
 ---
 
-## 7. 심볼릭 링크 활용
+## 7. Using Symbolic Links
 
-### 7.1 공유 규칙
+### 7.1 Shared Rules
 
 ```bash
-# 공유 규칙 디렉토리 링크
+# Link a shared rules directory
 ln -s ~/shared-claude-rules .claude/rules/shared
 
-# 개별 파일 링크
+# Link a single shared file
 ln -s ~/company-standards/security.md .claude/rules/security.md
 ```
 
-### 7.2 사용 사례
+### 7.2 Use Cases
 
-- 조직 표준 규칙 공유
-- 여러 프로젝트에서 공통 규칙 재사용
-- 개인 규칙을 프로젝트에 연결
+- Share organization-wide standard rules.
+- Reuse common rules across multiple projects.
+- Bring personal rules into a specific project.
 
 ---
 
-## 8. 상위 디렉토리 상속
+## 8. Parent-Directory Inheritance
 
-### 8.1 동작 방식
+### 8.1 How It Works
 
 ```
 parent-folder/
-├── CLAUDE.md          ← 먼저 로드
+├── CLAUDE.md          ← loaded first
 └── child-project/
-    ├── CLAUDE.md      ← 나중에 로드 (오버라이드)
+    ├── CLAUDE.md      ← loaded later (overrides)
     └── .claude/
-        └── rules/     ← 가장 높은 우선순위
+        └── rules/     ← highest priority
 ```
 
-### 8.2 활용 예
+### 8.2 Example
 
 ```
-dotnet-with-claudecode/       # .claude 설정 포함
+dotnet-with-claudecode/       # contains .claude/ configuration
 ├── .claude/
 │   └── rules/
-└── repos/                    # 하위 프로젝트들
-    ├── project-a/            # 상위 .claude 상속
-    └── project-b/            # 상위 .claude 상속
+└── repos/                    # child projects
+    ├── project-a/            # inherits the parent .claude/
+    └── project-b/            # inherits the parent .claude/
 ```
 
 ---
 
-## 9. 유용한 명령어
+## 9. Useful Commands
 
-| 명령어 | 설명 |
-|--------|------|
-| `/init` | CLAUDE.md 초기화 |
-| `/memory` | 로드된 메모리 확인 및 편집 |
-
----
-
-## 10. 체크리스트
-
-### 규칙 파일 작성 시
-
-- [ ] 하나의 파일에 하나의 주제만 다룸
-- [ ] 파일명이 내용을 설명함
-- [ ] 구체적이고 실행 가능한 지침 작성
-- [ ] 필요시에만 `paths` frontmatter 사용
-- [ ] 관련 규칙은 하위 디렉토리로 그룹화
-- [ ] 불릿 포인트로 구조화
-- [ ] 예시 코드 포함 (필요시)
-
-### 프로젝트 설정 시
-
-- [ ] `.claude/rules/` 디렉토리 구조 설계
-- [ ] 공유 규칙과 개인 규칙 분리
-- [ ] `CLAUDE.local.md`를 `.gitignore`에 추가
-- [ ] 팀원과 규칙 공유 방법 결정
+| Command | Description |
+|---------|-------------|
+| `/init` | Initialize CLAUDE.md |
+| `/memory` | Inspect and edit currently loaded memory |
 
 ---
 
-## 11. 참고 자료
+## 10. Checklist
+
+### When Writing a Rule File
+
+- [ ] One topic per file.
+- [ ] The filename describes the contents.
+- [ ] Instructions are concrete and actionable.
+- [ ] `paths` frontmatter is used only when appropriate.
+- [ ] Related rules are grouped under subdirectories.
+- [ ] Structure uses bullet points.
+- [ ] Example code is included when useful.
+
+### When Configuring a Project
+
+- [ ] Design the `.claude/rules/` directory layout.
+- [ ] Separate shared rules from personal rules.
+- [ ] Add `CLAUDE.local.md` to `.gitignore`.
+- [ ] Decide how rules are shared with the team.
+
+---
+
+## 11. References
 
 - [Claude Code Memory Documentation](https://code.claude.com/docs/en/memory)
 - [Modular Rules Guide](https://code.claude.com/docs/en/memory#modular-rules-with-claude/rules/)

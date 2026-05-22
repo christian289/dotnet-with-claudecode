@@ -145,12 +145,12 @@ When `wpf-architect` is invoked, conduct an **adaptive path-based interview** us
 
 | Path | Task Type | Steps | Focus |
 |------|-----------|-------|-------|
-| **A** | Create new project | 7 | 컨셉 → 아키텍처 → 규모 → 복잡도 → 라이브러리 → 기능 영역 |
-| **B** | Analyze/improve | 5 | 분석 목표 → 분석 모드 → 범위 → 출력 형식 |
-| **C** | Implement feature | 5 | 기능 설명 → 구현 방식 → 라이브러리 → 기능 영역 |
-| **D** | Debug/fix | 4 | 문제 증상 → 문제 유형 → 문제 영역 |
+| **A** | Create new project | 7 | concept → architecture → scale → complexity → libraries → feature areas |
+| **B** | Analyze/improve | 5 | analysis goal → analysis mode → scope → output format |
+| **C** | Implement feature | 5 | feature description → implementation approach → libraries → feature areas |
+| **D** | Debug/fix | 4 | symptom → problem type → problem area |
 
-**Keyword Analysis**: 자유 입력 단계(A-2, B-2, C-2, D-2)에서 키워드를 감지하여 후속 단계 기본값 자동 설정.
+**Keyword Analysis**: At free-input steps (A-2, B-2, C-2, D-2), detect keywords and auto-set defaults for subsequent steps.
 
 See `agents/wpf-architect.md` for full interview specification.
 
@@ -167,7 +167,7 @@ See `agents/wpf-architect.md` for full interview specification.
 2. Check `.claude/rules/dotnet/wpf/mvvm-framework.md` for active MVVM framework
 3. Load appropriate file:
    - **CommunityToolkit.Mvvm** → SKILL.md
-   - **Prism 9** → PRISM.md (있을 경우), 없으면 SKILL.md
+   - **Prism 9** → PRISM.md if present, otherwise SKILL.md
 4. Generate/modify code per guidelines and active framework rules
 
 **Silent Triggers** (no announcement):
@@ -184,9 +184,9 @@ See `agents/wpf-architect.md` for full interview specification.
 
 ## Adding a New Skill — Required Co-updates
 
-새 skill을 `skills/<skill-name>/SKILL.md`로 추가할 때 반드시 함께 업데이트할 항목:
+When adding a new skill at `skills/<skill-name>/SKILL.md`, these files MUST be updated together:
 
-1. **`skills/.claude/CLAUDE.md`** — Keyword-Skill Mapping 표에 키워드 행 추가, Skill Category Index의 해당 카테고리에 skill 이름 추가
-2. **연관된 기존 SKILL.md** — 토픽이 겹치는 기존 skill에 새 skill로의 cross-link(See [...](../skill-name/SKILL.md)) 추가
-3. **Prism 9 분기가 필요한 skill** — `PRISM.md` 컴패니언 파일 작성 (mvvm-framework.md 규칙 참조)
-4. **Foundation + Application 쌍 skill** — 두 skill을 별도로 만들고 상호 참조. Foundation skill은 메커니즘·일반 원칙, Application skill은 구체 시나리오 적용 (예: `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`)
+1. **`skills/.claude/CLAUDE.md`** — add a keyword row to the Keyword-Skill Mapping table; add the skill name under the appropriate Skill Category Index row.
+2. **Adjacent existing SKILL.md files** — when topics overlap, add a cross-link to the new skill (`See [...](../skill-name/SKILL.md)`).
+3. **Skills that need a Prism 9 branch** — author a `PRISM.md` companion file (see `mvvm-framework.md`).
+4. **Foundation + Application skill pairs** — author the two skills separately and cross-reference. Foundation skill describes the mechanism / general principle; Application skill applies it to a specific scenario (e.g., `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`).

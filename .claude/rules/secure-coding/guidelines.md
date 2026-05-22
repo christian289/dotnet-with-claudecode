@@ -1,60 +1,56 @@
-# 시큐어 코딩 지침
+# Secure Coding Guidelines
 
-## 핵심 원칙
+## Core Principles
 
-- **최소 권한 원칙**: 필요한 최소한의 권한만 부여
-- **심층 방어 (Defense in Depth)**: 여러 계층의 보안 적용
-- **안전한 기본값**: 기본 설정은 항상 가장 안전하게
-- **신뢰하지 않기**: 모든 외부 입력은 잠재적 위협으로 간주
+- **Least privilege**: grant only the minimum permissions required.
+- **Defense in depth**: layer security controls.
+- **Secure defaults**: defaults should be the safest option.
+- **Trust nothing**: treat every external input as a potential threat.
 
 ---
 
-## 1. 입력 검증 (Input Validation)
+## 1. Input Validation
 
-### 1.1 기본 원칙
+### 1.1 Basics
 
-- **모든 입력은 신뢰하지 않음** (사용자 입력, API 응답, 파일 등)
-- **화이트리스트 방식 검증** 우선 (허용된 것만 통과)
-- 서버 측에서 **반드시** 재검증 (클라이언트 검증만으로 불충분)
+- **Trust no input** (user input, API responses, files, etc.).
+- **Prefer allowlist validation** (let only the permitted pass).
+- The server **must** re-validate (client-side validation alone is
+  insufficient).
 
-### 1.2 검증 항목
+### 1.2 What to Validate
 
-| 항목 | 검증 내용 |
-|------|----------|
-| 타입 | 예상되는 데이터 타입 확인 |
-| 길이 | 최소/최대 길이 제한 |
-| 범위 | 숫자 범위, 날짜 범위 등 |
-| 형식 | 정규식 패턴 매칭 |
-| 비즈니스 규칙 | 도메인 특화 규칙 |
+| Aspect | What to Check |
+|--------|---------------|
+| Type | The expected data type |
+| Length | Minimum / maximum length |
+| Range | Numeric range, date range, etc. |
+| Format | Regex pattern matching |
+| Business rules | Domain-specific constraints |
 
-### 1.3 C# 예시
+### 1.3 C# Example
 
 ```csharp
-// 잘못된 예
 // Bad practice
 public void ProcessData(string userInput)
 {
     var query = $"SELECT * FROM Users WHERE Name = '{userInput}'";
 }
 
-// 올바른 예
 // Good practice
 public void ProcessData(string userInput)
 {
     if (string.IsNullOrWhiteSpace(userInput))
     {
-        throw new ArgumentException("입력값이 비어있습니다.");
-        // Input value is empty.
+        throw new ArgumentException("Input value is empty.");
     }
 
     if (userInput.Length > 100)
     {
-        throw new ArgumentException("입력값이 너무 깁니다.");
-        // Input value is too long.
+        throw new ArgumentException("Input value is too long.");
     }
 
-    // 파라미터화된 쿼리 사용
-    // Use parameterized query
+    // Use a parameterized query
     using var command = new SqlCommand("SELECT * FROM Users WHERE Name = @name");
     command.Parameters.AddWithValue("@name", userInput);
 }
@@ -62,51 +58,48 @@ public void ProcessData(string userInput)
 
 ---
 
-## 2. 출력 인코딩 (Output Encoding)
+## 2. Output Encoding
 
-### 2.1 컨텍스트별 인코딩
+### 2.1 Encoding per Context
 
-| 출력 컨텍스트 | 인코딩 방법 |
-|--------------|------------|
-| HTML Body | HTML Entity Encoding |
-| HTML Attribute | Attribute Encoding |
-| JavaScript | JavaScript Encoding |
-| URL Parameter | URL Encoding |
-| CSS | CSS Encoding |
-| SQL | 파라미터화된 쿼리 |
+| Output Context | Encoding |
+|----------------|----------|
+| HTML body | HTML entity encoding |
+| HTML attribute | Attribute encoding |
+| JavaScript | JavaScript encoding |
+| URL parameter | URL encoding |
+| CSS | CSS encoding |
+| SQL | Parameterized queries |
 
-### 2.2 XSS 방지
+### 2.2 XSS Prevention
 
 ```csharp
-// HTML 인코딩
 // HTML encoding
 var safeOutput = System.Web.HttpUtility.HtmlEncode(userInput);
 
-// ASP.NET Core Razor에서는 자동 인코딩
-// Auto-encoding in ASP.NET Core Razor
-@Model.UserName  // 자동으로 HTML 인코딩됨
+// ASP.NET Core Razor auto-encodes
+@Model.UserName  // Encoded automatically
 ```
 
 ---
 
-## 3. 인증 및 세션 관리
+## 3. Authentication and Session Management
 
-### 3.1 비밀번호 정책
+### 3.1 Password Policy
 
-- 최소 12자 이상
-- 대소문자, 숫자, 특수문자 조합
-- 일반적인 비밀번호 패턴 금지
-- **bcrypt, Argon2** 등 안전한 해시 알고리즘 사용
+- At least 12 characters.
+- Mix of uppercase, lowercase, digits, and special characters.
+- Disallow common password patterns.
+- Use a strong hash algorithm such as **bcrypt** or **Argon2**.
 
-### 3.2 세션 관리
+### 3.2 Session Management
 
-- 세션 ID는 암호학적으로 안전한 난수 생성기 사용
-- 로그인 성공 시 세션 ID 재생성
-- 적절한 세션 타임아웃 설정
-- HTTPS 전용 쿠키 사용 (`Secure`, `HttpOnly`, `SameSite` 속성)
+- Generate session IDs with a cryptographically secure RNG.
+- Regenerate the session ID on successful login.
+- Set an appropriate session timeout.
+- Use HTTPS-only cookies (`Secure`, `HttpOnly`, `SameSite`).
 
 ```csharp
-// 쿠키 설정 예시
 // Cookie configuration example
 services.ConfigureApplicationCookie(options =>
 {
@@ -120,26 +113,24 @@ services.ConfigureApplicationCookie(options =>
 
 ---
 
-## 4. 접근 제어
+## 4. Access Control
 
-### 4.1 원칙
+### 4.1 Principles
 
-- **인증 (Authentication)**: 사용자가 누구인지 확인
-- **인가 (Authorization)**: 사용자가 무엇을 할 수 있는지 확인
-- 모든 요청에서 권한 검증 수행
+- **Authentication** identifies who the user is.
+- **Authorization** decides what the user is allowed to do.
+- Authorize on every request.
 
-### 4.2 안티 패턴
+### 4.2 Anti-Pattern
 
 ```csharp
-// 잘못된 예: 클라이언트 제공 ID로 직접 접근
-// Bad: Direct access with client-provided ID
+// Bad: direct access using a client-provided ID
 public IActionResult GetDocument(int documentId)
 {
-    return Ok(_repository.GetById(documentId));  // 위험!
+    return Ok(_repository.GetById(documentId));  // Dangerous!
 }
 
-// 올바른 예: 소유권 검증
-// Good: Ownership verification
+// Good: verify ownership
 public IActionResult GetDocument(int documentId)
 {
     var document = _repository.GetById(documentId);
@@ -155,29 +146,28 @@ public IActionResult GetDocument(int documentId)
 
 ---
 
-## 5. 암호화
+## 5. Cryptography
 
-### 5.1 알고리즘 선택
+### 5.1 Algorithm Selection
 
-| 용도 | 권장 알고리즘 |
-|------|-------------|
-| 대칭키 암호화 | AES-256-GCM |
-| 비대칭키 암호화 | RSA-2048 이상, ECDSA |
-| 해시 (일반) | SHA-256 이상 |
-| 비밀번호 해시 | bcrypt, Argon2, PBKDF2 |
-| 난수 생성 | `RandomNumberGenerator` |
+| Use Case | Recommended Algorithm |
+|----------|-----------------------|
+| Symmetric encryption | AES-256-GCM |
+| Asymmetric encryption | RSA-2048+, ECDSA |
+| General hashing | SHA-256+ |
+| Password hashing | bcrypt, Argon2, PBKDF2 |
+| Random number generation | `RandomNumberGenerator` |
 
-### 5.2 금지 알고리즘
+### 5.2 Forbidden Algorithms
 
-- ❌ MD5 (해시 충돌 취약)
-- ❌ SHA-1 (해시 충돌 취약)
-- ❌ DES, 3DES (키 길이 부족)
-- ❌ `System.Random` (암호학적으로 안전하지 않음)
+- ❌ MD5 (hash-collision vulnerable)
+- ❌ SHA-1 (hash-collision vulnerable)
+- ❌ DES, 3DES (key length insufficient)
+- ❌ `System.Random` (not cryptographically secure)
 
-### 5.3 안전한 난수 생성
+### 5.3 Secure Random Generation
 
 ```csharp
-// 안전한 난수 생성
 // Secure random number generation
 using var rng = RandomNumberGenerator.Create();
 var bytes = new byte[32];
@@ -187,155 +177,144 @@ var token = Convert.ToBase64String(bytes);
 
 ---
 
-## 6. 에러 처리 및 로깅
+## 6. Error Handling and Logging
 
-### 6.1 에러 처리 원칙
+### 6.1 Error Handling Principles
 
-- 상세한 에러 메시지를 사용자에게 노출하지 않음
-- 내부적으로는 상세 로깅, 외부에는 일반적 메시지
-- 스택 트레이스 노출 금지
+- Do not expose detailed error messages to the user.
+- Log details internally; return generic messages externally.
+- Never expose stack traces.
 
 ```csharp
-// 잘못된 예
-// Bad practice
+// Bad
 catch (Exception ex)
 {
-    return BadRequest(ex.ToString());  // 스택 트레이스 노출!
+    return BadRequest(ex.ToString());  // Stack trace leak!
 }
 
-// 올바른 예
-// Good practice
+// Good
 catch (Exception ex)
 {
-    _logger.LogError(ex, "데이터 처리 중 오류 발생");
-    // Error occurred during data processing
-    return BadRequest("요청을 처리할 수 없습니다.");
-    // Unable to process the request.
+    _logger.LogError(ex, "Error occurred during data processing");
+    return BadRequest("Unable to process the request.");
 }
 ```
 
-### 6.2 로깅 주의사항
+### 6.2 Logging Cautions
 
-**로깅 금지 항목:**
-- 비밀번호, API 키, 토큰
-- 신용카드 번호, 주민등록번호
-- 개인 식별 정보 (PII)
+**Do NOT log:**
+
+- Passwords, API keys, tokens
+- Credit card numbers, national IDs
+- Personally identifiable information (PII)
 
 ---
 
-## 7. SQL Injection 방지
+## 7. SQL Injection Prevention
 
-### 7.1 필수 규칙
+### 7.1 Required Rules
 
-- **항상 파라미터화된 쿼리 사용**
-- 문자열 연결로 쿼리 생성 금지
-- ORM 사용 시에도 Raw SQL 주의
+- **Always use parameterized queries.**
+- Do not build queries via string concatenation.
+- Watch raw SQL even when using an ORM.
 
 ```csharp
-// 잘못된 예: SQL Injection 취약
 // Bad: SQL Injection vulnerable
 var query = $"SELECT * FROM Users WHERE Email = '{email}'";
 
-// 올바른 예: 파라미터화된 쿼리
-// Good: Parameterized query
+// Good: parameterized query
 var query = "SELECT * FROM Users WHERE Email = @Email";
 command.Parameters.AddWithValue("@Email", email);
 
-// Entity Framework 사용 시
 // When using Entity Framework
 var user = context.Users.FirstOrDefault(u => u.Email == email);
 ```
 
 ---
 
-## 8. 파일 업로드 보안
+## 8. File Upload Security
 
-### 8.1 검증 항목
+### 8.1 What to Validate
 
-- 파일 확장자 화이트리스트 검증
-- MIME 타입 검증 (확장자만으로 불충분)
-- 파일 크기 제한
-- 파일 내용 검사 (매직 바이트)
-- 업로드 경로를 웹 루트 외부로 설정
+- Allowlist file extensions.
+- Validate MIME types (extension alone is insufficient).
+- Enforce a maximum file size.
+- Inspect file contents (magic bytes).
+- Store uploads outside the web root.
 
-### 8.2 파일명 처리
+### 8.2 Filename Handling
 
 ```csharp
-// 안전한 파일명 생성
-// Generate safe filename
+// Generate a safe filename
 var safeFileName = Path.GetRandomFileName() +
     Path.GetExtension(originalFileName);
 
-// 경로 조작 방지
 // Prevent path traversal
-var fileName = Path.GetFileName(userProvidedPath);  // 경로 제거
+var fileName = Path.GetFileName(userProvidedPath);
 ```
 
 ---
 
-## 9. 의존성 보안
+## 9. Dependency Security
 
-### 9.1 관리 원칙
+### 9.1 Management Principles
 
-- 정기적인 의존성 업데이트
-- 취약점 스캔 도구 사용 (`dotnet list package --vulnerable`)
-- 사용하지 않는 패키지 제거
-- 신뢰할 수 있는 소스에서만 패키지 설치
+- Update dependencies regularly.
+- Use vulnerability scanners (`dotnet list package --vulnerable`).
+- Remove unused packages.
+- Install packages only from trusted sources.
 
-### 9.2 취약점 확인
+### 9.2 Vulnerability Check
 
 ```bash
-# NuGet 패키지 취약점 확인
 # Check NuGet package vulnerabilities
 dotnet list package --vulnerable
 
-# 또는 OWASP Dependency-Check 사용
 # Or use OWASP Dependency-Check
 ```
 
 ---
 
-## 10. 통신 보안
+## 10. Communication Security
 
-### 10.1 HTTPS 필수
+### 10.1 HTTPS is Mandatory
 
-- 모든 통신에 TLS 1.2 이상 사용
-- HTTP → HTTPS 리다이렉션 적용
-- HSTS 헤더 설정
+- Use TLS 1.2 or higher for all communication.
+- Redirect HTTP → HTTPS.
+- Set HSTS headers.
 
 ```csharp
-// ASP.NET Core HTTPS 강제
 // Force HTTPS in ASP.NET Core
 app.UseHttpsRedirection();
 app.UseHsts();
 ```
 
-### 10.2 API 보안
+### 10.2 API Security
 
-- API 키는 헤더로 전송 (URL 파라미터 금지)
-- Rate Limiting 적용
-- CORS 정책 최소화
-
----
-
-## 11. 체크리스트
-
-### 코드 리뷰 시 확인 항목
-
-- [ ] 모든 사용자 입력에 검증 적용
-- [ ] SQL 쿼리가 파라미터화되어 있음
-- [ ] 출력 시 적절한 인코딩 적용
-- [ ] 민감 정보가 로그에 기록되지 않음
-- [ ] 에러 메시지에 상세 정보 미노출
-- [ ] 파일 업로드 시 적절한 검증 수행
-- [ ] 암호화에 안전한 알고리즘 사용
-- [ ] 접근 제어가 모든 엔드포인트에 적용
-- [ ] HTTPS 통신 강제
-- [ ] 의존성 취약점 검사 완료
+- Pass API keys in headers (never in URL parameters).
+- Apply rate limiting.
+- Tighten CORS policies.
 
 ---
 
-## 12. 참고 자료
+## 11. Checklist
+
+### Items to Verify During Code Review
+
+- [ ] All user input is validated.
+- [ ] SQL queries are parameterized.
+- [ ] Output is appropriately encoded.
+- [ ] Sensitive information is not logged.
+- [ ] Error messages do not leak detail.
+- [ ] File uploads are validated thoroughly.
+- [ ] Cryptography uses secure algorithms.
+- [ ] Access control is enforced on every endpoint.
+- [ ] HTTPS is enforced.
+- [ ] Dependency vulnerability scan was performed.
+
+---
+
+## 12. References
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)

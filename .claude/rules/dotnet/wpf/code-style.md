@@ -1,110 +1,118 @@
-# WPF Project 코드 생성 지침
+# WPF Project Code Generation Guidelines
 
-## 핵심 원칙
+## Core Principles
 
-- UI 커스터마이징 시 WPF Custom Control Library 프로젝트 사용
-- Converter, WPF UI Service Layer는 WPF Class Library 프로젝트 사용
-- MVVM 프레임워크는 `mvvm-framework.md` 설정에 따라 결정
+- For UI customization, use a WPF Custom Control Library project.
+- For Converters and WPF UI service layers, use a WPF Class Library
+  project.
+- The MVVM framework is decided per the `mvvm-framework.md` configuration.
 
 ---
 
 ## 1. Dependency Injection
 
-> **📌 상세 가이드**: `/configuring-dependency-injection` skill 참조
+> **📌 Detailed guide**: see the `/configuring-dependency-injection` skill.
 
-- 기본적으로 AddSingleton()만 사용
-- DI 컨테이너 구성 방식은 MVVM 프레임워크에 따라 결정:
+- By default, use `AddSingleton()` only.
+- The DI container composition depends on the active MVVM framework:
   - CommunityToolkit.Mvvm → GenericHost (`Microsoft.Extensions.Hosting`)
   - Prism 9 → PrismApplication (`IContainerRegistry`)
 
 ---
 
-## 2. 솔루션 및 프로젝트 구조
+## 2. Solution and Project Structure
 
-> **📌 상세 가이드**: `/structuring-wpf-projects` skill 참조
+> **📌 Detailed guide**: see the `/structuring-wpf-projects` skill.
 
-**프로젝트 명명 규칙:**
+**Project naming conventions:**
 
-| 접미사 | 타입 | 용도 |
-|--------|------|------|
-| `.Abstractions` | .NET Class Library | Interface, abstract class (IoC) |
-| `.Core` | .NET Class Library | 비즈니스 로직 (UI 독립) |
-| `.ViewModels` | .NET Class Library | MVVM ViewModel (UI 독립) |
-| `.WpfServices` | WPF Class Library | WPF 관련 서비스 |
-| `.WpfApp` | WPF Application | 실행 진입점 |
-| `.UI` | WPF Custom Control Library | 커스텀 컨트롤 |
+| Suffix | Type | Purpose |
+|--------|------|---------|
+| `.Abstractions` | .NET Class Library | Interfaces, abstract classes (IoC) |
+| `.Core` | .NET Class Library | Business logic (UI-independent) |
+| `.ViewModels` | .NET Class Library | MVVM ViewModels (UI-independent) |
+| `.WpfServices` | WPF Class Library | WPF-related services |
+| `.WpfApp` | WPF Application | Entry point |
+| `.UI` | WPF Custom Control Library | Custom controls |
 
-> ⚠️ Prism 9 사용 시 `.Modules.*` 프로젝트 구조 추가 가능. 상세는 `structuring-wpf-projects/PRISM.md` 참조.
+> ⚠️ When Prism 9 is used, `.Modules.*` project structure may be
+> appropriate. See `structuring-wpf-projects/PRISM.md` for details.
 
 ---
 
-## 3. MVVM 패턴
+## 3. MVVM Pattern
 
-> **📌 MVVM 프레임워크 선택**: `mvvm-framework.md` 참조
+> **📌 MVVM framework selection**: see `mvvm-framework.md`.
 
-### 핵심 제약 (프레임워크 공통)
+### Hard Constraints (framework-agnostic)
 
-- **ViewModel 클래스에 UI 프레임워크 의존성 금지**
-  - `System.Windows`로 시작하는 클래스 참조 금지
-  - 예외: Custom Control 프로젝트 내부 ViewModel
-- **MVVM 제약은 ViewModel에만 적용**
-  - Converter, Service, Manager는 UI 프레임워크 참조 가능
+- **ViewModel classes must not depend on the UI framework.**
+  - References to classes whose namespace starts with `System.Windows`
+    are forbidden.
+  - Exception: ViewModels declared inside a Custom Control project.
+- **MVVM constraints apply to ViewModels only.**
+  - Converters, Services, and Managers may reference the UI framework.
 
-### 참조 어셈블리 규칙
+### Reference Assembly Rules
 
-**ViewModel 프로젝트 참조 금지:**
-- ❌ `WindowsBase.dll` (ICollectionView 포함)
+**Prohibited references in ViewModel projects:**
+
+- ❌ `WindowsBase.dll` (contains `ICollectionView`)
 - ❌ `PresentationFramework.dll`
 - ❌ `PresentationCore.dll`
 
-**ViewModel 프로젝트 참조 가능:**
-- ✅ BCL 타입만 (IEnumerable, ObservableCollection 등)
-- ✅ MVVM 프레임워크 패키지 (CommunityToolkit.Mvvm 또는 Prism.Core)
+**Allowed references in ViewModel projects:**
+
+- ✅ BCL types only (`IEnumerable`, `ObservableCollection`, etc.)
+- ✅ The chosen MVVM framework package (CommunityToolkit.Mvvm or
+  Prism.Core)
 
 ---
 
-## 4. XAML 코드 작성
+## 4. XAML Authoring
 
-> **📌 상세 가이드**: `/designing-wpf-customcontrol-architecture` skill 참조
+> **📌 Detailed guide**: see the `/designing-wpf-customcontrol-architecture` skill.
 
-- CustomControl + ResourceDictionary를 통한 Stand-Alone Control Style 사용
-- Generic.xaml은 MergedDictionaries 허브로만 사용
-- 각 컨트롤 스타일을 개별 XAML 파일로 분리
-
----
-
-## 5. CollectionView MVVM 패턴
-
-> **📌 상세 가이드**: `/managing-wpf-collectionview-mvvm` skill 참조
-
-- Service Layer를 통해 CollectionViewSource 접근 캡슐화
-- ViewModel은 IEnumerable만 사용 (WPF 타입 노출 금지)
+- Use a stand-alone control style via CustomControl + ResourceDictionary.
+- Use `Generic.xaml` only as a `MergedDictionaries` hub.
+- Split each control's style into its own XAML file.
 
 ---
 
-## 6. Popup 포커스 관리
+## 5. CollectionView MVVM Pattern
 
-> **📌 상세 가이드**: `/managing-wpf-popup-focus` skill 참조
+> **📌 Detailed guide**: see the `/managing-wpf-collectionview-mvvm` skill.
 
-- Popup 사용 시 PreviewMouseDown 이벤트로 포커스 관리 필수
-
----
-
-## 7. DataTemplate / Navigation 매핑
-
-> **📌 상세 가이드**: `/mapping-viewmodel-view-datatemplate` skill 참조
-
-- View-ViewModel 매핑 방식은 MVVM 프레임워크에 따라 결정:
-  - CommunityToolkit.Mvvm → Mappings.xaml DataTemplate 매핑
-  - Prism 9 → RegionManager + RegisterForNavigation
+- Encapsulate `CollectionViewSource` access behind a service layer.
+- ViewModels expose `IEnumerable` only (no WPF types).
 
 ---
 
-## 8. 고성능 렌더링 (DrawingContext)
+## 6. Popup Focus Management
 
-> **📌 상세 가이드**: `/rendering-with-drawingcontext` skill 참조
+> **📌 Detailed guide**: see the `/managing-wpf-popup-focus` skill.
 
-- 대량 도형 렌더링 시 Shape 대신 DrawingContext 사용 (10-50배 성능 향상)
-- FrameworkElement 상속 후 OnRender에서 직접 그리기
-- Pen, Brush, Geometry에 Freeze() 적용 필수
-- InvalidateVisual()은 데이터 추가 완료 후 **한 번만** 호출
+- When using `Popup`, manage focus via the `PreviewMouseDown` event.
+
+---
+
+## 7. DataTemplate / Navigation Mapping
+
+> **📌 Detailed guide**: see the `/mapping-viewmodel-view-datatemplate` skill.
+
+- View-to-ViewModel mapping depends on the active MVVM framework:
+  - CommunityToolkit.Mvvm → `Mappings.xaml` `DataTemplate` mapping
+  - Prism 9 → `RegionManager` + `RegisterForNavigation`
+
+---
+
+## 8. High-Performance Rendering (`DrawingContext`)
+
+> **📌 Detailed guide**: see the `/rendering-with-drawingcontext` skill.
+
+- For rendering large numbers of shapes, use `DrawingContext` instead
+  of `Shape` (10–50× faster).
+- Inherit from `FrameworkElement` and draw inside `OnRender`.
+- `Freeze()` is mandatory for `Pen`, `Brush`, and `Geometry`.
+- Call `InvalidateVisual()` **once**, after the bulk data load is
+  complete.
