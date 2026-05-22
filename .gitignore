@@ -417,10 +417,11 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# Claude Code local settings
-# Claude Code 로컬 설정
+# Claude Code local settings (personal, do not commit)
+# Claude Code 로컬 설정 (개인 설정, 커밋 금지)
 .claude/settings.local.json
+.claude/*.local.md
+CLAUDE.local.md
 
 # Serena MCP workspace
 .serena/
-.claude/settings.local.json

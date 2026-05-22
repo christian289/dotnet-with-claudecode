@@ -17,7 +17,7 @@ Claude Code plugin for WPF development.
 ## Requirements
 
 - Claude Code CLI
-- .NET 10.0 SDK (for wpf-dev-pack hooks)
+- .NET SDK 10.0.300+ (for wpf-dev-pack hooks)
 - Required Claude Code plugins for wpf-dev-pack:
   - [context7](https://github.com/upstash/context7)
   - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)

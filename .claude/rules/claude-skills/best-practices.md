@@ -388,8 +388,104 @@ Use the GitHub:create_issue tool to create issues.
 
 ---
 
-## 11. 공식 문서
+## 11. Compaction 생존 — 중요 콘텐츠는 위로
+
+### 11.1 배경: 무엇이 compaction에서 살아남는가
+
+Claude Code 대화가 길어지면 `/compact`로 자동/수동 압축됩니다. 압축 후
+컨텍스트에 남는 것과 사라지는 것은 [공식
+문서](https://code.claude.com/docs/en/context-window#what-survives-compaction)에
+명시되어 있고, **skill 작성에 직결되는 핵심 사실은 다음과 같습니다**:
+
+| 항목 | compaction 후 |
+|------|---------------|
+| 시스템 프롬프트 | 재주입됨 |
+| Auto memory (`MEMORY.md`, 첫 200줄 / 25KB) | 재주입됨 |
+| `~/.claude/CLAUDE.md`, 프로젝트 `CLAUDE.md` 계층 | 재주입됨 |
+| 환경 정보 | 재주입됨 |
+| MCP 도구 이름 (deferred) | 재주입됨 |
+| **Skill description 목록** | **재주입 안 됨**. 실제로 호출했던 skill만 보존됨 (`noSurviveCompact: true`) |
+| 대화의 verbatim 본문 | 구조화된 summary로 대체 (사용자 의도·핵심 기술·수정 파일·에러와 해결·미완 작업만 보존) |
+| Tool 출력·중간 추론 | 사라짐 |
+
+### 11.2 Skill 저자가 알아야 할 함의
+
+- Skill description은 사용자가 그 skill을 명시적으로 호출하기 전엔
+  compaction 후 사라짐 → description은 **첫 호출을 유도하기 위한
+  미끼**로 설계해야 함
+- SKILL.md 본문은 호출 시점에 컨텍스트로 들어오지만, compaction 후엔
+  conversation summary로 압축됨. summary가 **verbatim으로 보존하는 것은
+  핵심 코드 스니펫·파일 경로·구체적 결정사항**이고, 줄글로 풀어쓴
+  지침·하단 예시·장황한 표 본문은 잘려나감
+
+### 11.3 Critical-first 작성 규칙
+
+skill을 작성할 때 **중요한 콘텐츠일수록 위에 두어야** compaction
+summary에 verbatim으로 살아남거나 "key technical concepts"로 인식될
+가능성이 높아집니다.
+
+#### 권장 섹션 순서
+
+```
+1. Frontmatter
+2. (선택) Essential / Post-Compact 섹션 ← 가장 위에, non-negotiable 규칙
+3. 핵심 워크플로우 (번호 매김된 단계)
+4. 단계별 상세 (간결한 표 + 직접 명령형 문장)
+5. 예시 / 케이스별 패턴
+6. Notes / 미주
+7. 참조 (See [reference.md])
+```
+
+#### `Essential (Post-Compact)` 패턴
+
+비협상 규칙은 본문 상단(권장: 100줄 이내)에 다음 형태로 명시적 표기:
+
+```markdown
+## Essential (Post-Compact)
+
+These rules MUST survive context compression. If prior context is lost,
+re-read this section.
+
+1. <hard rule one — one line, numbered>
+2. <hard rule two>
+...
+```
+
+이 패턴은 `wpf-dev-pack/.claude/CLAUDE.md`의 "Essential (Post-Compact)"
+섹션을 그대로 본뜬 것입니다. 헤더 텍스트 자체가 summary에 인용될 가능성
+을 높이는 신호 역할을 합니다.
+
+#### 피해야 할 형태
+
+- 핵심 규칙을 본문 하단의 "Notes" 영역에만 두기 → summary에서 사라질
+  가능성 높음
+- 규칙을 *예시 코드 안에만* 표현 (예시 코드는 summary가 잘 안 잡음)
+- 규칙을 한 단락 줄글로 풀어쓰기 → 번호·표·짧은 imperative 문장이 더
+  생존력 강함
+- 규칙을 다른 파일 참조로만 대체 (`자세한 내용은 reference.md 참조`만 두고
+  본문에는 규칙 미기재) → reference는 점진적 공개용이지 규칙 위임용 아님
+
+### 11.4 체크리스트 (compaction-aware authoring)
+
+- [ ] 가장 중요한 hard rule이 본문 첫 100줄 안에 등장
+- [ ] 비협상 규칙이 있다면 `Essential (Post-Compact)` 헤더 아래 명시
+- [ ] 규칙이 *예시 코드에만* 표현되지 않음 (별도 imperative 문장으로
+      먼저 기술)
+- [ ] 워크플로우는 번호 단계로 (산문 X)
+- [ ] 표 본문에 핵심 규칙을 두지 않음 (표는 보조용; 규칙은 표 위에
+      한 줄로 먼저)
+- [ ] 외부 파일 참조는 규칙을 *대신*하지 않고 *보충*함
+
+### 11.5 참고
+
+- 공식 문서: <https://code.claude.com/docs/en/context-window#what-survives-compaction>
+- 참고 패턴: `wpf-dev-pack/.claude/CLAUDE.md`의 `Essential (Post-Compact)` 섹션
+
+---
+
+## 12. 공식 문서
 
 - [Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Skills Quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart)
 - [Skills in Claude Code](https://code.claude.com/docs/en/skills)
+- [Claude Code Context Window — What survives compaction](https://code.claude.com/docs/en/context-window#what-survives-compaction)

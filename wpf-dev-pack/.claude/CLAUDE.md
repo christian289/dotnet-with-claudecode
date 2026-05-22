@@ -60,6 +60,32 @@ These rules MUST survive context compression. If prior context is lost, re-read 
 
 ---
 
+## Per-Project Language Preference
+
+The plugin supports a per-project response-language preference, read by
+the `LanguagePreferenceLoader` SessionStart hook at the start of every
+new conversation.
+
+- **Configure**: run `/wpf-dev-pack:configuring-wpf-dev-pack-language`
+  to write `.claude/wpf-dev-pack.local.md` with a `language:` field
+  (BCP-47 code, e.g. `ko`, `en`, `ja`, `zh`).
+- **Effect**: from the next session onward, the hook injects a directive
+  into the system context telling Claude to respond in that language.
+  The current session is not affected by an in-session change because
+  SessionStart hooks fire only at session start.
+- **Scope**: applies to user-facing responses within the wpf-dev-pack
+  context. Skill content language policy (SKILL.md body, code comments)
+  is unaffected — it remains English.
+- **Override**: the user can always override in-conversation
+  ("respond in English" / "한글로 답해줘"). The hook only sets the
+  default for the session.
+- **Revert**: delete `.claude/wpf-dev-pack.local.md` or remove its
+  `language:` field. The hook will then emit nothing, and the plugin's
+  default language behavior applies.
+
+The file is personal and is covered by the repo's `.gitignore`
+(`.claude/*.local.md`).
+
 ## .NET Version Configuration
 
 ### Version Selection Rules

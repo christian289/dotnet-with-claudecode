@@ -27,10 +27,17 @@ dotnet-with-claudecode/
 
 ## Plugin Version Update Checklist
 
-플러그인 버전 업데이트 시 반드시 수정해야 하는 파일:
+**버전 변경은 `/wpf-dev-pack-release` 스킬을 통해서만 수행합니다.**
+이 스킬이 아래 파일들을 lockstep으로 갱신합니다. 어떤 다른 워크플로우도
+(피드백 반영, 새 skill 추가, hook 추가, 문서 수정 등 무엇이든) `version`
+필드를 직접 손대지 않습니다. 버전 범프가 필요한 변경이면 작업을
+완료한 뒤 `/wpf-dev-pack-release`를 별도로 호출하세요.
+
+플러그인 릴리스 스킬이 갱신하는 파일:
 - `<plugin>/.claude-plugin/plugin.json` — `version` 필드
 - `<plugin>/README.md` — 버전 뱃지
 - `<plugin>/README.ko.md` — 버전 뱃지
+- `docs/changelogs/<plugin>.md` — 새 버전 항목 추가
 
 ## AvaloniaUI Skills
 

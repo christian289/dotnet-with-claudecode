@@ -1,6 +1,23 @@
 {
-  "description": "WPF Dev Pack hooks - MCP dependency check, WPF keyword detection, XAML validation, MVVM violation detection, build error diagnosis, code formatting, and HandMirror API verification reminder (C# file-based apps, .NET 10 required)",
+  "description": "WPF Dev Pack hooks - .NET SDK version check, MCP dependency check, WPF keyword detection, XAML validation, MVVM violation detection, build error diagnosis, code formatting, HandMirror API verification reminder, and per-project language preference loader (C# file-based apps, .NET SDK 10.0.300+ required). Note: feedback document anonymity audit and Microsoft skill creator reminder are wired through skill frontmatter, not here.",
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/DotnetVersionChecker.cs\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/LanguagePreferenceLoader.cs\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "mcp__plugin_context7|mcp__claude_ai_Microsoft_Learn",

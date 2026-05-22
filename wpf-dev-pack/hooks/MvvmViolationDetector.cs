@@ -74,7 +74,7 @@ static bool IsViewModelFile(string filePath)
     var dirPath = Path.GetDirectoryName(filePath)?.ToLowerInvariant() ?? "";
 
     // File name contains "viewmodel" or "vm"
-    if (fileName.Contains("viewmodel") || fileName.EndsWith("vm"))
+    if (fileName.Contains("viewmodel"))
         return true;
 
     // File is in a ViewModels directory

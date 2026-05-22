@@ -58,7 +58,7 @@ git commit -m "feat: add new skill for XYZ"
 1. WPF 작업 세션에서 `wpf-dev-pack`을 사용한 뒤, 사용자 호출 스킬
    `/wpf-dev-pack:collecting-wpf-dev-pack-feedback`을 실행합니다.
 2. 스킬이 해당 세션을 분석하여 현재 디렉토리에
-   `YYYY-MM-DD-<topic>-wpf-devpack-feedback.md`를 생성합니다.
+   `<topic>-wpf-dev-pack-feedback.md`를 생성합니다.
    git을 건드리지 않으며 이 저장소를 찾지도 않습니다.
 3. 생성된 md 파일을 이 저장소의 `FeedbackDocs/` 폴더로 옮기고(파일명 유지)
    Pull Request를 엽니다.
@@ -67,10 +67,46 @@ git commit -m "feat: add new skill for XYZ"
 구체적인 `wpf-dev-pack` 변경으로 분류·반영합니다.
 
 **FeedbackDocs 규칙:**
-- 세션/주제당 파일 1개, `YYYY-MM-DD-<topic>-wpf-devpack-feedback.md` 형식.
-- 문서 본문은 기존 코퍼스와의 일관성을 위해 한글로 작성하며, 스킬이 이
-  구조를 자동으로 생성합니다.
+- 세션/주제당 파일 1개, `<topic>-wpf-dev-pack-feedback.md` 형식.
+- 문서 본문 언어는 제한하지 않습니다 — 한글, 영문, 혼용 모두 무방합니다.
+  스킬이 문서 구조를 자동으로 생성합니다.
 - 본인 문서만 추가하고 타인의 피드백 문서는 수정·삭제하지 않습니다.
+
+**개인을 특정할 수 있는 정보 금지.** 피드백 문서는 여러 프로젝트에 걸쳐
+재사용되는 산출물이므로, 기술적 현상과 그 인과관계만 서술해야 합니다.
+다음 정보는 절대 포함하지 마세요:
+
+- 프로젝트, 솔루션, 리포지토리, 제품, 코드네임 이름
+- 팀 / 개발자 / 사용자 이름, 이메일, 계정 핸들
+- 이슈가 발생한 날짜·시각
+- 원 코드베이스의 절대 경로 또는 리포지토리 상대 경로
+- 원 프로젝트에 고유한 클래스 / 네임스페이스 / 멤버명
+  (`XxxView`, `XxxViewModel`, `IXxxService` 같은 중립 placeholder로 치환)
+
+공개 프레임워크 / 라이브러리 / API 이름(`HelixToolkit`, `ScottPlot`,
+`CommunityToolkit.Mvvm`, `Prism`, `DispatcherPriority.ApplicationIdle` 등)은
+기술 컨텍스트의 일부이므로 허용됩니다.
+
+**PR 제출 전 셀프 리뷰.** push 직전에 문서를 한 번 더 읽으며 다음 항목을
+직접 확인하세요:
+
+- [ ] 프로젝트 / 솔루션 / 리포지토리 / 제품 / 코드네임 이름이 없는가
+- [ ] 팀 / 개발자 / 사용자 이름·이메일·핸들이 없는가
+- [ ] 원래 이슈가 발생한 날짜·시각이 없는가
+- [ ] 원 코드베이스의 절대 경로·리포지토리 상대 경로가 없는가
+- [ ] 프로젝트 고유 클래스 / 네임스페이스 / 멤버명이 모두 중립
+      placeholder로 치환되었는가
+- [ ] 각 항목이 특정 프로젝트의 사건이 아니라 Phenomenon → Cause → Effect
+      형태의 일반적인 기술 인과 체인으로 기술되어 있는가
+
+위 중 하나라도 실패하면 먼저 문서를 수정한 뒤 PR을 제출하세요.
+
+**PR이 머지된 이후.** 메인테이너는 이 저장소의
+`/applying-wpf-dev-pack-feedback` 스킬을 통해 피드백을 반영합니다. 이
+스킬은 각 항목을 순차적으로 플러그인에 적용한 뒤, 피드백 문서를
+`FeedbackDocs/` 안으로 이동시키고, `FeedbackDocs/APPLIED-LOG.md`에
+적용 내역(전부 적용 / 부분 적용 / 거부)과 반영 커밋을 기록하는 한 줄을
+추가합니다. 기여자는 Applied Log를 직접 작성하지 않습니다.
 
 ## 가이드라인
 

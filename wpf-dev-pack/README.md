@@ -8,7 +8,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.6.4-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
 **58 Skills** · **10 Specialized Agents** · **1 MCP Server**
@@ -104,11 +104,11 @@ claude plugin update wpf-dev-pack@dotnet-claude-plugins
 
 | Requirement | Version | Notes |
 |-------------|---------|-------|
-| .NET SDK | **10.0+** | Required for file-based app hooks |
+| .NET SDK | **10.0.300+** | Required for file-based app hooks |
 | Claude Code | Latest | - |
 | uv | Latest | For Serena MCP |
 
-> **Target Framework vs SDK**: .NET 10 SDK is required to **run wpf-dev-pack** (hooks use file-based apps).
+> **Target Framework vs SDK**: .NET SDK 10.0.300+ is required to **run wpf-dev-pack** (hooks use file-based apps).
 > Generated WPF projects can **target .NET 8+** — install the corresponding SDK alongside .NET 10 if needed.
 
 ### Required Plugin Dependencies

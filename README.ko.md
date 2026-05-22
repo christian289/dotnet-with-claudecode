@@ -17,7 +17,7 @@ WPF 개발을 위한 Claude Code 플러그인.
 ## 요구사항
 
 - Claude Code CLI
-- .NET 10.0 SDK (wpf-dev-pack 훅 실행용)
+- .NET SDK 10.0.300 이상 (wpf-dev-pack 훅 실행용)
 - wpf-dev-pack 필수 Claude Code 플러그인:
   - [context7](https://github.com/upstash/context7)
   - [microsoft-docs](https://github.com/MicrosoftDocs/mcp)

@@ -1,8 +1,12 @@
-# Changelog
+# wpf-dev-pack Changelog
 
 All notable changes to **wpf-dev-pack** are documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to Semantic Versioning.
+
+Version bumps for this plugin are produced by the `/wpf-dev-pack-release`
+skill only. Do not edit `version` fields by hand — see the repository
+`.claude/CLAUDE.md` "Plugin Version Update Checklist" section.
 
 ---
 

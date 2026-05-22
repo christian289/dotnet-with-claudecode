@@ -96,6 +96,12 @@
 |---------|-------|
 | `dependency injection` | `configuring-dependency-injection` |
 
+### Configuration & Setup Keywords
+
+| Keyword | Skill |
+|---------|-------|
+| `language`, `응답 언어`, `set language`, `configure language`, `switch language` | `configuring-wpf-dev-pack-language` |
+
 ### Build & Deployment
 
 | Keyword | Skill |
@@ -149,4 +155,4 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 | **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `flaui-wpf-element-discovery`, `flaui-prism-dialog-discovery`, `scottplot-syncing-modifier-keys-for-mousewheel`, `scottplot-axes-margins-destructive` |
 | **Testing** | `testing-wpf-viewmodels`, `managing-unit-tests` |
 | **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior`, `make-wpf-viewmodel`, `make-wpf-service` |
-| **Meta / Maintenance** | `collecting-wpf-dev-pack-feedback` |
+| **Meta / Maintenance** | `collecting-wpf-dev-pack-feedback`, `configuring-wpf-dev-pack-language` |

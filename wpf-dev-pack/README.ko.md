@@ -8,7 +8,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.6.4-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET_SDK-10.0+-purple.svg)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
 **58개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
@@ -104,11 +104,11 @@ claude plugin update wpf-dev-pack@dotnet-claude-plugins
 
 | 요구사항 | 버전 | 비고 |
 |----------|------|------|
-| .NET SDK | **10.0+** | file-based app 훅 실행에 필수 |
+| .NET SDK | **10.0.300+** | file-based app 훅 실행에 필수 |
 | Claude Code | 최신 | - |
 | uv | 최신 | Serena MCP용 |
 
-> **대상 프레임워크 vs SDK**: .NET 10 SDK는 **wpf-dev-pack 실행**에 필요합니다 (훅이 file-based app 사용).
+> **대상 프레임워크 vs SDK**: .NET SDK 10.0.300 이상은 **wpf-dev-pack 실행**에 필요합니다 (훅이 file-based app 사용).
 > 생성되는 WPF 프로젝트는 **.NET 8 이상을 대상**으로 설정할 수 있습니다 — 필요시 .NET 10과 함께 해당 버전 SDK를 설치하세요.
 
 ### 필수 플러그인 종속성
