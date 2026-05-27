@@ -348,7 +348,88 @@ Do **not** put async cleanup here. If something genuinely must run during `OnExi
 
 ---
 
-## 8. Session Ending (Logoff / Shutdown)
+## 8. Background Callback Racing Dispatcher Shutdown
+
+Cleanup paths sometimes spawn a background callback that later marshals back to the main `Dispatcher` via `Application.Current?.Dispatcher.Invoke(...)`. If the shutdown sequence has already started by the time the callback fires, the marshal throws — and because the callback runs on a non-UI thread, the exception is unhandled and tears the process down ungracefully.
+
+### 8.1 When it fires
+
+Common triggers:
+
+- A fade-out animation (e.g., the ~220 ms splash fade) started by a service's `Dispose()` running inside `App.OnExit`.
+- A `System.Timers.Timer` / `DispatcherTimer` callback queued before shutdown and dispatched during it.
+- A NATS / SignalR / MQTT subscriber callback delivered on a worker thread.
+- An `IHostedService.StopAsync` continuation that posts a final status update via `Dispatcher.Invoke`.
+
+Either of these exceptions appears in the crash log:
+
+| Exception | Cause |
+|---|---|
+| `InvalidOperationException` | The `Dispatcher` was alive when the guard was checked but transitioned to shutting-down before `Invoke` queued the work. |
+| `TaskCanceledException` | `Invoke` was already queued when `BeginInvokeShutdown` cancelled the operation. |
+
+### 8.2 Anti-pattern — broad `catch (Exception)`
+
+```csharp
+// Bad: swallows every exception, including real bugs in the lambda body.
+try
+{
+    Application.Current?.Dispatcher.Invoke(() =>
+    {
+        Application.Current.MainWindow?.Activate();
+    });
+}
+catch (Exception)
+{
+    // silent — hides NullReferenceException, binding mistakes, future regressions
+}
+```
+
+Catching everything masks `NullReferenceException` inside the lambda, hides binding-system mistakes, and makes future regressions invisible. Don't do this.
+
+### 8.3 Recommended pattern — `HasShutdownStarted` guard + narrow catch + diagnostic log
+
+```csharp
+var mainDispatcher = Application.Current?.Dispatcher;
+if (mainDispatcher is { HasShutdownStarted: false })
+{
+    try
+    {
+        mainDispatcher.Invoke(() =>
+        {
+            Application.Current?.MainWindow?.Activate();
+        });
+    }
+    catch (InvalidOperationException ex)
+    {
+        // Race: the dispatcher entered shutdown after the HasShutdownStarted check.
+        _logger?.LogDebug(ex, "Main dispatcher Invoke failed during shutdown race");
+    }
+    catch (TaskCanceledException ex)
+    {
+        // Race: Invoke was cancelled because shutdown is already draining the queue.
+        _logger?.LogDebug(ex, "Main dispatcher Invoke cancelled during shutdown race");
+    }
+}
+```
+
+Rules:
+
+1. **Guard with `HasShutdownStarted`** — cheap pre-check; eliminates the common case.
+2. **Catch only the two race exceptions** — `InvalidOperationException` and `TaskCanceledException`. Anything else is a real bug and must propagate.
+3. **Log at `Debug`** — never silent, never `Error`. The race is expected during normal shutdown.
+4. **Null-guard the logger (`?.`)** — during shutdown the logger itself may already be disposed; the diagnostic log is best-effort.
+5. **Prefer `BeginInvoke` for fire-and-forget paths**; reserve `Invoke` for callbacks that genuinely depend on the result.
+
+### 8.4 Worked example — splash service `OnExit → Dispose` race
+
+A splash service hosted on a dedicated STA thread starts a fade-out animation in `Dispose()`. The `Storyboard.Completed` callback fires on the splash thread and marshals to the main `Dispatcher` to call `MainWindow.Activate()`. If `Dispose()` was reached via `App.OnExit`, the main `Dispatcher` may already be shutting down by the time the fade completes.
+
+The fix is exactly the pattern in §8.3 — the splash service's fade-completed handler must check `HasShutdownStarted` before the `Invoke` and catch the two race exceptions narrowly. See [`implementing-wpf-splash-screen`](../implementing-wpf-splash-screen/SKILL.md) for the full splash architecture.
+
+---
+
+## 9. Session Ending (Logoff / Shutdown)
 
 `SessionEnding` fires when Windows is logging off or shutting down. The OS gives your process a limited amount of time, so you cannot count on long-running cleanup here.
 
@@ -378,7 +459,7 @@ For full-weight cleanup during session end, persist enough state synchronously t
 
 ---
 
-## 9. Checklist
+## 10. Checklist
 
 - [ ] `preventing-dispatcher-deadlock` skill reviewed and applied in the project
 - [ ] `ShutdownMode` set to `OnMainWindowClose` or `OnExplicitShutdown`
@@ -390,20 +471,22 @@ For full-weight cleanup during session end, persist enough state synchronously t
 - [ ] Prism container disposed in `OnExit` only after async cleanup has completed
 - [ ] `OnExit` contains purely synchronous work, no `.GetAwaiter().GetResult()` patterns
 - [ ] `SessionEnding` cleanup is time-boxed to a few seconds
+- [ ] Every background callback that marshals to the main `Dispatcher` guards on `HasShutdownStarted` and catches only `InvalidOperationException` + `TaskCanceledException` (no broad `catch (Exception)`)
 
 ---
 
-## 10. Related Skills
+## 11. Related Skills
 
 | Skill | Relationship |
 |-------|--------------|
 | `preventing-dispatcher-deadlock` | Foundation — explains why sync-over-async deadlocks |
 | `managing-wpf-application-lifecycle` | Broader lifecycle events: Startup, SessionEnding, exception handling |
 | `configuring-dependency-injection` | `IHost` / Prism container registration details |
+| [`implementing-wpf-splash-screen`](../implementing-wpf-splash-screen/SKILL.md) | Real-world `OnExit → Dispose → fade` race that §8 protects against |
 
 ---
 
-## 11. References
+## 12. References
 
 - [Application.ShutdownMode — Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.application.shutdownmode)
 - [Window.Closing Event — Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.window.closing)

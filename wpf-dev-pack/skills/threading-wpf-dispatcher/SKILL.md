@@ -100,3 +100,11 @@ Thread.Sleep(1000);
 // ✅ Use async/await instead
 await Task.Delay(1000);
 ```
+
+## Related Skills
+
+| Skill | Relationship |
+|---|---|
+| [`preventing-dispatcher-deadlock`](../preventing-dispatcher-deadlock/SKILL.md) | Sync-over-async deadlocks during normal operation |
+| [`shutting-down-wpf-gracefully`](../shutting-down-wpf-gracefully/SKILL.md) | Cross-thread `Invoke` racing main-Dispatcher shutdown; guard with `HasShutdownStarted` |
+| [`implementing-wpf-splash-screen`](../implementing-wpf-splash-screen/SKILL.md) | Hosting a `Window` on a dedicated STA thread with `Dispatcher.Run()` |

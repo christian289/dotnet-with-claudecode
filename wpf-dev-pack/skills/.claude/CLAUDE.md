@@ -47,6 +47,7 @@ convention because they act as data, not documentation.
 | `hit test`, `hittest`, `ishittestvisible` | `implementing-hit-testing` |
 | `getawaiter`, `getresult`, `.result`, `.wait()`, `sync over async`, `dispatcher deadlock`, `async event handler`, `async void handler` | `preventing-dispatcher-deadlock` |
 | `graceful shutdown`, `onexit`, `async cleanup`, `onmainwindowclose`, `onexplicitshutdown`, `window.closing async`, `ihost.stopasync shutdown` | `shutting-down-wpf-gracefully` |
+| `splash`, `splash screen`, `splashscreen`, `splashscreenservice`, `sta thread splash`, `foreground handoff`, `cross-thread owner`, `setforegroundwindow handoff`, `dispatcher.run splash` | `implementing-wpf-splash-screen` |
 | `performance` | `rendering-wpf-high-performance` |
 | `visualtree`, `logicaltree` | `navigating-visual-logical-tree` |
 | `validation` | `implementing-wpf-validation` |
@@ -158,7 +159,7 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 | **Performance & Rendering** | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `rendering-wpf-high-performance`, `virtualizing-wpf-ui`, `optimizing-wpf-memory`, `implementing-hit-testing` |
 | **Input & Events** | `routing-wpf-events` |
 | **Styling & Resources** | `managing-styles-resourcedictionary`, `using-xaml-property-element-syntax` |
-| **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `preventing-dispatcher-deadlock`, `shutting-down-wpf-gracefully` |
+| **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `preventing-dispatcher-deadlock`, `shutting-down-wpf-gracefully`, `implementing-wpf-splash-screen` |
 | **UI Interaction** | `managing-wpf-popup-focus`, `binding-enum-command-parameters`, `checking-image-bounds-transform`, `displaying-slider-index`, `highlighting-nodify-connections`, `resolving-icon-font-inheritance` |
 | **Data Access** | `implementing-repository-pattern`, `configuring-console-app-di` |
 | **Architecture & Tree Navigation** | `navigating-visual-logical-tree`, `rendering-wpf-architecture`, `structuring-wpf-projects`, `designing-wpf-customcontrol-architecture` |

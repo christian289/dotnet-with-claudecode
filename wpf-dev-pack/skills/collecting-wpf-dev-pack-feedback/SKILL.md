@@ -129,6 +129,12 @@ directory root — do NOT search for or write into any other repo, and do NOT
 run git). If a file with the same name already exists, append a short
 disambiguating suffix (e.g., `-2`) rather than overwriting.
 
+**Do NOT prefix the filename with a date** (no `YYYY-MM-DD-…`). The Anonymity
+policy in this skill forbids dates inside the document body, and the same
+rule applies to the filename — date prefixes leak when the issue was
+encountered and defeat anonymity. The filename is exactly
+`<topic>-wpf-dev-pack-feedback.md`, nothing prepended.
+
 The document body language is not constrained — use whichever language the
 session naturally produced (Korean, English, or mixed is all fine). Use this
 exact structure:
@@ -199,6 +205,8 @@ and verify every checklist item below against the file content:
       Effect, not as a project incident report
 - [ ] No remaining `작성일` / `출처` / "Date written" / "Source" /
       "Originating project" / "Encountered in" style metadata field exists
+- [ ] The filename itself carries no date prefix — it is exactly
+      `<topic>-wpf-dev-pack-feedback.md`, never `YYYY-MM-DD-<topic>-…`
 
 Public framework / library / API names (`HelixToolkit`, `ScottPlot`,
 `CommunityToolkit.Mvvm`, `Prism`, `DispatcherPriority.ApplicationIdle`, etc.)

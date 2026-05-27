@@ -269,7 +269,17 @@ private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEv
 
 ---
 
-## 6. References
+## 6. Related Skills
+
+| Skill | Relationship |
+|---|---|
+| [`shutting-down-wpf-gracefully`](../shutting-down-wpf-gracefully/SKILL.md) | Async cleanup during `Window.Closing` / `Closed` and graceful `Application.Shutdown()` timing |
+| [`threading-wpf-dispatcher`](../threading-wpf-dispatcher/SKILL.md) | Dispatcher priority and cross-thread marshaling for lifecycle code |
+| [`implementing-wpf-splash-screen`](../implementing-wpf-splash-screen/SKILL.md) | STA-thread splash with cross-thread foreground handoff to `MainWindow` — wires into `OnStartup` and `MainWindow.ContentRendered` |
+
+---
+
+## 7. References
 
 - [Application Management Overview - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/app-development/application-management-overview)
 - [Application Class - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.application)
