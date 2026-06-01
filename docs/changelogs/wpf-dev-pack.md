@@ -10,6 +10,30 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.6.5
+
+### Added
+- New skill: `implementing-wpf-splash-screen` — STA-thread splash with a dedicated `Dispatcher`; strict Activate-before-Close ordering for the cross-thread foreground handoff to MainWindow (Win32 `SetForegroundWindow` grant rules); lock-free `Interlocked.CompareExchange` sentinel for the Show vs Close race; AXAML must not depend on `App.xaml` resources (cross-thread `Freezable`); idempotent `Close()`.
+- New skill: `configuring-wpf-dev-pack-language` — writes `.claude/wpf-dev-pack.local.md` with a BCP-47 `language:` field consumed by the `LanguagePreferenceLoader` SessionStart hook.
+- New hook: `LanguagePreferenceLoader` (SessionStart) — injects the per-project response-language directive into the session context.
+- New hook: `DotnetVersionChecker` (SessionStart) — verifies .NET SDK 10.0.300+ and emits a high-visibility warning if missing or too old.
+- New hook: `FeedbackDocAuditor` (PostToolUse, scoped to `collecting-wpf-dev-pack-feedback`) — pattern-based anonymity audit of newly written `*-wpf-dev-pack-feedback.md` files; exits with code 2 on violation.
+- "Per-Project Language Preference" section added to `.claude/CLAUDE.md`.
+
+### Changed
+- `collecting-wpf-dev-pack-feedback` hardened: mandatory Anonymity policy; separate Sanitize (Step 3) and independent Audit (Step 5) passes; explicit no-date-prefix filename rule (output is exactly `<topic>-wpf-dev-pack-feedback.md`); document body language no longer constrained to Korean.
+- `shutting-down-wpf-gracefully`: new "Background Callback Racing Dispatcher Shutdown" section (`HasShutdownStarted` guard + narrow catch on `InvalidOperationException` / `TaskCanceledException`).
+- `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`: Related Skills cross-links to `implementing-wpf-splash-screen`.
+- wpf-dev-pack `CLAUDE.md` files (plugin / skills / agents) translated to English; Korean mirror added under `.claude.ko/`.
+
+### Moved
+- Per-plugin changelog relocated from `wpf-dev-pack/CHANGELOG.md` to `docs/changelogs/wpf-dev-pack.md`.
+
+### Stats
+- Skills: 60 · Agents: 10 · MCP Servers: 1
+
+---
+
 ## v1.6.4
 
 ### Added
