@@ -1,5 +1,5 @@
 ---
-description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, canvas drag selection hits the wrong position, or FlaUI xUnit tests fail intermittently due to parallel execution. Covers xUnit parallel test disabling (xunit.runner.json), stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, SetCursorPos vs SendInput hit-test issues, drag interpolation tuning, and UIA BoundingRectangle-based coordinate calculation."
+description: "Fixes FlaUI mouse click/drag failures in WPF UI automation. Use when FlaUI drag-and-drop silently fails, Mouse.Down has no effect, SendInput click is ignored, adorner flickers during drag, Keyboard.Press breaks the next mouse gesture, ReleaseAllKeys causes unexpected panning, canvas drag selection hits the wrong position, Keyboard.Type silently enters no text in a TextBox, computed canvas coordinates are off-center on a high-DPI display, cursor repositioning is slow, or FlaUI xUnit tests fail intermittently due to parallel execution. Covers xUnit parallel test disabling (xunit.runner.json), stuck-key diagnosis, ReleaseAllKeys vs ReleaseModifierKeys pattern, Keyboard.Press vs Type distinction, ValuePattern.SetValue fallback when Keyboard.Type is silently dropped, SetCursorPos vs SendInput hit-test issues, Mouse.Position vs Mouse.MoveTo interpolation, drag interpolation tuning, UIA BoundingRectangle-based coordinate calculation, and DPI-aware computed-coordinate scaling (GetEffectiveDpiScale)."
 user-invocable: false
 ---
 
@@ -208,6 +208,20 @@ public static void SendInputMoveAndDown(Point screenPoint)
 }
 ```
 
+### `Mouse.MoveTo` interpolates (animates) — use `Mouse.Position` for an instant non-drag move
+
+`Mouse.MoveTo(pt)` is not a single `SetCursorPos`: FlaUI animates the cursor in multiple steps governed by `Mouse.MovePixelsPerMillisecond`. Over long distances (e.g. moving from a designer corner back to a toolbox search result on every loop iteration) this is visibly slow.
+
+- **Non-drag reposition** (move the cursor with no hit test needed before a click): assign `Mouse.Position = pt` — a single `SetCursorPos`, instant. (Or raise `Mouse.MovePixelsPerMillisecond`.)
+- **Hit test must update before a click**: still use `SendInput(MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE)` (above) — `SetCursorPos` / `Mouse.Position` alone does not inject `WM_MOUSEMOVE`.
+- **During a drag**: keep the interpolated movement — WPF needs a continuous stream of `DragOver` events.
+
+| Goal | API |
+|------|-----|
+| Instant non-drag reposition | `Mouse.Position = pt` (single `SetCursorPos`) |
+| Update WPF hit test before a click | `SendInput(MOVE \| ABSOLUTE)` |
+| Continuous drag | interpolated `SendInput` steps (or `Mouse.MoveTo`) |
+
 ## Problem 3: Adorner Flickering During Drag
 
 When sending interpolated mouse-move events during a drag, the target WPF control may show rapid visual flickering — adorners or preview elements appearing and disappearing in short cycles. This happens because intermediate drag points cross over interactive zones (e.g., other connectors, drop targets) that trigger hover/preview state changes on each entry and exit.
@@ -363,6 +377,73 @@ var selectionEnd = new Point(
     firstNodeBounds.Top + firstNodeBounds.Height / 2);
 ```
 
+### DPI-aware process: scale computed (node-less) coordinates
+
+UIA `BoundingRectangle` returns physical pixels, so anchoring on an existing node's bounds is DPI-independent and needs no correction. But when the target has no existing element to anchor on — e.g. dropping onto an empty canvas at a computed grid cell — you compute the point from the editor's bounds plus layout constants (cell width, cell pitch, item spacing). Those constants are **device-independent units (DIP)**. If the test process is DPI-aware (`SetProcessDpiAwarenessContext` / `SetThreadDpiAwarenessContext` for Per-Monitor-V2), the screen renders in physical pixels, so a DIP offset added directly to a screen coordinate falls short by the monitor's DPI scale.
+
+**Symptoms:**
+- The drop/click lands inside the target region but is off-center by the DPI ratio
+- Reproduces only at high scaling (e.g. 150%); a non-DPI-aware test (coordinates virtualized to 96 DPI, ratio 1.0) hits dead center, so the bug is found late
+
+**Fix — multiply the computed DIP offset by the effective DPI scale (leave the already-physical node bounds alone):**
+
+```csharp
+using System.Runtime.InteropServices;
+
+// Physical pixels per 1 DIP for the current thread.
+// A DPI-unaware thread has its coordinates virtualized to 96 DPI -> 1.0;
+// an aware thread uses the window monitor's DPI / 96.
+public static double GetEffectiveDpiScale(AutomationElement window)
+{
+    int awareness = GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext());
+    if (awareness <= 0) return 1.0; // DPI_AWARENESS_UNAWARE(0) / INVALID(-1)
+    uint dpi = GetDpiForWindow(window.Properties.NativeWindowHandle.ValueOrDefault);
+    return dpi == 0 ? 1.0 : dpi / 96.0;
+}
+
+// Usage: scale only the computed DIP offset, not the already-physical editor origin.
+double scale = GetEffectiveDpiScale(window);
+var dropTarget = new Point(
+    designer.BoundingRectangle.Left + (int)Math.Round((col * CellPitchX + CellWidth / 2.0) * scale),
+    designer.BoundingRectangle.Top  + (int)Math.Round((row * CellPitchY + CellHeight / 2.0) * scale));
+```
+
+`GetThreadDpiAwarenessContext`, `GetAwarenessFromDpiAwarenessContext`, and `GetDpiForWindow` are `user32.dll` P/Invoke.
+
+**Rule:** existing node `BoundingRectangle` = already physical, no correction. Computed DIP offset = multiply by `GetEffectiveDpiScale`.
+
+## Problem 7: `Keyboard.Type` Silently Fails to Enter Text in a TextBox
+
+In cross-process FlaUI, clicking a WPF `TextBox` (e.g. a search/filter field) and then calling `Keyboard.Type(text)` often enters nothing — with no exception. Cross-process keystroke injection is sensitive to focus and timing, so the keystrokes never reach the WPF input queue and are silently dropped. Because there is no error, a later step fails first (e.g. a filtered list returns 0 results) and the real cause — empty input — is hard to trace back.
+
+**Symptoms:**
+- After `element.Click()` + `Keyboard.Type(text)`, the field is still empty
+- No exception anywhere; a downstream assertion fails instead
+- Works only intermittently, or only when the window is already focused
+
+**Fix — set the value through UIA `ValuePattern` instead of injecting keystrokes:**
+
+```csharp
+// BAD — keystrokes can be silently dropped cross-process
+element.Click();
+Keyboard.Type(text);
+
+// GOOD — UIA ValuePattern updates the WPF TwoWay binding directly
+if (element.Patterns.Value.TryGetPattern(out var valuePattern))
+{
+    valuePattern.SetValue(text); // TwoWay binding updates immediately
+}
+else
+{
+    // Last-resort fallback for elements that do not support ValuePattern
+    element.Click();
+    Keyboard.TypeSimultaneously(VirtualKeyShort.CONTROL, VirtualKeyShort.KEY_A); // select existing text
+    Keyboard.Type(text);
+}
+```
+
+**Rule:** when `Keyboard.Type` silently fails to populate a WPF `TextBox`, stop tuning keystroke timing — set the text via `ValuePattern.SetValue`. Keep `Click` + `Ctrl+A` + `Type` only as a last-resort fallback.
+
 ## Quick Reference
 
 | Scenario | Action |
@@ -377,6 +458,9 @@ var selectionEnd = new Point(
 | Key stays pressed after `Keyboard.Press()` | Use `Keyboard.Type()` (down+up) instead of `Keyboard.Press()` (down only) |
 | Canvas drag selection at wrong position | Calculate coordinates from node `BoundingRectangle`, not editor control bounds |
 | `ReleaseAllKeys` before gesture, need all keys cleared | `ReleaseAllKeys()` + `Thread.Sleep(500)` — longer delay for non-modifier key states to settle |
+| Computed (node-less) canvas coordinate in a DPI-aware process | Multiply the DIP offset by `GetEffectiveDpiScale(window)`; node `BoundingRectangle` is already physical |
+| `Keyboard.Type` silently enters no text in a WPF `TextBox` | Set the text via `ValuePattern.SetValue` instead of injecting keystrokes |
+| Long cursor reposition is slow (animated) | `Mouse.Position = pt` for an instant non-drag move; `SendInput` for hit test; interpolate only during a drag |
 
 ## Diagnostic Checklist
 
@@ -390,3 +474,5 @@ When a FlaUI mouse gesture fails silently on a WPF control, check these in order
 6. **Press vs Type** — Audit all `Keyboard.Press()` calls. Each one leaves a key pressed. Use `Keyboard.Type()` for single keystrokes.
 7. **Canvas coordinates** — Never assume viewport origin equals editor control top-left. Use node `BoundingRectangle` from UIA as position anchors.
 8. **ReleaseAllKeys delay** — 200ms is enough after `ReleaseModifierKeys()`. `ReleaseAllKeys()` needs 500ms because non-modifier key-up events take longer to settle across processes.
+9. **DPI awareness** — If the test process is DPI-aware, computed (DIP) coordinates need the DIP→physical scale correction (`GetEffectiveDpiScale`); a node `BoundingRectangle` is already physical and needs none.
+10. **Keyboard.Type entered no text** — If a `TextBox` stays empty after `Keyboard.Type` with no exception, set the value via `ValuePattern.SetValue` rather than retrying keystrokes.
