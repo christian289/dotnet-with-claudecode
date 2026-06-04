@@ -74,6 +74,40 @@ standalone `.exe` (~37 MB), runtime bundled. For other OSes, add a sibling
 profile with the matching RID (`linux-x64`, `osx-arm64`, …). Build output
 (`bin/`, `obj/`, `nupkg/`) is git-ignored.
 
+## Publishing a new version to NuGet (maintainer)
+
+NuGet versions are **immutable** — every release needs a new `<Version>`. The
+plugin keeps running on the currently pinned version until you update the pin
+in the last step, so publish first and re-pin after.
+
+**One-time setup**
+
+1. Create a NuGet API key: nuget.org → Account → **API Keys** → **Create**
+   (scope: **Push**, glob pattern `WpfDevPackMcp` or `*`). Copy it (shown once).
+2. Ensure the `WpfDevPackMcp` package id is available on nuget.org (the first
+   push registers ownership). If taken, change `<PackageId>` here **and** the
+   `dnx` arg in `wpf-dev-pack/.mcp.json`.
+
+**Each release**
+
+1. **Verify** — `dotnet test mcp/WpfDevPackMcp.Tests`, then exercise the tools
+   with the MCP Inspector (see "Inspect with the MCP Inspector" below).
+2. **Bump** `<Version>` in `mcp/WpfDevPackMcp.csproj` (e.g. `0.1.1` → `0.1.2`).
+3. **Pack** — `dotnet pack mcp/WpfDevPackMcp.csproj -c Release -o mcp/nupkg`
+4. **Push** —
+   ```
+   dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
+     --source https://api.nuget.org/v3/index.json --api-key <NUGET_KEY>
+   ```
+5. **Wait** for nuget.org indexing (a few minutes), then verify:
+   `dnx WpfDevPackMcp@<ver> --yes`
+6. **Re-pin** — update `wpf-dev-pack/.mcp.json`: `WpfDevPackMcp@<old>` →
+   `WpfDevPackMcp@<ver>` (only after the new version is live on nuget.org).
+
+Keep the API key secret — never commit it. Steps 3–6 are the maintainer's;
+knowledge-content edits do **not** need a republish (they are served live from
+the repo).
+
 ## Runtime configuration (required)
 
 The server must know where the local clone is. Resolution order:

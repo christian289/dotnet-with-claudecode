@@ -67,6 +67,38 @@ dotnet publish mcp/WpfDevPackMcp.csproj -p:PublishProfile=win-x64
 단일 `.exe`(~37 MB). 다른 OS는 해당 RID(`linux-x64`, `osx-arm64`…) 프로필을
 추가하세요. 빌드 산출물(`bin/`, `obj/`, `nupkg/`)은 git-ignore 됩니다.
 
+## NuGet에 새 버전 배포 (메인테이너)
+
+NuGet 버전은 **불변**이라 릴리스마다 새 `<Version>`이 필요합니다. 마지막 단계에서
+핀을 갱신하기 전까지 플러그인은 기존 핀 버전으로 계속 동작하므로, **먼저 배포하고
+나중에 핀을 갱신**합니다.
+
+**최초 1회 설정**
+
+1. NuGet API 키 발급: nuget.org → 계정 → **API Keys** → **Create**
+   (권한: **Push**, glob `WpfDevPackMcp` 또는 `*`). 키 복사(한 번만 표시).
+2. nuget.org에서 `WpfDevPackMcp` 패키지 id 사용 가능 여부 확인(첫 push 시 소유권
+   등록). 이미 점유돼 있으면 여기 `<PackageId>` **와** `wpf-dev-pack/.mcp.json`의
+   `dnx` 인자를 함께 변경.
+
+**릴리스마다**
+
+1. **검증** — `dotnet test mcp/WpfDevPackMcp.Tests` 후, MCP Inspector로 도구 실행
+   확인(아래 "MCP Inspector 로 점검" 참조).
+2. **버전 올리기** — `mcp/WpfDevPackMcp.csproj`의 `<Version>`(예: `0.1.1` → `0.1.2`).
+3. **팩** — `dotnet pack mcp/WpfDevPackMcp.csproj -c Release -o mcp/nupkg`
+4. **푸시** —
+   ```
+   dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
+     --source https://api.nuget.org/v3/index.json --api-key <NUGET_KEY>
+   ```
+5. **대기** — nuget.org 인덱싱(수 분) 후 확인: `dnx WpfDevPackMcp@<ver> --yes`
+6. **핀 갱신** — `wpf-dev-pack/.mcp.json`의 `WpfDevPackMcp@<old>` → `WpfDevPackMcp@<ver>`
+   (새 버전이 nuget.org에 올라간 뒤에만).
+
+API 키는 비밀 — 절대 커밋 금지. 3~6단계는 메인테이너 작업이고, 지식 콘텐츠 수정은
+재배포가 필요 없습니다(저장소에서 실시간 제공).
+
 ## 런타임 설정 (필수)
 
 서버는 로컬 클론 위치를 알아야 합니다. 해석 순서:

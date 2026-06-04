@@ -98,9 +98,21 @@ content live from the repo on each call. Only changes shipped inside the plugin
 package itself (command skills, hooks, rules) require a plugin version bump
 via `/wpf-dev-pack-release`.
 
-> How to build, publish (dnx tool + single-file profile), run cross-platform,
-> and inspect the server with the MCP Inspector is documented in
-> [`mcp/README.md`](../mcp/README.md).
+**Publishing `WpfDevPackMcp` to NuGet (each release):** NuGet versions are
+immutable, so bump first and re-pin last.
+
+1. Verify: `dotnet test mcp/WpfDevPackMcp.Tests`, then exercise the tools with
+   the MCP Inspector (`npx @modelcontextprotocol/inspector "<built exe>"`).
+2. Bump `<Version>` in `mcp/WpfDevPackMcp.csproj`.
+3. `dotnet pack mcp/WpfDevPackMcp.csproj -c Release -o mcp/nupkg`
+4. `dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg --source https://api.nuget.org/v3/index.json --api-key <KEY>`
+5. After nuget.org indexes it (verify with `dnx WpfDevPackMcp@<ver> --yes`),
+   update the `dnx` pin in `wpf-dev-pack/.mcp.json` (`@<old>` → `@<ver>`).
+
+Keep the API key secret (never commit). The first one-time setup (API key,
+package-id ownership) and full detail are in
+[`mcp/README.md`](../mcp/README.md), which also covers build, the single-file
+publish profile, cross-platform notes, and MCP Inspector usage.
 
 ## Maintainer Workflow
 
