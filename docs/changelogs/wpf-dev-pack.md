@@ -10,6 +10,20 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.7.1
+
+### Fixed
+- **RepoPathGuard no longer fails open on cold start.** The PreToolUse hook that blocks `WpfDevPackMcp` tool calls when the knowledge repo path is unset used a 5s timeout; a cold `dotnet` file-based-app compile exceeded it, so the hook was killed and the call proceeded (PreToolUse hooks fail open on timeout) — after which the agent would auto-search for a clone and self-run `set-repo-path`. Bumped the hook `timeout` to 30s so the deny reliably lands (warm runs are ~750ms; only the first call per plugin version pays the cold-compile cost).
+
+### Changed
+- **"Repo not configured" messages now defer to the user.** Both the `RepoPathGuard` deny reason and the server-side `RepoNotConfiguredException` state that this is a one-time USER setup and instruct the agent NOT to search the filesystem or run `set-repo-path` itself. Defense in depth: the MCP server's code-level check backstops the hook if it ever fails open again.
+- Re-pinned `WpfDevPackMcp` to `@0.1.2` in `.mcp.json` (and README examples); 0.1.2 ships the reworded server-side message.
+
+### Stats
+- Skills: 11 · Agents: 10 · MCP Servers: 2
+
+---
+
 ## v1.7.0
 
 ### Changed
