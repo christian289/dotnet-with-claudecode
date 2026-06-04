@@ -23,12 +23,10 @@ dotnet build mcp/WpfDevPackMcp.csproj
 dotnet test  mcp/WpfDevPackMcp.Tests
 ```
 
-## 서버를 만드는 두 가지 방법
-
-### 1. dnx + NuGet tool — `.mcp.json` 이 실행하는 방식
+## 서버 빌드/배포
 
 프로젝트는 **framework-dependent·platform-agnostic** .NET tool 입니다
-(`PackAsTool=true`, `RuntimeIdentifiers` 없음). 단일 `dotnet pack`이 모든 OS에서
+(`PackAsTool=true`). 단일 `dotnet pack`이 모든 OS에서
 .NET 10 런타임으로 실행되는 작은 크로스플랫폼 패키지 1개(~1.3 MB, 관리 IL)를 만듭니다:
 
 ```
@@ -40,32 +38,10 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` 이 핀 버전으로 실행합니다:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.0", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.1", "--yes"] }
 ```
 
-**왜 self-contained / RID별이 아닌가?** 이 환경에선 런타임이 공짜입니다 —
-wpf-dev-pack 플러그인이 이미 .NET 10 SDK를 강제합니다(훅이 `dotnet` file-based
-app이고 `.mcp.json`이 `dnx`로 실행). 즉 서버를 돌리는 머신엔 .NET 10이 반드시
-있으므로, framework-dependent 도구가 작은 크로스플랫폼 패키지 1개로 가장 단순한
-배포입니다. (.NET 10은 `<RuntimeIdentifiers>win-x64;…;any</RuntimeIdentifiers>` +
-RID 조건부 `<SelfContained>`로 self-contained per-RID 패키지를 만들 수 있고 `dnx`가
-자동 선택하지만, .NET이 없는 환경에서 돌릴 때만 의미 있고 여기엔 해당 없음.)
-**Native AOT** 도 원리상 가능하지만(빌드가 native codegen까지 도달) JSON 설정
-코드를 System.Text.Json 소스 생성으로 바꿔야 AOT-안전하고, OS별 C++ 툴체인이
-필요하며, 런타임이 이미 있는 환경에선 이점이 없어 사용하지 않습니다.
-
-### 2. Single-file self-contained 실행 파일 — 게시 프로필 (선택)
-
-NuGet tool이 아닌 단독 `.exe` 산출물. NuGet/dnx 없이 순수 실행 파일이 필요할 때
-유용합니다. 프로필: `mcp/Properties/PublishProfiles/win-x64.pubxml`.
-
-```
-dotnet publish mcp/WpfDevPackMcp.csproj -p:PublishProfile=win-x64
-```
-
-산출물: `mcp/bin/Release/net10.0/publish/win-x64/WpfDevPackMcp.exe` — 런타임 내장
-단일 `.exe`(~37 MB). 다른 OS는 해당 RID(`linux-x64`, `osx-arm64`…) 프로필을
-추가하세요. 빌드 산출물(`bin/`, `obj/`, `nupkg/`)은 git-ignore 됩니다.
+빌드 산출물(`bin/`, `obj/`, `nupkg/`)은 git-ignore 됩니다.
 
 ## NuGet에 새 버전 배포 (메인테이너)
 
@@ -133,9 +109,10 @@ Claude Code 세션에서 설정:
 ## MCP Inspector 로 점검
 
 ```
-# 도구 목록 (single-file exe 대상)
+# 빌드 후 빌드 산출물 exe 대상으로 도구 목록 조회
+dotnet build mcp/WpfDevPackMcp.csproj -c Release
 npx @modelcontextprotocol/inspector --cli \
-  "mcp/bin/Release/net10.0/publish/win-x64/WpfDevPackMcp.exe" --method tools/list
+  "mcp/bin/Release/net10.0/WpfDevPackMcp.exe" --method tools/list
 
 # 도구 호출 (먼저 경로 설정, 또는 ~/.wpf-dev-pack-mcp/config.json 의존)
 npx @modelcontextprotocol/inspector --cli "<exe>" \

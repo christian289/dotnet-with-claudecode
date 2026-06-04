@@ -15,15 +15,6 @@
     <!-- NuGet versions are immutable; 0.1.0 is already published. Metadata
          below ships from 0.1.1 onward. Bump per release. -->
     <Version>0.1.1</Version>
-    <!--
-      Framework-dependent, platform-agnostic .NET tool: a single cross-platform
-      package (managed IL) that runs on Windows/Linux/macOS with the .NET 10
-      runtime. Self-contained / RID-specific packaging is intentionally NOT used:
-      the wpf-dev-pack plugin already mandates the .NET 10 SDK (its hooks are
-      `dotnet` file-based apps and `.mcp.json` launches the server via `dnx`), so
-      the runtime is guaranteed present — bundling it would only add size and a
-      multi-package publish dance for no benefit.
-    -->
   </PropertyGroup>
 
   <!-- NuGet package metadata (nuget.org listing) -->

@@ -111,8 +111,8 @@ immutable, so bump first and re-pin last.
 
 Keep the API key secret (never commit). The first one-time setup (API key,
 package-id ownership) and full detail are in
-[`mcp/README.md`](../mcp/README.md), which also covers build, the single-file
-publish profile, cross-platform notes, and MCP Inspector usage.
+[`mcp/README.md`](../mcp/README.md), which also covers build and MCP Inspector
+usage.
 
 ## Maintainer Workflow
 

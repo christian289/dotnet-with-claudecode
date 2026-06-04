@@ -25,12 +25,10 @@ dotnet build mcp/WpfDevPackMcp.csproj
 dotnet test  mcp/WpfDevPackMcp.Tests
 ```
 
-## Two ways to produce the server
-
-### 1. dnx + NuGet tool — how `.mcp.json` runs it
+## Producing the server
 
 The project is a **framework-dependent, platform-agnostic** .NET tool
-(`PackAsTool=true`, no `RuntimeIdentifiers`). A single `dotnet pack` produces
+(`PackAsTool=true`). A single `dotnet pack` produces
 one small cross-platform package (~1.3 MB, managed IL) that runs on Windows,
 Linux, and macOS with the .NET 10 runtime:
 
@@ -43,36 +41,10 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` runs it with a pinned version:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.0", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.1", "--yes"] }
 ```
 
-**Why not self-contained / RID-specific?** The .NET runtime is free here: the
-wpf-dev-pack plugin already mandates the .NET 10 SDK (its hooks are `dotnet`
-file-based apps and `.mcp.json` launches via `dnx`), so every machine that runs
-this server already has .NET 10. A framework-dependent tool is therefore one
-tiny cross-platform package and the simplest possible publish. (.NET 10 *can*
-emit self-contained per-RID tool packages — `<RuntimeIdentifiers>win-x64;…;any</RuntimeIdentifiers>`
-plus a RID-conditional `<SelfContained>` — and `dnx` auto-selects them; that's
-only worth it for running where .NET isn't installed, which isn't the case
-here.) **Native AOT** is likewise possible in principle (the build reaches
-native codegen), but the JSON config code would need System.Text.Json source
-generation to be AOT-safe, AOT needs a per-OS C++ toolchain, and it brings no
-benefit when the runtime is already present — so it is not used.
-
-### 2. Single-file, self-contained executable — publish profile (optional)
-
-A standalone `.exe` artifact (not a NuGet tool). Useful if you want a bare
-executable without NuGet/dnx. Profile:
-`mcp/Properties/PublishProfiles/win-x64.pubxml`.
-
-```
-dotnet publish mcp/WpfDevPackMcp.csproj -p:PublishProfile=win-x64
-```
-
-Output: `mcp/bin/Release/net10.0/publish/win-x64/WpfDevPackMcp.exe` — one
-standalone `.exe` (~37 MB), runtime bundled. For other OSes, add a sibling
-profile with the matching RID (`linux-x64`, `osx-arm64`, …). Build output
-(`bin/`, `obj/`, `nupkg/`) is git-ignored.
+Build output (`bin/`, `obj/`, `nupkg/`) is git-ignored.
 
 ## Publishing a new version to NuGet (maintainer)
 
@@ -144,9 +116,10 @@ sibling `PRISM.md` / `ADVANCED.md` files.
 ## Inspect with the MCP Inspector
 
 ```
-# List tools (against the single-file exe)
+# Build first, then list tools against the built exe
+dotnet build mcp/WpfDevPackMcp.csproj -c Release
 npx @modelcontextprotocol/inspector --cli \
-  "mcp/bin/Release/net10.0/publish/win-x64/WpfDevPackMcp.exe" --method tools/list
+  "mcp/bin/Release/net10.0/WpfDevPackMcp.exe" --method tools/list
 
 # Call a tool (set the repo path first, or rely on ~/.wpf-dev-pack-mcp/config.json)
 npx @modelcontextprotocol/inspector --cli "<exe>" \
