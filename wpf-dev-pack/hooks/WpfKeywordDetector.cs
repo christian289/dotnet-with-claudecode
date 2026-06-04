@@ -29,21 +29,37 @@ if (string.IsNullOrWhiteSpace(prompt))
 
 var (skills, agents) = DetectKeywordsAndAgents(prompt);
 
+// Skill ids that remain real plugin skills (slash-invocable). Everything
+// else detected is now an MCP knowledge topic served by WpfDevPackMcp.
+var commandSkills = new HashSet<string>(StringComparer.Ordinal)
+{
+    "make-wpf-project", "make-wpf-custom-control", "make-wpf-usercontrol",
+    "make-wpf-converter", "make-wpf-behavior", "make-wpf-viewmodel", "make-wpf-service",
+    "collecting-wpf-dev-pack-feedback", "configuring-wpf-dev-pack-language",
+    "formatting-wpf-csharp-code", "set-repo-path",
+};
+
 if (skills.Count > 0 || agents.Count > 0)
 {
     Console.WriteLine("========================================");
     Console.WriteLine("[WPF Dev Pack] Hook Triggered");
 
-    if (skills.Count > 0)
+    var knowledge = skills.Where(s => !commandSkills.Contains(s)).Take(5).ToList();
+    var commands = skills.Where(commandSkills.Contains).ToList();
+
+    foreach (var skill in commands)
     {
-        int shown = 0;
-        foreach (var skill in skills.Take(5))
+        Console.WriteLine($"  -> /wpf-dev-pack:{skill}");
+    }
+
+    if (knowledge.Count > 0)
+    {
+        Console.WriteLine("  WPF knowledge topics (load via MCP before answering):");
+        foreach (var id in knowledge)
         {
-            Console.WriteLine($"  -> /wpf-dev-pack:{skill}");
-            shown++;
+            Console.WriteLine($"    -> WpfDevPackMcp get_wpf_topic(\"{id}\")");
         }
-        if (skills.Count > shown)
-            Console.WriteLine($"  -> (+{skills.Count - shown} more)");
+        Console.WriteLine("    (If WpfDevPackMcp is unconfigured, run /wpf-dev-pack:set-repo-path <path>.)");
     }
 
     if (agents.Count > 0)

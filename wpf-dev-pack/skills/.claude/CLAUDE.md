@@ -1,127 +1,30 @@
-# WPF Dev Pack Skills - Keyword Mapping & Index
+# WPF Dev Pack Skills — Routing
 
-> **📦 Archived skills**: doc-mirror skills have been moved to `../../archive-skills/`.
-> See `../../archive-skills/` for topics covered by the `microsoft-docs` MCP plugin
-> (e.g., DependencyProperty, ControlTemplate, Storyboard, DragDrop, async/await, Span<T>).
+Knowledge topics are NO LONGER plugin skills. They live in
+`wpf-dev-pack/knowledge/<id>/` and are served by the `WpfDevPackMcp` MCP
+server. The `WpfKeywordDetector` UserPromptSubmit hook owns the
+keyword → topic-id routing table (single source of truth, zero
+always-loaded context). On a WPF knowledge keyword it emits
+`WpfDevPackMcp get_wpf_topic("<id>")`.
+
+Only command skills remain under `skills/` and are slash-invocable:
+
+| Keyword (intent) | Command skill |
+|---|---|
+| `create viewmodel`, `뷰모델 생성` | `make-wpf-viewmodel` |
+| `create service`, `서비스 생성` | `make-wpf-service` |
+| (explicit) | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |
+| `feedback` (maintainer) | `collecting-wpf-dev-pack-feedback` |
+| `language` | `configuring-wpf-dev-pack-language` |
+| `repo path`, MCP unconfigured | `set-repo-path` |
+
+To add a knowledge topic: create `wpf-dev-pack/knowledge/<id>/TOPIC.md`
+(NO frontmatter — first `# H1` is the title; put a one-line `> summary`
+blockquote directly under the H1; the MCP catalog reads both from the body)
+and add its keyword(s) to `hooks/WpfKeywordDetector.cs`. No plugin skill,
+no version bump, no MCP rebuild — the server picks it up on next pull.
 
 ---
-
-## Korean Keywords Are Intentional
-
-Some skill mappings list Korean keywords (`차트`, `대시보드`,
-`뷰모델 테스트`, `속성 요소 구문`, etc.). These are **functional
-triggers**, not translation gaps: they let Claude activate the matching
-skill when a Korean-speaking user types those phrases. Do not
-"translate" them away. They are exempt from the repository bilingual
-convention because they act as data, not documentation.
-
----
-
-## Keyword-Skill Mapping
-
-### WPF Keywords
-
-| Keyword | Skill |
-|---------|-------|
-| `customcontrol` | `authoring-wpf-controls` |
-| `mvvm`, `viewmodel` | `implementing-communitytoolkit-mvvm` |
-| `drawingcontext`, `onrender` | `rendering-with-drawingcontext` |
-| `drawingvisual` | `rendering-with-drawingvisual` |
-| `resourcedictionary` | `managing-styles-resourcedictionary` |
-| `generic.xaml` | `designing-wpf-customcontrol-architecture`, `configuring-wpf-themeinfo` |
-| `collectionview` | `managing-wpf-collectionview-mvvm` |
-| `binding`, `multibinding`, `prioritybinding`, `relativesource` | `advanced-data-binding` |
-| `converter`, `ivalueconverter`, `markupextension` | `using-converter-markup-extension` |
-| `property element`, `속성 요소 구문` | `using-xaml-property-element-syntax` |
-| `routed event` | `routing-wpf-events` |
-| `dispatcher` | `threading-wpf-dispatcher` |
-| `virtualizing` | `virtualizing-wpf-ui` |
-| `freeze`, `freezable` | `optimizing-wpf-memory` |
-| `startup`, `sessionending`, `lifecycle`, `dispatcherunhandledexception`, `unhandled exception` | `managing-wpf-application-lifecycle` |
-| `popup focus`, `popupfocus`, `preview mouse down popup` | `managing-wpf-popup-focus` |
-| `repository`, `repository pattern`, `service layer` | `implementing-repository-pattern` |
-| `console app di`, `generichost console` | `configuring-console-app-di` |
-| `rendering architecture`, `wpf rendering pipeline` | `rendering-wpf-architecture` |
-| `ui automation discovery`, `flaui element`, `automationelement discovery` | `flaui-wpf-element-discovery` |
-| `prism dialog discovery`, `flaui prism dialog` | `flaui-prism-dialog-discovery` |
-| `hit test`, `hittest`, `ishittestvisible` | `implementing-hit-testing` |
-| `getawaiter`, `getresult`, `.result`, `.wait()`, `sync over async`, `dispatcher deadlock`, `async event handler`, `async void handler` | `preventing-dispatcher-deadlock` |
-| `graceful shutdown`, `onexit`, `async cleanup`, `onmainwindowclose`, `onexplicitshutdown`, `window.closing async`, `ihost.stopasync shutdown` | `shutting-down-wpf-gracefully` |
-| `splash`, `splash screen`, `splashscreen`, `splashscreenservice`, `sta thread splash`, `foreground handoff`, `cross-thread owner`, `setforegroundwindow handoff`, `dispatcher.run splash` | `implementing-wpf-splash-screen` |
-| `performance` | `rendering-wpf-high-performance` |
-| `visualtree`, `logicaltree` | `navigating-visual-logical-tree` |
-| `validation` | `implementing-wpf-validation` |
-| `themeinfo`, `assemblyinfo` | `configuring-wpf-themeinfo` |
-| `wpf-ui`, `wpfui`, `fluentwindow`, `navigationview` | `integrating-wpfui-fluent` |
-| `livecharts`, `cartesianchart`, `piechart`, `iseries` | `integrating-livecharts2` |
-| `fluentvalidation`, `abstractvalidator`, `rulefor` | `validating-with-fluentvalidation` |
-| `erroror`, `result pattern`, `error.validation` | `handling-errors-with-erroror` |
-| `nodify`, `nodifyeditor`, `node graph`, `node editor` | `integrating-nodify` |
-| `flaui`, `cross-process`, `sendinput`, `keybd_event`, `stuck key`, `xunit.runner.json`, `parallelizeTestCollections` | `flaui-cross-process-input` |
-| `scottplot`, `mousewheel`, `focus`, `modifier` | `scottplot-syncing-modifier-keys-for-mousewheel` |
-| `scottplot margins`, `autoscaler`, `invertedy`, `fractionalautoscaler`, `axis flip`, `scottplot reactive`, `scottplot converter`, `imagerect overlay flip` | `scottplot-axes-margins-destructive` |
-| `focus ring clipped`, `hover glow cut`, `decorative overflow`, `clip to bounds ancestor`, `thumb cut at edge` | `containing-control-decorative-overflow` |
-
-### Scaffolding Keywords
-
-| Keyword | Skill |
-|---------|-------|
-| `create project`, `scaffold`, `new project` | `make-wpf-project` |
-| `create customcontrol`, `generate control` | `make-wpf-custom-control` |
-| `create usercontrol`, `generate usercontrol` | `make-wpf-usercontrol` |
-| `create converter`, `generate converter` | `make-wpf-converter` |
-| `create behavior`, `generate behavior` | `make-wpf-behavior` |
-| `create viewmodel`, `generate viewmodel`, `viewmodel 생성` | `make-wpf-viewmodel` |
-| `create service`, `generate service`, `서비스 생성` | `make-wpf-service` |
-
-### Testing Keywords
-
-| Keyword | Skill |
-|---------|-------|
-| `viewmodel test`, `unit test`, `xunit`, `nsubstitute` | `testing-wpf-viewmodels` |
-| `뷰모델 테스트`, `단위 테스트` | `testing-wpf-viewmodels` |
-
-### Feature Intent Keywords
-
-| Keyword (Intent) | Skill |
-|-------------------|-------|
-| `차트`, `chart`, `그래프`, `대시보드` | `integrating-livecharts2` |
-| `입력 검증`, `폼 검증`, `form validation` | `validating-with-fluentvalidation`, `implementing-wpf-validation` |
-| `모던 ui`, `플루언트 디자인`, `fluent design` | `integrating-wpfui-fluent` |
-| `노드 편집기`, `워크플로우 편집기`, `visual scripting` | `integrating-nodify` |
-| `대용량 데이터`, `느려`, `렉`, `slow`, `lag` | `rendering-wpf-high-performance`, `virtualizing-wpf-ui` |
-| `ui 테스트`, `자동화 테스트`, `automation test` | `flaui-cross-process-input`, `flaui-wpf-element-discovery` |
-
-### Prism 9 Keywords
-
-| Keyword | Skill (see PRISM.md) |
-|---------|----------------------|
-| `prism`, `bindablebase`, `delegatecommand` | `implementing-communitytoolkit-mvvm` |
-| `prismapplication`, `icontainerregistry` | `configuring-dependency-injection` |
-| `regionmanager`, `iregionmanager` | (see `rules/view-viewmodel-wiring-prism.md`) |
-| `imodule`, `modulecatalog` | `structuring-wpf-projects` |
-| `validatablebindablebase` | `implementing-wpf-validation` |
-
-### .NET Keywords
-
-| Keyword | Skill |
-|---------|-------|
-| `dependency injection` | `configuring-dependency-injection` |
-
-### Configuration & Setup Keywords
-
-| Keyword | Skill |
-|---------|-------|
-| `language`, `응답 언어`, `set language`, `configure language`, `switch language` | `configuring-wpf-dev-pack-language` |
-
-### Build & Deployment
-
-| Keyword | Skill |
-|---------|-------|
-| `pdb`, `debugtype`, `source link` | `embedding-pdb-in-exe` |
-| `publish`, `deploy`, `release` | `publishing-wpf-apps` |
-| `self-contained`, `single-file` | `publishing-wpf-apps` |
-| `installer`, `velopack`, `msix`, `nsis` | `publishing-wpf-apps` |
 
 ### HandMirror MCP - .NET API Verification
 
@@ -147,24 +50,3 @@ WHEN using context7 or Microsoft Learn for .NET/NuGet info:
 - Identify correct namespaces for extension methods
 - Check API breaking changes across package versions
 - Diagnose build errors (CS0246, NU1605, etc.) and recommend required packages
-
----
-
-## Skill Category Index
-
-| Category | Skills |
-|----------|--------|
-| **UI & Controls** | `authoring-wpf-controls`, `configuring-wpf-themeinfo`, `containing-control-decorative-overflow` |
-| **Data Binding & MVVM** | `implementing-communitytoolkit-mvvm`, `advanced-data-binding`, `implementing-wpf-validation`, `managing-wpf-collectionview-mvvm`, `using-converter-markup-extension`, `configuring-dependency-injection` |
-| **Performance & Rendering** | `rendering-with-drawingcontext`, `rendering-with-drawingvisual`, `rendering-wpf-high-performance`, `virtualizing-wpf-ui`, `optimizing-wpf-memory`, `implementing-hit-testing` |
-| **Input & Events** | `routing-wpf-events` |
-| **Styling & Resources** | `managing-styles-resourcedictionary`, `using-xaml-property-element-syntax` |
-| **Application** | `managing-wpf-application-lifecycle`, `threading-wpf-dispatcher`, `preventing-dispatcher-deadlock`, `shutting-down-wpf-gracefully`, `implementing-wpf-splash-screen` |
-| **UI Interaction** | `managing-wpf-popup-focus`, `binding-enum-command-parameters`, `checking-image-bounds-transform`, `displaying-slider-index`, `highlighting-nodify-connections`, `resolving-icon-font-inheritance` |
-| **Data Access** | `implementing-repository-pattern`, `configuring-console-app-di` |
-| **Architecture & Tree Navigation** | `navigating-visual-logical-tree`, `rendering-wpf-architecture`, `structuring-wpf-projects`, `designing-wpf-customcontrol-architecture` |
-| **Build & Deployment** | `embedding-pdb-in-exe`, `publishing-wpf-apps` |
-| **3rd Party Libraries** | `integrating-wpfui-fluent`, `integrating-livecharts2`, `validating-with-fluentvalidation`, `handling-errors-with-erroror`, `integrating-nodify`, `flaui-cross-process-input`, `flaui-wpf-element-discovery`, `flaui-prism-dialog-discovery`, `scottplot-syncing-modifier-keys-for-mousewheel`, `scottplot-axes-margins-destructive` |
-| **Testing** | `testing-wpf-viewmodels`, `managing-unit-tests` |
-| **Scaffolding** | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior`, `make-wpf-viewmodel`, `make-wpf-service` |
-| **Meta / Maintenance** | `collecting-wpf-dev-pack-feedback`, `configuring-wpf-dev-pack-language` |

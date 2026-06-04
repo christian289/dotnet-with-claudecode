@@ -92,11 +92,12 @@ section as the spec. Typical change kinds and where they land:
 
 | Change kind | Where to apply |
 |------|-------|
-| New skill | `wpf-dev-pack/skills/<name>/SKILL.md` + update `wpf-dev-pack/skills/.claude/CLAUDE.md` (Keyword-Skill Mapping + Skill Category Index) + cross-link from related skills |
-| Skill augmentation | Edit the existing `SKILL.md` to add the missing guidance |
+| New knowledge topic | `wpf-dev-pack/knowledge/<id>/TOPIC.md` (NO frontmatter — first `# H1` is the title, first `>` blockquote is the summary) + add keyword(s) to `wpf-dev-pack/hooks/WpfKeywordDetector.cs` + cross-link adjacent topics |
+| Knowledge augmentation | Edit `wpf-dev-pack/knowledge/<id>/TOPIC.md` |
+| Prism 9 companion (knowledge) | Add `PRISM.md` next to `knowledge/<id>/TOPIC.md` |
+| New command skill | `wpf-dev-pack/skills/<name>/SKILL.md` + slimmed `skills/.claude/CLAUDE.md` |
 | Scaffolder modernization | Update the relevant `make-wpf-*` skill template |
 | Rule addition | Add to `wpf-dev-pack/.claude/rules/<rule>.md` |
-| Prism 9 companion | Add `PRISM.md` next to the affected `SKILL.md` (see `wpf-dev-pack/.claude/rules/dotnet/wpf/mvvm-framework.md`) |
 
 Apply items one at a time:
 
@@ -135,6 +136,13 @@ The hook cannot probe runtime MCP / skill availability — that visibility
 belongs to you. The hook is a reminder; do the check before proceeding.
 
 ### Step 4 — Version bump + README sync (only if needed)
+
+> Knowledge-only changes (edits under `wpf-dev-pack/knowledge/`) require
+> NO plugin version bump and NO MCP republish — content is served from the
+> repo by WpfDevPackMcp and reflected on its next `git pull`. In that case
+> skip Step 4 and write `(knowledge only, no plugin/MCP bump)` in the
+> APPLIED-LOG `Plugin version` column. Version bumps apply only to changes
+> shipped in the plugin (command skills, hooks, rules).
 
 Per `.claude/CLAUDE.md` (Plugin Version Update Checklist), keep these
 in lockstep when cutting a release:

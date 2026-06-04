@@ -59,9 +59,10 @@ if (string.IsNullOrEmpty(filePath))
 var normalized = filePath.Replace('\\', '/');
 var lower      = normalized.ToLowerInvariant();
 
-// Must target a SKILL.md inside a wpf-dev-pack skill directory.
-// Accept both "wpf-dev-pack/skills/<name>/SKILL.md" and the legacy
-// no-hyphen variant just in case.
+// Must target a SKILL.md inside a wpf-dev-pack skills directory.
+// Accept "wpf-dev-pack/skills/<name>/SKILL.md" and the legacy no-hyphen
+// variant just in case. Knowledge topics are now TOPIC.md (not SKILL.md),
+// so they are intentionally excluded here.
 var matchesPath =
     (lower.Contains("/wpf-dev-pack/skills/") || lower.Contains("/wpf-devpack/skills/")) &&
     lower.EndsWith("/skill.md");

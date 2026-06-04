@@ -66,6 +66,7 @@ Stateless VM 패턴, 두 경로 혼용 등)은 `rules/prohibitions.md`
 4. **Generic.xaml = MergedDictionaries 허브 전용** (`rules/resourcedictionary-patterns.md`)
 5. **코드 작성 전 HandMirror로 API 시그니처 검증**
 6. **프레임워크별 단일 매칭 경로** — ViewModel First (CommunityToolkit, `Mappings.xaml`) 또는 View First (Prism, `RegisterForNavigation`). 프레임워크별 와이어링은 `docs/TERMINOLOGY.md` 및 `rules/` 참조.
+7. **WPF 지식 토픽은 `WpfDevPackMcp get_wpf_topic(id)`로 조회** — `skills/`에서 로드하지 않음.
 
 ---
 
@@ -173,9 +174,11 @@ RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
 **트리거 시:**
 1. Announce: "WPF Dev Pack: Activating `skill-name` skill."
 2. `.claude/rules/dotnet/wpf/mvvm-framework.md`에서 활성 MVVM 프레임워크 확인
-3. 적절한 파일 로드:
-   - **CommunityToolkit.Mvvm** → SKILL.md
-   - **Prism 9** → PRISM.md 있으면 그 파일, 없으면 SKILL.md
+3. 콘텐츠 로드:
+   - **지식 토픽** → `WpfDevPackMcp get_wpf_topic(id[, variant])`를 호출해 MCP에서 가져옴
+   - **커맨드 스킬** → 슬래시 명령으로 호출 (`/wpf-dev-pack:<skill-name>`)
+   - **CommunityToolkit.Mvvm 커맨드 스킬** → SKILL.md
+   - **Prism 9 커맨드 스킬** → PRISM.md 있으면 그 파일, 없으면 SKILL.md
 4. 가이드라인 및 활성 프레임워크 규칙에 따라 코드 생성/수정
 
 **Silent 트리거** (announce 없음):
@@ -192,9 +195,16 @@ RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
 
 ## 새 Skill 추가 시 — 필수 동반 갱신
 
+**지식 토픽 추가** (WPF 지식, MCP를 통해 제공 — 플러그인 스킬이 아님):
+1. `wpf-dev-pack/knowledge/<id>/TOPIC.md`에 토픽 콘텐츠를 작성합니다. **YAML frontmatter 없음.** 첫 번째 `# H1`이 제목이며, H1 바로 아래에 한 줄짜리 `> 요약` 블록인용을 작성합니다 — MCP 카탈로그(`TopicDocReader`)는 첫 번째 H1에서 제목을, 첫 번째 `>` 블록인용에서 요약을 읽습니다.
+2. 토픽의 키워드를 `wpf-dev-pack/hooks/WpfKeywordDetector.cs`의 키워드→id 라우팅 테이블에 추가합니다.
+3. 플러그인 스킬 등록 불필요, 버전 범프 불필요, MCP 재빌드 불필요 — 서버는 다음 `git pull` 시 자동으로 반영합니다.
+
+**커맨드 스킬 추가** (슬래시 호출 가능한 플러그인 스킬, `skills/` 하위):
+
 `skills/<skill-name>/SKILL.md`로 새 skill을 추가할 때 함께 갱신해야 하는 파일:
 
-1. **`skills/.claude/CLAUDE.md`** — Keyword-Skill Mapping 표에 키워드 행 추가, Skill Category Index의 해당 카테고리에 skill 이름 추가.
+1. **`skills/.claude/CLAUDE.md`** — 잔류 커맨드 표에 행 추가.
 2. **인접 기존 SKILL.md** — 주제가 겹치는 경우 새 skill로의 cross-link 추가 (`See [...](../skill-name/SKILL.md)`).
 3. **Prism 9 분기가 필요한 skill** — `PRISM.md` 컴패니언 파일 작성 (`mvvm-framework.md` 참조).
 4. **Foundation + Application 쌍 skill** — 두 skill을 별도로 만들고 상호 참조. Foundation skill은 메커니즘·일반 원칙을 다루고, Application skill은 구체 시나리오에 적용 (예: `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`).

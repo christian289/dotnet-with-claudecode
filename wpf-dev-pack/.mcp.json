@@ -6,6 +6,11 @@
       "type": "stdio",
       "command": "dnx",
       "args": ["HandMirrorMcp@0.1.1", "--yes"]
+    },
+    "WpfDevPackMcp": {
+      "type": "stdio",
+      "command": "dnx",
+      "args": ["WpfDevPackMcp@0.1.0", "--yes"]
     }
   }
 }

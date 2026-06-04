@@ -28,6 +28,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "mcp__.*WpfDevPackMcp.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/RepoPathGuard.cs\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [

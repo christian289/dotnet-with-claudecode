@@ -65,7 +65,9 @@ dotnet-with-claudecode/
 │       ├── dotnet/               # C#, WPF, AvaloniaUI, spreadsheet
 │       ├── secure-coding/        # secure-coding guidelines
 │       └── preferences.md        # default behavior (response language, etc.)
+├── mcp/                          # WpfDevPackMcp MCP server source (outside the plugin)
 ├── wpf-dev-pack/                 # WPF-focused plugin (currently the only hosted plugin)
+│   └── knowledge/                # MCP knowledge topics (served by WpfDevPackMcp)
 ├── FeedbackDocs/                 # accumulated wpf-dev-pack feedback md files from foreign sessions
 ├── archive-skills/               # legacy skills superseded by the microsoft-docs MCP
 └── docs/                         # project documentation
@@ -87,6 +89,19 @@ Files that the release skill updates:
 - `<plugin>/README.ko.md` — version badge
 - `docs/changelogs/<plugin>.md` — new version entry
 
+**WpfDevPackMcp NuGet package versioning:** The `WpfDevPackMcp` MCP server is
+distributed as a separate NuGet package and pinned in `wpf-dev-pack/.mcp.json`
+via its `dnx` version specifier. Its version is independent of the plugin
+version. Knowledge-only edits (files under `wpf-dev-pack/knowledge/`) require
+**NO plugin version bump and NO MCP republish** — the server reads knowledge
+content live from the repo on each call. Only changes shipped inside the plugin
+package itself (command skills, hooks, rules) require a plugin version bump
+via `/wpf-dev-pack-release`.
+
+> How to build, publish (dnx tool + single-file profile), run cross-platform,
+> and inspect the server with the MCP Inspector is documented in
+> [`mcp/README.md`](../mcp/README.md).
+
 ## Maintainer Workflow
 
 Slash commands a maintainer of this repository uses regularly:
@@ -95,6 +110,7 @@ Slash commands a maintainer of this repository uses regularly:
 |---------|-------|---------|
 | `/applying-wpf-dev-pack-feedback <file.md>` | repo | Reflect one FeedbackDocs entry into `wpf-dev-pack`, move the source md into `FeedbackDocs/`, and append a row to `FeedbackDocs/APPLIED-LOG.md`. Does not commit. |
 | `/wpf-dev-pack:configuring-wpf-dev-pack-language [code]` | plugin | Write `.claude/wpf-dev-pack.local.md` with a BCP-47 `language:` field. Takes effect from the next session. |
+| `/wpf-dev-pack:set-repo-path <path>` | plugin | Configure the local clone path WpfDevPackMcp reads knowledge from. Required before the MCP tools work. |
 | `/wpf-dev-pack-release` | repo | The only path to bump the plugin version. Updates `plugin.json`, both README badges, and `docs/changelogs/wpf-dev-pack.md` in lockstep. See "Plugin Version Update Checklist" above. |
 
 ### Local Plugin Testing

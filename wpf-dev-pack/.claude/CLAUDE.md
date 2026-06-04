@@ -57,6 +57,7 @@ These rules MUST survive context compression. If prior context is lost, re-read 
 4. **Generic.xaml = MergedDictionaries hub only** (`rules/resourcedictionary-patterns.md`)
 5. **Verify API signatures with HandMirror before writing code**
 6. **Single matching path per framework** — ViewModel First (CommunityToolkit, `Mappings.xaml`) or View First (Prism, `RegisterForNavigation`). See `docs/TERMINOLOGY.md` and `rules/` for framework-specific wiring.
+7. **WPF knowledge topics are fetched via `WpfDevPackMcp get_wpf_topic(id)`** — not loaded from `skills/`.
 
 ---
 
@@ -165,9 +166,11 @@ See `agents/wpf-architect.md` for full interview specification.
 **On Trigger:**
 1. Announce: "WPF Dev Pack: Activating `skill-name` skill."
 2. Check `.claude/rules/dotnet/wpf/mvvm-framework.md` for active MVVM framework
-3. Load appropriate file:
-   - **CommunityToolkit.Mvvm** → SKILL.md
-   - **Prism 9** → PRISM.md if present, otherwise SKILL.md
+3. Load content:
+   - **Knowledge topics** → call `WpfDevPackMcp get_wpf_topic(id[, variant])` to fetch from MCP
+   - **Command skills** → invoked via slash command (`/wpf-dev-pack:<skill-name>`)
+   - **CommunityToolkit.Mvvm command skills** → SKILL.md
+   - **Prism 9 command skills** → PRISM.md if present, otherwise SKILL.md
 4. Generate/modify code per guidelines and active framework rules
 
 **Silent Triggers** (no announcement):
@@ -184,9 +187,16 @@ See `agents/wpf-architect.md` for full interview specification.
 
 ## Adding a New Skill — Required Co-updates
 
+**Adding a knowledge topic** (WPF knowledge, served via MCP — NOT a plugin skill):
+1. Create `wpf-dev-pack/knowledge/<id>/TOPIC.md` with the topic content. **No YAML frontmatter.** The first `# H1` is the title; put a one-line `> summary` blockquote directly under the H1 — the MCP catalog (`TopicDocReader`) reads title from the first H1 and summary from the first `>` blockquote.
+2. Add the topic's keyword(s) to `wpf-dev-pack/hooks/WpfKeywordDetector.cs` (the keyword→id routing table).
+3. No plugin skill registration, no version bump, no MCP rebuild — the server picks it up on next `git pull`.
+
+**Adding a command skill** (slash-invocable plugin skill under `skills/`):
+
 When adding a new skill at `skills/<skill-name>/SKILL.md`, these files MUST be updated together:
 
-1. **`skills/.claude/CLAUDE.md`** — add a keyword row to the Keyword-Skill Mapping table; add the skill name under the appropriate Skill Category Index row.
+1. **`skills/.claude/CLAUDE.md`** — add a row to the retained-command table.
 2. **Adjacent existing SKILL.md files** — when topics overlap, add a cross-link to the new skill (`See [...](../skill-name/SKILL.md)`).
 3. **Skills that need a Prism 9 branch** — author a `PRISM.md` companion file (see `mvvm-framework.md`).
 4. **Foundation + Application skill pairs** — author the two skills separately and cross-reference. Foundation skill describes the mechanism / general principle; Application skill applies it to a specific scenario (e.g., `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`).

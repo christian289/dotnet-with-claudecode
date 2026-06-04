@@ -56,7 +56,9 @@ dotnet-with-claudecode/
 │       ├── dotnet/               # C#, WPF, AvaloniaUI, spreadsheet
 │       ├── secure-coding/        # 시큐어 코딩 지침
 │       └── preferences.md        # 답변 언어 등 기본 지침
+├── mcp/                          # WpfDevPackMcp MCP 서버 소스 (플러그인 외부)
 ├── wpf-dev-pack/                 # WPF 전용 플러그인 (현재 유일한 호스팅 대상)
+│   └── knowledge/                # MCP 지식 토픽 (WpfDevPackMcp가 제공)
 ├── FeedbackDocs/                 # 외부 세션 wpf-dev-pack 피드백 md 누적 폴더
 ├── archive-skills/               # microsoft-docs MCP로 대체되어 보관된 구 skill
 └── docs/                         # 프로젝트 문서
@@ -76,6 +78,17 @@ dotnet-with-claudecode/
 - `<plugin>/README.ko.md` — 버전 뱃지
 - `docs/changelogs/<plugin>.md` — 새 버전 항목 추가
 
+**WpfDevPackMcp NuGet 패키지 버전 관리:** `WpfDevPackMcp` MCP 서버는 별도
+NuGet 패키지로 배포되며, `wpf-dev-pack/.mcp.json`의 `dnx` 버전 지정자로
+고정됩니다. 이 버전은 플러그인 버전과 독립적입니다. 지식 전용 편집
+(`wpf-dev-pack/knowledge/` 하위 파일 수정)은 **플러그인 버전 범프 없이,
+MCP 재배포 없이** 반영됩니다 — 서버는 호출마다 저장소에서 콘텐츠를 직접
+읽어옵니다. 플러그인 패키지 자체에 포함된 변경(커맨드 스킬, 훅, 규칙)만이
+`/wpf-dev-pack-release`를 통한 플러그인 버전 범프를 필요로 합니다.
+
+> 서버 빌드·게시(dnx tool + single-file 프로필)·크로스플랫폼 실행·MCP Inspector
+> 점검 방법은 [`mcp/README.md`](../mcp/README.md)에 정리되어 있습니다.
+
 ## 메인테이너 워크플로우
 
 본 저장소의 메인테이너가 자주 사용하는 슬래시 명령:
@@ -84,6 +97,7 @@ dotnet-with-claudecode/
 |------|------|------|
 | `/applying-wpf-dev-pack-feedback <file.md>` | repo | FeedbackDocs 항목 하나를 `wpf-dev-pack`에 반영하고, 원본 md를 `FeedbackDocs/`로 이동시키며, `FeedbackDocs/APPLIED-LOG.md`에 한 줄을 추가. 커밋은 수행하지 않음. |
 | `/wpf-dev-pack:configuring-wpf-dev-pack-language [code]` | plugin | `.claude/wpf-dev-pack.local.md`에 BCP-47 `language:` 필드를 작성. 다음 세션부터 발효. |
+| `/wpf-dev-pack:set-repo-path <path>` | plugin | WpfDevPackMcp가 지식을 읽어올 로컬 클론 경로를 설정합니다. MCP 도구를 사용하기 전에 반드시 실행해야 합니다. |
 | `/wpf-dev-pack-release` | repo | 플러그인 버전 범프의 유일한 경로. `plugin.json`, 양쪽 README 뱃지, `docs/changelogs/wpf-dev-pack.md`를 lockstep으로 갱신. 위 "Plugin Version Update Checklist" 참조. |
 
 ### 로컬 플러그인 테스트
