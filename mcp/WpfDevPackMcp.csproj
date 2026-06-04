@@ -12,7 +12,9 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>WpfDevPackMcp</ToolCommandName>
     <PackageId>WpfDevPackMcp</PackageId>
-    <Version>0.1.0</Version>
+    <!-- NuGet versions are immutable; 0.1.0 is already published. Metadata
+         below ships from 0.1.1 onward. Bump per release. -->
+    <Version>0.1.1</Version>
     <!--
       Framework-dependent, platform-agnostic .NET tool: a single cross-platform
       package (managed IL) that runs on Windows/Linux/macOS with the .NET 10
@@ -24,9 +26,31 @@
     -->
   </PropertyGroup>
 
+  <!-- NuGet package metadata (nuget.org listing) -->
+  <PropertyGroup>
+    <Title>WpfDevPackMcp — WPF Dev Pack knowledge MCP server</Title>
+    <Authors>christian289</Authors>
+    <Company>christian289</Company>
+    <Copyright>Copyright (c) christian289</Copyright>
+    <Description>A .NET 10 stdio Model Context Protocol (MCP) server that serves the WPF Dev Pack plugin's WPF knowledge topics. It reads plain-markdown topics from a local clone of christian289/dotnet-with-claudecode (wpf-dev-pack/knowledge) and exposes list/get/search/refresh tools. Configure the local clone path via /wpf-dev-pack:set-repo-path (or the WPFDEVPACK_REPO_PATH environment variable).</Description>
+    <PackageTags>mcp;model-context-protocol;wpf;dotnet-tool;claude;wpf-dev-pack;dnx</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/christian289/dotnet-with-claudecode/tree/main/mcp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/christian289/dotnet-with-claudecode</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>main</RepositoryBranch>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>See the repository for changes. Knowledge content is served live from the repo, independent of this package's version.</PackageReleaseNotes>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="ModelContextProtocol" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
+  </ItemGroup>
+
+  <!-- Include README.md inside the package for the nuget.org listing -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <!-- Exclude test project files from the main project compilation -->
