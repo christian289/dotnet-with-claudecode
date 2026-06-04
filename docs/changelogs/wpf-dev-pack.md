@@ -10,6 +10,27 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.7.0
+
+### Changed
+- **WPF knowledge skills migrated to the `WpfDevPackMcp` MCP server.** The ~50 knowledge topics (MVVM, rendering, threading, styling, 3rd-party libraries, .NET common, Prism 9 companions, testing) are no longer bundled under `skills/`. They are served on demand by `WpfDevPackMcp` (`get_wpf_topic` / `search_wpf_topics`) from a local clone of `christian289/dotnet-with-claudecode` (`wpf-dev-pack/knowledge/<id>/TOPIC.md`). This removes ~50 skill descriptions from the session skill listing (session-context savings) while keeping the content editable as plain Markdown — no MCP rebuild or plugin version bump is needed to update knowledge.
+- `WpfKeywordDetector` hook now routes knowledge keywords to `WpfDevPackMcp get_wpf_topic(<id>)` and command keywords to `/wpf-dev-pack:<skill>`.
+- `applying-wpf-dev-pack-feedback` now targets the knowledge base (`wpf-dev-pack/knowledge/<id>/TOPIC.md`) instead of a skill.
+- `.mcp.json` now registers two servers: `HandMirrorMcp` and `WpfDevPackMcp` (pinned `@0.1.1`).
+- `README.md` / `README.ko.md`: the "Skills by Category" breakdown is replaced by the 11 bundled command skills plus a knowledge-via-MCP note; stats updated.
+
+### Added
+- New command skill: `set-repo-path` — configures the local repo-clone path `WpfDevPackMcp` reads knowledge from (writes `~/.wpf-dev-pack-mcp/config.json`, or set `WPFDEVPACK_REPO_PATH`).
+- New hook: `RepoPathGuard` (PreToolUse) — blocks `WpfDevPackMcp` tool calls when the repo path is unconfigured, with guidance on running `/wpf-dev-pack:set-repo-path`.
+
+### Removed
+- ~50 WPF knowledge `SKILL.md` files removed from `skills/` (relocated to `knowledge/<id>/TOPIC.md`; YAML frontmatter dropped — title = first `# H1`, summary = first `>` blockquote).
+
+### Stats
+- Skills: 11 · Agents: 10 · MCP Servers: 2
+
+---
+
 ## v1.6.5
 
 ### Added

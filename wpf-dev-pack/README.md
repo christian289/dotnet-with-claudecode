@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.6.5-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**60 Skills** · **10 Specialized Agents** · **1 MCP Server**
+**11 Skills** · **10 Specialized Agents** · **2 MCP Servers**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **60 Skills** covering all WPF aspects
+- **11 command Skills** + on-demand WPF knowledge via MCP
 - **Best practices** built-in
 
 </td>
@@ -303,6 +303,7 @@ Some skills activate without notification:
 | Plugin | MCP Server | Purpose |
 |--------|-----------|---------|
 | **HandMirrorMcp** | HandMirrorMcp | .NET assembly/NuGet inspection (bundled) |
+| **WpfDevPackMcp** | WpfDevPackMcp | WPF knowledge topics, served on demand from a local repo clone (bundled) |
 | **context7** | context7 | Library/framework documentation |
 | **sequential-thinking** | sequential-thinking | Step-by-step analysis |
 | _(direct MCP via `uv`)_ | **serena** | Semantic code analysis |
@@ -311,146 +312,18 @@ Some skills activate without notification:
 
 > See [Required Plugin Dependencies](#required-plugin-dependencies) and [Required MCPs](#required-mcps) for installation. Serena is **not** a Claude Code plugin — install it directly as an MCP server via `uv`.
 
-### 📚 Skills by Category
+### 📚 Skills & Knowledge
 
-<details>
-<summary><b>🎨 UI & Controls (5 skills)</b></summary>
+> **As of v1.7.0**, the ~50 WPF *knowledge* topics (MVVM, rendering, threading,
+> styling, 3rd-party libraries, .NET common, Prism 9 companions, testing, …) are
+> **no longer bundled as plugin skills**. They are served on demand by the
+> **WpfDevPackMcp** MCP server via `get_wpf_topic` / `search_wpf_topics`, and the
+> keyword detector routes to them automatically. This keeps them out of the
+> session's skill listing (no per-session context cost) while remaining editable
+> as plain Markdown. See [`mcp/README.md`](../mcp/README.md) and
+> [`/wpf-dev-pack:set-repo-path`](#-configuration).
 
-| Skill | Description |
-|-------|-------------|
-| `authoring-wpf-controls` | Control authoring patterns |
-| `designing-wpf-customcontrol-architecture` | CustomControl architecture |
-| `displaying-slider-index` | Slider UI patterns |
-| `binding-enum-command-parameters` | Enum binding patterns |
-| `configuring-wpf-themeinfo` | ThemeInfo configuration |
-
-</details>
-
-<details>
-<summary><b>🔗 Data Binding & MVVM (7 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
-| `advanced-data-binding` | Advanced binding patterns (MultiBinding, PriorityBinding) |
-| `using-converter-markup-extension` | Converter MarkupExtension pattern |
-| `implementing-wpf-validation` | Validation strategies |
-| `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
-| `configuring-dependency-injection` | DI configuration |
-| `structuring-wpf-projects` | Project structure |
-
-</details>
-
-<details>
-<summary><b>⚡ Performance & Rendering (9 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `rendering-with-drawingcontext` | DrawingContext rendering |
-| `rendering-with-drawingvisual` | DrawingVisual rendering |
-| `rendering-wpf-architecture` | Rendering architecture |
-| `rendering-wpf-high-performance` | High-performance rendering |
-| `implementing-hit-testing` | Hit testing |
-| `virtualizing-wpf-ui` | UI virtualization |
-| `optimizing-wpf-memory` | Memory optimization |
-| `checking-image-bounds-transform` | Image transforms |
-| `navigating-visual-logical-tree` | Tree navigation |
-
-</details>
-
-<details>
-<summary><b>⌨️ Input & Events (2 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `routing-wpf-events` | Routed events |
-| `managing-wpf-popup-focus` | Popup focus management |
-
-</details>
-
-<details>
-<summary><b>🎨 Styling & Resources (4 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `managing-styles-resourcedictionary` | Styles & resources |
-| `resolving-icon-font-inheritance` | Icon fonts |
-| `using-xaml-property-element-syntax` | XAML property element syntax |
-| `formatting-wpf-csharp-code` | Code formatting |
-
-</details>
-
-<details>
-<summary><b>🔧 Application & Threading (6 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `managing-wpf-application-lifecycle` | App lifecycle |
-| `threading-wpf-dispatcher` | Dispatcher & threading |
-| `preventing-dispatcher-deadlock` | Avoid sync-over-async deadlocks in event handlers |
-| `shutting-down-wpf-gracefully` | OnMainWindowClose / OnExplicitShutdown with async cleanup |
-| `embedding-pdb-in-exe` | PDB embedding |
-| `publishing-wpf-apps` | Publishing & installers |
-
-</details>
-
-<details>
-<summary><b>📦 3rd Party Libraries (8 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `integrating-wpfui-fluent` | WPF-UI (Wpf.Ui) Fluent Design integration |
-| `integrating-livecharts2` | LiveCharts2 charting library |
-| `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo bridge |
-| `handling-errors-with-erroror` | ErrorOr result pattern for service layer |
-| `integrating-nodify` | Nodify node-based editor control |
-| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot modifier key sync for mouse wheel zoom |
-| `flaui-cross-process-input` | FlaUI cross-process input calibration |
-| `flaui-wpf-element-discovery` | FlaUI element discovery in WPF automation |
-
-</details>
-
-<details>
-<summary><b>🔷 .NET Common (3 skills)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `configuring-console-app-di` | Console app DI |
-| `implementing-repository-pattern` | Repository pattern |
-| `managing-literal-strings` | String management |
-
-</details>
-
-<details>
-<summary><b>🔄 Prism 9 Companion (13 PRISM.md files)</b></summary>
-
-12 skills provide `PRISM.md` companion files with Prism 9 (Community License) equivalents:
-
-| Skill | PRISM.md Focus |
-|-------|----------------|
-| `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
-| `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
-| `structuring-wpf-projects` | IModule-based module architecture |
-| `managing-wpf-application-lifecycle` | PrismApplication lifecycle |
-| `binding-enum-command-parameters` | DelegateCommand\<T\> |
-| `implementing-wpf-validation` | ValidatableBindableBase |
-| `managing-wpf-collectionview-mvvm` | BindableBase + IContainerRegistry |
-| `validating-with-fluentvalidation` | ValidatableBindableBase\<T\> bridge |
-| `implementing-repository-pattern` | IContainerRegistry DI |
-| `displaying-slider-index` | SetProperty + RaisePropertyChanged |
-
-> Each skill's SKILL.md (CommunityToolkit.Mvvm) and PRISM.md (Prism 9) cross-reference each other.
-
-</details>
-
-<details>
-<summary><b>🧪 Testing (1 skill)</b></summary>
-
-| Skill | Description |
-|-------|-------------|
-| `testing-wpf-viewmodels` | ViewModel unit testing with xUnit + NSubstitute |
-
-</details>
+The plugin bundles **11 command skills** (slash-invocable):
 
 <details>
 <summary><b>🏗️ Scaffolding (7 skills)</b></summary>
@@ -464,6 +337,26 @@ Some skills activate without notification:
 | `make-wpf-behavior` | Behavior<T> generation |
 | `make-wpf-viewmodel` | ViewModel + View + DI + DataTemplate mapping generation |
 | `make-wpf-service` | Service interface + implementation + DI registration |
+
+</details>
+
+<details>
+<summary><b>🎨 Code Quality (1 skill)</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `formatting-wpf-csharp-code` | C# / XAML formatting & style (silent trigger) |
+
+</details>
+
+<details>
+<summary><b>🔧 Plugin Operations (3 skills)</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `collecting-wpf-dev-pack-feedback` | Capture anonymized feedback docs for later application |
+| `configuring-wpf-dev-pack-language` | Set the per-project response language (`.claude/wpf-dev-pack.local.md`) |
+| `set-repo-path` | Configure the local repo-clone path WpfDevPackMcp reads knowledge from |
 
 </details>
 
@@ -485,9 +378,10 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 60 Skills
+├── 📁 skills/                 # 11 command skills
+├── 📁 knowledge/              # WPF knowledge topics (served via WpfDevPackMcp MCP)
 ├── 📁 hooks/                  # Event hooks
-├── 📄 .mcp.json               # MCP config (HandMirrorMcp only)
+├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```

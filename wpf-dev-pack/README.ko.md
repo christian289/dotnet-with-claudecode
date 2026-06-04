@@ -6,12 +6,12 @@
 
 ### Claude Code를 위한 최고의 WPF 개발 도구 키트
 
-[![Version](https://img.shields.io/badge/version-1.6.5-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**60개 스킬** · **10개 전문 에이전트** · **1개 MCP 서버**
+**11개 스킬** · **10개 전문 에이전트** · **2개 MCP 서버**
 
 [설치](#-설치) · [빠른 시작](#-빠른-시작) · [기능](#-기능) · [문서](#-문서)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ 완벽한 도구 키트
-- WPF 전 영역을 다루는 **60개 스킬**
+- **11개 커맨드 스킬** + MCP로 온디맨드 제공되는 WPF 지식
 - **모범 사례** 내장
 
 </td>
@@ -303,6 +303,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | 플러그인 | MCP 서버 | 용도 |
 |---------|----------|------|
 | **HandMirrorMcp** | HandMirrorMcp | .NET 어셈블리/NuGet 검사 (내장) |
+| **WpfDevPackMcp** | WpfDevPackMcp | WPF 지식 토픽, 로컬 저장소 클론에서 온디맨드 제공 (내장) |
 | **context7** | context7 | 라이브러리/프레임워크 문서 |
 | **sequential-thinking** | sequential-thinking | 단계별 분석 |
 | _(`uv`로 직접 설치한 MCP)_ | **serena** | 시맨틱 코드 분석 |
@@ -311,146 +312,18 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 > 설치 방법은 [필수 플러그인 종속성](#필수-플러그인-종속성) 및 [필수-mcp](#필수-mcp) 섹션을 참고하세요. Serena는 Claude Code 플러그인이 **아니며**, `uv`로 MCP 서버로 직접 설치해야 합니다.
 
-### 📚 카테고리별 스킬
+### 📚 스킬 & 지식
 
-<details>
-<summary><b>🎨 UI & 컨트롤 (5개 스킬)</b></summary>
+> **v1.7.0부터**, ~50개의 WPF *지식* 토픽(MVVM, 렌더링, 스레딩, 스타일링,
+> 서드파티 라이브러리, .NET 공통, Prism 9 컴패니언, 테스트 등)은 **더 이상
+> 플러그인 스킬로 번들되지 않습니다**. 이들은 **WpfDevPackMcp** MCP 서버가
+> `get_wpf_topic` / `search_wpf_topics`로 온디맨드 제공하며, 키워드 감지기가
+> 자동으로 라우팅합니다. 덕분에 세션 스킬 목록에서 빠져(세션 컨텍스트 비용
+> 없음) 있으면서도 순수 마크다운으로 편집 가능합니다.
+> [`mcp/README.md`](../mcp/README.md)와 [`/wpf-dev-pack:set-repo-path`](#-설정)를
+> 참고하세요.
 
-| 스킬 | 설명 |
-|------|------|
-| `authoring-wpf-controls` | 컨트롤 작성 패턴 |
-| `designing-wpf-customcontrol-architecture` | CustomControl 아키텍처 |
-| `displaying-slider-index` | Slider UI 패턴 |
-| `binding-enum-command-parameters` | Enum 바인딩 패턴 |
-| `configuring-wpf-themeinfo` | ThemeInfo 설정 |
-
-</details>
-
-<details>
-<summary><b>🔗 데이터 바인딩 & MVVM (7개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
-| `advanced-data-binding` | 고급 바인딩 패턴 (MultiBinding, PriorityBinding) |
-| `using-converter-markup-extension` | Converter MarkupExtension 패턴 |
-| `implementing-wpf-validation` | 유효성 검사 전략 |
-| `managing-wpf-collectionview-mvvm` | MVVM에서 CollectionView |
-| `configuring-dependency-injection` | DI 설정 |
-| `structuring-wpf-projects` | 프로젝트 구조 |
-
-</details>
-
-<details>
-<summary><b>⚡ 성능 & 렌더링 (9개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `rendering-with-drawingcontext` | DrawingContext 렌더링 |
-| `rendering-with-drawingvisual` | DrawingVisual 렌더링 |
-| `rendering-wpf-architecture` | 렌더링 아키텍처 |
-| `rendering-wpf-high-performance` | 고성능 렌더링 |
-| `implementing-hit-testing` | 히트 테스트 |
-| `virtualizing-wpf-ui` | UI 가상화 |
-| `optimizing-wpf-memory` | 메모리 최적화 |
-| `checking-image-bounds-transform` | 이미지 변환 |
-| `navigating-visual-logical-tree` | 트리 탐색 |
-
-</details>
-
-<details>
-<summary><b>⌨️ 입력 & 이벤트 (2개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `routing-wpf-events` | 라우티드 이벤트 |
-| `managing-wpf-popup-focus` | Popup 포커스 관리 |
-
-</details>
-
-<details>
-<summary><b>🎨 스타일링 & 리소스 (4개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `managing-styles-resourcedictionary` | 스타일 & 리소스 |
-| `resolving-icon-font-inheritance` | 아이콘 폰트 |
-| `using-xaml-property-element-syntax` | XAML 속성 요소 구문 |
-| `formatting-wpf-csharp-code` | 코드 서식 |
-
-</details>
-
-<details>
-<summary><b>🔧 애플리케이션 & 스레딩 (6개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `managing-wpf-application-lifecycle` | 앱 생명주기 |
-| `threading-wpf-dispatcher` | Dispatcher & 스레딩 |
-| `preventing-dispatcher-deadlock` | 이벤트 핸들러의 sync-over-async 데드락 방지 |
-| `shutting-down-wpf-gracefully` | OnMainWindowClose / OnExplicitShutdown 기반 비동기 종료 |
-| `embedding-pdb-in-exe` | PDB 임베딩 |
-| `publishing-wpf-apps` | 배포 & 인스톨러 |
-
-</details>
-
-<details>
-<summary><b>📦 서드파티 라이브러리 (8개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `integrating-wpfui-fluent` | WPF-UI (Wpf.Ui) Fluent Design 통합 |
-| `integrating-livecharts2` | LiveCharts2 차트 라이브러리 |
-| `validating-with-fluentvalidation` | FluentValidation + INotifyDataErrorInfo 브리지 |
-| `handling-errors-with-erroror` | ErrorOr 결과 패턴 (서비스 계층) |
-| `integrating-nodify` | Nodify 노드 기반 에디터 컨트롤 |
-| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot 마우스 휠 줌 수정자 키 동기화 |
-| `flaui-cross-process-input` | FlaUI 크로스 프로세스 입력 보정 |
-| `flaui-wpf-element-discovery` | FlaUI WPF 요소 탐색 문제 해결 |
-
-</details>
-
-<details>
-<summary><b>🔷 .NET 공통 (3개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `configuring-console-app-di` | 콘솔 앱 DI |
-| `implementing-repository-pattern` | Repository 패턴 |
-| `managing-literal-strings` | 문자열 관리 |
-
-</details>
-
-<details>
-<summary><b>🔄 Prism 9 컴패니언 (13개 PRISM.md 파일)</b></summary>
-
-12개 스킬에 Prism 9 (Community License) 대응 `PRISM.md` 컴패니언 파일을 제공합니다:
-
-| 스킬 | PRISM.md 주요 내용 |
-|------|-------------------|
-| `implementing-communitytoolkit-mvvm` | BindableBase, SetProperty, DelegateCommand |
-| `configuring-dependency-injection` | PrismApplication, IContainerRegistry |
-| `structuring-wpf-projects` | IModule 기반 모듈 아키텍처 |
-| `managing-wpf-application-lifecycle` | PrismApplication 라이프사이클 |
-| `binding-enum-command-parameters` | DelegateCommand\<T\> |
-| `implementing-wpf-validation` | ValidatableBindableBase |
-| `managing-wpf-collectionview-mvvm` | BindableBase + IContainerRegistry |
-| `validating-with-fluentvalidation` | ValidatableBindableBase\<T\> 브릿지 |
-| `implementing-repository-pattern` | IContainerRegistry DI |
-| `displaying-slider-index` | SetProperty + RaisePropertyChanged |
-
-> 각 스킬의 SKILL.md (CommunityToolkit.Mvvm)와 PRISM.md (Prism 9)는 상호 참조합니다.
-
-</details>
-
-<details>
-<summary><b>🧪 테스트 (1개 스킬)</b></summary>
-
-| 스킬 | 설명 |
-|------|------|
-| `testing-wpf-viewmodels` | xUnit + NSubstitute로 ViewModel 단위 테스트 |
-
-</details>
+플러그인은 **11개 커맨드 스킬**(슬래시 호출)을 번들합니다:
 
 <details>
 <summary><b>🏗️ 스캐폴딩 (7개 스킬)</b></summary>
@@ -464,6 +337,26 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | `make-wpf-behavior` | Behavior<T> 생성 |
 | `make-wpf-viewmodel` | ViewModel + View + DI + DataTemplate 매핑 생성 |
 | `make-wpf-service` | 서비스 인터페이스 + 구현 + DI 등록 |
+
+</details>
+
+<details>
+<summary><b>🎨 코드 품질 (1개 스킬)</b></summary>
+
+| 스킬 | 설명 |
+|------|------|
+| `formatting-wpf-csharp-code` | C# / XAML 서식 & 스타일 (무음 트리거) |
+
+</details>
+
+<details>
+<summary><b>🔧 플러그인 운영 (3개 스킬)</b></summary>
+
+| 스킬 | 설명 |
+|------|------|
+| `collecting-wpf-dev-pack-feedback` | 익명화된 피드백 문서 수집 (추후 반영용) |
+| `configuring-wpf-dev-pack-language` | 프로젝트별 응답 언어 설정 (`.claude/wpf-dev-pack.local.md`) |
+| `set-repo-path` | WpfDevPackMcp가 지식을 읽어올 로컬 저장소 클론 경로 설정 |
 
 </details>
 
@@ -485,9 +378,10 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 60개 스킬
+├── 📁 skills/                 # 11개 커맨드 스킬
+├── 📁 knowledge/              # WPF 지식 토픽 (WpfDevPackMcp MCP로 제공)
 ├── 📁 hooks/                  # 이벤트 훅
-├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp만)
+├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md
 └── 📄 LICENSE
 ```
