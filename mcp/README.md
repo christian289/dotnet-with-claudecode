@@ -141,4 +141,4 @@ directory plus a keyword in `wpf-dev-pack/hooks/WpfKeywordDetector.cs`) and
 push. The server picks it up on its next pull — **no rebuild, no republish, no
 plugin version bump**.
 
-> Korean mirror: [README.ko.md](README.ko.md)
+> Korean mirror: [README.ko.md](https://github.com/christian289/dotnet-with-claudecode/blob/main/mcp/README.ko.md)

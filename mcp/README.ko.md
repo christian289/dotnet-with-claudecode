@@ -133,4 +133,4 @@ npx @modelcontextprotocol/inspector --cli "<exe>" \
 `wpf-dev-pack/hooks/WpfKeywordDetector.cs` 에 키워드 추가)하고 push 하세요. 서버가
 다음 pull 때 반영합니다 — **재빌드·재배포·플러그인 버전업 불필요.**
 
-> 영문 원본: [README.md](README.md)
+> 영문 원본: [README.md](https://github.com/christian289/dotnet-with-claudecode/blob/main/mcp/README.md)
