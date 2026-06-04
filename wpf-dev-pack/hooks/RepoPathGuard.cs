@@ -39,8 +39,10 @@ if (IsConfigured())
 }
 
 var reason =
-    "WpfDevPackMcp is not configured: the knowledge repo path is unset. " +
-    "Run /wpf-dev-pack:set-repo-path <path-to-local-clone-of-christian289/dotnet-with-claudecode> first.";
+    "WpfDevPackMcp is blocked: the knowledge repo path is not configured. " +
+    "This is a one-time USER setup. Do NOT search the filesystem for a clone, and do NOT run " +
+    "set-repo-path or SetWpfDevPackRepoPath.cs yourself. Stop and ask the user to run: " +
+    "/wpf-dev-pack:set-repo-path <path-to-local-clone-of-christian289/dotnet-with-claudecode>.";
 
 var reasonJson = reason.Replace("\\", "\\\\").Replace("\"", "\\\"");
 var outputJson =

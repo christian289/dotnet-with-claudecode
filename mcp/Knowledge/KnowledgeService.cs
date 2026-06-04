@@ -5,7 +5,10 @@ using WpfDevPackMcp.Git;
 namespace WpfDevPackMcp.Knowledge;
 
 public sealed class RepoNotConfiguredException()
-    : Exception("WPF knowledge repo path is not configured. Run /wpf-dev-pack:set-repo-path <path>.");
+    : Exception(
+        "WPF knowledge repo path is not configured. This requires a one-time USER setup — " +
+        "do NOT auto-detect the repo or run set-repo-path yourself; ask the user to run " +
+        "/wpf-dev-pack:set-repo-path <path>.");
 
 /// <summary>
 /// Facade the MCP tools depend on: resolves the repo, refreshes (TTL/forced),

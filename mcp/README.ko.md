@@ -38,7 +38,7 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` 이 핀 버전으로 실행합니다:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.1", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.2", "--yes"] }
 ```
 
 빌드 산출물(`bin/`, `obj/`, `nupkg/`)은 git-ignore 됩니다.

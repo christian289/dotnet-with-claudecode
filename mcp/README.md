@@ -41,7 +41,7 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` runs it with a pinned version:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.1", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.2", "--yes"] }
 ```
 
 Build output (`bin/`, `obj/`, `nupkg/`) is git-ignored.

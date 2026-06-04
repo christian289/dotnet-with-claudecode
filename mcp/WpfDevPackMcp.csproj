@@ -12,9 +12,10 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>WpfDevPackMcp</ToolCommandName>
     <PackageId>WpfDevPackMcp</PackageId>
-    <!-- NuGet versions are immutable; 0.1.0 is already published. Metadata
-         below ships from 0.1.1 onward. Bump per release. -->
-    <Version>0.1.1</Version>
+    <!-- NuGet versions are immutable; bump per release. 0.1.0/0.1.1 already
+         published. 0.1.2 reworks the "repo not configured" message so agents
+         defer the one-time setup to the user instead of auto-configuring. -->
+    <Version>0.1.2</Version>
   </PropertyGroup>
 
   <!-- NuGet package metadata (nuget.org listing) -->
