@@ -221,3 +221,8 @@ private AutomationElement? WaitForFileDialog(string exactTitle, TimeSpan? timeou
 - Avoid `Contains()` — it false-matches the IDE window that hosts the test runner (VS, Rider).
 - Use all 3 tiers; any single one is insufficient depending on how the COM dialog attaches to its owner.
 - Always filter tier 3 by `ProcessId` to stay within the automated app's process.
+
+## See also
+
+- `flaui-capture-resize-robustness` — once elements are found by identifier, anchor capture and manipulation on their live `BoundingRectangle` so screenshots and clicks survive window resize.
+- `flaui-cross-process-input` — injecting mouse/keyboard input cross-process (SendInput vs `Mouse.MoveTo`, stuck keys, drag interpolation, DPI scaling).

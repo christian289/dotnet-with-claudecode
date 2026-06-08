@@ -1,6 +1,6 @@
 # WPF Application Lifecycle Patterns
 
-> Manages WPF Application lifecycle including Startup, Exit, SessionEnding events and single instance detection. Use when handling app initialization, shutdown, or preventing multiple instances.
+> Manages WPF Application lifecycle including Startup, Exit, SessionEnding events, single instance detection, and programmatic restart. Use when handling app initialization, shutdown, preventing multiple instances, or restarting the app from code (AppInstance.Restart for packaged/MSIX apps — UWP RequestRestartAsync deadlocks in FullTrust WPF — vs Process.Start for unpackaged).
 
 > **MVVM Framework Rule**: `.claude/rules/dotnet/wpf/mvvm-framework.md` 설정에 따라 코드 스타일이 결정됩니다.
 > Prism 9 사용 시 → [PRISM.md](PRISM.md) 참조
@@ -266,7 +266,58 @@ private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEv
 
 ---
 
-## 6. Related Skills
+## 6. Programmatic Restart (packaged vs unpackaged)
+
+To restart the app from code, the correct API depends on whether the app runs **packaged** (MSIX) or **unpackaged**. (For the MSIX/WASDK packaging side — Content globbing, multi-exe MSIX, native DLL PATH — see `publishing-wpf-apps`.)
+
+### Packaged (MSIX, incl. FullTrust): use `AppInstance.Restart`
+
+Do **not** use UWP `Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync` in a FullTrust WPF package app: called on the UI thread it **deadlocks without even returning** (the synchronous portion blocks, so a `Task.WhenAny(call.AsTask(), Task.Delay(...))` timeout never fires); moved to a background thread it terminates the process but **does not relaunch** (foreground context is lost). `RequestRestartAsync` assumes a UWP CoreApplication view (CoreDispatcher/CoreWindow) that a `Windows.FullTrustApplication` does not have.
+
+Use Windows App SDK `Microsoft.Windows.AppLifecycle.AppInstance.Restart` instead — it is **synchronous**, so calling it on the UI thread (which is foreground) neither deadlocks nor loses foreground, and it relaunches correctly.
+
+```csharp
+using Windows.ApplicationModel.Core;      // AppRestartFailureReason
+using Microsoft.Windows.AppLifecycle;     // AppInstance
+
+// Synchronous. On success the process terminates and the next line never runs,
+// so REACHING the switch means the restart FAILED — handle it (silent-failure guard).
+AppRestartFailureReason reason = AppInstance.Restart(string.Empty);
+switch (reason)
+{
+    case AppRestartFailureReason.NotInForeground:
+        // The app must be visible / in the foreground when calling Restart.
+        break;
+    case AppRestartFailureReason.RestartPending:
+    case AppRestartFailureReason.InvalidUser:
+    case AppRestartFailureReason.Other:
+        // Surface the failure to the user; do not discard the return value.
+        break;
+}
+```
+
+`AppInstance.Restart(string arguments)` is **static** and returns `Windows.ApplicationModel.Core.AppRestartFailureReason` (`RestartPending` / `NotInForeground` / `InvalidUser` / `Other`). Always inspect it — discarding it makes a failed restart look like "the button did nothing".
+
+### Unpackaged (development / xcopy): `Process.Start` + `Shutdown`
+
+```csharp
+var exePath = Environment.ProcessPath;   // null-guard: can be null in rare hosts
+if (exePath is not null)
+{
+    Process.Start(exePath);
+    Application.Current.Shutdown();
+}
+```
+
+Do **not** `Process.Start` a packaged app's exe directly — it launches outside the package and **loses package identity**. Packaged apps must restart via `AppInstance.Restart`.
+
+### Command wiring
+
+A restart command is usually `async void`; wrap the whole method in try-catch so an `AppInstance.Restart` / `Process.Start` exception reaches the user. Switching to `async Task` does not by itself add robustness — and `DelegateCommand(Action)` does not accept `Func<Task>`, so you would need `AsyncDelegateCommand` and still need the try-catch (or command-level exception handling) separately.
+
+---
+
+## 7. Related Skills
 
 | Skill | Relationship |
 |---|---|
@@ -276,7 +327,7 @@ private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEv
 
 ---
 
-## 7. References
+## 8. References
 
 - [Application Management Overview - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/app-development/application-management-overview)
 - [Application Class - Microsoft Docs](https://learn.microsoft.com/en-us/dotnet/api/system.windows.application)

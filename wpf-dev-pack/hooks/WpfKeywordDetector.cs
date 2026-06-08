@@ -307,7 +307,7 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         // 3rd Party Libraries
         // ─────────────────────────────────────────────────────────
         // FlaUI cross-process input
-        ["flaui"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["flaui"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery", "flaui-capture-resize-robustness"],
         ["cross-process"] = ["flaui-cross-process-input"],
         ["크로스 프로세스"] = ["flaui-cross-process-input"],
         ["sendinput"] = ["flaui-cross-process-input"],
@@ -325,6 +325,12 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["automationpeer"] = ["flaui-wpf-element-discovery"],
         ["uia tree"] = ["flaui-wpf-element-discovery"],
         ["uia 트리"] = ["flaui-wpf-element-discovery"],
+
+        // FlaUI capture & resize robustness
+        ["capture.element"] = ["flaui-capture-resize-robustness"],
+        ["captureimage"] = ["flaui-capture-resize-robustness"],
+        ["elementrectangle"] = ["flaui-capture-resize-robustness"],
+        ["창 리사이즈 캡처"] = ["flaui-capture-resize-robustness"],
 
         // Nodify
         ["nodify"] = ["integrating-nodify"],
@@ -432,10 +438,10 @@ static (HashSet<string> skills, HashSet<string> agents) DetectKeywordsAndAgents(
         ["lag"] = ["rendering-wpf-high-performance", "optimizing-wpf-memory"],
 
         // UI Automation Testing (intent)
-        ["ui 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
-        ["ui test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
-        ["자동화 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
-        ["automation test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery"],
+        ["ui 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery", "flaui-capture-resize-robustness"],
+        ["ui test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery", "flaui-capture-resize-robustness"],
+        ["자동화 테스트"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery", "flaui-capture-resize-robustness"],
+        ["automation test"] = ["flaui-cross-process-input", "flaui-wpf-element-discovery", "flaui-capture-resize-robustness"],
 
     };
 

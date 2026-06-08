@@ -473,3 +473,8 @@ When a FlaUI mouse gesture fails silently on a WPF control, check these in order
 8. **ReleaseAllKeys delay** — 200ms is enough after `ReleaseModifierKeys()`. `ReleaseAllKeys()` needs 500ms because non-modifier key-up events take longer to settle across processes.
 9. **DPI awareness** — If the test process is DPI-aware, computed (DIP) coordinates need the DIP→physical scale correction (`GetEffectiveDpiScale`); a node `BoundingRectangle` is already physical and needs none.
 10. **Keyboard.Type entered no text** — If a `TextBox` stays empty after `Keyboard.Type` with no exception, set the value via `ValuePattern.SetValue` rather than retrying keystrokes.
+
+## See also
+
+- `flaui-capture-resize-robustness` — anchoring capture and manipulation on UIA identifiers and the live `BoundingRectangle` so screenshots and actions survive window resize. Adjacent but distinct boundary: this topic is "how to inject input / get the coordinate system right"; that topic is "do not depend on coordinates at all".
+- `flaui-wpf-element-discovery` — finding elements missing from the UIA tree (AutomationId placement, `FindAllDescendants` depth, Shape controls without an AutomationPeer).
