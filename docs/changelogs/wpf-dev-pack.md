@@ -10,6 +10,45 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.7.3
+
+### Fixed
+- **`make-wpf-custom-control` no longer emits an uncompilable override.** The
+  generated control declared `protected override void OnIsEnabledChanged(...)`,
+  which has no base method to override (CS0115); `IsEnabled` changes are now
+  handled via the `IsEnabledChanged` event subscribed in the constructor.
+- **`make-wpf-project` default scaffold now builds.** It referenced an undefined
+  `IDialogService` (CS0246) and omitted the `$0.ViewModels` global using; the
+  service example was removed (services come from `make-wpf-service`) and the
+  missing using added. Verified end-to-end with `dotnet build` (CTK 8.4.* /
+  Hosting 10.0.* / Behaviors.Wpf 1.1.* restore; custom control + Generic.xaml +
+  ThemeInfo XAML compiles).
+
+### Changed
+- **`make-wpf-*` generators standardized into one consistent, buildable app.**
+  `make-wpf-project` uses the `.WpfApp` suffix (matching the `make-wpf-viewmodel`
+  / `make-wpf-service` project lookups) and scaffolds ViewModel-First navigation
+  (`Mappings.xaml` + `ContentControl` host + `CurrentViewModel`);
+  `make-wpf-service` places the interface in `.Core` when there is no
+  `.Abstractions` (avoids a broken back-reference); `make-wpf-custom-control`
+  auto-creates `Themes/Generic.xaml` + `ThemeInfo` when absent;
+  `make-wpf-converter` is unified on the MarkupExtension pattern
+  (`converter-patterns.md` aligned); `make-wpf-usercontrol` uses a design-time
+  `d:DataContext` only (drops the prohibited inline `DataContext`, P-001-c).
+- **Docs de-staled after the knowledge→MCP / keyword-router-removal refactor.**
+  README, `.claude/CLAUDE.md`, `skills/.claude/CLAUDE.md` (and `.ko` mirrors)
+  drop the obsolete keyword-router / auto-trigger framing; `skills/README` was
+  rewritten (it had listed ~50 knowledge topics as skills); `hooks/README` now
+  lists all 10 hooks with correct triggers; the agents README + delegation guide
+  add the missing `wpf-code-auditor`; the orphan `sequential-thinking` MCP entry
+  was removed; two hooks no longer print invalid
+  `/wpf-dev-pack:<knowledge-topic>` slash commands.
+
+### Stats
+- Skills: 11 · Agents: 10 · MCP Servers: 2
+
+---
+
 ## v1.7.2
 
 ### Removed
