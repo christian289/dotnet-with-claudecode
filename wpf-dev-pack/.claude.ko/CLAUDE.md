@@ -196,9 +196,8 @@ RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
 ## 새 Skill 추가 시 — 필수 동반 갱신
 
 **지식 토픽 추가** (WPF 지식, MCP를 통해 제공 — 플러그인 스킬이 아님):
-1. `wpf-dev-pack/knowledge/<id>/TOPIC.md`에 토픽 콘텐츠를 작성합니다. **YAML frontmatter 없음.** 첫 번째 `# H1`이 제목이며, H1 바로 아래에 한 줄짜리 `> 요약` 블록인용을 작성합니다 — MCP 카탈로그(`TopicDocReader`)는 첫 번째 H1에서 제목을, 첫 번째 `>` 블록인용에서 요약을 읽습니다.
-2. 토픽의 키워드를 `wpf-dev-pack/hooks/WpfKeywordDetector.cs`의 키워드→id 라우팅 테이블에 추가합니다.
-3. 플러그인 스킬 등록 불필요, 버전 범프 불필요, MCP 재빌드 불필요 — 서버는 다음 `git pull` 시 자동으로 반영합니다.
+1. `knowledge/<id>/TOPIC.md`(레포 루트, 플러그인 밖)에 토픽 콘텐츠를 작성합니다. **YAML frontmatter 없음.** 첫 번째 `# H1`이 제목이며, H1 바로 아래에 한 줄짜리 `> 요약` 블록인용을 작성합니다 — MCP 카탈로그(`TopicDocReader`)는 첫 번째 H1에서 제목을, 첫 번째 `>` 블록인용에서 요약을 읽습니다.
+2. 라우터 수정 불필요, 플러그인 스킬 등록 불필요, 버전 범프 불필요, MCP 재빌드 불필요 — MCP 카탈로그가 새 디렉터리를 자동 발견하고 다음 `git pull` 시 `search_wpf_topics`로 노출됩니다.
 
 **커맨드 스킬 추가** (슬래시 호출 가능한 플러그인 스킬, `skills/` 하위):
 

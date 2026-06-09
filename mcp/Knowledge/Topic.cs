@@ -1,6 +1,6 @@
 namespace WpfDevPackMcp.Knowledge;
 
-/// <summary>One knowledge topic = one directory under wpf-dev-pack/knowledge/.</summary>
+/// <summary>One knowledge topic = one directory under the repo-root knowledge/.</summary>
 public sealed record Topic(
     string Id,
     string Title,

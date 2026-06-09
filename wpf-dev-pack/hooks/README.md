@@ -8,7 +8,6 @@ Event hooks that run automatically during Claude Code operations.
 
 | Hook | Trigger | Description |
 |------|---------|-------------|
-| **WpfKeywordDetector** | PreToolUse | Detects WPF/C#/.NET keywords and auto-activates relevant skills |
 | **CodeFormatter** | PostToolUse | Formats C# and XAML code after file modifications |
 | **McpDependencyChecker** | PreToolUse | Checks for required MCP server availability |
 | **XamlValidator** | PostToolUse | Validates XAML syntax after edits |
@@ -21,7 +20,6 @@ Event hooks that run automatically during Claude Code operations.
 | File | Description |
 |------|-------------|
 | `hooks.json` | Hook configuration and triggers |
-| `WpfKeywordDetector.cs` | Keyword detection logic |
 | `CodeFormatter.cs` | Code formatting with XamlStyler and dotnet format |
 | `McpDependencyChecker.cs` | MCP dependency verification |
 | `XamlValidator.cs` | XAML syntax validation |

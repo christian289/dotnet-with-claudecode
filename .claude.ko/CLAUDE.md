@@ -57,8 +57,8 @@ dotnet-with-claudecode/
 │       ├── secure-coding/        # 시큐어 코딩 지침
 │       └── preferences.md        # 답변 언어 등 기본 지침
 ├── mcp/                          # WpfDevPackMcp MCP 서버 소스 (플러그인 외부)
+├── knowledge/                    # MCP 지식 토픽 (WpfDevPackMcp가 제공; 플러그인 밖이라 번들되지 않음)
 ├── wpf-dev-pack/                 # WPF 전용 플러그인 (현재 유일한 호스팅 대상)
-│   └── knowledge/                # MCP 지식 토픽 (WpfDevPackMcp가 제공)
 ├── FeedbackDocs/                 # 외부 세션 wpf-dev-pack 피드백 md 누적 폴더
 ├── archive-skills/               # microsoft-docs MCP로 대체되어 보관된 구 skill
 └── docs/                         # 프로젝트 문서
@@ -81,7 +81,7 @@ dotnet-with-claudecode/
 **WpfDevPackMcp NuGet 패키지 버전 관리:** `WpfDevPackMcp` MCP 서버는 별도
 NuGet 패키지로 배포되며, `wpf-dev-pack/.mcp.json`의 `dnx` 버전 지정자로
 고정됩니다. 이 버전은 플러그인 버전과 독립적입니다. 지식 전용 편집
-(`wpf-dev-pack/knowledge/` 하위 파일 수정)은 **플러그인 버전 범프 없이,
+(`knowledge/` 하위 파일 수정)은 **플러그인 버전 범프 없이,
 MCP 재배포 없이** 반영됩니다 — 서버는 호출마다 저장소에서 콘텐츠를 직접
 읽어옵니다. 플러그인 패키지 자체에 포함된 변경(커맨드 스킬, 훅, 규칙)만이
 `/wpf-dev-pack-release`를 통한 플러그인 버전 범프를 필요로 합니다.

@@ -92,8 +92,8 @@ section as the spec. Typical change kinds and where they land:
 
 | Change kind | Where to apply |
 |------|-------|
-| New knowledge topic | `wpf-dev-pack/knowledge/<id>/TOPIC.md` (NO frontmatter — first `# H1` is the title, first `>` blockquote is the summary) + add keyword(s) to `wpf-dev-pack/hooks/WpfKeywordDetector.cs` + cross-link adjacent topics |
-| Knowledge augmentation | Edit `wpf-dev-pack/knowledge/<id>/TOPIC.md` |
+| New knowledge topic | `knowledge/<id>/TOPIC.md` (NO frontmatter — first `# H1` is the title, first `>` blockquote is the summary) + cross-link adjacent topics (the MCP catalog auto-discovers the new directory — no router to update) |
+| Knowledge augmentation | Edit `knowledge/<id>/TOPIC.md` |
 | Prism 9 companion (knowledge) | Add `PRISM.md` next to `knowledge/<id>/TOPIC.md` |
 | New command skill | `wpf-dev-pack/skills/<name>/SKILL.md` + slimmed `skills/.claude/CLAUDE.md` |
 | Scaffolder modernization | Update the relevant `make-wpf-*` skill template |
@@ -137,7 +137,7 @@ belongs to you. The hook is a reminder; do the check before proceeding.
 
 ### Step 4 — Version bump + README sync (only if needed)
 
-> Knowledge-only changes (edits under `wpf-dev-pack/knowledge/`) require
+> Knowledge-only changes (edits under `knowledge/`) require
 > NO plugin version bump and NO MCP republish — content is served from the
 > repo by WpfDevPackMcp and reflected on its next `git pull`. In that case
 > skip Step 4 and write `(knowledge only, no plugin/MCP bump)` in the

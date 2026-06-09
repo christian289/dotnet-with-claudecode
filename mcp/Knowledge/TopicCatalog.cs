@@ -14,7 +14,7 @@ public sealed class TopicNotFoundException : Exception
 public sealed record SearchHit(string Id, string Title, string Snippet, int Score);
 
 /// <summary>
-/// Scans &lt;repoRoot&gt;/wpf-dev-pack/knowledge/*/TOPIC.md into a topic
+/// Scans &lt;repoRoot&gt;/knowledge/*/TOPIC.md into a topic
 /// catalog. Reads directly from the local filesystem (a git clone), so a
 /// rescan reflects the latest pulled content. Results are cached until
 /// <see cref="Invalidate"/> is called.
@@ -25,7 +25,7 @@ public sealed class TopicCatalog(string repoRoot)
     private const int SnippetMaxLength = 160;
 
     private readonly string _knowledgeRoot =
-        Path.Combine(repoRoot, "wpf-dev-pack", "knowledge");
+        Path.Combine(repoRoot, "knowledge");
 
     private readonly Lock _gate = new();
     private IReadOnlyList<Topic>? _cache;

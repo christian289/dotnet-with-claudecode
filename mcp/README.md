@@ -1,8 +1,10 @@
 # WpfDevPackMcp — WPF Dev Pack knowledge MCP server
 
+<!-- mcp-name: io.github.christian289/wpf-dev-pack-mcp -->
+
 `WpfDevPackMcp` is a small **.NET 10 stdio MCP server** that serves the WPF
 knowledge topics of the `wpf-dev-pack` plugin. The knowledge content lives as
-plain Markdown under `wpf-dev-pack/knowledge/` in a **local clone** of
+plain Markdown under `knowledge/` (at the repo root) in a **local clone** of
 `christian289/dotnet-with-claudecode`; the server reads it from disk and
 refreshes it with `git pull` on demand. This keeps the knowledge out of the
 plugin's `skills/` loader (so it no longer consumes session context) while
@@ -41,7 +43,7 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` runs it with a pinned version:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.2", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.3", "--yes"] }
 ```
 
 Build output (`bin/`, `obj/`, `nupkg/`) is git-ignored.
@@ -64,7 +66,7 @@ in the last step, so publish first and re-pin after.
 
 1. **Verify** — `dotnet test mcp/WpfDevPackMcp.Tests`, then exercise the tools
    with the MCP Inspector (see "Inspect with the MCP Inspector" below).
-2. **Bump** `<Version>` in `mcp/WpfDevPackMcp.csproj` (e.g. `0.1.1` → `0.1.2`).
+2. **Bump** `<Version>` in `mcp/WpfDevPackMcp.csproj` (e.g. `0.1.2` → `0.1.3`).
 3. **Pack** — `dotnet pack mcp/WpfDevPackMcp.csproj -c Release -o mcp/nupkg`
 4. **Push** —
    ```
@@ -109,7 +111,7 @@ Configure it from a Claude Code session:
 | `search_wpf_topics(query, maxResults?)` | Ranked matches over id / title / summary / body |
 | `refresh_wpf_knowledge()` | Force a `git pull` + rescan |
 
-Topic files: `wpf-dev-pack/knowledge/<id>/TOPIC.md` — **no YAML frontmatter**.
+Topic files: `knowledge/<id>/TOPIC.md` — **no YAML frontmatter**.
 Title = the first `# H1`; summary = the first `>` blockquote. Variants are the
 sibling `PRISM.md` / `ADVANCED.md` files.
 
@@ -136,8 +138,7 @@ server's JSON-RPC pipe.
 
 ## Updating knowledge content
 
-Edit the relevant `wpf-dev-pack/knowledge/<id>/TOPIC.md` (or add a new topic
-directory plus a keyword in `wpf-dev-pack/hooks/WpfKeywordDetector.cs`) and
+Edit the relevant `knowledge/<id>/TOPIC.md` (or add a new topic directory) and
 push. The server picks it up on its next pull — **no rebuild, no republish, no
 plugin version bump**.
 

@@ -6,12 +6,12 @@ namespace WpfDevPackMcp.Tests;
 public sealed class TopicCatalogTests : IDisposable
 {
     private readonly string _root;          // repo root
-    private readonly string _knowledge;     // <root>/wpf-dev-pack/knowledge
+    private readonly string _knowledge;     // <root>/knowledge
 
     public TopicCatalogTests()
     {
         _root = Path.Combine(Path.GetTempPath(), "wdpmcp-" + Guid.NewGuid().ToString("N"));
-        _knowledge = Path.Combine(_root, "wpf-dev-pack", "knowledge");
+        _knowledge = Path.Combine(_root, "knowledge");
         WriteTopic("implementing-communitytoolkit-mvvm",
             "# CommunityToolkit MVVM\n\n> Implements MVVM using CommunityToolkit.\n\nbody",
             prism: "# Prism variant\n");

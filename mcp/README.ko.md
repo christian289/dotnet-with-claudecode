@@ -1,8 +1,10 @@
 # WpfDevPackMcp — WPF Dev Pack 지식 MCP 서버
 
+<!-- mcp-name: io.github.christian289/wpf-dev-pack-mcp -->
+
 `WpfDevPackMcp` 는 `wpf-dev-pack` 플러그인의 WPF 지식 토픽을 제공하는 작은
 **.NET 10 stdio MCP 서버**입니다. 지식 콘텐츠는 `christian289/dotnet-with-claudecode`
-의 **로컬 클론** 안 `wpf-dev-pack/knowledge/` 에 순수 마크다운으로 존재하며,
+의 **로컬 클론** 안 `knowledge/` (레포 루트)에 순수 마크다운으로 존재하며,
 서버가 이를 디스크에서 읽고 필요 시 `git pull` 로 갱신합니다. 덕분에 지식이
 플러그인의 `skills/` 로더에서 빠져(세션 컨텍스트를 더는 점유하지 않음) 있으면서,
 마크다운만 수정하면 갱신됩니다 — **서버 재빌드나 재배포가 필요 없습니다.**
@@ -38,7 +40,7 @@ dotnet nuget push mcp/nupkg/WpfDevPackMcp.<ver>.nupkg \
 `wpf-dev-pack/.mcp.json` 이 핀 버전으로 실행합니다:
 
 ```json
-"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.2", "--yes"] }
+"WpfDevPackMcp": { "type": "stdio", "command": "dnx", "args": ["WpfDevPackMcp@0.1.3", "--yes"] }
 ```
 
 빌드 산출물(`bin/`, `obj/`, `nupkg/`)은 git-ignore 됩니다.
@@ -61,7 +63,7 @@ NuGet 버전은 **불변**이라 릴리스마다 새 `<Version>`이 필요합니
 
 1. **검증** — `dotnet test mcp/WpfDevPackMcp.Tests` 후, MCP Inspector로 도구 실행
    확인(아래 "MCP Inspector 로 점검" 참조).
-2. **버전 올리기** — `mcp/WpfDevPackMcp.csproj`의 `<Version>`(예: `0.1.1` → `0.1.2`).
+2. **버전 올리기** — `mcp/WpfDevPackMcp.csproj`의 `<Version>`(예: `0.1.2` → `0.1.3`).
 3. **팩** — `dotnet pack mcp/WpfDevPackMcp.csproj -c Release -o mcp/nupkg`
 4. **푸시** —
    ```
@@ -103,7 +105,7 @@ Claude Code 세션에서 설정:
 | `search_wpf_topics(query, maxResults?)` | id / title / summary / body 기반 랭킹 검색 |
 | `refresh_wpf_knowledge()` | `git pull` + 재스캔 강제 |
 
-토픽 파일: `wpf-dev-pack/knowledge/<id>/TOPIC.md` — **YAML frontmatter 없음.**
+토픽 파일: `knowledge/<id>/TOPIC.md` — **YAML frontmatter 없음.**
 제목 = 첫 `# H1`, 요약 = 첫 `>` 블록인용. 변형은 형제 `PRISM.md` / `ADVANCED.md`.
 
 ## MCP Inspector 로 점검
@@ -129,8 +131,7 @@ npx @modelcontextprotocol/inspector --cli "<exe>" \
 
 ## 지식 콘텐츠 갱신
 
-해당 `wpf-dev-pack/knowledge/<id>/TOPIC.md` 를 수정(또는 새 토픽 디렉터리 +
-`wpf-dev-pack/hooks/WpfKeywordDetector.cs` 에 키워드 추가)하고 push 하세요. 서버가
+해당 `knowledge/<id>/TOPIC.md` 를 수정(또는 새 토픽 디렉터리 추가)하고 push 하세요. 서버가
 다음 pull 때 반영합니다 — **재빌드·재배포·플러그인 버전업 불필요.**
 
 > 영문 원본: [README.md](https://github.com/christian289/dotnet-with-claudecode/blob/main/mcp/README.md)

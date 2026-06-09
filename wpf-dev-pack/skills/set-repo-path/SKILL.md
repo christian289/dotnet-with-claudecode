@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Records the on-disk location of a local clone of
 `christian289/dotnet-with-claudecode` so the `WpfDevPackMcp` MCP server can
-serve WPF knowledge topics from `wpf-dev-pack/knowledge/`.
+serve WPF knowledge topics from `knowledge/` (at the repo root).
 
 **If `$0` is empty, use AskUserQuestion to ask for the absolute path to the
 local clone (e.g., `C:/Users/<you>/src/dotnet-with-claudecode`). Do NOT

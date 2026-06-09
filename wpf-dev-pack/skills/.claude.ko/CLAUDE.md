@@ -7,11 +7,11 @@
 
 ## 개요
 
-지식 토픽은 **더 이상 플러그인 스킬이 아닙니다**. `wpf-dev-pack/knowledge/<id>/`에
-위치하며 `WpfDevPackMcp` MCP 서버가 제공합니다. `WpfKeywordDetector`
-UserPromptSubmit 훅이 키워드 → 토픽 id 라우팅 테이블을 관리합니다(단일
-소스, 항상 로드되는 컨텍스트 없음). WPF 지식 키워드가 감지되면
-`WpfDevPackMcp get_wpf_topic("<id>")`를 emit합니다.
+지식 토픽은 **더 이상 플러그인 스킬이 아닙니다**. `knowledge/<id>/`(레포 루트)에
+위치하며 `WpfDevPackMcp` MCP 서버가 제공합니다. 키워드 라우터 훅은 없습니다:
+MCP 서버 자체의 instructions가 에이전트에게 WPF 질문에 답하기 전
+`search_wpf_topics`(라이브 카탈로그 랭킹 검색)로 찾아 `get_wpf_topic`으로
+로드하도록 지시합니다. 새 토픽은 자동 발견되어 등록할 것이 없습니다.
 
 `skills/` 아래에는 커맨드 스킬만 남으며 슬래시 명령으로 호출합니다:
 
@@ -24,12 +24,12 @@ UserPromptSubmit 훅이 키워드 → 토픽 id 라우팅 테이블을 관리합
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP 미설정 | `set-repo-path` |
 
-지식 토픽 추가 방법: `wpf-dev-pack/knowledge/<id>/TOPIC.md`를 생성하고
-`hooks/WpfKeywordDetector.cs`에 키워드를 추가합니다.
+지식 토픽 추가 방법: `knowledge/<id>/TOPIC.md`를 생성합니다.
 **YAML frontmatter 없음** — 첫 번째 `# H1`이 제목이며, H1 바로 아래에
 한 줄짜리 `> 요약` 블록인용을 작성합니다(MCP 카탈로그가 본문에서
-제목·요약을 읽음). 플러그인 스킬 등록 불필요, 버전 범프 불필요,
-MCP 재빌드 불필요 — 서버는 다음 pull 시 자동으로 반영합니다.
+제목·요약을 읽음). 라우터 수정 불필요, 플러그인 스킬 등록 불필요,
+버전 범프 불필요, MCP 재빌드 불필요 — 카탈로그가 자동 발견하고
+서버는 다음 pull 시 반영합니다.
 
 ---
 
