@@ -1,5 +1,7 @@
 # WpfDevPackMcp — WPF Dev Pack knowledge MCP server
 
+<!-- mcp-name: io.github.christian289/wpf-dev-pack-mcp -->
+
 `WpfDevPackMcp` is a small **.NET 10 stdio MCP server** that serves the WPF
 knowledge topics of the `wpf-dev-pack` plugin. The knowledge content lives as
 plain Markdown under `knowledge/` (at the repo root) in a **local clone** of

@@ -8,8 +8,11 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>WpfDevPackMcp</AssemblyName>
     <RootNamespace>WpfDevPackMcp</RootNamespace>
-    <!-- dnx (NuGet tool) 실행 대상 -->
+    <!-- dnx (NuGet tool) 실행 대상 + nuget.org MCP 서버 발견성.
+         PackAsTool 과 PackageType=McpServer 를 함께 지정해야 dnx 실행 +
+         nuget.org "MCP Server" 탭/필터 노출이 모두 동작한다 (공식 mcpserver 템플릿과 동일). -->
     <PackAsTool>true</PackAsTool>
+    <PackageType>McpServer</PackageType>
     <ToolCommandName>WpfDevPackMcp</ToolCommandName>
     <PackageId>WpfDevPackMcp</PackageId>
     <!-- NuGet versions are immutable; bump per release. 0.1.0/0.1.1 already
@@ -35,7 +38,16 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryBranch>main</RepositoryBranch>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>See the repository for changes. Knowledge content is served live from the repo, independent of this package's version.</PackageReleaseNotes>
+
+    <!-- Reproducible build + Source Link (debug into sources from the package).
+         Source Link ships in the .NET SDK; these properties opt in without an extra PackageReference. -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,14 +55,20 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
   </ItemGroup>
 
-  <!-- Include README.md inside the package for the nuget.org listing -->
+  <!-- Files browsable inside the package: README (nuget listing), icon, and the
+       .mcp/server.json manifest that powers nuget.org's "MCP Server" tab. -->
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include=".mcp\server.json" Pack="true" PackagePath="\.mcp\" />
   </ItemGroup>
 
-  <!-- Exclude test project files from the main project compilation -->
+  <!-- Exclude test files and the standalone icon generator (a file-based app,
+       run via `dotnet icon-gen.cs`) from the main project compilation. -->
   <ItemGroup>
     <Compile Remove="WpfDevPackMcp.Tests\**\*.cs" />
+    <Compile Remove="icon-gen.cs" />
+    <None Include="icon-gen.cs" Pack="false" />
   </ItemGroup>
 
 </Project>

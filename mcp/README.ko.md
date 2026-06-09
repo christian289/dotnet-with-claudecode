@@ -1,5 +1,7 @@
 # WpfDevPackMcp — WPF Dev Pack 지식 MCP 서버
 
+<!-- mcp-name: io.github.christian289/wpf-dev-pack-mcp -->
+
 `WpfDevPackMcp` 는 `wpf-dev-pack` 플러그인의 WPF 지식 토픽을 제공하는 작은
 **.NET 10 stdio MCP 서버**입니다. 지식 콘텐츠는 `christian289/dotnet-with-claudecode`
 의 **로컬 클론** 안 `knowledge/` (레포 루트)에 순수 마크다운으로 존재하며,
