@@ -92,7 +92,7 @@ section as the spec. Typical change kinds and where they land:
 
 | Change kind | Where to apply |
 |------|-------|
-| New knowledge topic | `knowledge/<id>/TOPIC.md` (NO frontmatter — first `# H1` is the title, first `>` blockquote is the summary) + add keyword(s) to `wpf-dev-pack/hooks/WpfKeywordDetector.cs` + cross-link adjacent topics |
+| New knowledge topic | `knowledge/<id>/TOPIC.md` (NO frontmatter — first `# H1` is the title, first `>` blockquote is the summary) + cross-link adjacent topics (the MCP catalog auto-discovers the new directory — no router to update) |
 | Knowledge augmentation | Edit `knowledge/<id>/TOPIC.md` |
 | Prism 9 companion (knowledge) | Add `PRISM.md` next to `knowledge/<id>/TOPIC.md` |
 | New command skill | `wpf-dev-pack/skills/<name>/SKILL.md` + slimmed `skills/.claude/CLAUDE.md` |

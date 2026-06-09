@@ -2,10 +2,10 @@
 
 Knowledge topics are NO LONGER plugin skills. They live in
 `knowledge/<id>/` (at the repo root, outside the plugin) and are served by the `WpfDevPackMcp` MCP
-server. The `WpfKeywordDetector` UserPromptSubmit hook owns the
-keyword → topic-id routing table (single source of truth, zero
-always-loaded context). On a WPF knowledge keyword it emits
-`WpfDevPackMcp get_wpf_topic("<id>")`.
+server. There is no keyword-router hook: the MCP server's own
+instructions tell the agent to call `search_wpf_topics` (ranked over the
+live catalog) and load hits with `get_wpf_topic` before answering WPF
+questions. New topics are discovered automatically — nothing to register.
 
 Only command skills remain under `skills/` and are slash-invocable:
 
@@ -20,9 +20,9 @@ Only command skills remain under `skills/` and are slash-invocable:
 
 To add a knowledge topic: create `knowledge/<id>/TOPIC.md`
 (NO frontmatter — first `# H1` is the title; put a one-line `> summary`
-blockquote directly under the H1; the MCP catalog reads both from the body)
-and add its keyword(s) to `hooks/WpfKeywordDetector.cs`. No plugin skill,
-no version bump, no MCP rebuild — the server picks it up on next pull.
+blockquote directly under the H1; the MCP catalog reads both from the body).
+No router edit, no plugin skill, no version bump, no MCP rebuild — the
+catalog auto-discovers it and the server picks it up on next pull.
 
 ---
 

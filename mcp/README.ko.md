@@ -129,8 +129,7 @@ npx @modelcontextprotocol/inspector --cli "<exe>" \
 
 ## 지식 콘텐츠 갱신
 
-해당 `knowledge/<id>/TOPIC.md` 를 수정(또는 새 토픽 디렉터리 +
-`wpf-dev-pack/hooks/WpfKeywordDetector.cs` 에 키워드 추가)하고 push 하세요. 서버가
+해당 `knowledge/<id>/TOPIC.md` 를 수정(또는 새 토픽 디렉터리 추가)하고 push 하세요. 서버가
 다음 pull 때 반영합니다 — **재빌드·재배포·플러그인 버전업 불필요.**
 
 > 영문 원본: [README.md](https://github.com/christian289/dotnet-with-claudecode/blob/main/mcp/README.md)

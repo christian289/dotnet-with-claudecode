@@ -317,8 +317,8 @@ Some skills activate without notification:
 > **As of v1.7.0**, the ~50 WPF *knowledge* topics (MVVM, rendering, threading,
 > styling, 3rd-party libraries, .NET common, Prism 9 companions, testing, …) are
 > **no longer bundled as plugin skills**. They are served on demand by the
-> **WpfDevPackMcp** MCP server via `get_wpf_topic` / `search_wpf_topics`, and the
-> keyword detector routes to them automatically. This keeps them out of the
+> **WpfDevPackMcp** MCP server via `get_wpf_topic` / `search_wpf_topics`; the
+> server's own instructions tell the agent to search before answering. This keeps them out of the
 > session's skill listing (no per-session context cost) while remaining editable
 > as plain Markdown. See [`mcp/README.md`](../mcp/README.md) and
 > [`/wpf-dev-pack:set-repo-path`](#-configuration).

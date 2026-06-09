@@ -136,8 +136,7 @@ server's JSON-RPC pipe.
 
 ## Updating knowledge content
 
-Edit the relevant `knowledge/<id>/TOPIC.md` (or add a new topic
-directory plus a keyword in `wpf-dev-pack/hooks/WpfKeywordDetector.cs`) and
+Edit the relevant `knowledge/<id>/TOPIC.md` (or add a new topic directory) and
 push. The server picks it up on its next pull — **no rebuild, no republish, no
 plugin version bump**.
 

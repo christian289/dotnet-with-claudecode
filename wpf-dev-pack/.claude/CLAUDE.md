@@ -189,8 +189,7 @@ See `agents/wpf-architect.md` for full interview specification.
 
 **Adding a knowledge topic** (WPF knowledge, served via MCP — NOT a plugin skill):
 1. Create `knowledge/<id>/TOPIC.md` (at the repo root, outside the plugin) with the topic content. **No YAML frontmatter.** The first `# H1` is the title; put a one-line `> summary` blockquote directly under the H1 — the MCP catalog (`TopicDocReader`) reads title from the first H1 and summary from the first `>` blockquote.
-2. Add the topic's keyword(s) to `wpf-dev-pack/hooks/WpfKeywordDetector.cs` (the keyword→id routing table).
-3. No plugin skill registration, no version bump, no MCP rebuild — the server picks it up on next `git pull`.
+2. No router edit, no plugin skill registration, no version bump, no MCP rebuild — the MCP catalog auto-discovers the new directory and `search_wpf_topics` surfaces it on the next `git pull`.
 
 **Adding a command skill** (slash-invocable plugin skill under `skills/`):
 
