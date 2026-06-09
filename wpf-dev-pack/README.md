@@ -379,7 +379,6 @@ wpf-dev-pack/
 │   ├── code-formatter.md
 │   └── serena-initializer.md
 ├── 📁 skills/                 # 11 command skills
-├── 📁 knowledge/              # WPF knowledge topics (served via WpfDevPackMcp MCP)
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md

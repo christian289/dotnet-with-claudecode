@@ -1,7 +1,7 @@
 # WPF Dev Pack Skills — Routing
 
 Knowledge topics are NO LONGER plugin skills. They live in
-`wpf-dev-pack/knowledge/<id>/` and are served by the `WpfDevPackMcp` MCP
+`knowledge/<id>/` (at the repo root, outside the plugin) and are served by the `WpfDevPackMcp` MCP
 server. The `WpfKeywordDetector` UserPromptSubmit hook owns the
 keyword → topic-id routing table (single source of truth, zero
 always-loaded context). On a WPF knowledge keyword it emits
@@ -18,7 +18,7 @@ Only command skills remain under `skills/` and are slash-invocable:
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP unconfigured | `set-repo-path` |
 
-To add a knowledge topic: create `wpf-dev-pack/knowledge/<id>/TOPIC.md`
+To add a knowledge topic: create `knowledge/<id>/TOPIC.md`
 (NO frontmatter — first `# H1` is the title; put a one-line `> summary`
 blockquote directly under the H1; the MCP catalog reads both from the body)
 and add its keyword(s) to `hooks/WpfKeywordDetector.cs`. No plugin skill,

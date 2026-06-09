@@ -379,7 +379,6 @@ wpf-dev-pack/
 │   ├── code-formatter.md
 │   └── serena-initializer.md
 ├── 📁 skills/                 # 11개 커맨드 스킬
-├── 📁 knowledge/              # WPF 지식 토픽 (WpfDevPackMcp MCP로 제공)
 ├── 📁 hooks/                  # 이벤트 훅
 ├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md

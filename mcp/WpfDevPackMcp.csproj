@@ -14,8 +14,11 @@
     <PackageId>WpfDevPackMcp</PackageId>
     <!-- NuGet versions are immutable; bump per release. 0.1.0/0.1.1 already
          published. 0.1.2 reworks the "repo not configured" message so agents
-         defer the one-time setup to the user instead of auto-configuring. -->
-    <Version>0.1.2</Version>
+         defer the one-time setup to the user instead of auto-configuring.
+         0.1.3 reads knowledge from <repo-root>/knowledge instead of
+         wpf-dev-pack/knowledge, so the content is no longer bundled inside
+         the plugin package. -->
+    <Version>0.1.3</Version>
   </PropertyGroup>
 
   <!-- NuGet package metadata (nuget.org listing) -->
@@ -24,7 +27,7 @@
     <Authors>christian289</Authors>
     <Company>christian289</Company>
     <Copyright>Copyright (c) christian289</Copyright>
-    <Description>A .NET 10 stdio Model Context Protocol (MCP) server that serves the WPF Dev Pack plugin's WPF knowledge topics. It reads plain-markdown topics from a local clone of christian289/dotnet-with-claudecode (wpf-dev-pack/knowledge) and exposes list/get/search/refresh tools. Configure the local clone path via /wpf-dev-pack:set-repo-path (or the WPFDEVPACK_REPO_PATH environment variable).</Description>
+    <Description>A .NET 10 stdio Model Context Protocol (MCP) server that serves the WPF Dev Pack plugin's WPF knowledge topics. It reads plain-markdown topics from a local clone of christian289/dotnet-with-claudecode (the repo-root knowledge/ directory) and exposes list/get/search/refresh tools. Configure the local clone path via /wpf-dev-pack:set-repo-path (or the WPFDEVPACK_REPO_PATH environment variable).</Description>
     <PackageTags>mcp;model-context-protocol;wpf;dotnet-tool;claude;wpf-dev-pack;dnx</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/christian289/dotnet-with-claudecode/tree/main/mcp</PackageProjectUrl>

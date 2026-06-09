@@ -66,8 +66,8 @@ dotnet-with-claudecode/
 │       ├── secure-coding/        # secure-coding guidelines
 │       └── preferences.md        # default behavior (response language, etc.)
 ├── mcp/                          # WpfDevPackMcp MCP server source (outside the plugin)
+├── knowledge/                    # MCP knowledge topics (served by WpfDevPackMcp; outside the plugin so it is not bundled)
 ├── wpf-dev-pack/                 # WPF-focused plugin (currently the only hosted plugin)
-│   └── knowledge/                # MCP knowledge topics (served by WpfDevPackMcp)
 ├── FeedbackDocs/                 # accumulated wpf-dev-pack feedback md files from foreign sessions
 ├── archive-skills/               # legacy skills superseded by the microsoft-docs MCP
 └── docs/                         # project documentation
@@ -92,7 +92,7 @@ Files that the release skill updates:
 **WpfDevPackMcp NuGet package versioning:** The `WpfDevPackMcp` MCP server is
 distributed as a separate NuGet package and pinned in `wpf-dev-pack/.mcp.json`
 via its `dnx` version specifier. Its version is independent of the plugin
-version. Knowledge-only edits (files under `wpf-dev-pack/knowledge/`) require
+version. Knowledge-only edits (files under `knowledge/`) require
 **NO plugin version bump and NO MCP republish** — the server reads knowledge
 content live from the repo on each call. Only changes shipped inside the plugin
 package itself (command skills, hooks, rules) require a plugin version bump

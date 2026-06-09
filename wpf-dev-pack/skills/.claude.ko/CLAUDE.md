@@ -7,7 +7,7 @@
 
 ## 개요
 
-지식 토픽은 **더 이상 플러그인 스킬이 아닙니다**. `wpf-dev-pack/knowledge/<id>/`에
+지식 토픽은 **더 이상 플러그인 스킬이 아닙니다**. `knowledge/<id>/`(레포 루트)에
 위치하며 `WpfDevPackMcp` MCP 서버가 제공합니다. `WpfKeywordDetector`
 UserPromptSubmit 훅이 키워드 → 토픽 id 라우팅 테이블을 관리합니다(단일
 소스, 항상 로드되는 컨텍스트 없음). WPF 지식 키워드가 감지되면
@@ -24,7 +24,7 @@ UserPromptSubmit 훅이 키워드 → 토픽 id 라우팅 테이블을 관리합
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP 미설정 | `set-repo-path` |
 
-지식 토픽 추가 방법: `wpf-dev-pack/knowledge/<id>/TOPIC.md`를 생성하고
+지식 토픽 추가 방법: `knowledge/<id>/TOPIC.md`를 생성하고
 `hooks/WpfKeywordDetector.cs`에 키워드를 추가합니다.
 **YAML frontmatter 없음** — 첫 번째 `# H1`이 제목이며, H1 바로 아래에
 한 줄짜리 `> 요약` 블록인용을 작성합니다(MCP 카탈로그가 본문에서
