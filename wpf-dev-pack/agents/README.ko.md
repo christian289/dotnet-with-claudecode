@@ -17,6 +17,7 @@ WPF 개발 작업을 위한 전문 AI 에이전트입니다.
 | 🔗 **wpf-data-binding-expert** | 복잡한 바인딩 및 유효성 검사 |
 | ⚡ **wpf-performance-optimizer** | 렌더링 및 성능 |
 | 🔍 **wpf-code-reviewer** | 코드 품질 분석 |
+| 🔎 **wpf-code-auditor** | 전체 코드베이스 패턴 & 일관성 감사 |
 | 📝 **code-formatter** | C# 서식 및 스타일 |
 | 🔧 **serena-initializer** | 프로젝트 설정 |
 

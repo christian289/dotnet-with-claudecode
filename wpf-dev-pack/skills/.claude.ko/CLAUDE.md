@@ -20,6 +20,7 @@ MCP 서버 자체의 instructions가 에이전트에게 WPF 질문에 답하기 
 | `create viewmodel`, `뷰모델 생성` | `make-wpf-viewmodel` |
 | `create service`, `서비스 생성` | `make-wpf-service` |
 | (명시적) | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |
+| (자동) C#/XAML 서식 | `formatting-wpf-csharp-code` |
 | `feedback` (메인테이너) | `collecting-wpf-dev-pack-feedback` |
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP 미설정 | `set-repo-path` |

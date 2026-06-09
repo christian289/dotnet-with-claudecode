@@ -65,7 +65,7 @@ if (violations.Count > 0)
     foreach (var violation in violations)
         Console.WriteLine($"  - {violation}");
     Console.WriteLine("  Tip: ViewModel should only reference BCL types and MVVM framework packages.");
-    Console.WriteLine("  See `/wpf-dev-pack:implementing-communitytoolkit-mvvm` for MVVM best practices.");
+    Console.WriteLine("  See the `implementing-communitytoolkit-mvvm` knowledge topic (WpfDevPackMcp get_wpf_topic) for MVVM best practices.");
 }
 
 static bool IsViewModelFile(string filePath)

@@ -118,11 +118,12 @@ Locate `App.xaml.cs` and add registration inside `ConfigureServices`:
 services.AddSingleton<$0ViewModel>();
 ```
 
-If `--with-view`:
+With `--with-view`, register **only** the ViewModel — the View is instantiated
+by the `Mappings.xaml` `DataTemplate` (ViewModel First), so it is NOT registered
+in DI (registering it would also force a `$0.Views` using in `App.xaml.cs`):
 
 ```csharp
 services.AddSingleton<$0ViewModel>();
-services.AddSingleton<$0View>();
 ```
 
 ### Step 6: Add DataTemplate Mapping (unless --no-mapping)

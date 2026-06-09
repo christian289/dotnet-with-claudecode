@@ -187,7 +187,9 @@ public class HomeViewModel : BindableBase, INavigationAware
         _messageService = messageService;
     }
 
-    public DelegateCommand LoadCommand => new(async () =>
+    // Async commands use AsyncDelegateCommand (not DelegateCommand with an
+    // async void lambda) — see prism9.md.
+    public AsyncDelegateCommand LoadCommand => new(async () =>
     {
         await Task.Delay(1000);
         _messageService.Show("Data loaded");

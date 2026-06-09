@@ -283,6 +283,9 @@ public sealed class InverseBoolConverter : ConverterMarkupExtension<InverseBoolC
 
 ## GlobalUsings.cs
 
+Append these to the project's **existing** `GlobalUsings.cs` (do not create a
+second one — duplicate `global using` directives fail to compile):
+
 ```csharp
 global using System;
 global using System.Globalization;
@@ -305,8 +308,11 @@ global using System.Windows.Markup;
 
 ---
 
-## Related Skills
+## Related knowledge topics (via WpfDevPackMcp)
 
-- `using-converter-markup-extension` - Detailed MarkupExtension pattern
-- `advanced-data-binding` - MultiBinding patterns
-- Plugin rule: `.claude/rules/converter-patterns.md` — Singleton `Instance`, null/UnsetValue handling, TemplateBinding guidance
+Fetch with `WpfDevPackMcp get_wpf_topic`:
+
+- `using-converter-markup-extension` — detailed MarkupExtension pattern (the canonical converter pattern)
+- `advanced-data-binding` — MultiBinding patterns
+
+Plugin rule: `.claude/rules/converter-patterns.md` — MarkupExtension singleton, null/UnsetValue handling, TemplateBinding guidance.

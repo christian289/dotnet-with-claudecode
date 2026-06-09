@@ -14,6 +14,7 @@ Only command skills remain under `skills/` and are slash-invocable:
 | `create viewmodel`, `뷰모델 생성` | `make-wpf-viewmodel` |
 | `create service`, `서비스 생성` | `make-wpf-service` |
 | (explicit) | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |
+| (auto) C#/XAML formatting | `formatting-wpf-csharp-code` |
 | `feedback` (maintainer) | `collecting-wpf-dev-pack-feedback` |
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP unconfigured | `set-repo-path` |

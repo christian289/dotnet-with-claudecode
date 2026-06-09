@@ -44,10 +44,10 @@ Search for solution file and identify projects by naming convention:
 | `.WpfServices` | WPF-dependent services | `$0Service.cs` (if needs WPF types) |
 | `.WpfApp` | Application | DI registration in `App.xaml.cs` |
 
-**Fallback rules:**
-- No `.Abstractions` project → place interface in `Services/` folder of main project
-- No `.Core` or `.WpfServices` → place implementation in `Services/` folder of main project
-- Single project solution → all files in `Services/` folder
+**Fallback rules (keep the interface visible to both the implementation and the app):**
+- No `.Abstractions` project → place the interface in **`.Core`** (beside the implementation). Do NOT put it in the WPF app project: `.Core` cannot reference the app, so an interface placed there is unreachable from the implementation in `.Core`.
+- No `.Core` or `.WpfServices` (no separate logic project) → place both interface and implementation in the app's `Services/` folder.
+- Single project solution → both files in `Services/` folder.
 
 ### Step 3: Generate Interface (unless --no-interface)
 
@@ -115,6 +115,11 @@ containerRegistry.RegisterSingleton<I$0Service, $0Service>();
 containerRegistry.RegisterSingleton<$0Service>();
 ```
 
+> **GlobalUsings**: make sure `App.xaml.cs` can resolve the service type — add
+> `global using {Namespace}.Services;` to the app's existing `GlobalUsings.cs`
+> if absent (the `Services` namespace now exists, so the using resolves). Do not
+> create a second `GlobalUsings.cs`.
+
 ### Step 6: Report Results
 
 Output list of generated/modified files and next steps guidance.
@@ -148,6 +153,10 @@ Output list of generated/modified files and next steps guidance.
 {WpfAppProject}/
 └── App.xaml.cs              (DI registration added)
 ```
+
+> If there is **no `.Abstractions` project** (the default 3-project structure),
+> place `I$0Service.cs` in **`$0.Core/Services/`** alongside `$0Service.cs` —
+> never in the WPF app project, which `.Core` cannot reference.
 
 ---
 

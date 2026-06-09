@@ -151,7 +151,7 @@ exact structure:
 
 | ID | Kind | Target | Priority | One-liner |
 |----|------|--------|----------|-----------|
-| 1  | New skill / Augment / Modernize / Rule | skills/<...>/SKILL.md | High/Medium/Low | ... |
+| 1  | New skill / Augment / Modernize / Rule / Knowledge | skills/<...>/SKILL.md or knowledge/<id>/TOPIC.md | High/Medium/Low | ... |
 
 ---
 

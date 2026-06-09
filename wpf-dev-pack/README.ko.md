@@ -36,7 +36,7 @@
 ### 🤖 AI 기반 개발
 - **10개 전문 에이전트**로 다양한 WPF 작업 수행
 - **세션 모델 그대로 사용** — 에이전트가 현재 모델을 상속
-- WPF 키워드 **자동 감지**
+- **MCP 기반 지식 제공** — WpfDevPackMcp가 답변 전 검색(search-before-answer)
 - 듀얼 프레임워크 지원을 위한 **Prism 9** 컴패니언 파일
 
 </td>
@@ -221,62 +221,33 @@ wpf-architect: [A-5] 서드파티 라이브러리?
 
 ---
 
-## 🧠 자동 트리거 시스템
+## 🧠 지식 제공 방식
 
-wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)에서 영감을 받은 지능형 키워드 감지 시스템을 사용합니다. WPF, C#, .NET 키워드를 언급하면 관련 스킬이 **자동으로 활성화**됩니다.
+wpf-dev-pack은 키워드 감지 훅을 **사용하지 않습니다**. WPF 지식은 **WpfDevPackMcp** MCP 서버가 온디맨드로 제공합니다 — 서버 자체의 instructions가 에이전트에게 WPF/C#/.NET 질문에 **답하기 전 토픽 카탈로그를 검색**하도록 지시합니다.
 
 ### 작동 방식
 
-1. **키워드 감지**: 프롬프트에서 WPF/.NET 키워드 스캔
-2. **스킬 활성화**: 일치하는 스킬 자동 로드
-3. **에이전트 추천**: 복잡한 작업에 전문 에이전트 제안
+1. **질문**: WPF/C#/.NET 질문을 하거나 커맨드 스킬/에이전트를 호출합니다.
+2. **검색**: 에이전트가 `WpfDevPackMcp search_wpf_topics`로 카탈로그를 검색하고 `get_wpf_topic`으로 적합한 토픽을 로드합니다.
+3. **에이전트**: 복잡한 다단계 작업은 전문 에이전트가 처리합니다.
 
-### 트리거 예시
+> ~50개 지식 토픽은 레포의 `knowledge/<id>/TOPIC.md`에 순수 마크다운으로 존재하며 실시간으로 조회됩니다 — 편집에 플러그인 재빌드나 버전 범프가 필요 없습니다. [`/wpf-dev-pack:set-repo-path`](#-설정)를 한 번 실행해 서버가 읽을 로컬 클론 경로를 지정하세요.
 
-| 사용자 입력 | 자동 활성화 |
-|-------------|-------------|
-| "CustomControl 만들어줘" | `authoring-wpf-controls` |
-| "MVVM 패턴 적용" | `implementing-communitytoolkit-mvvm` |
-| "DrawingContext로 렌더링" | `rendering-with-drawingcontext` |
-| "성능 최적화 필요" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` 에이전트 |
-| "아키텍처 검토" | `wpf-architect` 에이전트 추천 |
+### 토픽 예시 (MCP로 제공)
 
-### 무음 트리거
+| 질문 주제 | 토픽 |
+|-----------|------|
+| CustomControl 작성 | `authoring-wpf-controls` |
+| CommunityToolkit MVVM | `implementing-communitytoolkit-mvvm` |
+| DrawingContext 렌더링 | `rendering-with-drawingcontext` |
+| 고성능 렌더링 | `rendering-wpf-high-performance` |
 
-일부 스킬은 알림 없이 활성화됩니다:
-- `formatting-wpf-csharp-code` - 코드 서식
-- `using-xaml-property-element-syntax` - XAML 구문
-- `managing-literal-strings` - 문자열 관리
+복잡한 작업에는 전문 에이전트가 추천됩니다 (예: 렌더링은 `wpf-performance-optimizer`, 아키텍처 검토는 `wpf-architect`).
 
-### 키워드 카테고리
+### 커맨드 스킬 vs 지식
 
-<details>
-<summary><b>📌 주요 WPF 키워드 (펼치려면 클릭)</b></summary>
-
-| 카테고리 | 키워드 |
-|----------|--------|
-| **컨트롤** | `customcontrol`, `dependencyproperty`, `templatepart`, `controltemplate` |
-| **MVVM** | `mvvm`, `viewmodel`, `relaycommand`, `observableproperty` |
-| **렌더링** | `drawingcontext`, `drawingvisual`, `onrender`, `invalidatevisual` |
-| **성능** | `virtualizingstackpanel`, `freeze`, `freezable`, `bitmapcache` |
-| **이벤트** | `routedevent`, `command`, `inputbinding`, `dragdrop` |
-| **스타일링** | `resourcedictionary`, `generic.xaml`, `storyboard`, `animation` |
-| **스레딩** | `dispatcher`, `invoke`, `begininvoke` |
-
-</details>
-
-<details>
-<summary><b>🔷 .NET 키워드 (펼치려면 클릭)</b></summary>
-
-| 카테고리 | 키워드 |
-|----------|--------|
-| **비동기** | `async`, `await`, `task`, `valuetask`, `configureawait` |
-| **병렬** | `parallel`, `plinq`, `concurrentdictionary` |
-| **메모리** | `span`, `memory<`, `arraypool`, `stackalloc` |
-| **I/O** | `pipeline`, `pipereader`, `pipewriter` |
-| **패턴** | `repository pattern`, `pubsub`, `channel` |
-
-</details>
+- **커맨드 스킬** (`/wpf-dev-pack:<name>`) — 슬래시로 호출하는 생성기/플러그인 운영 도구 (11개 번들; 아래 **스킬 & 지식** 참조).
+- **지식 토픽** — WpfDevPackMcp가 제공하는 참조 콘텐츠로, 세션 스킬 목록에 올라가지 않습니다 (세션 컨텍스트 비용 없음).
 
 ---
 
@@ -295,6 +266,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | 🔗 **wpf-data-binding-expert** | 복잡한 바인딩 및 유효성 검사 |
 | ⚡ **wpf-performance-optimizer** | 렌더링 및 성능 |
 | 🔍 **wpf-code-reviewer** | 코드 품질 분석 |
+| 🔎 **wpf-code-auditor** | 전체 코드베이스 패턴 & 일관성 감사 |
 | 📝 **code-formatter** | C# 서식 및 스타일 |
 | 🔧 **serena-initializer** | 프로젝트 설정 |
 
@@ -305,7 +277,6 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 | **HandMirrorMcp** | HandMirrorMcp | .NET 어셈블리/NuGet 검사 (내장) |
 | **WpfDevPackMcp** | WpfDevPackMcp | WPF 지식 토픽, 로컬 저장소 클론에서 온디맨드 제공 (내장) |
 | **context7** | context7 | 라이브러리/프레임워크 문서 |
-| **sequential-thinking** | sequential-thinking | 단계별 분석 |
 | _(`uv`로 직접 설치한 MCP)_ | **serena** | 시맨틱 코드 분석 |
 | **microsoft-docs** | microsoft-learn | 공식 Microsoft 문서 |
 | **csharp-lsp** | csharp | C# LSP 코드 인텔리전스 |
@@ -317,9 +288,10 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 > **v1.7.0부터**, ~50개의 WPF *지식* 토픽(MVVM, 렌더링, 스레딩, 스타일링,
 > 서드파티 라이브러리, .NET 공통, Prism 9 컴패니언, 테스트 등)은 **더 이상
 > 플러그인 스킬로 번들되지 않습니다**. 이들은 **WpfDevPackMcp** MCP 서버가
-> `get_wpf_topic` / `search_wpf_topics`로 온디맨드 제공하며, 키워드 감지기가
-> 자동으로 라우팅합니다. 덕분에 세션 스킬 목록에서 빠져(세션 컨텍스트 비용
-> 없음) 있으면서도 순수 마크다운으로 편집 가능합니다.
+> `get_wpf_topic` / `search_wpf_topics`로 온디맨드 제공하며, 서버 자체의
+> instructions가 답변 전 검색하도록 에이전트에게 지시합니다. 덕분에 세션
+> 스킬 목록에서 빠져(세션 컨텍스트 비용 없음) 있으면서도 순수 마크다운으로
+> 편집 가능합니다.
 > [`mcp/README.md`](../mcp/README.md)와 [`/wpf-dev-pack:set-repo-path`](#-설정)를
 > 참고하세요.
 
@@ -345,7 +317,7 @@ wpf-dev-pack은 [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudeco
 
 | 스킬 | 설명 |
 |------|------|
-| `formatting-wpf-csharp-code` | C# / XAML 서식 & 스타일 (무음 트리거) |
+| `formatting-wpf-csharp-code` | C# / XAML 서식 & 스타일 (편집 시 CodeFormatter 훅이 자동 적용) |
 
 </details>
 
@@ -370,6 +342,7 @@ wpf-dev-pack/
 │   └── plugin.json           # 플러그인 매니페스트
 ├── 📁 agents/                 # 10개 전문 에이전트
 │   ├── wpf-architect.md
+│   ├── wpf-code-auditor.md
 │   ├── wpf-code-reviewer.md
 │   ├── wpf-control-designer.md
 │   ├── wpf-xaml-designer.md

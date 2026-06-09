@@ -17,6 +17,7 @@ Specialized AI agents for WPF development tasks.
 | 🔗 **wpf-data-binding-expert** | Complex bindings & validation |
 | ⚡ **wpf-performance-optimizer** | Rendering & performance |
 | 🔍 **wpf-code-reviewer** | Code quality analysis |
+| 🔎 **wpf-code-auditor** | Full-codebase pattern & consistency audit |
 | 📝 **code-formatter** | C# formatting & style |
 | 🔧 **serena-initializer** | Project setup |
 
