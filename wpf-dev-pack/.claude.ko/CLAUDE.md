@@ -1,6 +1,7 @@
-# WPF Dev Pack - Auto-Trigger System
+# WPF Dev Pack - Configuration
 
-WPF/C#/.NET 키워드가 감지되면 관련 skill을 자동으로 활성화합니다.
+WPF 지식은 WpfDevPackMcp MCP 서버가 온디맨드로 제공합니다(답변 전 검색).
+커맨드 스킬은 슬래시로 호출합니다. 키워드 감지 훅은 없습니다.
 
 > 본 파일은 `wpf-dev-pack/.claude/CLAUDE.md`의 한국어 미러입니다. AI는 영문
 > 원본을 읽으며, 본 파일은 사람을 위한 참고용입니다. 갱신은 영문 원본을
@@ -137,10 +138,10 @@ ELSE:
 ## 핵심 규칙
 
 ```
-RULE 1: WPF/C#/.NET 키워드 감지 → 관련 skill 활성화
+RULE 1: WPF/C#/.NET 질문 → 답하기 전 WpfDevPackMcp 토픽 검색 (search_wpf_topics → get_wpf_topic)
 RULE 2: 복잡한 작업은 전문 agent에 위임
-RULE 3: skill 활성화 announce (silent trigger 제외)
-RULE 4: 복수 매치 시 가장 구체적인 skill 선택
+RULE 3: 커맨드 스킬 활성화 announce
+RULE 4: 복수 매치 시 가장 구체적인 토픽/스킬 선택
 RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
 ```
 
@@ -165,9 +166,9 @@ RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
 
 ## 트리거 우선순위
 
-1. **명시적 slash command** (`/wpf-dev-pack:skill-name`) → 최우선
-2. **키워드 기반 자동 트리거** → `skills/.claude/CLAUDE.md` 참조
-3. **컨텍스트 기반 추론** → 대화 내용에서
+1. **명시적 slash command** (`/wpf-dev-pack:skill-name`) → 커맨드 스킬
+2. **WPF 지식** → WpfDevPackMcp로 검색/조회 (`search_wpf_topics` → `get_wpf_topic`); `skills/.claude/CLAUDE.md` 참조
+3. **컨텍스트 기반 추론** → 전문 agent에 위임
 
 ## 트리거 동작
 
@@ -181,10 +182,8 @@ RULE 5: wpf-architect는 분석 전 Requirements Interview 필수 수행
    - **Prism 9 커맨드 스킬** → PRISM.md 있으면 그 파일, 없으면 SKILL.md
 4. 가이드라인 및 활성 프레임워크 규칙에 따라 코드 생성/수정
 
-**Silent 트리거** (announce 없음):
-- `formatting-wpf-csharp-code`
-- `using-xaml-property-element-syntax`
-- `managing-literal-strings`
+**Silent 적용** (announce 없음):
+- `formatting-wpf-csharp-code` — `.cs` / `.xaml` 편집 시 `CodeFormatter` PostToolUse 훅이 자동 적용.
 
 **복수 키워드:**
 1. 가장 구체적인 것 우선 (예: "drawingcontext" > "performance")

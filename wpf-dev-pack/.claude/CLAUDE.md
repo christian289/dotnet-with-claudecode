@@ -1,6 +1,8 @@
-# WPF Dev Pack - Auto-Trigger System
+# WPF Dev Pack - Configuration
 
-Automatically activates relevant skills when WPF/C#/.NET keywords are detected.
+WPF knowledge is served on demand by the WpfDevPackMcp MCP server
+(search-before-answer); command skills are slash-invocable. There is no
+keyword-detection hook.
 
 ---
 
@@ -131,10 +133,10 @@ ELSE:
 ## Core Rules
 
 ```
-RULE 1: Detect WPF/C#/.NET keywords → Activate relevant skills
+RULE 1: For WPF/C#/.NET questions → search WpfDevPackMcp topics before answering (search_wpf_topics → get_wpf_topic)
 RULE 2: Delegate complex tasks to specialized agents
-RULE 3: Announce skill activation (except silent triggers)
-RULE 4: Select most specific skill when multiple match
+RULE 3: Announce command-skill activation
+RULE 4: Select the most specific topic/skill when multiple match
 RULE 5: wpf-architect MUST conduct Requirements Interview before analysis
 ```
 
@@ -157,9 +159,9 @@ See `agents/wpf-architect.md` for full interview specification.
 
 ## Trigger Priority
 
-1. **Explicit slash command** (`/wpf-dev-pack:skill-name`) → Highest
-2. **Keyword-based auto-trigger** → See `skills/.claude/CLAUDE.md`
-3. **Context-based inference** → From conversation
+1. **Explicit slash command** (`/wpf-dev-pack:skill-name`) → command skills
+2. **WPF knowledge** → search/fetch via WpfDevPackMcp (`search_wpf_topics` → `get_wpf_topic`); see `skills/.claude/CLAUDE.md`
+3. **Context-based inference** → delegate to a specialized agent
 
 ## Trigger Behavior
 
@@ -173,10 +175,8 @@ See `agents/wpf-architect.md` for full interview specification.
    - **Prism 9 command skills** → PRISM.md if present, otherwise SKILL.md
 4. Generate/modify code per guidelines and active framework rules
 
-**Silent Triggers** (no announcement):
-- `formatting-wpf-csharp-code`
-- `using-xaml-property-element-syntax`
-- `managing-literal-strings`
+**Silent application** (no announcement):
+- `formatting-wpf-csharp-code` — applied automatically by the `CodeFormatter` PostToolUse hook on `.cs` / `.xaml` edits.
 
 **Multiple Keywords:**
 1. Most specific first (e.g., "drawingcontext" > "performance")

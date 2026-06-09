@@ -62,13 +62,20 @@ public class $0 : {BaseClass}
         public const string Disabled     = "Disabled";
     }
 
-    #region Static Constructor
+    #region Constructors
 
     static $0()
     {
         DefaultStyleKeyProperty.OverrideMetadata(
             typeof($0),
             new FrameworkPropertyMetadata(typeof($0)));
+    }
+
+    public $0()
+    {
+        // IsEnabledChanged is an EVENT — there is no OnIsEnabledChanged to
+        // override (Control/UIElement exposes no such virtual). Subscribe here.
+        IsEnabledChanged += (_, _) => UpdateVisualState(true);
     }
 
     #endregion
@@ -234,11 +241,8 @@ public class $0 : {BaseClass}
         UpdateVisualState(true);
     }
 
-    protected override void OnIsEnabledChanged(DependencyPropertyChangedEventArgs e)
-    {
-        base.OnIsEnabledChanged(e);
-        UpdateVisualState(true);
-    }
+    // Note: IsEnabled changes are handled via the IsEnabledChanged event
+    // subscribed in the constructor (there is no OnIsEnabledChanged to override).
 
     #endregion
 }
@@ -356,9 +360,39 @@ Create `Themes/$0.xaml`:
 </ResourceDictionary>
 ```
 
-### Step 4: Update Generic.xaml
+### Step 4: Ensure a CustomControl home, then register the theme
 
-Add to `Themes/Generic.xaml` MergedDictionaries:
+CustomControls require a `Themes/Generic.xaml` **and** the `ThemeInfo` assembly
+attribute. Prefer a dedicated `.UI` CustomControl library; if the solution has
+none, target the WPF app project and create the infrastructure there.
+
+**4a. If `Themes/Generic.xaml` does not exist** in the target project, create it
+as a hub-only dictionary (see `resourcedictionary-patterns.md` — hub only, no
+inline styles):
+
+```xml
+<!-- Themes/Generic.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/$0.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
+```
+
+**4b. If the `ThemeInfo` attribute is missing**, add it once (e.g. in
+`Properties/AssemblyInfo.cs` or any `.cs`) so WPF locates `Generic.xaml`:
+
+```csharp
+using System.Windows;
+
+[assembly: ThemeInfo(
+    ResourceDictionaryLocation.None,
+    ResourceDictionaryLocation.SourceAssembly)]
+```
+
+**4c. If `Generic.xaml` already exists**, just add this control's dictionary to
+its `MergedDictionaries`:
 
 ```xml
 <ResourceDictionary.MergedDictionaries>
@@ -379,9 +413,11 @@ After generation, provide:
 <local:$0 Value="42" />
 ```
 
-## Related Skills
+## Related knowledge topics (via WpfDevPackMcp)
+
+Fetch with `WpfDevPackMcp get_wpf_topic`:
 
 - `authoring-wpf-controls` — §3.4 Visual State Naming Contract, §4 Multi-Constraint Coerce Ordering, §3.1 Template-Part tolerance
 - `containing-control-decorative-overflow` — when focus ring / hover glow gets clipped at an ancestor boundary
 - `managing-styles-resourcedictionary` — Generic.xaml hub pattern
-- `managing-literal-strings` — general rule for consolidating literal strings (VSM names are a notable WPF-specific case)
+- `managing-literal-strings` — consolidating literal strings (VSM names are a notable WPF-specific case)

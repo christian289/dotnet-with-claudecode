@@ -36,7 +36,7 @@
 ### 🤖 AI-Powered Development
 - **10 Specialized Agents** for different WPF tasks
 - **Session-model agnostic** — agents inherit your current model
-- **Auto-detection** of WPF keywords
+- **MCP-served knowledge** — search-before-answer via WpfDevPackMcp
 - **Prism 9** companion files for dual-framework support
 
 </td>
@@ -221,62 +221,33 @@ Result: Activates LiveCharts2 + DrawingContext skills + wpf-performance-optimize
 
 ---
 
-## 🧠 Auto-Trigger System
+## 🧠 How Knowledge Is Served
 
-wpf-dev-pack uses an intelligent keyword detection system inspired by [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode). When you mention WPF, C#, or .NET keywords, relevant skills are **automatically activated**.
+wpf-dev-pack does **not** use a keyword-detection hook. WPF knowledge is served on demand by the **WpfDevPackMcp** MCP server — its own server instructions tell the agent to **search the topic catalog before answering** WPF/C#/.NET questions.
 
 ### How It Works
 
-1. **Keyword Detection**: Your prompt is scanned for WPF/.NET keywords
-2. **Skill Activation**: Matching skills are automatically loaded
-3. **Agent Recommendation**: Complex tasks suggest specialized agents
+1. **You ask** a WPF/C#/.NET question (or invoke a command skill / agent).
+2. **The agent searches** the catalog with `WpfDevPackMcp search_wpf_topics`, then loads the best matches with `get_wpf_topic`.
+3. **Specialized agents** handle complex, multi-step tasks.
 
-### Example Triggers
+> The ~50 knowledge topics live as plain Markdown at `knowledge/<id>/TOPIC.md` in the repo and are fetched live — editing them needs no plugin rebuild or version bump. Run [`/wpf-dev-pack:set-repo-path`](#-configuration) once to point the server at your local clone.
 
-| You Say | Auto-Activates |
-|---------|----------------|
-| "Create a CustomControl" | `authoring-wpf-controls` |
-| "Apply MVVM pattern" | `implementing-communitytoolkit-mvvm` |
-| "Render with DrawingContext" | `rendering-with-drawingcontext` |
-| "Need performance optimization" | `rendering-wpf-high-performance` + `wpf-performance-optimizer` agent |
-| "Review architecture" | `wpf-architect` agent recommended |
+### Example Topics (served via MCP)
 
-### Silent Triggers
+| You ask about | Topic |
+|---------------|-------|
+| Authoring a CustomControl | `authoring-wpf-controls` |
+| MVVM with CommunityToolkit | `implementing-communitytoolkit-mvvm` |
+| Rendering with DrawingContext | `rendering-with-drawingcontext` |
+| High-performance rendering | `rendering-wpf-high-performance` |
 
-Some skills activate without notification:
-- `formatting-wpf-csharp-code` - Code formatting
-- `using-xaml-property-element-syntax` - XAML syntax
-- `managing-literal-strings` - String management
+For complex tasks, a specialized agent is recommended (e.g. `wpf-performance-optimizer` for rendering, `wpf-architect` for architecture reviews).
 
-### Keyword Categories
+### Command Skills vs Knowledge
 
-<details>
-<summary><b>📌 Primary WPF Keywords (Click to expand)</b></summary>
-
-| Category | Keywords |
-|----------|----------|
-| **Controls** | `customcontrol`, `dependencyproperty`, `templatepart`, `controltemplate` |
-| **MVVM** | `mvvm`, `viewmodel`, `relaycommand`, `observableproperty` |
-| **Rendering** | `drawingcontext`, `drawingvisual`, `onrender`, `invalidatevisual` |
-| **Performance** | `virtualizingstackpanel`, `freeze`, `freezable`, `bitmapcache` |
-| **Events** | `routedevent`, `command`, `inputbinding`, `dragdrop` |
-| **Styling** | `resourcedictionary`, `generic.xaml`, `storyboard`, `animation` |
-| **Threading** | `dispatcher`, `invoke`, `begininvoke` |
-
-</details>
-
-<details>
-<summary><b>🔷 .NET Keywords (Click to expand)</b></summary>
-
-| Category | Keywords |
-|----------|----------|
-| **Async** | `async`, `await`, `task`, `valuetask`, `configureawait` |
-| **Parallel** | `parallel`, `plinq`, `concurrentdictionary` |
-| **Memory** | `span`, `memory<`, `arraypool`, `stackalloc` |
-| **I/O** | `pipeline`, `pipereader`, `pipewriter` |
-| **Patterns** | `repository pattern`, `pubsub`, `channel` |
-
-</details>
+- **Command skills** (`/wpf-dev-pack:<name>`) — slash-invocable generators and plugin operations (11 bundled; see **Skills & Knowledge** below).
+- **Knowledge topics** — reference content served by WpfDevPackMcp; kept out of the session skill listing (no per-session context cost).
 
 ---
 
@@ -295,6 +266,7 @@ Some skills activate without notification:
 | 🔗 **wpf-data-binding-expert** | Complex bindings & validation |
 | ⚡ **wpf-performance-optimizer** | Rendering & performance |
 | 🔍 **wpf-code-reviewer** | Code quality analysis |
+| 🔎 **wpf-code-auditor** | Full-codebase pattern & consistency audit |
 | 📝 **code-formatter** | C# formatting & style |
 | 🔧 **serena-initializer** | Project setup |
 
@@ -305,7 +277,6 @@ Some skills activate without notification:
 | **HandMirrorMcp** | HandMirrorMcp | .NET assembly/NuGet inspection (bundled) |
 | **WpfDevPackMcp** | WpfDevPackMcp | WPF knowledge topics, served on demand from a local repo clone (bundled) |
 | **context7** | context7 | Library/framework documentation |
-| **sequential-thinking** | sequential-thinking | Step-by-step analysis |
 | _(direct MCP via `uv`)_ | **serena** | Semantic code analysis |
 | **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
 | **csharp-lsp** | csharp | C# LSP code intelligence |
@@ -345,7 +316,7 @@ The plugin bundles **11 command skills** (slash-invocable):
 
 | Skill | Description |
 |-------|-------------|
-| `formatting-wpf-csharp-code` | C# / XAML formatting & style (silent trigger) |
+| `formatting-wpf-csharp-code` | C# / XAML formatting & style (auto-applied on edits by the CodeFormatter hook) |
 
 </details>
 
@@ -370,6 +341,7 @@ wpf-dev-pack/
 │   └── plugin.json           # Plugin manifest
 ├── 📁 agents/                 # 10 Specialized agents
 │   ├── wpf-architect.md
+│   ├── wpf-code-auditor.md
 │   ├── wpf-code-reviewer.md
 │   ├── wpf-control-designer.md
 │   ├── wpf-xaml-designer.md

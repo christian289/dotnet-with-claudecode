@@ -101,15 +101,22 @@ public partial class $0ControlViewModel : ObservableObject
 
 **$0Control.xaml (with ViewModel)**
 
+> **No inline runtime `DataContext`.** Inline `<UserControl.DataContext>` (and
+> code-behind `DataContext = new …`) is prohibited (P-001-c). Declare a
+> design-time `d:DataContext` for IntelliSense only; the runtime DataContext is
+> supplied by the composition root — the parent passes the VM, or a
+> `Mappings.xaml` `DataTemplate` resolves this control as the View for
+> `$0ControlViewModel` (ViewModel First). This matches `make-wpf-viewmodel`.
+
 ```xml
 <UserControl x:Class="{Namespace}.Controls.$0Control"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:{Namespace}.ViewModels">
-
-    <UserControl.DataContext>
-        <vm:$0ControlViewModel/>
-    </UserControl.DataContext>
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:{Namespace}.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:$0ControlViewModel}">
 
     <Grid>
         <TextBlock Text="{Binding Title}"/>

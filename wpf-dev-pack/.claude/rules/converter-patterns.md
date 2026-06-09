@@ -4,36 +4,44 @@ Standards for implementing `IValueConverter` in wpf-dev-pack projects.
 
 ---
 
-## Singleton Pattern with Static Instance Property
+## MarkupExtension Singleton Pattern
 
-Every converter must expose a static `Instance` property so it can be used directly in XAML without declaring a resource.
-Converters are stateless — a single shared instance is safe and avoids ResourceDictionary clutter.
+Every converter is a `MarkupExtension` so it can be used directly in XAML without
+declaring a resource, and `ProvideValue` returns a single shared instance
+(converters are stateless, so a shared instance is safe and avoids
+ResourceDictionary clutter). This is the **canonical** converter pattern,
+matching the `/wpf-dev-pack:make-wpf-converter` scaffolder and the
+`using-converter-markup-extension` knowledge topic. Pick this one pattern — do
+NOT also expose a separate static `Instance` property.
+
+Derive from a small base class (the scaffolder generates it once per project):
 
 ```csharp
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
 namespace MyApp.Converters;
 
-public sealed class BoolToVisibilityConverter : IValueConverter
+public abstract class ConverterMarkupExtension<T> : MarkupExtension, IValueConverter
+    where T : class, new()
 {
-    public static readonly BoolToVisibilityConverter Instance = new();
+    private static readonly Lazy<T> _converter = new(() => new T());
 
-    // Private constructor enforces singleton usage
-    private BoolToVisibilityConverter() { }
+    public override object ProvideValue(IServiceProvider serviceProvider) => _converter.Value;
 
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
+
+    public virtual object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException("ConvertBack is not supported.");
+}
+
+public sealed class BoolToVisibilityConverter : ConverterMarkupExtension<BoolToVisibilityConverter>
+{
+    public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is DependencyProperty.UnsetValue || value is null)
+        if (value is null || value == DependencyProperty.UnsetValue)
             return Visibility.Collapsed;
 
-        return value is bool b && b ? Visibility.Visible : Visibility.Collapsed;
+        var invert = parameter is "Invert" or "invert";
+        return (value is bool b && (b ^ invert)) ? Visibility.Visible : Visibility.Collapsed;
     }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        => value is Visibility v && v == Visibility.Visible;
 }
 ```
 
@@ -41,7 +49,7 @@ Usage in XAML (no ResourceDictionary entry required):
 
 ```xml
 <TextBlock Visibility="{Binding IsActive,
-               Converter={x:Static converters:BoolToVisibilityConverter.Instance}}" />
+               Converter={converters:BoolToVisibilityConverter}}" />
 ```
 
 ---

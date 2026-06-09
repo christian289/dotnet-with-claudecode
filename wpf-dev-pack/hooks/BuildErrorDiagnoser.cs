@@ -128,7 +128,7 @@ static List<BuildDiagnostic> AnalyzeBuildErrors(string output)
 
             // XAML parse errors
             _ when code.StartsWith("XDG") || code.StartsWith("MC") =>
-                "XAML error — check `/wpf-dev-pack:managing-styles-resourcedictionary`",
+                "XAML error — see the `managing-styles-resourcedictionary` knowledge topic (WpfDevPackMcp get_wpf_topic)",
 
             // XAML type not found
             "XLS0414" or "XLS0418" =>

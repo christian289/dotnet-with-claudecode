@@ -14,6 +14,7 @@ Delegate complex tasks to specialized agents.
 | B | Performance analysis | `wpf-performance-optimizer` |
 | B | Architecture diagnosis | `wpf-architect` (self) |
 | B | Open-source code analysis | `wpf-architect` (self) |
+| B | Codebase-wide audit | `wpf-code-auditor` |
 | D | UI display problem | `wpf-xaml-designer` |
 | D | Data problem | `wpf-data-binding-expert` |
 | D | Performance problem | `wpf-performance-optimizer` |
@@ -28,6 +29,7 @@ Delegate complex tasks to specialized agents.
 |-----------|-------|---------|
 | Architecture analysis | `wpf-architect` | "architecture", "best practice" |
 | Code review | `wpf-code-reviewer` | "review", "MVVM violation" |
+| Full-codebase audit | `wpf-code-auditor` | "audit", "codebase-wide consistency", pattern sweep |
 | CustomControl development | `wpf-control-designer` | CustomControl creation |
 | XAML styles/themes | `wpf-xaml-designer` | ControlTemplate, Style |
 | MVVM implementation | `wpf-mvvm-expert` | ViewModel, Command |

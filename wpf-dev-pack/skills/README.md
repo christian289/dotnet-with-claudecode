@@ -2,132 +2,54 @@
 
 # Skills
 
-Specialized skills for WPF and .NET development.
+Command skills for WPF/.NET development. All are slash-invocable except
+`formatting-wpf-csharp-code`, which Claude applies automatically (it is
+`user-invocable: false`; the CodeFormatter PostToolUse hook also runs on edits).
 
-> **📦 Archived**: Doc-mirror skills have been moved to `../../archive-skills/`. Topics covered by the `microsoft-docs` MCP plugin (e.g., DependencyProperty, ControlTemplate, Storyboard, DragDrop, async/await, Span<T>, GeneratedRegex) are no longer active skills.
+> **Knowledge topics are not skills.** The ~50 WPF knowledge topics (MVVM,
+> rendering, threading, styling, 3rd-party libraries, Prism 9 companions,
+> testing, …) are **not** bundled under `skills/`. They live as plain Markdown
+> at `knowledge/<id>/TOPIC.md` in the repo and are served on demand by the
+> **WpfDevPackMcp** MCP server (`search_wpf_topics` / `get_wpf_topic`). Run
+> [`set-repo-path`](./set-repo-path/SKILL.md) once to point the server at your
+> local clone. See the plugin [README](../README.md) → "Skills & Knowledge".
 
-## Skills by Category
+## Command Skills (11)
 
-### 🎨 UI & Controls
-
-| Skill | Description |
-|-------|-------------|
-| `authoring-wpf-controls` | Control authoring decision guide (UserControl vs Control vs FrameworkElement) |
-| `designing-wpf-customcontrol-architecture` | CustomControl architecture |
-| `configuring-wpf-themeinfo` | ThemeInfo configuration |
-| `binding-enum-command-parameters` | Enum binding patterns |
-| `displaying-slider-index` | Slider UI patterns |
-
-### 🔗 Data Binding & MVVM
+### 🛠️ Scaffolding (7)
 
 | Skill | Description |
 |-------|-------------|
-| `implementing-communitytoolkit-mvvm` | CommunityToolkit.Mvvm |
-| `advanced-data-binding` | Advanced binding patterns (MultiBinding, PriorityBinding) |
-| `using-converter-markup-extension` | Converter MarkupExtension pattern |
-| `implementing-wpf-validation` | Validation strategies |
-| `managing-wpf-collectionview-mvvm` | CollectionView in MVVM |
-| `mapping-viewmodel-view-datatemplate` | View-ViewModel mapping |
-| `configuring-dependency-injection` | DI configuration |
-| `structuring-wpf-projects` | Project structure |
+| `make-wpf-project` | Scaffold a WPF project (MVVM/DI) |
+| `make-wpf-custom-control` | Scaffold a CustomControl |
+| `make-wpf-usercontrol` | Scaffold a UserControl |
+| `make-wpf-converter` | Scaffold an IValueConverter |
+| `make-wpf-behavior` | Scaffold a Behavior<T> |
+| `make-wpf-viewmodel` | Scaffold ViewModel + View + DataTemplate mapping |
+| `make-wpf-service` | Scaffold service interface + impl + DI registration |
 
-### ⚡ Performance & Rendering
-
-| Skill | Description |
-|-------|-------------|
-| `rendering-with-drawingcontext` | DrawingContext rendering |
-| `rendering-with-drawingvisual` | DrawingVisual rendering |
-| `rendering-wpf-architecture` | Rendering architecture |
-| `rendering-wpf-high-performance` | High-performance rendering |
-| `implementing-hit-testing` | Hit testing |
-| `virtualizing-wpf-ui` | UI virtualization |
-| `optimizing-wpf-memory` | Memory optimization (leak patterns) |
-| `checking-image-bounds-transform` | Image transforms |
-| `navigating-visual-logical-tree` | Tree navigation helpers |
-
-### ⌨️ Input & Events
+### 🎨 Code Quality (1)
 
 | Skill | Description |
 |-------|-------------|
-| `routing-wpf-events` | Routed events (custom event creation) |
-| `managing-wpf-popup-focus` | Popup focus management |
+| `formatting-wpf-csharp-code` | C# / XAML formatting & style (auto-applied on edits by the CodeFormatter hook) |
 
-### 🎨 Styling & Resources
-
-| Skill | Description |
-|-------|-------------|
-| `managing-styles-resourcedictionary` | Styles & resources |
-| `resolving-icon-font-inheritance` | Icon fonts |
-| `using-xaml-property-element-syntax` | XAML property element syntax |
-| `formatting-wpf-csharp-code` | Code formatting |
-
-### 🔧 Application & Threading
+### 🔧 Plugin Operations (3)
 
 | Skill | Description |
 |-------|-------------|
-| `managing-wpf-application-lifecycle` | App lifecycle (Single Instance, IPC) |
-| `threading-wpf-dispatcher` | Dispatcher & threading |
-
-### 🔷 .NET Common
-
-| Skill | Description |
-|-------|-------------|
-| `configuring-console-app-di` | Console app DI |
-| `implementing-repository-pattern` | Repository pattern |
-| `managing-literal-strings` | String management |
-
-### 🧪 Testing
-
-| Skill | Description |
-|-------|-------------|
-| `testing-wpf-viewmodels` | ViewModel xUnit testing |
-| `managing-unit-tests` | Unit test strategy |
-
-### 🛠️ Scaffolding
-
-| Skill | Description |
-|-------|-------------|
-| `make-wpf-project` | Scaffold WPF project |
-| `make-wpf-custom-control` | Scaffold CustomControl |
-| `make-wpf-usercontrol` | Scaffold UserControl |
-| `make-wpf-converter` | Scaffold IValueConverter |
-| `make-wpf-behavior` | Scaffold Behavior |
-| `make-wpf-viewmodel` | Scaffold ViewModel + View + DataTemplate |
-| `make-wpf-service` | Scaffold service class |
-
-### 🔌 3rd Party Libraries
-
-| Skill | Description |
-|-------|-------------|
-| `integrating-wpfui-fluent` | WPF-UI Fluent Design |
-| `integrating-livecharts2` | LiveCharts2 data visualization |
-| `integrating-nodify` | Nodify node editor |
-| `validating-with-fluentvalidation` | FluentValidation integration |
-| `handling-errors-with-erroror` | ErrorOr result pattern |
-| `flaui-cross-process-input` | FlaUI cross-process input fixes |
-| `flaui-prism-dialog-discovery` | FlaUI + Prism dialog discovery |
-| `flaui-wpf-element-discovery` | FlaUI WPF element discovery |
-| `scottplot-syncing-modifier-keys-for-mousewheel` | ScottPlot modifier key sync |
-
-### 📦 Build & Deployment
-
-| Skill | Description |
-|-------|-------------|
-| `embedding-pdb-in-exe` | PDB embedding |
-| `publishing-wpf-apps` | Publish & installer guidance |
-
-## Skill Structure
-
-Each skill directory contains:
-- `SKILL.md` - Main skill documentation
-- `PRISM.md` - Prism 9 companion (where applicable)
-- `QUICKREF.md` - Quick reference (optional)
-- Additional resources (scripts, templates)
+| `collecting-wpf-dev-pack-feedback` | Capture anonymized feedback docs for later application |
+| `configuring-wpf-dev-pack-language` | Set the per-project response language (`.claude/wpf-dev-pack.local.md`) |
+| `set-repo-path` | Configure the local repo-clone path WpfDevPackMcp reads knowledge from |
 
 ## Usage
 
-Skills are auto-triggered by keywords or can be invoked directly:
+Invoke a command skill directly:
 
 ```
-/wpf-dev-pack:implementing-communitytoolkit-mvvm
+/wpf-dev-pack:make-wpf-project MyApp
 ```
+
+For WPF knowledge, just ask your question — the WpfDevPackMcp MCP server's
+instructions guide the agent to search the topic catalog (`search_wpf_topics`)
+and load the relevant topic (`get_wpf_topic`) before answering.
