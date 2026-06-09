@@ -10,6 +10,29 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.7.2
+
+### Removed
+- **`WpfKeywordDetector` keyword-router hook removed** (~520 lines). WPF
+  knowledge/skill triggering no longer flows through a UserPromptSubmit keyword
+  router; it is now driven by the `WpfDevPackMcp` MCP server's own instructions
+  (`search_wpf_topics` / `get_wpf_topic`). `hooks.json` no longer registers the
+  detector (10 hooks remain).
+- **`wpf-dev-pack/knowledge/` removed from the plugin package.** The knowledge
+  topics now live at the repository root (`knowledge/<id>/TOPIC.md`) and are
+  served on demand by `WpfDevPackMcp` from the repo clone, so they are no longer
+  bundled into the installed plugin (~16k fewer lines shipped).
+
+### Changed
+- **`WpfDevPackMcp` is now a discoverable MCP server package on NuGet.** It is
+  pinned in `.mcp.json` via `dnx`, and the server advertises usage instructions
+  so agents reach for it without a keyword hook.
+
+### Stats
+- Skills: 11 · Agents: 10 · MCP Servers: 2
+
+---
+
 ## v1.7.1
 
 ### Fixed
