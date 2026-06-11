@@ -158,3 +158,12 @@ public sealed class EnterKeyBehavior : Behavior<TextBox>
 | Expose settings via DependencyProperty | Use hardcoded values |
 | Apply IsEnabled pattern | Always execute without condition |
 | Check AssociatedObject for null | Use without null check |
+
+## Related
+
+- `/wpf-dev-pack:make-wpf-chatclient` emits two worked `Behavior<T>` instances
+  built on this template: an `EnterCommandBehavior` (Enter=send / Shift+Enter=newline,
+  IME-safe, via `PreviewKeyDown` with a `Command`/`CommandParameter` DP pair) and a
+  `StickToBottomBehavior` (pin a streaming `ScrollViewer` to the newest content unless
+  the user scrolled up). See it for a Command-DP behavior and an event-tracking behavior
+  in context.

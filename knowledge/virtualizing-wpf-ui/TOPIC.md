@@ -95,3 +95,40 @@ public static int GetRealizedCount(ItemsControl control)
           VirtualizingPanel.IsVirtualizing="True"
           VirtualizingPanel.VirtualizationMode="Recycling"/>
 ```
+
+## Variable-Height, Selectable Chat Bubbles
+
+A long conversation (hundreds of turns) where each turn is a selectable
+`RichTextBox` bubble is a hard case for virtualization. A plain `ItemsControl`
+does not virtualize at all, so memory and layout cost grow with the history.
+Turning virtualization on then interacts badly with two properties of chat
+bubbles: their **variable height**, and their **per-bubble transient state**
+(text selection, internal scroll). Under `VirtualizationMode="Recycling"` the
+host reuses a container for a different turn, so any visual state left on the
+container reappears against the wrong message; and a `RichTextBox` is a
+comparatively heavy element to realize per item.
+
+Guidance:
+
+- **Use a virtualizing host for long histories.** Enable
+  `VirtualizingPanel.IsVirtualizing="True"`,
+  `VirtualizingPanel.VirtualizationMode="Recycling"`, and
+  `ScrollViewer.CanContentScroll="True"`.
+- **Keep all per-turn state in the turn ViewModel, never in the visual.**
+  Containers are recycled and re-bound, so anything stored on the realized
+  bubble (not the VM) is lost or leaks onto another turn.
+- **Treat the `RichTextBox` as expensive.** Consider capping the number of
+  retained turns, or rendering off-screen turns with a lighter read-only
+  representation and promoting to a full `RichTextBox` only when the container
+  is realized.
+- **Mind the tension with pin-to-bottom auto-scroll.** A streaming chat usually
+  pins the view to the newest content with a stick-to-bottom `ScrollViewer`
+  behavior. But `CanContentScroll="True"` switches the host to *item-based*
+  scrolling, so `VerticalOffset` / `ScrollableHeight` are measured in item
+  units rather than pixels — which changes how "the user is at the bottom" is
+  computed. Reconcile the auto-scroll math with the scroll unit you enable here.
+
+### Related topics
+
+- [`displaying-selectable-rich-text-in-wpf`](../displaying-selectable-rich-text-in-wpf/TOPIC.md) — the heavy, content-hugging read-only `RichTextBox` bubble whose per-item cost motivates virtualization, and whose selection/scroll state must live in the VM under recycling.
+- [`styling-chat-bubbles-in-wpf`](../styling-chat-bubbles-in-wpf/TOPIC.md) — the role-differentiated bubble `DataTemplate` rendered inside the virtualized item host.

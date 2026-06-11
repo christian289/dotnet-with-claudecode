@@ -14,6 +14,8 @@ Only command skills remain under `skills/` and are slash-invocable:
 | `create viewmodel`, `뷰모델 생성` | `make-wpf-viewmodel` |
 | `create service`, `서비스 생성` | `make-wpf-service` |
 | (explicit) | `make-wpf-project`, `make-wpf-custom-control`, `make-wpf-usercontrol`, `make-wpf-converter`, `make-wpf-behavior` |
+| `chat client`, `LLM chat UI`, `채팅 클라이언트` | `make-wpf-chatclient` (one-button full client) |
+| (explicit, chat components) | `make-wpf-markdown-presenter`, `make-wpf-chat-bubble-template`, `make-wpf-chatclient-factory`, `make-wpf-chat-orchestrator` |
 | (auto) C#/XAML formatting | `formatting-wpf-csharp-code` |
 | `feedback` (maintainer) | `collecting-wpf-dev-pack-feedback` |
 | `language` | `configuring-wpf-dev-pack-language` |
