@@ -12,6 +12,15 @@ The MCP .NET client entry point is the **static** `McpClient.CreateAsync(IClient
 
 For a framework-dependent dll, set `Command="dotnet"` and `Arguments=[dllPath]`. For a self-contained exe, set `Command=exePath` (no extra arguments needed).
 
+**Package layout (ModelContextProtocol 1.x, verified against 1.4.0):** the
+client types above (`McpClient`, `StdioClientTransport`, `McpClientTool`) ship
+in the `ModelContextProtocol.Core` assembly. The `ModelContextProtocol` package
+itself carries only server/DI types but depends on Core, so a single
+`<PackageReference Include="ModelContextProtocol" Version="1.*" />` still
+compiles all client code, and the `ModelContextProtocol.Client` namespace is
+unchanged. The full `CreateAsync` parameter list as of 1.4.0:
+`CreateAsync(IClientTransport, McpClientOptions?, ILoggerFactory?, CancellationToken)`.
+
 ```csharp
 // Connect to a local stdio MCP server process. For a framework-dependent dll use
 // Command="dotnet", Arguments=[dllPath]; for a self-contained exe, Command=exePath.

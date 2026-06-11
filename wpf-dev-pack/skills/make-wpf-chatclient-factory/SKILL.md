@@ -30,13 +30,30 @@ have not verified against the pinned package version.
 ## Required Packages
 
 ```xml
-<PackageReference Include="Microsoft.Extensions.AI" Version="9.*" />
-<!-- Include only the providers you need: -->
+<PackageReference Include="Microsoft.Extensions.AI" Version="10.*" />
+<!-- OPTIONAL — add only the provider SDKs the user asked for: -->
 <PackageReference Include="OpenAI" Version="2.*" />
 <PackageReference Include="OllamaSharp" Version="5.*" />
 <PackageReference Include="Anthropic.SDK" Version="5.*" />
 <PackageReference Include="Google.GenAI" Version="1.*" />
 ```
+
+> **Emit only the arms you installed.** The canonical class below shows ALL
+> provider arms for reference. A provider arm whose SDK package is not
+> installed is a CS0246 build error — when emitting, keep the `Provider.Mock`
+> arm, keep each arm whose package you added, and replace every other arm with
+> `=> throw new NotSupportedException($"Install and wire the {s.Provider} SDK first.")`.
+> The mock-only emission (no provider SDK at all) is the correct default when
+> no provider was requested.
+
+> **Usings**: the snippets assume `global using System.Net.Http;`,
+> `global using Microsoft.Extensions.AI;`, and
+> `global using System.Runtime.CompilerServices;` (for `[EnumeratorCancellation]`
+> in the mock) in `GlobalUsings.cs`. Provider-arm namespaces (e.g. the OpenAI
+> client, `System.ClientModel`, OllamaSharp, Anthropic.SDK, Google.GenAI types)
+> are version-sensitive — resolve the exact namespaces with HandMirror
+> (`inspect_nuget_package` → `list_namespaces`) at emit time and add per-file
+> `using`s for the arms you keep.
 
 > **Version-floor caveat**: a native SDK may pin `Microsoft.Extensions.AI.Abstractions`
 > to a higher version than other consumers (e.g. an MCP client library). The bump is
@@ -217,6 +234,13 @@ services.AddSingleton<I$0, $0>(); // GenericHost (CommunityToolkit.Mvvm)
     ├── Provider.cs
     └── MockChatClient.cs
 ```
+
+> In a `make-wpf-project` solution (`*.WpfApp` + `*.ViewModels`), place the
+> WPF-free contracts (`I$0`, `ChatSettings`, `Provider`) in `*.ViewModels`
+> (namespace `{Namespace}.ViewModels`) so ViewModels can consume them without
+> referencing the app project — this is how the one-button
+> `/wpf-dev-pack:make-wpf-chatclient` lays them out. The implementation (`$0`,
+> `MockChatClient`) stays in the app project's `Services/`.
 
 ## Related
 

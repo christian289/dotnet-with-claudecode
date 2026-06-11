@@ -30,9 +30,27 @@ with HandMirror (`inspect_nuget_package` / `inspect_nuget_package_type`):
 ## Required Packages
 
 ```xml
-<PackageReference Include="Microsoft.Extensions.AI" Version="9.*" />
-<PackageReference Include="ModelContextProtocol" Version="0.*" />
+<PackageReference Include="Microsoft.Extensions.AI" Version="10.*" />
+<PackageReference Include="ModelContextProtocol" Version="1.*" />
 ```
+
+> ModelContextProtocol 1.x ships the client types (`McpClient`,
+> `StdioClientTransport`, `McpClientTool`) in its `ModelContextProtocol.Core`
+> dependency — the package reference above still works (Core flows
+> transitively) and the `ModelContextProtocol.Client` namespace is unchanged.
+
+> **Usings**: the snippets assume these in the target project's `GlobalUsings.cs`:
+> `global using System.Runtime.CompilerServices;` (`[EnumeratorCancellation]`),
+> `global using Microsoft.Extensions.AI;`, `global using ModelContextProtocol.Client;`,
+> and `global using Microsoft.Extensions.Logging;` (`ILoggerFactory`).
+> `ChatSettings` is the supporting type emitted by
+> `/wpf-dev-pack:make-wpf-chatclient-factory`.
+
+> **Placement**: standalone default is `{Project}/Services` below. In a
+> `make-wpf-project` solution, prefer the `*.ViewModels` project (namespace
+> `{Namespace}.ViewModels`) — every type here is WPF-free, and that placement
+> lets ViewModels consume the orchestrator without referencing the app project
+> (the layout used by the one-button `/wpf-dev-pack:make-wpf-chatclient`).
 
 ## Generated Code
 
@@ -190,7 +208,10 @@ private void Stop() => _cts?.Cancel();
 ```
 
 > The full ViewModel (turns collection, `IsWaiting`, `Apply(ev)` switch) is
-> emitted by the one-button `/wpf-dev-pack:make-wpf-chatclient`.
+> emitted by the one-button `/wpf-dev-pack:make-wpf-chatclient`. If the
+> ViewModel lives in a WPF-free `*.ViewModels` project, do NOT call
+> `Application.Current.Dispatcher` there (P-002) — inject the one-method
+> `IUiDispatcher` abstraction from `make-wpf-chatclient` instead.
 
 ## File Location
 

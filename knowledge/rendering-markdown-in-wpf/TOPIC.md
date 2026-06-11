@@ -124,6 +124,15 @@ private Paragraph BuildLeafFallback(LeafBlock leaf)
     else { p.Inlines.Add(new Run(leaf.Lines.ToString())); }
     return p;
 }
+
+// Thematic break (---): an empty paragraph drawing a 1px bottom rule.
+private static Paragraph BuildThematicBreak() => new()
+{
+    Margin = new Thickness(0, 4, 0, 10),
+    BorderThickness = new Thickness(0, 0, 0, 1),
+    BorderBrush = Brushes.LightGray,
+    FontSize = 1 // collapse the line height; only the border renders
+};
 ```
 
 ---
@@ -198,7 +207,11 @@ private static void OpenInBrowser(Uri? uri)
     try { Process.Start(new ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true }); }
     catch { /* a navigation failure must not crash the chat */ }
 }
-// SafeUri (§3) already rejects non-absolute URLs; combine both: absolute + http/https only.
+
+// Used when constructing each Hyperlink.NavigateUri (§3): absolute or nothing.
+private static Uri? SafeUri(string? url)
+    => Uri.TryCreate(url, UriKind.Absolute, out Uri? uri) ? uri : null;
+// SafeUri rejects non-absolute URLs; combine both: absolute + http/https only.
 ```
 
 `SafeUri` (used when constructing each `Hyperlink.NavigateUri` in §3) rejects non-absolute URLs; `OpenInBrowser` rejects non-http(s) schemes. Together they enforce: the link must be **absolute and http/https only** before it is ever launched. The same validation applies anywhere a `Hyperlink` is built from generated text — see [`displaying-selectable-rich-text-in-wpf`](../displaying-selectable-rich-text-in-wpf/TOPIC.md).

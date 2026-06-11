@@ -36,12 +36,17 @@ Generate the role-differentiated chat bubble `DataTemplate` (opposite alignment,
 `IsUser` discriminates the role; `Markdown` is the content the streaming
 orchestrator appends to. Lives in the ViewModels project (no `System.Windows`).
 
+> **Skip this file if `/wpf-dev-pack:make-wpf-chatclient` already emitted a
+> turn ViewModel** — emitting both produces a duplicate-type collision. The
+> chatclient's version is this class plus an `IsWaiting` flag.
+
 ```csharp
 namespace {Namespace}.ViewModels;
 
 public sealed partial class $0 : ObservableObject
 {
     [ObservableProperty] private bool _isUser;
+    [ObservableProperty] private bool _isWaiting;          // "waiting…" until the first streamed token
     [ObservableProperty] private string _markdown = string.Empty;
 
     // The streaming orchestrator appends tokens here; the bound MarkdownPresenter re-renders.
@@ -51,10 +56,11 @@ public sealed partial class $0 : ObservableObject
 
 ### Chat list XAML (ItemsControl + bubble DataTemplate)
 
+The default uses **stock-WPF brushes** so it builds with no UI-kit package:
+
 ```xml
 <ItemsControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
               xmlns:vm="clr-namespace:{Namespace}.ViewModels;assembly={Namespace}.ViewModels"
               xmlns:controls="clr-namespace:{Namespace}.Controls"
               ItemsSource="{Binding Turns}">
@@ -63,16 +69,16 @@ public sealed partial class $0 : ObservableObject
             <Border Padding="10" CornerRadius="6">
                 <Border.Style>
                     <Style TargetType="Border">
-                        <!-- DEFAULT = ASSISTANT (response): left, card background, right gutter -->
+                        <!-- DEFAULT = ASSISTANT (response): left, neutral background, right gutter -->
                         <Setter Property="HorizontalAlignment" Value="Left"/>
                         <Setter Property="Margin" Value="0,4,48,0"/>
-                        <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                        <Setter Property="Background" Value="#FFF0F0F0"/>
                         <Style.Triggers>
-                            <!-- USER (request): right, accent background, left gutter -->
+                            <!-- USER (request): right, tinted background, left gutter -->
                             <DataTrigger Binding="{Binding IsUser}" Value="True">
                                 <Setter Property="HorizontalAlignment" Value="Right"/>
                                 <Setter Property="Margin" Value="48,4,0,0"/>
-                                <Setter Property="Background" Value="{ui:ThemeResource SystemAccentColorPrimaryBrush}"/>
+                                <Setter Property="Background" Value="#FFD6E8FF"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -96,10 +102,14 @@ public sealed partial class $0 : ObservableObject
 | One asymmetric `Margin` per role | Doubles as the "who sent it" gutter and the max-width cap (`parent − gutter`); no separate `MaxWidth` needed. |
 | Properties constant across roles (`Padding`, `CornerRadius`) | Safe to leave as inline attributes — never under trigger control. |
 
-> The `ui:ThemeResource` brushes require WPF-UI (`Wpf.Ui`). For stock WPF, swap
-> them for `{DynamicResource {x:Static SystemColors.ControlBrushKey}}` and an
-> accent brush of your choice. An invalid theme-resource key throws
-> `XamlParseException` at render time, not at build.
+> **WPF-UI variant** — if (and only if) the project references `Wpf.Ui`, swap
+> the two `Background` Setters for theme-aware kit brushes and add
+> `xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"`:
+> `{ui:ThemeResource CardBackgroundFillColorDefaultBrush}` (assistant) /
+> `{ui:ThemeResource SystemAccentColorPrimaryBrush}` (user). Declaring
+> `xmlns:ui` without the package installed is an MC3074 **build** error, and an
+> invalid theme-resource key throws `XamlParseException` at **render** time —
+> use only keys verified to exist in the kit.
 
 ## File Location
 

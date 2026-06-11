@@ -151,8 +151,10 @@ appends one `DataTemplate` to `Mappings.xaml` and registers DI.
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\$0.ViewModels\$0.ViewModels.csproj" />
-    <ProjectReference Include="..\$0.Core\$0.Core.csproj" />
+    <!-- Forward slashes: MSBuild accepts them on Windows, and a "\$" sequence
+         in this skill body is consumed as an argument escape at invocation. -->
+    <ProjectReference Include="../$0.ViewModels/$0.ViewModels.csproj" />
+    <ProjectReference Include="../$0.Core/$0.Core.csproj" />
   </ItemGroup>
 
 </Project>

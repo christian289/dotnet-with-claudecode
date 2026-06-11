@@ -35,39 +35,96 @@ Copy this checklist and emit each file in order:
 
 ```
 ChatClient Scaffold Progress:
-- [ ] 1. Packages: add the required PackageReferences to {Project}
-- [ ] 2. Components: emit MarkdownPresenter, ChatClientFactory(+Mock), ChatOrchestrator(+ChatEvent, McpToolService)
+- [ ] 1. Packages: add PackageReferences to {ViewModels} AND {Project}; append GlobalUsings.cs in both
+- [ ] 2. Components: emit MarkdownPresenter + ChatClientFactory(+Mock) into {Project}; ChatOrchestrator, ChatEvent, McpToolService, contracts into {ViewModels}
 - [ ] 3. Behaviors: emit EnterCommandBehavior + StickToBottomBehavior
 - [ ] 4. Turn VM: emit ChatTurnViewModel (IsUser, Markdown, IsWaiting)
-- [ ] 5. Chat VM: emit ChatViewModel
+- [ ] 5. Chat VM: emit IUiDispatcher + ChatViewModel ({ViewModels}) and WpfUiDispatcher ({Project})
 - [ ] 6. View: emit ChatView.xaml (bubbles + input)
-- [ ] 7. Wire: register DI (singleton factory + orchestrator + ChatViewModel), add Mappings.xaml entry
+- [ ] 7. Wire: register DI (singleton factory + dispatcher + orchestrator + ChatViewModel), add Mappings.xaml entry
 - [ ] 8. Verify: dotnet build; the mock provider streams a reply with no key
 ```
 
-## 1. Required Packages (in {Project} = *.WpfApp)
+## 1. Required Packages + GlobalUsings
+
+In `{ViewModels}` (`*.ViewModels` — orchestrator, events, contracts, and
+view-models live here; none of them touch WPF):
 
 ```xml
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.*" />
+<PackageReference Include="Microsoft.Extensions.AI" Version="10.*" />
+<PackageReference Include="ModelContextProtocol" Version="1.*" />
+```
+
+> Since ModelContextProtocol 1.x the CLIENT types (`McpClient`,
+> `StdioClientTransport`, `McpClientTool`) live in the `ModelContextProtocol.Core`
+> dependency; the `ModelContextProtocol` package itself carries server/DI types
+> but pulls Core transitively, so the reference above still compiles the client
+> code and the `ModelContextProtocol.Client` namespace is unchanged.
+
+In `{Project}` (`*.WpfApp` — presenter, factory, behaviors, view;
+`Microsoft.Extensions.AI` flows transitively from the `{ViewModels}` project
+reference):
+
+```xml
 <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.*" />
 <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.*" />
-<PackageReference Include="Markdig" Version="0.37.*" />
-<PackageReference Include="Microsoft.Extensions.AI" Version="9.*" />
-<PackageReference Include="ModelContextProtocol" Version="0.*" />
-<!-- Real providers are optional; the default mock path needs none of them. -->
+<PackageReference Include="Markdig" Version="1.*" />
+<!-- Real provider SDKs are optional; the default mock path needs none of them. -->
 ```
+
+Append to `{ViewModels}` `GlobalUsings.cs` (the emitted code assumes these):
+
+```csharp
+global using System.Collections.ObjectModel;
+global using System.Runtime.CompilerServices;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using Microsoft.Extensions.AI;
+global using Microsoft.Extensions.Logging;
+global using ModelContextProtocol.Client;
+```
+
+Append to `{Project}` `GlobalUsings.cs`:
+
+```csharp
+global using System.Net.Http;
+global using System.Runtime.CompilerServices;
+global using System.Windows;
+global using System.Windows.Controls;
+global using System.Windows.Input;
+global using Microsoft.Extensions.AI;
+global using Microsoft.Xaml.Behaviors;
+```
+
+`{Project}` files that consume the contracts (`ChatClientFactory.cs`,
+`WpfUiDispatcher.cs`, `App.xaml.cs`) add a per-file
+`using {Namespace}.ViewModels;` — user-defined namespaces stay per-file, not
+in `GlobalUsings.cs`.
 
 ## 2. Components (emit using the canonical templates)
 
 Emit these files now (this is what makes the skill self-contained — do not ask
 the user to run the component commands). Use the exact code from each component
-scaffolder / knowledge topic:
+scaffolder / knowledge topic, with two overrides:
 
-| File(s) | Source template | Knowledge topic |
-|---------|-----------------|-----------------|
-| `Controls/MarkdownPresenter.cs` | `make-wpf-markdown-presenter` | `rendering-markdown-in-wpf`, `displaying-selectable-rich-text-in-wpf` |
-| `Services/ChatClientFactory.cs`, `IChatClientFactory.cs`, `ChatSettings.cs`, `Provider.cs`, `MockChatClient.cs` | `make-wpf-chatclient-factory` | `sharing-httpclient-across-llm-sdks` |
-| `Services/ChatOrchestrator.cs`, `ChatEvent.cs`, `McpToolService.cs` | `make-wpf-chat-orchestrator` | `hosting-extensions-ai-chatclient-in-wpf-mvvm`, `consuming-mcp-tools-in-extensions-ai` |
+- **Placement/namespace override**: files emitted into `{ViewModels}` use
+  `namespace {Namespace}.ViewModels;` (not `{Namespace}.Services`); files in
+  `{Project}` keep `{Namespace}.Services` / `.Controls`. The split keeps every
+  WPF-free type in the UI-independent project — no circular reference, and
+  `mvvm-constraints.md` stays satisfied.
+- **Mock-only factory default**: the factory's canonical template shows ALL
+  provider arms. Emit only the `Provider.Mock` arm (others
+  `=> throw new NotSupportedException($"Install and wire the {s.Provider} SDK first.")`)
+  unless the user asked for real providers — the default package set above
+  contains no provider SDK, so emitting the full switch does not compile.
+
+| File(s) | Target project | Source template |
+|---------|----------------|-----------------|
+| `Controls/MarkdownPresenter.cs` | `{Project}` | `make-wpf-markdown-presenter` |
+| `Services/ChatClientFactory.cs`, `Services/MockChatClient.cs` | `{Project}` | `make-wpf-chatclient-factory` |
+| `IChatClientFactory.cs`, `ChatSettings.cs`, `Provider.cs` | `{ViewModels}` | `make-wpf-chatclient-factory` (supporting types) |
+| `ChatOrchestrator.cs`, `ChatEvent.cs`, `McpToolService.cs` | `{ViewModels}` | `make-wpf-chat-orchestrator` |
 
 ## 3. Behaviors
 
@@ -99,9 +156,12 @@ public sealed class EnterCommandBehavior : Behavior<TextBox>
 
     private void OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
+        // IME guard FIRST: an IME-composition confirm arrives as Key.ImeProcessed
+        // (never Key.Enter), so it must not send. Checking Key.Enter first would
+        // also skip it, but only by accident — keep the intent explicit.
+        if (e.Key == Key.ImeProcessed) { return; }
         if (e.Key != Key.Enter) { return; }
         if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0) { return; } // Shift+Enter -> newline (default)
-        if (e.Key == Key.ImeProcessed) { return; }                     // ignore IME candidate confirm
         if (Command?.CanExecute(CommandParameter) == true) { Command.Execute(CommandParameter); }
         e.Handled = true;                                              // suppress the newline insert
     }
@@ -152,7 +212,36 @@ public sealed partial class ChatTurnViewModel : ObservableObject
 }
 ```
 
-## 5. ViewModels/ChatViewModel.cs
+## 5. ViewModels: IUiDispatcher + ChatViewModel (in {ViewModels}), WpfUiDispatcher (in {Project})
+
+`mvvm-constraints.md` / P-002 ban `System.Windows` in ViewModel classes, and
+`*.ViewModels` is a plain classlib with no WPF reference — so the ViewModel
+must NOT call `Application.Current.Dispatcher` directly. Inject a one-method
+abstraction instead:
+
+### {ViewModels}/IUiDispatcher.cs
+
+```csharp
+namespace {Namespace}.ViewModels;
+
+public interface IUiDispatcher
+{
+    void Invoke(Action action);
+}
+```
+
+### {Project}/Services/WpfUiDispatcher.cs
+
+```csharp
+namespace {Namespace}.Services;
+
+public sealed class WpfUiDispatcher : IUiDispatcher
+{
+    public void Invoke(Action action) => Application.Current.Dispatcher.Invoke(action);
+}
+```
+
+### {ViewModels}/ChatViewModel.cs
 
 ```csharp
 namespace {Namespace}.ViewModels;
@@ -160,6 +249,7 @@ namespace {Namespace}.ViewModels;
 public sealed partial class ChatViewModel : ObservableObject
 {
     private readonly ChatOrchestrator _orchestrator;
+    private readonly IUiDispatcher _dispatcher;
     private readonly List<ChatMessage> _history = [];
     private CancellationTokenSource? _cts;
     private ChatTurnViewModel? _current;
@@ -173,7 +263,11 @@ public sealed partial class ChatViewModel : ObservableObject
     [NotifyCanExecuteChangedFor(nameof(StopCommand))]
     [ObservableProperty] private bool _isStreaming;
 
-    public ChatViewModel(ChatOrchestrator orchestrator) => _orchestrator = orchestrator;
+    public ChatViewModel(ChatOrchestrator orchestrator, IUiDispatcher dispatcher)
+    {
+        _orchestrator = orchestrator;
+        _dispatcher = dispatcher;
+    }
 
     private bool CanSend() => !IsStreaming && !string.IsNullOrWhiteSpace(Input);
 
@@ -195,7 +289,7 @@ public sealed partial class ChatViewModel : ObservableObject
         {
             await foreach (ChatEvent ev in _orchestrator.SendAsync(_history, _cts.Token))
             {
-                Application.Current.Dispatcher.Invoke(() => Apply(ev)); // marshal before touching bound state
+                _dispatcher.Invoke(() => Apply(ev)); // marshal before touching bound state
             }
             _history.Add(new ChatMessage(ChatRole.Assistant, _current.Markdown));
         }
@@ -226,12 +320,11 @@ public sealed partial class ChatViewModel : ObservableObject
 }
 ```
 
-> ViewModels reference `ChatMessage`/`ChatRole` from `Microsoft.Extensions.AI`
-> and `ChatEvent`/`ChatOrchestrator` from the app's `Services` namespace. Add a
-> `ProjectReference` from `{ViewModels}` to whichever project owns `ChatOrchestrator`,
-> or place the orchestrator + events in `{ViewModels}`. `Application.Current.Dispatcher`
-> is the one allowed `System.Windows` touch here; if strict MVVM purity is required,
-> inject an `IDispatcher` abstraction instead.
+> `ChatMessage`/`ChatRole` come from `Microsoft.Extensions.AI` (installed in
+> `{ViewModels}` in step 1); `ChatOrchestrator`/`ChatEvent` live in the same
+> project (step 2 placement), so no extra `ProjectReference` is needed and the
+> ViewModel stays free of `System.Windows` — the Dispatcher is reached only
+> through `IUiDispatcher`, implemented WPF-side by `WpfUiDispatcher`.
 
 ## 6. Views/ChatView.xaml
 
@@ -242,7 +335,6 @@ public sealed partial class ChatViewModel : ObservableObject
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:behaviors="clr-namespace:{Namespace}.Behaviors"
              xmlns:controls="clr-namespace:{Namespace}.Controls"
              xmlns:vm="clr-namespace:{Namespace}.ViewModels;assembly={ViewModels}"
@@ -265,16 +357,16 @@ public sealed partial class ChatViewModel : ObservableObject
                         <Border Padding="10" CornerRadius="6">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <!-- DEFAULT = ASSISTANT: left, card background, right gutter -->
+                                    <!-- DEFAULT = ASSISTANT: left, neutral background, right gutter -->
                                     <Setter Property="HorizontalAlignment" Value="Left"/>
                                     <Setter Property="Margin" Value="0,4,48,0"/>
-                                    <Setter Property="Background" Value="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                                    <Setter Property="Background" Value="#FFF0F0F0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsUser}" Value="True">
-                                            <!-- USER: right, accent background, left gutter -->
+                                            <!-- USER: right, tinted background, left gutter -->
                                             <Setter Property="HorizontalAlignment" Value="Right"/>
                                             <Setter Property="Margin" Value="48,4,0,0"/>
-                                            <Setter Property="Background" Value="{ui:ThemeResource SystemAccentColorPrimaryBrush}"/>
+                                            <Setter Property="Background" Value="#FFD6E8FF"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -315,9 +407,12 @@ public partial class ChatView : UserControl
 }
 ```
 
-> The `ui:ThemeResource` brushes require WPF-UI (`Wpf.Ui`); for stock WPF, swap
-> them per `make-wpf-chat-bubble-template`. An invalid theme-resource key throws
-> at render time, not at build.
+> The default uses stock-WPF brushes so the view builds with no UI-kit package.
+> If (and only if) the app already references WPF-UI (`Wpf.Ui`), you may swap
+> the two `Background` Setters for the `{ui:ThemeResource ...}` variant in
+> `make-wpf-chat-bubble-template` — adding `xmlns:ui` without the package is an
+> MC3074 build error, and an invalid theme-resource key throws at render time,
+> not at build.
 
 ## 7. Wire DI + Mappings.xaml (ViewModel First)
 
@@ -327,6 +422,7 @@ HttpClient pool), and the default settings use `Provider.Mock` so it runs keyles
 ```csharp
 // Shared HttpClient pool — singleton is part of the pattern's correctness.
 services.AddSingleton<IChatClientFactory, ChatClientFactory>();
+services.AddSingleton<IUiDispatcher, WpfUiDispatcher>();
 
 services.AddSingleton(sp =>
 {
@@ -375,16 +471,23 @@ Show the chat by assigning the shell's `CurrentViewModel`:
 ├── Controls/
 │   └── MarkdownPresenter.cs
 ├── Services/
-│   ├── ChatClientFactory.cs   IChatClientFactory.cs   ChatSettings.cs   Provider.cs
+│   ├── ChatClientFactory.cs
 │   ├── MockChatClient.cs
-│   ├── ChatOrchestrator.cs    ChatEvent.cs            McpToolService.cs
+│   └── WpfUiDispatcher.cs
 ├── Views/
 │   ├── ChatView.xaml
 │   └── ChatView.xaml.cs
 └── Mappings.xaml              (+1 DataTemplate)
-{ViewModels} (*.ViewModels)/
+{ViewModels} (*.ViewModels)/    ← WPF-free: namespace {Namespace}.ViewModels
 ├── ChatViewModel.cs
-└── ChatTurnViewModel.cs
+├── ChatTurnViewModel.cs
+├── IUiDispatcher.cs
+├── ChatOrchestrator.cs
+├── ChatEvent.cs
+├── McpToolService.cs
+├── IChatClientFactory.cs
+├── ChatSettings.cs
+└── Provider.cs
 ```
 
 ## Related

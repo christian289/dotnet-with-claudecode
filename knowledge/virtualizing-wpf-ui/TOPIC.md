@@ -123,10 +123,13 @@ Guidance:
   is realized.
 - **Mind the tension with pin-to-bottom auto-scroll.** A streaming chat usually
   pins the view to the newest content with a stick-to-bottom `ScrollViewer`
-  behavior. But `CanContentScroll="True"` switches the host to *item-based*
-  scrolling, so `VerticalOffset` / `ScrollableHeight` are measured in item
-  units rather than pixels — which changes how "the user is at the bottom" is
-  computed. Reconcile the auto-scroll math with the scroll unit you enable here.
+  behavior. `CanContentScroll="True"` hands scrolling to the items panel, and
+  the unit of `VerticalOffset` / `ScrollableHeight` then depends on
+  `VirtualizingPanel.ScrollUnit`: with `Item` (the WPF default) they are
+  measured in item units, while with the `Pixel` setting recommended in Quick
+  Setup above they stay pixel-based. Either way the extent now changes as
+  containers realize/virtualize — reconcile the auto-scroll "am I at the
+  bottom" math with the scroll unit you enable here.
 
 ### Related topics
 

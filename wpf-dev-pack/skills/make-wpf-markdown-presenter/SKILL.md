@@ -28,7 +28,7 @@ Generate a `$0` control: a `ContentControl` with a bindable `Markdown` dependenc
 ## Required Packages
 
 ```xml
-<PackageReference Include="Markdig" Version="0.37.*" />
+<PackageReference Include="Markdig" Version="1.*" />
 ```
 
 - **Markdig** is required (markdown parsing). Verify the current version and the
