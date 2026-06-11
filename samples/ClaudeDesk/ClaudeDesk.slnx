@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ClaudeDesk.Abstractions/ClaudeDesk.Abstractions.csproj" />
+    <Project Path="src/ClaudeDesk.Core/ClaudeDesk.Core.csproj" />
+    <Project Path="src/ClaudeDesk.UI/ClaudeDesk.UI.csproj" />
+    <Project Path="src/ClaudeDesk.ViewModels/ClaudeDesk.ViewModels.csproj" />
+    <Project Path="src/ClaudeDesk.WpfApp/ClaudeDesk.WpfApp.csproj" />
+    <Project Path="src/ClaudeDesk.WpfServices/ClaudeDesk.WpfServices.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ClaudeDesk.Core.Tests/ClaudeDesk.Core.Tests.csproj" />
+    <Project Path="tests/ClaudeDesk.UiTests/ClaudeDesk.UiTests.csproj" />
+    <Project Path="tests/ClaudeDesk.ViewModels.Tests/ClaudeDesk.ViewModels.Tests.csproj" />
+  </Folder>
+</Solution>

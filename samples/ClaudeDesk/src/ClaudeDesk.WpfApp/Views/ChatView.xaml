@@ -1,0 +1,82 @@
+﻿<UserControl
+    x:Class="ClaudeDesk.Views.ChatView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:ClaudeDesk.Behaviors"
+    xmlns:controls="clr-namespace:ClaudeDesk.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ClaudeDesk.ViewModels;assembly=ClaudeDesk.ViewModels"
+    d:DataContext="{d:DesignInstance Type=vm:ChatViewModel}"
+    mc:Ignorable="d">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Conversation: pin-to-bottom unless the user scrolled up  -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <b:Interaction.Behaviors>
+                <behaviors:StickToBottomBehavior />
+            </b:Interaction.Behaviors>
+            <ItemsControl ItemsSource="{Binding Turns}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vm:ChatTurnViewModel}">
+                        <Border Padding="10" CornerRadius="6">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <!--  DEFAULT = ASSISTANT: left, neutral background, right gutter  -->
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                    <Setter Property="Margin" Value="0,4,48,0" />
+                                    <Setter Property="Background" Value="#FFF0F0F0" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsUser}" Value="True">
+                                            <!--  USER: right, tinted background, left gutter  -->
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                            <Setter Property="Margin" Value="48,4,0,0" />
+                                            <Setter Property="Background" Value="#FFD6E8FF" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <controls:MarkdownPresenter Markdown="{Binding Markdown}" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!--  Input: Enter=send, Shift+Enter=newline  -->
+        <Grid Grid.Row="1" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Grid.Column="0"
+                AcceptsReturn="True"
+                AutomationProperties.AutomationId="ChatInput"
+                MaxLines="4"
+                Text="{Binding Input, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <b:Interaction.Behaviors>
+                    <behaviors:EnterCommandBehavior Command="{Binding SendCommand}" />
+                </b:Interaction.Behaviors>
+            </TextBox>
+            <Button
+                Grid.Column="1"
+                Margin="6,0,0,0"
+                AutomationProperties.AutomationId="SendButton"
+                Command="{Binding SendCommand}"
+                Content="Send" />
+            <Button
+                Grid.Column="2"
+                Margin="6,0,0,0"
+                AutomationProperties.AutomationId="StopButton"
+                Command="{Binding StopCommand}"
+                Content="Stop" />
+        </Grid>
+    </Grid>
+</UserControl>
