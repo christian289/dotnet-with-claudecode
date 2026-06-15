@@ -20,6 +20,9 @@ Only command skills remain under `skills/` and are slash-invocable:
 | `feedback` (maintainer) | `collecting-wpf-dev-pack-feedback` |
 | `language` | `configuring-wpf-dev-pack-language` |
 | `repo path`, MCP unconfigured | `set-repo-path` |
+| `repo branch`, knowledge branch | `set-repo-branch` |
+| `managed flag`, stop MCP git reset | `set-repo-managed` |
+| `show config`, MCP state/path/branch | `show-wpf-dev-pack-config` |
 
 To add a knowledge topic: create `knowledge/<id>/TOPIC.md`
 (NO frontmatter — first `# H1` is the title; put a one-line `> summary`

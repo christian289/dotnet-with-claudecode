@@ -10,6 +10,7 @@ Event hooks that run automatically during Claude Code operations.
 |------|---------|-------------|
 | **DotnetVersionChecker** | SessionStart | Verifies .NET SDK 10.0.300+ is installed (required by all hooks, which are C# file-based apps). Emits a high-visibility red warning with the install/update URL if missing or too old. Caches per day to avoid spam. |
 | **LanguagePreferenceLoader** | SessionStart | Reads `.claude/wpf-dev-pack.local.md` at session start; if a `language:` field is present, emits a directive into the system context so Claude responds in that language for the rest of the session. |
+| **WpfAuthoringRulesLoader** | SessionStart | Injects an always-on, enforced rule set for authoring WPF ControlTemplates / Styles / animations (required `PART_` names per stock control, animation safety, Setter-on-Freezable → MC4111, `StaticResource` forward-reference, the `(UIElement.Children)[n]` path trap, runtime verification). Plugin `.claude/rules` are not auto-loaded for installed users, so these ship as a hook. Full detail in the `animating-wpf-controltemplates` MCP topic. |
 | **HandMirrorReminder** | PreToolUse (context7 / Microsoft Learn) | When a .NET/NuGet documentation lookup runs, reminds the agent to verify exact namespaces/signatures with HandMirrorMcp before writing code. |
 | **RepoPathGuard** | PreToolUse (WpfDevPackMcp) | Blocks `WpfDevPackMcp` tool calls when the knowledge repo path is unconfigured, instructing the user to run `/wpf-dev-pack:set-repo-path`. |
 | **McpDependencyChecker** | UserPromptSubmit | Checks for required MCP servers (context7, serena, microsoft-learn, csharp-lsp) once per session and warns if any are missing. |
@@ -26,6 +27,7 @@ Event hooks that run automatically during Claude Code operations.
 | `hooks.json` | Hook configuration and triggers |
 | `DotnetVersionChecker.cs` | .NET SDK 10.0.300+ presence/version check (SessionStart) |
 | `LanguagePreferenceLoader.cs` | Per-project language preference loader (SessionStart) |
+| `WpfAuthoringRulesLoader.cs` | Injects enforced WPF ControlTemplate/Style/animation authoring rules (SessionStart) |
 | `HandMirrorReminder.cs` | Reminder to verify .NET APIs with HandMirrorMcp (PreToolUse) |
 | `RepoPathGuard.cs` | Blocks `WpfDevPackMcp` calls until the knowledge repo path is set (PreToolUse) |
 | `McpDependencyChecker.cs` | Required-MCP availability check (UserPromptSubmit) |

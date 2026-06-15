@@ -418,6 +418,7 @@ After generation, provide:
 Fetch with `WpfDevPackMcp get_wpf_topic`:
 
 - `authoring-wpf-controls` — §3.4 Visual State Naming Contract, §4 Multi-Constraint Coerce Ordering, §3.1 Template-Part tolerance
+- `animating-wpf-controltemplates` — the `<Storyboard>` bodies + `VisualStateGroup.Transitions` that fill the VisualStates above; ambient loops; the Setter-on-Freezable (MC4111), inline-animated-brush, and StaticResource-forward-reference pitfalls; verify-at-runtime harness
 - `containing-control-decorative-overflow` — when focus ring / hover glow gets clipped at an ancestor boundary
 - `managing-styles-resourcedictionary` — Generic.xaml hub pattern
 - `managing-literal-strings` — consolidating literal strings (VSM names are a notable WPF-specific case)

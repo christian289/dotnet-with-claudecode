@@ -10,6 +10,7 @@ Claude Code 작업 중 자동으로 실행되는 이벤트 훅입니다.
 |----|--------|------|
 | **DotnetVersionChecker** | SessionStart | 모든 훅이 C# file-based app으로 작동하기 때문에 필수인 .NET SDK 10.0.300 이상 설치 여부를 검증. 누락/미달 시 설치·업데이트 URL과 함께 빨간색 경고 출력. 하루 1회 캐싱. |
 | **LanguagePreferenceLoader** | SessionStart | 세션 시작 시 `.claude/wpf-dev-pack.local.md`를 읽어 `language:` 필드가 있으면 시스템 컨텍스트에 응답 언어 지시문을 주입. 해당 세션 동안 Claude가 그 언어로 응답하도록 유도. |
+| **WpfAuthoringRulesLoader** | SessionStart | WPF ControlTemplate / Style / 애니메이션 작성에 항상 적용되는 강제 규칙(스톡 컨트롤별 필수 `PART_` 이름, 애니메이션 안전 규칙, Setter의 Freezable 대상 → MC4111, `StaticResource` 전방 참조, `(UIElement.Children)[n]` 경로 함정, 런타임 검증)을 세션 컨텍스트에 주입. 플러그인 `.claude/rules`는 설치 사용자에게 자동 로드되지 않으므로 훅으로 제공. 상세는 `animating-wpf-controltemplates` MCP 토픽. |
 | **HandMirrorReminder** | PreToolUse (context7 / Microsoft Learn) | .NET/NuGet 문서 조회 시, 코드 작성 전 HandMirrorMcp로 정확한 namespace/시그니처를 검증하도록 에이전트에게 상기. |
 | **RepoPathGuard** | PreToolUse (WpfDevPackMcp) | 지식 레포 경로가 미설정이면 `WpfDevPackMcp` 도구 호출을 차단하고 `/wpf-dev-pack:set-repo-path` 실행을 안내. |
 | **McpDependencyChecker** | UserPromptSubmit | 필수 MCP 서버(context7, serena, microsoft-learn, csharp-lsp)를 세션당 1회 확인하고 누락 시 경고. |
@@ -26,6 +27,7 @@ Claude Code 작업 중 자동으로 실행되는 이벤트 훅입니다.
 | `hooks.json` | 훅 설정 및 트리거 |
 | `DotnetVersionChecker.cs` | .NET SDK 10.0.300 이상 설치/버전 검증 (SessionStart) |
 | `LanguagePreferenceLoader.cs` | 프로젝트별 응답 언어 환경설정 로더 (SessionStart) |
+| `WpfAuthoringRulesLoader.cs` | WPF ControlTemplate/Style/애니메이션 작성 강제 규칙 주입 (SessionStart) |
 | `HandMirrorReminder.cs` | .NET API를 HandMirrorMcp로 검증하도록 상기 (PreToolUse) |
 | `RepoPathGuard.cs` | 지식 레포 경로 설정 전까지 `WpfDevPackMcp` 호출 차단 (PreToolUse) |
 | `McpDependencyChecker.cs` | 필수 MCP 가용성 확인 (UserPromptSubmit) |
