@@ -1,0 +1,182 @@
+﻿<Window
+    x:Class="ThemeGallery.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="WPF Theme Gallery"
+    Width="1100"
+    Height="780"
+    Background="{DynamicResource ThemeWindowBackgroundBrush}">
+    <Window.Resources>
+        <Style x:Key="SectionHeader" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,18,0,8" />
+        </Style>
+        <Style x:Key="BodyText" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Theme picker (itself themed by the active dictionary)  -->
+        <DockPanel Grid.Column="0" Margin="12">
+            <TextBlock
+                Margin="0,0,0,8"
+                DockPanel.Dock="Top"
+                Style="{StaticResource SectionHeader}"
+                Text="Themes" />
+            <ListBox
+                AutomationProperties.AutomationId="ThemeList"
+                ItemsSource="{Binding Themes}"
+                SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" />
+        </DockPanel>
+
+        <!--  Control showcase  -->
+        <ScrollViewer
+            Grid.Column="1"
+            Padding="20,0,20,20"
+            AutomationProperties.AutomationId="ShowcaseScroll"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="760" HorizontalAlignment="Left">
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="Button / ToggleButton" />
+                <WrapPanel>
+                    <Button
+                        Margin="0,0,12,0"
+                        AutomationProperties.AutomationId="DemoButton"
+                        Content="Click me" />
+                    <Button
+                        Margin="0,0,12,0"
+                        Content="Disabled"
+                        IsEnabled="False" />
+                    <ToggleButton AutomationProperties.AutomationId="DemoToggle" Content="Toggle me" />
+                </WrapPanel>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="CheckBox / RadioButton" />
+                <WrapPanel>
+                    <CheckBox
+                        Margin="0,0,16,0"
+                        AutomationProperties.AutomationId="DemoCheck"
+                        Content="Option A"
+                        IsChecked="True" />
+                    <CheckBox Margin="0,0,16,0" Content="Option B" />
+                    <RadioButton
+                        Margin="0,0,16,0"
+                        Content="Red"
+                        GroupName="G1"
+                        IsChecked="True" />
+                    <RadioButton
+                        Margin="0,0,16,0"
+                        Content="Green"
+                        GroupName="G1" />
+                    <RadioButton Content="Blue" GroupName="G1" />
+                </WrapPanel>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="TextBox" />
+                <WrapPanel>
+                    <TextBox
+                        Width="240"
+                        Margin="0,0,12,0"
+                        AutomationProperties.AutomationId="DemoTextBox"
+                        Text="Edit me" />
+                    <TextBox
+                        Width="180"
+                        IsEnabled="False"
+                        Text="Disabled" />
+                </WrapPanel>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="ComboBox" />
+                <ComboBox
+                    Width="240"
+                    HorizontalAlignment="Left"
+                    AutomationProperties.AutomationId="DemoCombo"
+                    SelectedIndex="0">
+                    <ComboBoxItem Content="Mercury" />
+                    <ComboBoxItem Content="Venus" />
+                    <ComboBoxItem Content="Earth" />
+                    <ComboBoxItem Content="Mars" />
+                </ComboBox>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="Slider / ProgressBar" />
+                <StackPanel>
+                    <Slider
+                        Width="320"
+                        HorizontalAlignment="Left"
+                        AutomationProperties.AutomationId="DemoSlider"
+                        Maximum="100"
+                        Value="40" />
+                    <ProgressBar
+                        Width="320"
+                        Height="18"
+                        Margin="0,14,0,0"
+                        HorizontalAlignment="Left"
+                        AutomationProperties.AutomationId="DemoProgress"
+                        Maximum="100"
+                        Value="65" />
+                    <ProgressBar
+                        Width="320"
+                        Height="18"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        IsIndeterminate="True" />
+                </StackPanel>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="TabControl" />
+                <TabControl Height="130" AutomationProperties.AutomationId="DemoTabs">
+                    <TabItem Header="Overview">
+                        <TextBlock
+                            Margin="10"
+                            Style="{StaticResource BodyText}"
+                            Text="First tab content." />
+                    </TabItem>
+                    <TabItem Header="Details">
+                        <TextBlock
+                            Margin="10"
+                            Style="{StaticResource BodyText}"
+                            Text="Second tab content." />
+                    </TabItem>
+                    <TabItem Header="About">
+                        <TextBlock
+                            Margin="10"
+                            Style="{StaticResource BodyText}"
+                            Text="Third tab content." />
+                    </TabItem>
+                </TabControl>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="ListBox" />
+                <ListBox
+                    Width="320"
+                    HorizontalAlignment="Left"
+                    AutomationProperties.AutomationId="DemoList"
+                    SelectedIndex="1">
+                    <ListBoxItem Content="Alpha" />
+                    <ListBoxItem Content="Beta" />
+                    <ListBoxItem Content="Gamma" />
+                    <ListBoxItem Content="Delta" />
+                    <ListBoxItem Content="Epsilon" />
+                </ListBox>
+
+                <TextBlock Style="{StaticResource SectionHeader}" Text="Expander" />
+                <Expander
+                    Width="420"
+                    HorizontalAlignment="Left"
+                    AutomationProperties.AutomationId="DemoExpander"
+                    Header="More information"
+                    IsExpanded="True">
+                    <TextBlock
+                        Margin="10"
+                        Style="{StaticResource BodyText}"
+                        Text="Expanded content goes here. Collapse and expand to see the theme's animation."
+                        TextWrapping="Wrap" />
+                </Expander>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

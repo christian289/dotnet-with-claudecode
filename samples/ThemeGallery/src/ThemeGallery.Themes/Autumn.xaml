@@ -1,0 +1,2295 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ============================================================  -->
+    <!--  AUTUMN — late-afternoon amber, pressed-leaf buttons,  -->
+    <!--  falling maple leaves, conker thumbs, harvest baskets.  -->
+    <!--  ============================================================  -->
+
+    <!--  1. Shell brushes (consumed by the gallery window)  -->
+    <LinearGradientBrush x:Key="ThemeWindowBackgroundBrush" StartPoint="0,0" EndPoint="0.15,1">
+        <GradientStop Offset="0.0" Color="#E8A33D" />
+        <GradientStop Offset="0.42" Color="#B4541E" />
+        <GradientStop Offset="0.78" Color="#4A2511" />
+        <GradientStop Offset="1.0" Color="#2E1708" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ThemeTextBrush" Color="#F5E9D3" />
+    <SolidColorBrush x:Key="ThemeSubtleTextBrush" Color="#C9A878" />
+    <SolidColorBrush x:Key="ThemeAccentBrush" Color="#C0392B" />
+    <SolidColorBrush x:Key="ThemeCardBrush" Color="#5A3318" />
+    <SolidColorBrush x:Key="ThemeBorderBrush" Color="#8A5A2B" />
+
+    <!--  2. Shared (never animated) geometry + texture resources  -->
+    <Geometry x:Key="AutumnLeafGeometry">M8,0 L9.5,4.5 L13.5,2.5 L12,6.5 L16,7.5 L12.5,9.5 L14.5,13 L10.5,11.5 L8,16 L5.5,11.5 L1.5,13 L3.5,9.5 L0,7.5 L4,6.5 L2.5,2.5 L6.5,4.5 Z</Geometry>
+    <Geometry x:Key="AutumnAcornCapGeometry">M2.5,9.5 Q8,2 13.5,9.5 L12.4,11 L3.6,11 Z</Geometry>
+
+    <!--  Tiny leaf flecks tiled along the slider branch  -->
+    <DrawingBrush
+        x:Key="AutumnFleckBrush"
+        Stretch="None"
+        TileMode="Tile"
+        Viewport="0,0,28,8"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#D2691E">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry
+                            Center="6,3"
+                            RadiusX="2.2"
+                            RadiusY="1.3" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#E5A33B">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry
+                            Center="18,5"
+                            RadiusX="1.8"
+                            RadiusY="1.1" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--  Basket weave hint for the ComboBox dropdown  -->
+    <DrawingBrush
+        x:Key="AutumnWeaveBrush"
+        Stretch="None"
+        TileMode="Tile"
+        Viewport="0,0,10,10"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Geometry="M0,0 L10,10 M10,0 L0,10">
+                <GeometryDrawing.Pen>
+                    <Pen Brush="#F5E9D3" Thickness="0.8" />
+                </GeometryDrawing.Pen>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--  Sun-through-leaves dapple for ListBoxItem hover  -->
+    <DrawingBrush
+        x:Key="AutumnDappleBrush"
+        Stretch="None"
+        TileMode="Tile"
+        Viewport="0,0,46,20"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#E5A33B">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry
+                            Center="9,6"
+                            RadiusX="6"
+                            RadiusY="4" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#E8C06A">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry
+                            Center="30,13"
+                            RadiusX="7"
+                            RadiusY="4.5" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#D2691E">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry
+                            Center="42,4"
+                            RadiusX="4"
+                            RadiusY="3" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--  3. Focus visual (keyboard focus cue)  -->
+    <Style x:Key="AutumnFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="-3"
+                        RadiusX="6"
+                        RadiusY="6"
+                        SnapsToDevicePixels="True"
+                        Stroke="#E8A33D"
+                        StrokeDashArray="1.5 1.5"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  4. Transparent RepeatButton for Slider / ScrollBar tracks  -->
+    <Style x:Key="AutumnTransparentRepeat" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  5. Conker (chestnut) Slider thumb  -->
+    <Style x:Key="AutumnConkerThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="True">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="ConkerScale" ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Ellipse
+                            x:Name="ConkerBody"
+                            Stroke="#3E2410"
+                            StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush GradientOrigin="0.35,0.3">
+                                    <GradientStop Offset="0" Color="#B5652F" />
+                                    <GradientStop Offset="0.7" Color="#7A3E18" />
+                                    <GradientStop Offset="1" Color="#4A2511" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse
+                            x:Name="ConkerGloss"
+                            Width="7"
+                            Height="4.5"
+                            Margin="3.5,3.5,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Fill="#F5E9D3"
+                            Opacity="0.5">
+                            <Ellipse.RenderTransform>
+                                <TranslateTransform x:Name="GlossShift" X="0" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlossShift"
+                                            Storyboard.TargetProperty="X"
+                                            To="4"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1.12"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1.12"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ConkerBody"
+                                            Storyboard.TargetProperty="(Shape.Fill).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            To="#D2873B"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlossShift"
+                                            Storyboard.TargetProperty="X"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            Duration="0:0:0.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ConkerBody"
+                                            Storyboard.TargetProperty="(Shape.Fill).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0.92"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.92"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ConkerScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  6. Branch-segment ScrollBar thumb  -->
+    <Style x:Key="AutumnBranchThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        x:Name="BranchBd"
+                        Margin="2"
+                        BorderBrush="#3E2410"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <SolidColorBrush Color="#7A4A22" />
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BranchBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#A8632C"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BranchBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BranchBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#C9842F"
+                                            Duration="0:0:0.12">
+                                            <ColorAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BranchBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  7. Button — pressed-leaf card; hover = rustle, press = crunch  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        x:Name="Root"
+                        RenderTransformOrigin="0.5,0.5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform x:Name="BtnTilt" Angle="0" />
+                                <ScaleTransform x:Name="BtnScale" ScaleX="1" ScaleY="1" />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="BtnBg"
+                            BorderThickness="1.5"
+                            CornerRadius="8">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#8A5A2B" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#C77B2E" />
+                                    <GradientStop Offset="1" Color="#9C4F1B" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <!--  Leaf-vein hint  -->
+                        <Path
+                            Margin="8,5"
+                            Data="M2,18 L38,4 M12,15 L17,21 M20,11 L26,17 M28,8 L33,13"
+                            IsHitTestVisible="False"
+                            Opacity="0.16"
+                            Stretch="Fill"
+                            Stroke="#F5E9D3"
+                            StrokeThickness="1" />
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  Hover: leaves rustle once + warm up  -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BtnTilt" Storyboard.TargetProperty="Angle">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="2.2">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.27" Value="-1.8">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.42" Value="0.9">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.55" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            To="#E89A3C"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            To="#C2651F"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#C9842F"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BtnTilt"
+                                            Storyboard.TargetProperty="Angle"
+                                            Duration="0:0:0.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BtnBg"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!--  Press: crunch  -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BtnScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0.93"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BtnScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.93"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BtnScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BtnScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  8. ToggleButton — leaf card that reddens when checked  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ToggleButton}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid
+                        x:Name="Root"
+                        RenderTransformOrigin="0.5,0.5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="TglScale" ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="TglBg"
+                            BorderThickness="1.5"
+                            CornerRadius="8">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#8A5A2B" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#7A4A22" />
+                            </Border.Background>
+                        </Border>
+                        <StackPanel
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Path
+                                x:Name="TglLeaf"
+                                Width="12"
+                                Height="12"
+                                Margin="0,0,6,0"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource AutumnLeafGeometry}"
+                                Fill="#E5A33B"
+                                Opacity="0"
+                                Stretch="Uniform" />
+                            <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TglBg"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#96591C"
+                                            Duration="0:0:0.22">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TglBg"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.28" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TglBg"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#B3402A"
+                                            Duration="0:0:0.3">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglLeaf"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TglBg"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TglLeaf"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  9. CheckBox — a maple leaf falls into the box when checked  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            x:Name="BoxBd"
+                            Width="19"
+                            Height="19"
+                            VerticalAlignment="Center"
+                            BorderThickness="1.5"
+                            ClipToBounds="True"
+                            CornerRadius="4">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#8A5A2B" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#3D1F0E" />
+                            </Border.Background>
+                            <Grid>
+                                <!--  Empty acorn cap (unchecked state)  -->
+                                <Path
+                                    x:Name="CapPath"
+                                    Width="12"
+                                    Height="8"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{StaticResource AutumnAcornCapGeometry}"
+                                    Fill="#8A5A2B"
+                                    Opacity="1"
+                                    Stretch="Uniform" />
+                                <!--  Maple leaf, parked above the box until checked  -->
+                                <Path
+                                    x:Name="LeafPath"
+                                    Width="13"
+                                    Height="13"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{StaticResource AutumnLeafGeometry}"
+                                    Fill="#C0392B"
+                                    Opacity="0"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Stretch="Uniform">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <RotateTransform x:Name="LeafSettleSpin" Angle="-70" />
+                                            <TranslateTransform x:Name="LeafFall" Y="-18" />
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BoxBd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#C9842F"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BoxBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#4E2A12"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BoxBd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BoxBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!--  Checked: leaf falls in from above, rotates, settles  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafFall"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-18"
+                                            To="0"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.55" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafSettleSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            From="-70"
+                                            To="0"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="CapPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafFall"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafSettleSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="LeafPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="CapPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  10. RadioButton — acorn drops in, glows harvest-gold  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid
+                            Width="19"
+                            Height="19"
+                            VerticalAlignment="Center">
+                            <!--  Bare twig circle  -->
+                            <Ellipse
+                                x:Name="TwigRing"
+                                StrokeDashArray="2.6 1.6"
+                                StrokeThickness="1.6">
+                                <Ellipse.Stroke>
+                                    <SolidColorBrush Color="#8A5A2B" />
+                                </Ellipse.Stroke>
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#2E1708" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <!--  Acorn dot  -->
+                            <Ellipse
+                                x:Name="AcornDot"
+                                Width="9"
+                                Height="9"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform x:Name="AcornDrop" Y="-10" />
+                                </Ellipse.RenderTransform>
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush GradientOrigin="0.35,0.3">
+                                        <GradientStop Offset="0" Color="#B5652F" />
+                                        <GradientStop Offset="1" Color="#5C2E14" />
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                                <Ellipse.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="9"
+                                        Opacity="0"
+                                        ShadowDepth="0"
+                                        Color="#E5A33B" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Grid>
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TwigRing"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            To="#C9842F"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TwigRing"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!--  Selected: acorn drops in + harvest-gold glow  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-10"
+                                            To="0"
+                                            Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.6" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.85"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="(Shape.Fill).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            To="#E5A33B"
+                                            Duration="0:0:0.45" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="AcornDot"
+                                            Storyboard.TargetProperty="(Shape.Fill).(RadialGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  11. TextBox — border warms from brown to amber on focus  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="SelectionBrush" Value="#66C0392B" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="Bd"
+                        BorderThickness="1.5"
+                        CornerRadius="6"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#6B3E1D" />
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="#361C0B" />
+                        </Border.Background>
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="8,5"
+                            VerticalAlignment="Center"
+                            Focusable="False" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#8A5526"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!--  Focus: brown warms to amber  -->
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#E8A33D"
+                                            Duration="0:0:0.35">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#42220C"
+                                            Duration="0:0:0.35" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  12. ComboBox — harvest-basket dropdown with settling leaf  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <ToggleButton
+                            x:Name="DropToggle"
+                            ClickMode="Press"
+                            Focusable="False"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsTabStop="False"
+                            Style="{x:Null}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border
+                                        x:Name="CbBd"
+                                        BorderThickness="1.5"
+                                        CornerRadius="7"
+                                        SnapsToDevicePixels="True">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="#8A5A2B" />
+                                        </Border.BorderBrush>
+                                        <Border.Background>
+                                            <SolidColorBrush Color="#5A3318" />
+                                        </Border.Background>
+                                        <Path
+                                            x:Name="CbLeaf"
+                                            Width="12"
+                                            Height="12"
+                                            Margin="0,0,10,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Data="{StaticResource AutumnLeafGeometry}"
+                                            Fill="#E5A33B"
+                                            RenderTransformOrigin="0.5,0.5"
+                                            Stretch="Uniform">
+                                            <Path.RenderTransform>
+                                                <RotateTransform x:Name="CbLeafSpin" Angle="0" />
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="CbBd"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="#6E3F1A"
+                                                            Duration="0:0:0.2">
+                                                            <ColorAnimation.EasingFunction>
+                                                                <SineEase EasingMode="EaseOut" />
+                                                            </ColorAnimation.EasingFunction>
+                                                        </ColorAnimation>
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="CbBd"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="#C9842F"
+                                                            Duration="0:0:0.2" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="CbBd"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            Duration="0:0:0.25" />
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="CbBd"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            Duration="0:0:0.25" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="CbLeafSpin"
+                                                            Storyboard.TargetProperty="Angle"
+                                                            To="140"
+                                                            Duration="0:0:0.3">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="CbLeafSpin"
+                                                            Storyboard.TargetProperty="Angle"
+                                                            Duration="0:0:0.25" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <ContentPresenter
+                            Margin="12,0,30,0"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            IsHitTestVisible="False" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            PopupAnimation="None">
+                            <Grid
+                                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                Margin="0,2,0,0">
+                                <Border
+                                    x:Name="BasketBd"
+                                    BorderThickness="1.5"
+                                    CornerRadius="4,4,12,12"
+                                    Opacity="0"
+                                    RenderTransformOrigin="0.5,0"
+                                    SnapsToDevicePixels="True">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform x:Name="BasketDrop" Y="-14" />
+                                    </Border.RenderTransform>
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="#3E2410" />
+                                    </Border.BorderBrush>
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#7A4A1F" />
+                                            <GradientStop Offset="1" Color="#4E2A12" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Grid>
+                                        <!--  Basket weave hint  -->
+                                        <Rectangle
+                                            Fill="{StaticResource AutumnWeaveBrush}"
+                                            IsHitTestVisible="False"
+                                            Opacity="0.12"
+                                            RadiusX="10"
+                                            RadiusY="10" />
+                                        <ScrollViewer Margin="3,6,3,6" VerticalScrollBarVisibility="Auto">
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                        <!--  The leaf that settles on top of the basket  -->
+                                        <Path
+                                            x:Name="BasketLeaf"
+                                            Width="14"
+                                            Height="14"
+                                            Margin="0,-4,12,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Data="{StaticResource AutumnLeafGeometry}"
+                                            Fill="#C0392B"
+                                            IsHitTestVisible="False"
+                                            Opacity="0"
+                                            RenderTransformOrigin="0.5,0.5"
+                                            Stretch="Uniform">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform x:Name="BasketLeafTilt" Angle="-30" />
+                                                    <TranslateTransform x:Name="BasketLeafDrop" Y="-12" />
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  Open: basket drops down, leaf settles on top  -->
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-14"
+                                            To="0"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketBd"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.1"
+                                            Storyboard.TargetName="BasketLeafDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-12"
+                                            To="0"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.1"
+                                            Storyboard.TargetName="BasketLeafTilt"
+                                            Storyboard.TargetProperty="Angle"
+                                            From="-30"
+                                            To="0"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.1"
+                                            Storyboard.TargetName="BasketLeaf"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketBd"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketLeafDrop"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketLeafTilt"
+                                            Storyboard.TargetProperty="Angle"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasketLeaf"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ComboBoxItem — warm highlight in the basket  -->
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border
+                        x:Name="ItemBd"
+                        Margin="3,1"
+                        Padding="9,5"
+                        CornerRadius="6"
+                        SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <SolidColorBrush Color="#00E8A33D" />
+                        </Border.Background>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#55E8A33D"
+                                            Duration="0:0:0.18">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#88C0392B"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ItemBd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  13. Slider — branch track, conker thumb  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <!--  Branch losing leaves  -->
+                        <Border
+                            Height="6"
+                            VerticalAlignment="Center"
+                            BorderBrush="#3E2410"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#6B3E1D" />
+                                    <GradientStop Offset="1" Color="#4A2511" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Rectangle
+                            Height="8"
+                            Margin="4,0"
+                            VerticalAlignment="Center"
+                            Fill="{StaticResource AutumnFleckBrush}"
+                            IsHitTestVisible="False"
+                            Opacity="0.75" />
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource AutumnTransparentRepeat}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource AutumnTransparentRepeat}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource AutumnConkerThumb}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  14. ProgressBar — leaf-pile fill + tumbling-leaf ambient  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid
+                        x:Name="Root"
+                        ClipToBounds="True"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border
+                            x:Name="PART_Track"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#8A5A2B" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#3D1F0E" />
+                            </Border.Background>
+                        </Border>
+                        <!--  Accumulating leaf pile  -->
+                        <Border
+                            x:Name="PART_Indicator"
+                            HorizontalAlignment="Left"
+                            ClipToBounds="True"
+                            CornerRadius="8">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Offset="0" Color="#8E2C1E" />
+                                    <GradientStop Offset="0.45" Color="#C0392B" />
+                                    <GradientStop Offset="0.75" Color="#D2691E" />
+                                    <GradientStop Offset="1" Color="#E5A33B" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <!--  Ambient: drifting sheen across the pile  -->
+                            <Rectangle
+                                x:Name="PileSheen"
+                                Width="46"
+                                HorizontalAlignment="Left"
+                                IsHitTestVisible="False"
+                                Opacity="0.4">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="#00F5E9D3" />
+                                        <GradientStop Offset="0.5" Color="#7DF5E9D3" />
+                                        <GradientStop Offset="1" Color="#00F5E9D3" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform X="-50" />
+                                </Rectangle.RenderTransform>
+                                <Rectangle.Triggers>
+                                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    RepeatBehavior="Forever"
+                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                    From="-50"
+                                                    To="360"
+                                                    Duration="0:0:2.6" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Rectangle.Triggers>
+                            </Rectangle>
+                        </Border>
+                        <!--  Signature ambient: single leaf tumbling end to end  -->
+                        <Path
+                            x:Name="TumbleLeaf"
+                            Width="14"
+                            Height="14"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Data="{StaticResource AutumnLeafGeometry}"
+                            Fill="#E5A33B"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            RenderTransformOrigin="0.5,0.5"
+                            Stretch="Uniform">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform x:Name="LeafSpin" Angle="0" />
+                                    <TranslateTransform x:Name="LeafDrift" X="-18" />
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="TumbleSb">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TumbleLeaf"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="LeafDrift"
+                                            Storyboard.TargetProperty="X"
+                                            From="-18"
+                                            To="330"
+                                            Duration="0:0:2.8">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="LeafSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            From="0"
+                                            To="360"
+                                            Duration="0:0:1.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="TumbleSb" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  15. ScrollBar — branch segment thumb, both orientations  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Border
+                            Background="#332E1708"
+                            BorderBrush="#33000000"
+                            BorderThickness="1"
+                            CornerRadius="6" />
+                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource AutumnTransparentRepeat}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource AutumnTransparentRepeat}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource AutumnBranchThumb}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid SnapsToDevicePixels="True">
+                                <Border
+                                    Background="#332E1708"
+                                    BorderBrush="#33000000"
+                                    BorderThickness="1"
+                                    CornerRadius="6" />
+                                <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource AutumnTransparentRepeat}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource AutumnTransparentRepeat}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource AutumnBranchThumb}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.45" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  16. TabControl + TabItem — golden leaf bookmark  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TabPanel
+                            Grid.Row="0"
+                            Margin="0,0,0,-1"
+                            Panel.ZIndex="1"
+                            IsItemsHost="True" />
+                        <Border
+                            Grid.Row="1"
+                            Padding="6"
+                            Background="{StaticResource ThemeCardBrush}"
+                            BorderBrush="{StaticResource ThemeBorderBrush}"
+                            BorderThickness="1.5"
+                            CornerRadius="0,8,8,8">
+                            <ContentPresenter ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid x:Name="Root" Margin="0,0,4,0">
+                        <Border
+                            x:Name="HeaderBd"
+                            Padding="14,7"
+                            BorderThickness="1.5,1.5,1.5,0"
+                            ClipToBounds="True"
+                            CornerRadius="8,8,0,0"
+                            SnapsToDevicePixels="True">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#8A5A2B" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#553014" />
+                            </Border.Background>
+                            <Grid>
+                                <!--  Golden leaf bookmark slides up behind the header  -->
+                                <Path
+                                    x:Name="Bookmark"
+                                    Width="17"
+                                    Height="17"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{StaticResource AutumnLeafGeometry}"
+                                    Fill="#E5A33B"
+                                    IsHitTestVisible="False"
+                                    Opacity="0"
+                                    Stretch="Uniform">
+                                    <Path.RenderTransform>
+                                        <TranslateTransform x:Name="BookmarkRise" Y="20" />
+                                    </Path.RenderTransform>
+                                </Path>
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ContentSource="Header"
+                                    RecognizesAccessKey="True" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="HeaderBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#6E3F1A"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="HeaderBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="2" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BookmarkRise"
+                                            Storyboard.TargetProperty="Y"
+                                            From="20"
+                                            To="0"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Bookmark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.55"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="HeaderBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#7A4A1F"
+                                            Duration="0:0:0.3">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BookmarkRise"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Bookmark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="HeaderBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  17. ListBox + ListBoxItem — sun-dapple hover  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource ThemeCardBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ThemeBorderBrush}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border
+                        Padding="4"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1.5"
+                        CornerRadius="8"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <ScrollViewer Focusable="False">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource AutumnFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        x:Name="ItemBd"
+                        Margin="1"
+                        Padding="9,5"
+                        CornerRadius="6"
+                        SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <SolidColorBrush Color="#00E8A33D" />
+                        </Border.Background>
+                        <Grid>
+                            <!--  Sun-through-leaves dapple  -->
+                            <Rectangle
+                                x:Name="Dapple"
+                                Fill="{StaticResource AutumnDappleBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0"
+                                RadiusX="6"
+                                RadiusY="6" />
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Dapple"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.35"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#2EE8A33D"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Dapple"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#8CC0392B"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemBd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ItemBd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  18. Expander — leaf-flip arrow, content drifts down  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ToggleButton
+                            x:Name="HeaderSite"
+                            Grid.Row="0"
+                            Cursor="Hand"
+                            FocusVisualStyle="{StaticResource AutumnFocusVisual}"
+                            FontWeight="SemiBold"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{x:Null}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border
+                                        x:Name="ExpHeadBd"
+                                        Padding="10,7"
+                                        BorderThickness="1.5"
+                                        CornerRadius="8"
+                                        SnapsToDevicePixels="True">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="#8A5A2B" />
+                                        </Border.BorderBrush>
+                                        <Border.Background>
+                                            <SolidColorBrush Color="#5A3318" />
+                                        </Border.Background>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <!--  The leaf arrow: flips on expand, sways forever  -->
+                                            <Path
+                                                x:Name="FlipLeaf"
+                                                Width="14"
+                                                Height="14"
+                                                VerticalAlignment="Center"
+                                                Data="{StaticResource AutumnLeafGeometry}"
+                                                Fill="#E5A33B"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Stretch="Uniform">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform x:Name="LeafFlipScale" ScaleX="1" ScaleY="1" />
+                                                        <RotateTransform x:Name="LeafSway" Angle="0" />
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                                <Path.Triggers>
+                                                    <!--  Ambient: gentle perpetual sway (subtle loop)  -->
+                                                    <EventTrigger RoutedEvent="Path.Loaded">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation
+                                                                    AutoReverse="True"
+                                                                    RepeatBehavior="Forever"
+                                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                                                    From="-7"
+                                                                    To="7"
+                                                                    Duration="0:0:2.4">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <SineEase EasingMode="EaseInOut" />
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </Path.Triggers>
+                                            </Path>
+                                            <ContentPresenter
+                                                Grid.Column="1"
+                                                Margin="8,0,0,0"
+                                                VerticalAlignment="Center"
+                                                RecognizesAccessKey="True" />
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="ExpHeadBd"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="#6E3F1A"
+                                                            Duration="0:0:0.2">
+                                                            <ColorAnimation.EasingFunction>
+                                                                <SineEase EasingMode="EaseOut" />
+                                                            </ColorAnimation.EasingFunction>
+                                                        </ColorAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation
+                                                            Storyboard.TargetName="ExpHeadBd"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            Duration="0:0:0.25" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                        <!--  LEAF-FLIP on expand  -->
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="LeafFlipScale"
+                                                            Storyboard.TargetProperty="ScaleX"
+                                                            To="-1"
+                                                            Duration="0:0:0.35">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <CubicEase EasingMode="EaseInOut" />
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="LeafFlipScale"
+                                                            Storyboard.TargetProperty="ScaleX"
+                                                            Duration="0:0:0.3" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" />
+                        </ToggleButton>
+                        <!--  Content drifts down like a falling leaf  -->
+                        <ContentPresenter
+                            x:Name="ExpandSite"
+                            Grid.Row="1"
+                            Margin="6,8,6,0"
+                            Visibility="Collapsed">
+                            <ContentPresenter.RenderTransform>
+                                <TranslateTransform x:Name="ExpDrift" Y="0" />
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ExpDrift"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-12"
+                                            To="0"
+                                            Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ExpandSite"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ExpDrift"
+                                            Storyboard.TargetProperty="Y"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ExpandSite"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
