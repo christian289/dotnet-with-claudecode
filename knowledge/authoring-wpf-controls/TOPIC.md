@@ -208,6 +208,12 @@ public partial class ColormapRangeSliderThumb
 > notable WPF-specific case where the XAML half is forced to remain a
 > literal.
 
+> The `<VisualState>`s above are intentionally empty — they declare the state
+> *names* only. For the `<Storyboard>` bodies and `<VisualTransition>`s that
+> actually animate these states (and the trigger-driven alternative for
+> restyling stock controls), see
+> [`animating-wpf-controltemplates`](../animating-wpf-controltemplates/TOPIC.md).
+
 ---
 
 ## 4. DependencyProperty Implementation
