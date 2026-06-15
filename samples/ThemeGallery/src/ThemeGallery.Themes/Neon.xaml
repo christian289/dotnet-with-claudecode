@@ -1,0 +1,1400 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        NEON / HALOGEN theme — dark club wall, electric magenta + cyan neon tubes,
+        halogen warm-white. Self-contained per THEME-CONTRACT.md. Animated brushes
+        are inline. Signature ambient animation: a slow breathing glow on lit tubes
+        and an ignition flicker (2-4 rapid opacity dips) on hover/check.
+    -->
+
+    <!--  Palette  -->
+    <Color x:Key="ColOffWhite">#ECECF2</Color>
+    <Color x:Key="ColDim">#8A8AA0</Color>
+    <Color x:Key="ColMagenta">#FF2EC4</Color>
+    <Color x:Key="ColCyan">#19E5FF</Color>
+    <Color x:Key="ColHalogen">#FFE9C8</Color>
+    <Color x:Key="ColGlass">#15131C</Color>
+    <Color x:Key="ColGlassDeep">#0C0A12</Color>
+    <Color x:Key="ColTubeOff">#3A3550</Color>
+
+    <!--  Shell brush keys (consumed by the gallery window)  -->
+    <RadialGradientBrush x:Key="ThemeWindowBackgroundBrush" Center="0.5,0.4" GradientOrigin="0.5,0.4" RadiusX="0.9" RadiusY="0.9">
+        <GradientStop Offset="0" Color="#16121E" />
+        <GradientStop Offset="0.7" Color="#0D0A12" />
+        <GradientStop Offset="1" Color="#160A18" />
+    </RadialGradientBrush>
+    <SolidColorBrush x:Key="ThemeTextBrush" Color="{StaticResource ColOffWhite}" />
+    <SolidColorBrush x:Key="ThemeSubtleTextBrush" Color="{StaticResource ColDim}" />
+    <SolidColorBrush x:Key="ThemeAccentBrush" Color="{StaticResource ColMagenta}" />
+    <SolidColorBrush x:Key="ThemeCardBrush" Color="#16141F" />
+    <SolidColorBrush x:Key="ThemeBorderBrush" Color="#332E47" />
+
+    <!--  Shared static brushes (never animated — animated brushes are inline)  -->
+    <SolidColorBrush x:Key="NeonTextBrush" Color="{StaticResource ColOffWhite}" />
+    <SolidColorBrush x:Key="NeonDimBrush" Color="{StaticResource ColDim}" />
+    <SolidColorBrush x:Key="NeonMagentaBrush" Color="{StaticResource ColMagenta}" />
+    <SolidColorBrush x:Key="NeonCyanBrush" Color="{StaticResource ColCyan}" />
+    <SolidColorBrush x:Key="NeonGlassBrush" Color="{StaticResource ColGlass}" />
+    <SolidColorBrush x:Key="NeonGlassDeepBrush" Color="{StaticResource ColGlassDeep}" />
+    <SolidColorBrush x:Key="NeonBorderBrush" Color="#332E47" />
+
+    <!--  Keyboard focus cue  -->
+    <Style x:Key="NeonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="-3"
+                        RadiusX="6"
+                        RadiusY="6"
+                        SnapsToDevicePixels="True"
+                        Stroke="{StaticResource NeonCyanBrush}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Transparent repeat button for Slider / ScrollBar tracks  -->
+    <Style x:Key="NeonTrackRepeat" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Lit repeat button for the Slider's filled (decrease) side  -->
+    <Style x:Key="NeonLitRepeat" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Background="Transparent">
+                        <Border
+                            Height="5"
+                            VerticalAlignment="Center"
+                            Background="#19E5FF"
+                            CornerRadius="2.5">
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="8"
+                                    Opacity="0.8"
+                                    ShadowDepth="0"
+                                    Color="#19E5FF" />
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Slider thumb: a glowing node that hums (perpetual glow pulse)  -->
+    <Style x:Key="NeonNodeThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid
+                        Width="22"
+                        Height="22"
+                        Background="Transparent">
+                        <Ellipse
+                            Width="14"
+                            Height="14"
+                            Fill="#3319E5FF"
+                            Stroke="{StaticResource NeonCyanBrush}"
+                            StrokeThickness="2">
+                            <Ellipse.Effect>
+                                <DropShadowEffect
+                                    x:Name="NodeGlow"
+                                    BlurRadius="10"
+                                    Opacity="0.9"
+                                    ShadowDepth="0"
+                                    Color="#19E5FF" />
+                            </Ellipse.Effect>
+                        </Ellipse>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        AutoReverse="True"
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="NodeGlow"
+                                        Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                        To="18"
+                                        Duration="0:0:1.1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <SineEase EasingMode="EaseInOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="NodeGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="22"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="NodeGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="12"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ScrollBar thumb: a lit tube segment  -->
+    <Style x:Key="NeonTubeThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        x:Name="Tube"
+                        Background="#3319E5FF"
+                        BorderThickness="1.5"
+                        CornerRadius="5"
+                        SnapsToDevicePixels="True">
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="TubeEdge" Color="#5A6E8A" />
+                        </Border.BorderBrush>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TubeEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#19E5FF"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TubeEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ Button: a neon tube sign with ignition flicker on hover ============  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource NeonMagentaBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="22,9" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="TubeScale" />
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="Tube"
+                            Background="#0DFFFFFF"
+                            BorderThickness="2"
+                            CornerRadius="16">
+                            <Border.BorderBrush>
+                                <SolidColorBrush x:Name="TubeEdge" Color="#FF2EC4" />
+                            </Border.BorderBrush>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    x:Name="Glow"
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    ShadowDepth="0"
+                                    Color="#FF2EC4" />
+                            </Border.Effect>
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="IgniteBSB">
+                                    <Storyboard>
+                                        <!--  ignition flicker: rapid dips then hold bright  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Tube" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.04" Value="0.4" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.08" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.12" Value="0.5" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.16" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="26"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="IgniteBSB" />
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Tube"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.1" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="10"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0.5"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="34"
+                                            Duration="0:0:0.1" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TubeScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0.96"
+                                            Duration="0:0:0.1" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TubeScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.96"
+                                            Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TubeScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TubeScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Tube" Property="Opacity" Value="0.4" />
+                            <Setter Property="Foreground" Value="{StaticResource NeonDimBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ToggleButton: cyan tube lit when on ============  -->
+    <Style TargetType="{x:Type ToggleButton}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="18,8" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        x:Name="Tube"
+                        Background="#0DFFFFFF"
+                        BorderThickness="2"
+                        CornerRadius="14">
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="Edge" Color="#3A3550" />
+                        </Border.BorderBrush>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                x:Name="Glow"
+                                BlurRadius="0"
+                                Opacity="0"
+                                ShadowDepth="0"
+                                Color="#19E5FF" />
+                        </Border.Effect>
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource NeonCyanBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#19E5FF"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="18"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0.9"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="0"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Tube" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ CheckBox: a neon check-stroke draws on with flicker ============  -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <StackPanel Background="Transparent" Orientation="Horizontal">
+                        <Border
+                            Width="22"
+                            Height="22"
+                            VerticalAlignment="Center"
+                            Background="#0DFFFFFF"
+                            BorderBrush="{StaticResource NeonBorderBrush}"
+                            BorderThickness="1.5"
+                            CornerRadius="5">
+                            <Path
+                                x:Name="Check"
+                                Width="13"
+                                Height="11"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="M0,5 L4,9 L12,0"
+                                Opacity="0"
+                                Stretch="Uniform"
+                                Stroke="{StaticResource NeonMagentaBrush}"
+                                StrokeEndLineCap="Round"
+                                StrokeStartLineCap="Round"
+                                StrokeThickness="2.4">
+                                <Path.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="8"
+                                        Opacity="0.9"
+                                        ShadowDepth="0"
+                                        Color="#FF2EC4" />
+                                </Path.Effect>
+                            </Path>
+                        </Border>
+                        <ContentPresenter Margin="9,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Check" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.05" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="0.3" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.13" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.18" Value="0.5" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.22" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Check"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ RadioButton: a halogen bulb warms up amber → white ============  -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <StackPanel Background="Transparent" Orientation="Horizontal">
+                        <Grid
+                            Width="22"
+                            Height="22"
+                            VerticalAlignment="Center">
+                            <Ellipse
+                                Width="20"
+                                Height="20"
+                                Fill="#0DFFFFFF"
+                                Stroke="{StaticResource NeonBorderBrush}"
+                                StrokeThickness="1.5" />
+                            <Ellipse
+                                x:Name="Bulb"
+                                Width="12"
+                                Height="12"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush x:Name="BulbFill" Color="#00FFE9C8" />
+                                </Ellipse.Fill>
+                                <Ellipse.Effect>
+                                    <DropShadowEffect
+                                        x:Name="BulbGlow"
+                                        BlurRadius="0"
+                                        Opacity="0"
+                                        ShadowDepth="0"
+                                        Color="#FFE9C8" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Grid>
+                        <ContentPresenter Margin="9,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="WarmBSB">
+                                    <Storyboard>
+                                        <!--  halogen warm-up: amber then to bright white  -->
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BulbFill" Storyboard.TargetProperty="Color">
+                                            <LinearColorKeyFrame KeyTime="0:0:0.00" Value="#00FFE9C8" />
+                                            <LinearColorKeyFrame KeyTime="0:0:0.15" Value="#FFFF9A3D" />
+                                            <LinearColorKeyFrame KeyTime="0:0:0.5" Value="#FFFFF4E0" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BulbGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="14"
+                                            Duration="0:0:0.5" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BulbGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0.9"
+                                            Duration="0:0:0.4" />
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            BeginTime="0:0:0.5"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="BulbGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="18"
+                                            Duration="0:0:1.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="WarmBSB" />
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="BulbFill"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#00FFE9C8"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BulbGlow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ TextBox: dark glass, focus ignites a cyan rim ============  -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource NeonCyanBrush}" />
+        <Setter Property="SelectionBrush" Value="#7F19E5FF" />
+        <Setter Property="Padding" Value="9,7" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{StaticResource NeonGlassDeepBrush}"
+                        BorderThickness="1.5"
+                        CornerRadius="6">
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="Edge" Color="#332E47" />
+                        </Border.BorderBrush>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                x:Name="Glow"
+                                BlurRadius="0"
+                                Opacity="0"
+                                ShadowDepth="0"
+                                Color="#19E5FF" />
+                        </Border.Effect>
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#19E5FF"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.BlurRadius)"
+                                            To="12"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0.7"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glow"
+                                            Storyboard.TargetProperty="(DropShadowEffect.Opacity)"
+                                            To="0"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ComboBox: a backlit sign buzzing on ============  -->
+    <Style x:Key="NeonComboToggle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{StaticResource NeonGlassDeepBrush}"
+                        BorderThickness="1.5"
+                        CornerRadius="6">
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="Edge" Color="#332E47" />
+                        </Border.BorderBrush>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="26" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+                            <Path
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="M0,0 L4,4 L8,0 Z"
+                                Fill="{StaticResource NeonCyanBrush}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="ArrowRot" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ArrowRot"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="180"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#19E5FF"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ArrowRot"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="0"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Edge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <ToggleButton
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource NeonComboToggle}" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            PopupAnimation="None">
+                            <Border
+                                x:Name="Sign"
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                Margin="0,6,0,0"
+                                Background="#16141F"
+                                BorderBrush="{StaticResource NeonCyanBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="6">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="16"
+                                        Opacity="0.6"
+                                        ShadowDepth="0"
+                                        Color="#19E5FF" />
+                                </Border.Effect>
+                                <ScrollViewer Padding="3">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!--  buzz-on flicker  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Sign" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.05" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="0.4" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.13" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="Padding" Value="9,7" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="4">
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent" />
+                        </Border.Background>
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#2619E5FF"
+                                            Duration="0:0:0.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="#33FF2EC4" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource NeonMagentaBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ Slider: an unlit tube that lights along the filled side ============  -->
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource NeonFocusVisual}" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid VerticalAlignment="Center" Background="Transparent">
+                        <Border
+                            Height="5"
+                            Background="#1C1928"
+                            BorderBrush="#332E47"
+                            BorderThickness="1"
+                            CornerRadius="2.5" />
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource NeonLitRepeat}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource NeonTrackRepeat}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource NeonNodeThumb}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ProgressBar: a lit neon tube growing with bloom ============  -->
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border
+                        x:Name="PART_Track"
+                        Background="#120F1A"
+                        BorderBrush="#332E47"
+                        BorderThickness="1.5"
+                        ClipToBounds="True"
+                        CornerRadius="9">
+                        <Grid>
+                            <Border
+                                x:Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                CornerRadius="9">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="#FF2EC4" />
+                                        <GradientStop Offset="1" Color="#19E5FF" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="12"
+                                        Opacity="0.85"
+                                        ShadowDepth="0"
+                                        Color="#FF2EC4" />
+                                </Border.Effect>
+                            </Border>
+                            <Border
+                                x:Name="IndetPulse"
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                CornerRadius="9"
+                                RenderTransformOrigin="0,0"
+                                Visibility="Collapsed">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="#0019E5FF" />
+                                        <GradientStop Offset="0.5" Color="#FF19E5FF" />
+                                        <GradientStop Offset="1" Color="#0019E5FF" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="14"
+                                        Opacity="0.9"
+                                        ShadowDepth="0"
+                                        Color="#19E5FF" />
+                                </Border.Effect>
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="PulseMove" X="-80" />
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IndetPulse" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="PulseMove"
+                                            Storyboard.TargetProperty="X"
+                                            From="-80"
+                                            To="360"
+                                            Duration="0:0:1.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ScrollBar: lit tube segment thumb ============  -->
+    <ControlTemplate x:Key="NeonScrollVertical" TargetType="{x:Type ScrollBar}">
+        <Grid Background="Transparent" SnapsToDevicePixels="True">
+            <Border
+                Width="3"
+                HorizontalAlignment="Center"
+                Background="#1C1928"
+                CornerRadius="1.5" />
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource NeonTrackRepeat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource NeonTrackRepeat}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        Width="10"
+                        MinHeight="30"
+                        Style="{StaticResource NeonTubeThumb}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="NeonScrollHorizontal" TargetType="{x:Type ScrollBar}">
+        <Grid Background="Transparent" SnapsToDevicePixels="True">
+            <Border
+                Height="3"
+                VerticalAlignment="Center"
+                Background="#1C1928"
+                CornerRadius="1.5" />
+            <Track x:Name="PART_Track" IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource NeonTrackRepeat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource NeonTrackRepeat}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        Height="10"
+                        MinWidth="30"
+                        Style="{StaticResource NeonTubeThumb}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="MinWidth" Value="12" />
+        <Setter Property="Template" Value="{StaticResource NeonScrollVertical}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="MinHeight" Value="12" />
+                <Setter Property="Template" Value="{StaticResource NeonScrollHorizontal}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  ============ TabControl + TabItem: underline tube ignites with flicker ============  -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TabPanel
+                            Grid.Row="0"
+                            Margin="0,0,0,6"
+                            IsItemsHost="True" />
+                        <Border
+                            Grid.Row="1"
+                            Background="#16141F"
+                            BorderBrush="#332E47"
+                            BorderThickness="1.5"
+                            CornerRadius="8">
+                            <ContentPresenter ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Foreground" Value="{StaticResource NeonDimBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid Background="Transparent">
+                        <ContentPresenter Margin="16,9" ContentSource="Header" />
+                        <Border
+                            x:Name="Underline"
+                            Height="2.5"
+                            VerticalAlignment="Bottom"
+                            Background="{StaticResource NeonMagentaBrush}"
+                            CornerRadius="1.25"
+                            Opacity="0">
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="8"
+                                    Opacity="0.9"
+                                    ShadowDepth="0"
+                                    Color="#FF2EC4" />
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource NeonMagentaBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Underline" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.05" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.09" Value="0.4" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.13" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Underline"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ListBox + ListBoxItem: edge-lit glow on hover ============  -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="{StaticResource NeonGlassDeepBrush}" />
+        <Setter Property="BorderBrush" Value="#332E47" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="8">
+                        <ScrollViewer Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="Margin" Value="0,1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Padding="{TemplateBinding Padding}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush x:Name="ItemEdge" Color="#0019E5FF" />
+                        </Border.BorderBrush>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#9919E5FF"
+                                            Duration="0:0:0.2" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#1419E5FF"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="ItemEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="#33FF2EC4" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource NeonMagentaBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ Expander: a sign flipping on, content fades in with bloom ============  -->
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{StaticResource NeonTextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Border
+                        Background="#16141F"
+                        BorderBrush="#332E47"
+                        BorderThickness="1.5"
+                        CornerRadius="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ToggleButton Grid.Row="0" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border Padding="12,10" Background="Transparent">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path
+                                                    x:Name="Arrow"
+                                                    Width="16"
+                                                    Height="16"
+                                                    VerticalAlignment="Center"
+                                                    Data="M0,0 L4,4 L8,0 Z"
+                                                    Fill="{StaticResource NeonCyanBrush}"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Stretch="Uniform">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform x:Name="ArrowRot" Angle="-90" />
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                                <ContentPresenter
+                                                    Margin="9,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    ContentSource="Content" />
+                                            </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="ArrowRot"
+                                                                Storyboard.TargetProperty="Angle"
+                                                                To="0"
+                                                                Duration="0:0:0.28">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="ArrowRot"
+                                                                Storyboard.TargetProperty="Angle"
+                                                                To="-90"
+                                                                Duration="0:0:0.28" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <Border
+                                x:Name="ContentArea"
+                                Grid.Row="1"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0">
+                                <Border.LayoutTransform>
+                                    <ScaleTransform x:Name="SignScale" ScaleY="0" />
+                                </Border.LayoutTransform>
+                                <ContentPresenter Margin="12,0,12,12" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SignScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentArea" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.00" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.12" Value="1" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.16" Value="0.5" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.22" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SignScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0:0:0.22" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentArea"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

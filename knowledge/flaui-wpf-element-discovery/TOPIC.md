@@ -224,5 +224,7 @@ private AutomationElement? WaitForFileDialog(string exactTitle, TimeSpan? timeou
 
 ## See also
 
+- `setting-up-flaui-ui-tests` — test-project configuration (`netX.0-windows` + `UseWPF`, xUnit parallelization off), ValuePattern-over-keyboard input, and the streaming-UI "let the burst settle before polling" rule.
+
 - `flaui-capture-resize-robustness` — once elements are found by identifier, anchor capture and manipulation on their live `BoundingRectangle` so screenshots and clicks survive window resize.
 - `flaui-cross-process-input` — injecting mouse/keyboard input cross-process (SendInput vs `Mouse.MoveTo`, stuck keys, drag interpolation, DPI scaling).

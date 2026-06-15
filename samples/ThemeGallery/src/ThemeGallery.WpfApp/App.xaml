@@ -1,0 +1,13 @@
+﻿<Application
+    x:Class="ThemeGallery.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        No StartupUri: the host resolves MainWindow from DI in OnStartup.
+        No static theme merge: ThemeSwitcher injects the selected theme
+        dictionary into MergedDictionaries at runtime.
+    -->
+    <Application.Resources>
+        <ResourceDictionary />
+    </Application.Resources>
+</Application>

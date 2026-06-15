@@ -1,0 +1,1731 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  METAL / Machined steel theme.  Self-contained per THEME-CONTRACT.md  -->
+
+    <!--  ===== Shell brushes (consumed by the gallery window) =====  -->
+    <LinearGradientBrush x:Key="ThemeWindowBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.00" Color="#FFCFD5DB" />
+        <GradientStop Offset="0.16" Color="#FFC2C9D0" />
+        <GradientStop Offset="0.20" Color="#FFCBD2D9" />
+        <GradientStop Offset="0.43" Color="#FFB8C0C8" />
+        <GradientStop Offset="0.48" Color="#FFC4CBD2" />
+        <GradientStop Offset="0.70" Color="#FFADB5BD" />
+        <GradientStop Offset="0.75" Color="#FFB9C1C9" />
+        <GradientStop Offset="1.00" Color="#FF99A2AB" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ThemeTextBrush" Color="#FF14181B" />
+    <SolidColorBrush x:Key="ThemeSubtleTextBrush" Color="#FF4A535B" />
+    <SolidColorBrush x:Key="ThemeAccentBrush" Color="#FFB87333" />
+    <LinearGradientBrush x:Key="ThemeCardBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFDDE2E7" />
+        <GradientStop Offset="1" Color="#FFC6CDD4" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ThemeBorderBrush" Color="#FF5A646D" />
+
+    <!--  ===== Shared static brushes (never color-animated) =====  -->
+    <SolidColorBrush x:Key="MetalInkBrush" Color="#FF14181B" />
+    <SolidColorBrush x:Key="MetalLightTextBrush" Color="#FFE4E8EC" />
+    <SolidColorBrush x:Key="MetalEdgeBrush" Color="#FF555F69" />
+    <SolidColorBrush x:Key="MetalEdgeDarkBrush" Color="#FF2B3138" />
+    <SolidColorBrush x:Key="MetalBevelLightBrush" Color="#B8FFFFFF" />
+    <SolidColorBrush x:Key="MetalCopperBrush" Color="#FFB87333" />
+    <SolidColorBrush x:Key="MetalHotBlueBrush" Color="#FF2E9BFF" />
+    <LinearGradientBrush x:Key="MetalPlateBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFE6EAEE" />
+        <GradientStop Offset="0.5" Color="#FFC7CED5" />
+        <GradientStop Offset="1" Color="#FFA9B2BA" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MetalPlateRaisedBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFF2F5F8" />
+        <GradientStop Offset="0.5" Color="#FFD6DCE2" />
+        <GradientStop Offset="1" Color="#FFBCC4CC" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MetalRecessBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FF20262B" />
+        <GradientStop Offset="0.15" Color="#FF2A3137" />
+        <GradientStop Offset="1" Color="#FF343C43" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MetalMoltenBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFE89A52" />
+        <GradientStop Offset="0.5" Color="#FFB87333" />
+        <GradientStop Offset="1" Color="#FF8A4F1D" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MetalSheenBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="#00FFFFFF" />
+        <GradientStop Offset="0.5" Color="#CCFFFFFF" />
+        <GradientStop Offset="1" Color="#00FFFFFF" />
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="MetalRivetBrush" GradientOrigin="0.3,0.3">
+        <GradientStop Offset="0" Color="#FFF4F7FA" />
+        <GradientStop Offset="0.6" Color="#FF9AA3AB" />
+        <GradientStop Offset="1" Color="#FF4A535B" />
+    </RadialGradientBrush>
+
+    <!--  ===== Button : machined plate, chrome sweep on hover, stamps down on press =====  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Padding" Value="18,8" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        x:Name="Root"
+                        RenderTransformOrigin="0.5,0.5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="PressScale" ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="Plate"
+                            Background="{StaticResource MetalPlateBrush}"
+                            BorderBrush="{StaticResource MetalEdgeBrush}"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    x:Name="PlateShadow"
+                                    BlurRadius="8"
+                                    Direction="270"
+                                    Opacity="0.45"
+                                    ShadowDepth="3"
+                                    Color="#FF1A1F24" />
+                            </Border.Effect>
+                            <Border
+                                BorderBrush="{StaticResource MetalBevelLightBrush}"
+                                BorderThickness="1,1,0,0"
+                                CornerRadius="2">
+                                <Border
+                                    BorderBrush="#5A2B3138"
+                                    BorderThickness="0,0,1,1"
+                                    CornerRadius="2" />
+                            </Border>
+                        </Border>
+                        <Border
+                            x:Name="SweepHost"
+                            Margin="2"
+                            ClipToBounds="True"
+                            CornerRadius="2">
+                            <Rectangle
+                                x:Name="Glint"
+                                Width="36"
+                                HorizontalAlignment="Left"
+                                Fill="{StaticResource MetalSheenBrush}"
+                                Opacity="0">
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform x:Name="GlintSlide" X="-40" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Border>
+                        <Border
+                            x:Name="PressShade"
+                            Margin="2"
+                            Background="#332B3138"
+                            CornerRadius="2"
+                            Opacity="0" />
+                        <Grid Margin="3">
+                            <Ellipse
+                                Width="4"
+                                Height="4"
+                                Margin="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Fill="{StaticResource MetalRivetBrush}" />
+                            <Ellipse
+                                Width="4"
+                                Height="4"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Fill="{StaticResource MetalRivetBrush}" />
+                            <Ellipse
+                                Width="4"
+                                Height="4"
+                                Margin="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Fill="{StaticResource MetalRivetBrush}" />
+                            <Ellipse
+                                Width="4"
+                                Height="4"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Fill="{StaticResource MetalRivetBrush}" />
+                        </Grid>
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <Border
+                            x:Name="FocusCue"
+                            Margin="-2"
+                            BorderBrush="{StaticResource MetalHotBlueBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Opacity="0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlintSlide"
+                                            Storyboard.TargetProperty="X"
+                                            From="-40"
+                                            To="260"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimationUsingKeyFrames
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.45">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0.85" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlintSlide"
+                                            Storyboard.TargetProperty="X"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0.955"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.955"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Plate"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.05"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressShade"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            Duration="0:0:0.18">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            Duration="0:0:0.18">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Plate"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PressShade"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="FocusCue" Property="Opacity" Value="0.9" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ===== ToggleButton : industrial slide switch, block slides with inertia =====  -->
+    <Style TargetType="{x:Type ToggleButton}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border
+                            x:Name="Plate"
+                            Background="{StaticResource MetalPlateBrush}"
+                            BorderBrush="{StaticResource MetalEdgeBrush}"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border
+                                BorderBrush="{StaticResource MetalBevelLightBrush}"
+                                BorderThickness="1,1,0,0"
+                                CornerRadius="2" />
+                        </Border>
+                        <StackPanel
+                            Margin="{TemplateBinding Padding}"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Border
+                                x:Name="SwitchTrack"
+                                Width="40"
+                                Height="18"
+                                Margin="0,0,8,0"
+                                VerticalAlignment="Center"
+                                BorderBrush="{StaticResource MetalEdgeDarkBrush}"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="TrackFill" Color="#FF2A3137" />
+                                </Border.Background>
+                                <Border
+                                    x:Name="SwitchBlock"
+                                    Width="18"
+                                    Margin="1"
+                                    HorizontalAlignment="Left"
+                                    Background="{StaticResource MetalPlateRaisedBrush}"
+                                    BorderBrush="{StaticResource MetalEdgeBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="1"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform x:Name="BlockSlide" X="0" />
+                                    </Border.RenderTransform>
+                                    <Rectangle
+                                        x:Name="BlockGlint"
+                                        Margin="2"
+                                        Fill="{StaticResource MetalSheenBrush}"
+                                        Opacity="0" />
+                                </Border>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center" TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+                        <Border
+                            x:Name="FocusCue"
+                            Margin="-2"
+                            BorderBrush="{StaticResource MetalHotBlueBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Opacity="0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BlockSlide"
+                                            Storyboard.TargetProperty="X"
+                                            To="18"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.55" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TrackFill"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#FFB87333"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BlockSlide"
+                                            Storyboard.TargetProperty="X"
+                                            To="0"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.55" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="TrackFill"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BlockGlint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.9"
+                                            Duration="0:0:0.15">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BlockGlint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="FocusCue" Property="Opacity" Value="0.9" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ===== CheckBox : a bolt screws in (rotate + scale) =====  -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <StackPanel Orientation="Horizontal">
+                            <Border
+                                x:Name="Socket"
+                                Width="19"
+                                Height="19"
+                                VerticalAlignment="Center"
+                                Background="{StaticResource MetalRecessBrush}"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="SocketEdge" Color="#FF555F69" />
+                                </Border.BorderBrush>
+                                <Grid
+                                    x:Name="Bolt"
+                                    Width="13"
+                                    Height="13"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform x:Name="BoltScale" ScaleX="0" ScaleY="0" />
+                                            <RotateTransform x:Name="BoltSpin" Angle="-180" />
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Path
+                                        Data="M 6.5,0 L 12.1,3.25 L 12.1,9.75 L 6.5,13 L 0.9,9.75 L 0.9,3.25 Z"
+                                        Fill="{StaticResource MetalRivetBrush}"
+                                        Stretch="Fill"
+                                        Stroke="{StaticResource MetalEdgeDarkBrush}"
+                                        StrokeThickness="0.8" />
+                                    <Rectangle
+                                        Width="7"
+                                        Height="1.6"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="{StaticResource MetalEdgeDarkBrush}" />
+                                </Grid>
+                            </Border>
+                            <ContentPresenter
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.3" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.3" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="0"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BoltSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="-180"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="SocketEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#FF2E9BFF"
+                                            Duration="0:0:0.15">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="SocketEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="SocketEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#FF2E9BFF"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="SocketEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ===== RadioButton : machined dial pin engages =====  -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid
+                                Width="19"
+                                Height="19"
+                                VerticalAlignment="Center">
+                                <Ellipse Fill="{StaticResource MetalRecessBrush}">
+                                    <Ellipse.Stroke>
+                                        <SolidColorBrush x:Name="DialEdge" Color="#FF555F69" />
+                                    </Ellipse.Stroke>
+                                </Ellipse>
+                                <Ellipse
+                                    x:Name="DialRing"
+                                    Margin="3"
+                                    Opacity="0"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Stroke="{StaticResource MetalCopperBrush}"
+                                    StrokeDashArray="2 1.2"
+                                    StrokeThickness="1">
+                                    <Ellipse.RenderTransform>
+                                        <RotateTransform x:Name="DialRingSpin" Angle="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Ellipse
+                                    x:Name="DialPin"
+                                    Width="7"
+                                    Height="7"
+                                    Fill="{StaticResource MetalRivetBrush}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Ellipse.RenderTransform>
+                                        <ScaleTransform x:Name="PinScale" ScaleX="0" ScaleY="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                            <ContentPresenter
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PinScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PinScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DialRing"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.28" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DialRingSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            From="-90"
+                                            To="0"
+                                            Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PinScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="0"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PinScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DialRing"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="DialEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#FF2E9BFF"
+                                            Duration="0:0:0.15">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="DialEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="DialEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            To="#FF2E9BFF"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="DialEdge"
+                                            Storyboard.TargetProperty="Color"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ===== Track / thumb helpers for Slider & ScrollBar =====  -->
+    <Style x:Key="MetalTrackRepeat" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Knurled knob slider thumb (radial metal) that glints on hover  -->
+    <Style x:Key="MetalKnobThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid
+                        Width="22"
+                        Height="22"
+                        Background="Transparent">
+                        <Ellipse Stroke="{StaticResource MetalEdgeDarkBrush}" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush GradientOrigin="0.35,0.3">
+                                    <GradientStop Offset="0" Color="#FFF4F7FA" />
+                                    <GradientStop Offset="0.55" Color="#FFC2CAD2" />
+                                    <GradientStop Offset="1" Color="#FF8B949D" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <!--  knurling lines  -->
+                        <Path
+                            Data="M11,3 L11,19 M6,5 L6,17 M16,5 L16,17 M3,11 L19,11"
+                            Stroke="#66333B43"
+                            StrokeThickness="0.8" />
+                        <Ellipse
+                            x:Name="Glint"
+                            Width="7"
+                            Height="7"
+                            Margin="3,3,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Fill="#FFFFFFFF"
+                            Opacity="0.5" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.95"
+                                            Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.5"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Machined scrollbar thumb (piston block)  -->
+    <Style x:Key="MetalScrollThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        x:Name="Block"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        SnapsToDevicePixels="True">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#FFD2D9E0" />
+                                <GradientStop Offset="1" Color="#FF9BA4AD" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FF5A646D" />
+                        </Border.BorderBrush>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Block"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#FFB87333"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Block"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ TextBox: engraved recess, focus = blue-hot edge ============  -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="CaretBrush" Value="#FF2E9BFF" />
+        <Setter Property="SelectionBrush" Value="#552E9BFF" />
+        <Setter Property="Padding" Value="9,7" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="Bd"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#FFBEC6CD" />
+                                <GradientStop Offset="0.12" Color="#FFD7DDE3" />
+                                <GradientStop Offset="1" Color="#FFEDF0F3" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FF5A646D" />
+                        </Border.BorderBrush>
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#FF2E9BFF"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ComboBox: a drawer of stamped plates sliding out ============  -->
+    <Style x:Key="MetalComboToggle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{StaticResource MetalPlateBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FF5A646D" />
+                        </Border.BorderBrush>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="28" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+                            <Border
+                                Grid.Column="1"
+                                Background="{StaticResource MetalPlateRaisedBrush}"
+                                BorderBrush="#FF5A646D"
+                                BorderThickness="1,0,0,0">
+                                <Path
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="M0,0 L4,4 L8,0 Z"
+                                    Fill="{StaticResource MetalInkBrush}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <RotateTransform x:Name="ArrowRot" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ArrowRot"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="180"
+                                            Duration="0:0:0.22">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ArrowRot"
+                                            Storyboard.TargetProperty="Angle"
+                                            To="0"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <ToggleButton
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource MetalComboToggle}" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            PopupAnimation="None">
+                            <Border
+                                x:Name="Drawer"
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                Margin="0,4,0,0"
+                                Background="#FFDDE2E7"
+                                BorderBrush="#FF5A646D"
+                                BorderThickness="1"
+                                CornerRadius="4"
+                                RenderTransformOrigin="0.5,0">
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="DrawerSlide" Y="-10" />
+                                </Border.RenderTransform>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="14"
+                                        Opacity="0.4"
+                                        ShadowDepth="3"
+                                        Color="#000000" />
+                                </Border.Effect>
+                                <ScrollViewer Padding="3">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Drawer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.18" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DrawerSlide"
+                                            Storyboard.TargetProperty="Y"
+                                            From="-10"
+                                            To="0"
+                                            Duration="0:0:0.24">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Padding" Value="9,7" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="3">
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent" />
+                        </Border.Background>
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#FFC2CAD2"
+                                            Duration="0:0:0.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="#FFB87333" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource MetalLightTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ Slider: slide bolt on a rail ============  -->
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid VerticalAlignment="Center" Background="Transparent">
+                        <Border
+                            Height="6"
+                            BorderBrush="#FF5A646D"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#FF8B949D" />
+                                    <GradientStop Offset="1" Color="#FFBAC2CA" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource MetalTrackRepeat}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource MetalTrackRepeat}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource MetalKnobThumb}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ProgressBar: molten metal pour with moving specular ============  -->
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Border
+                        x:Name="PART_Track"
+                        BorderBrush="#FF5A646D"
+                        BorderThickness="1"
+                        ClipToBounds="True"
+                        CornerRadius="4">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#FF6B747D" />
+                                <GradientStop Offset="1" Color="#FF8C949C" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>
+                            <Border
+                                x:Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                ClipToBounds="True"
+                                CornerRadius="3">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#FFE8A24A" />
+                                        <GradientStop Offset="0.5" Color="#FFB87333" />
+                                        <GradientStop Offset="1" Color="#FF8A5320" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Rectangle
+                                    x:Name="Spec"
+                                    Width="40"
+                                    HorizontalAlignment="Left"
+                                    RenderTransformOrigin="0,0">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Offset="0" Color="#00FFFFFF" />
+                                            <GradientStop Offset="0.5" Color="#88FFFFFF" />
+                                            <GradientStop Offset="1" Color="#00FFFFFF" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.RenderTransform>
+                                        <TranslateTransform x:Name="SpecMove" X="-40" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Border>
+                            <Border
+                                x:Name="IndetPiston"
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                CornerRadius="3"
+                                RenderTransformOrigin="0,0"
+                                Visibility="Collapsed">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="#00B87333" />
+                                        <GradientStop Offset="0.5" Color="#FFB87333" />
+                                        <GradientStop Offset="1" Color="#00B87333" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="PistonMove" X="-80" />
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="SpecMove"
+                                        Storyboard.TargetProperty="X"
+                                        From="-40"
+                                        To="320"
+                                        Duration="0:0:2.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IndetPiston" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="PistonMove"
+                                            Storyboard.TargetProperty="X"
+                                            From="-80"
+                                            To="320"
+                                            Duration="0:0:1.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ScrollBar: piston rod with machined thumb ============  -->
+    <ControlTemplate x:Key="MetalScrollVertical" TargetType="{x:Type ScrollBar}">
+        <Grid Background="Transparent" SnapsToDevicePixels="True">
+            <Border
+                Width="4"
+                HorizontalAlignment="Center"
+                Background="#FF7E878F"
+                CornerRadius="2" />
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource MetalTrackRepeat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource MetalTrackRepeat}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        Width="10"
+                        MinHeight="26"
+                        Style="{StaticResource MetalScrollThumb}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MetalScrollHorizontal" TargetType="{x:Type ScrollBar}">
+        <Grid Background="Transparent" SnapsToDevicePixels="True">
+            <Border
+                Height="4"
+                VerticalAlignment="Center"
+                Background="#FF7E878F"
+                CornerRadius="2" />
+            <Track x:Name="PART_Track" IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource MetalTrackRepeat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource MetalTrackRepeat}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb
+                        Height="10"
+                        MinWidth="26"
+                        Style="{StaticResource MetalScrollThumb}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="MinWidth" Value="12" />
+        <Setter Property="Template" Value="{StaticResource MetalScrollVertical}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="MinHeight" Value="12" />
+                <Setter Property="Template" Value="{StaticResource MetalScrollHorizontal}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  ============ TabControl + TabItem: riveted plates, selected one raised ============  -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TabPanel
+                            Grid.Row="0"
+                            Margin="0,0,0,-1"
+                            Panel.ZIndex="1"
+                            IsItemsHost="True" />
+                        <Border
+                            Grid.Row="1"
+                            Background="{StaticResource MetalPlateBrush}"
+                            BorderBrush="#FF5A646D"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                            <ContentPresenter ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border
+                        x:Name="Plate"
+                        Margin="2,2,2,0"
+                        Background="{StaticResource MetalPlateBrush}"
+                        BorderBrush="#FF5A646D"
+                        BorderThickness="1"
+                        CornerRadius="4,4,0,0"
+                        RenderTransformOrigin="0.5,1">
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="Lift" />
+                        </Border.RenderTransform>
+                        <Grid Margin="16,8">
+                            <Ellipse
+                                Width="3"
+                                Height="3"
+                                Margin="2,2,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Fill="#FF5A646D" />
+                            <Ellipse
+                                Width="3"
+                                Height="3"
+                                Margin="0,2,2,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Fill="#FF5A646D" />
+                            <ContentPresenter VerticalAlignment="Center" ContentSource="Header" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+                            <Setter TargetName="Plate" Property="Background" Value="{StaticResource MetalPlateRaisedBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Lift"
+                                            Storyboard.TargetProperty="Y"
+                                            To="-2"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Lift"
+                                            Storyboard.TargetProperty="Y"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ ListBox + ListBoxItem: steel sheen on hover ============  -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="{StaticResource MetalPlateBrush}" />
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="#FF5A646D" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                        <ScrollViewer Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="Margin" Value="0,1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border
+                        x:Name="Bd"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="3">
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent" />
+                        </Border.Background>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#FFEDF1F5"
+                                            Duration="0:0:0.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bd"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Bd" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="#FFB87333" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource MetalLightTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============ Expander: a hatch opening ============  -->
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{StaticResource MetalInkBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Border
+                        Background="{StaticResource MetalPlateBrush}"
+                        BorderBrush="#FF5A646D"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ToggleButton Grid.Row="0" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border Padding="12,10" Background="Transparent">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border
+                                                    Width="16"
+                                                    Height="16"
+                                                    VerticalAlignment="Center"
+                                                    Background="{StaticResource MetalPlateRaisedBrush}"
+                                                    BorderBrush="#FF5A646D"
+                                                    BorderThickness="1"
+                                                    CornerRadius="2"
+                                                    RenderTransformOrigin="0.5,0.5">
+                                                    <Border.RenderTransform>
+                                                        <RotateTransform x:Name="HatchRot" />
+                                                    </Border.RenderTransform>
+                                                    <Path
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Data="M0,0 L4,4 L8,0 Z"
+                                                        Fill="{StaticResource MetalInkBrush}" />
+                                                </Border>
+                                                <ContentPresenter
+                                                    Margin="9,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    ContentSource="Content" />
+                                            </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="HatchRot"
+                                                                Storyboard.TargetProperty="Angle"
+                                                                To="180"
+                                                                Duration="0:0:0.25">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut" />
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="HatchRot"
+                                                                Storyboard.TargetProperty="Angle"
+                                                                To="0"
+                                                                Duration="0:0:0.25" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <Border Grid.Row="1" RenderTransformOrigin="0.5,0">
+                                <Border.LayoutTransform>
+                                    <ScaleTransform x:Name="HatchScale" ScaleY="0" />
+                                </Border.LayoutTransform>
+                                <ContentPresenter Margin="12,0,12,12" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HatchScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.26">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HatchScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

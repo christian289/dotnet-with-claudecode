@@ -250,6 +250,13 @@ public sealed class ThemeService
 }
 ```
 
+> **Make the swap actually take effect**: brushes a theme controls must be
+> consumed via `{DynamicResource}`, not `{StaticResource}` — `StaticResource`
+> resolves once at load and freezes the first theme. To animate the transition
+> (cross-fade / `ColorAnimation`) rather than swapping instantly, and for the
+> animated-template body itself, see
+> [`animating-wpf-controltemplates`](../animating-wpf-controltemplates/TOPIC.md).
+
 ---
 
 ## 5. Accessing Resources from Code

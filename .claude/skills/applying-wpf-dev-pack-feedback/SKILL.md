@@ -40,7 +40,7 @@ Apply Progress:
 - [ ] Step 1: Validate input and load the feedback md
 - [ ] Step 2: Plan: review the summary, decide which items to apply
 - [ ] Step 3: Apply each selected item (one at a time)
-- [ ] Step 4: Version bump + README sync (only if needed)
+- [ ] Step 4: Flag whether a release is needed (NEVER bump the version here)
 - [ ] Step 5: Move the md into FeedbackDocs/
 - [ ] Step 6: Append a row to FeedbackDocs/APPLIED-LOG.md
 - [ ] Step 7: Surface a commit message draft for the maintainer
@@ -135,33 +135,33 @@ On fire, the hook reminds you to:
 The hook cannot probe runtime MCP / skill availability — that visibility
 belongs to you. The hook is a reminder; do the check before proceeding.
 
-### Step 4 — Version bump + README sync (only if needed)
+### Step 4 — Flag whether a release is needed (NEVER bump the version here)
 
-> Knowledge-only changes (edits under `knowledge/`) require
-> NO plugin version bump and NO MCP republish — content is served from the
-> repo by WpfDevPackMcp and reflected on its next `git pull`. In that case
-> skip Step 4 and write `(knowledge only, no plugin/MCP bump)` in the
-> APPLIED-LOG `Plugin version` column. Version bumps apply only to changes
-> shipped in the plugin (command skills, hooks, rules).
+> **This skill never edits a version field.** Per `.claude/CLAUDE.md`
+> (Plugin Version Update Checklist), version bumps are performed via the
+> `/wpf-dev-pack-release` skill **only** — no other workflow, feedback
+> application included, touches `plugin.json`, the README badges, or the
+> changelog directly. Do NOT edit `wpf-dev-pack/.claude-plugin/plugin.json`,
+> `wpf-dev-pack/README.md`, `wpf-dev-pack/README.ko.md`, or
+> `docs/changelogs/wpf-dev-pack.md` from inside this skill.
 
-Per `.claude/CLAUDE.md` (Plugin Version Update Checklist), keep these
-in lockstep when cutting a release:
+This step only **classifies** the batch so the maintainer knows what to do
+next; it changes no files:
 
-- `wpf-dev-pack/.claude-plugin/plugin.json` — `version`
-- `wpf-dev-pack/README.md` — version badge
-- `wpf-dev-pack/README.ko.md` — version badge
+- **Knowledge-only changes** (edits under `knowledge/`) — require NO release
+  at all. Content is served from the repo by WpfDevPackMcp and reflected on
+  its next `git pull` (no plugin version bump, no MCP republish). Write
+  `(knowledge only, no plugin/MCP bump)` in the APPLIED-LOG `Plugin version`
+  column.
+- **Plugin-shipped changes** (command skills, hooks, rules under
+  `wpf-dev-pack/`) — DO warrant a release, but you do not cut it here.
+  Tell the maintainer: "These changes ship in the plugin and need a version
+  bump — run `/wpf-dev-pack-release` separately after committing." Write the
+  *current* (unchanged) version + `(release pending /wpf-dev-pack-release)`
+  in the APPLIED-LOG `Plugin version` column.
 
-Ask the maintainer whether this batch of changes constitutes a release.
-
-- **Yes**: ask for the target version (e.g., `1.6.5`), update all three
-  files, and remember the version for Step 6.
-- **No** (docs-only, trivial fix, or part of a larger pending release):
-  skip this step entirely. The Step 6 `Plugin version` column will
-  carry the *current* version suffixed with `(docs only)` or
-  `(no version bump)` as appropriate.
-
-If the feedback adds a new skill or changes existing skill behavior,
-the default answer is **Yes** — surface that nuance to the maintainer.
+State the classification to the maintainer and move on. The version bump is
+their separate `/wpf-dev-pack-release` step.
 
 ### Step 5 — Move the md into FeedbackDocs/
 
@@ -189,7 +189,7 @@ and append one row at the bottom.
 | **Status** | `Applied` if every selected item was reflected; `Partially applied` if any item was skipped; `Rejected` if all items were declined. |
 | **Date reflected** | Today's date (`YYYY-MM-DD`) per the conversation's current date. |
 | **Reflected in (commit / PR)** | Leave as `TBD`. The maintainer fills in the commit hash after committing. The skill does NOT auto-commit. |
-| **Plugin version** | The version the change ships in (e.g., `v1.6.5`). If Step 4 was skipped, write the unchanged version + `(docs only)` or `(no version bump)`. |
+| **Plugin version** | This skill never bumps the version (Step 4). Write the *current* (unchanged) version. Suffix `(knowledge only, no plugin/MCP bump)` for knowledge-only batches, or `(release pending /wpf-dev-pack-release)` when plugin-shipped changes still need a release the maintainer will cut separately. |
 | **Notes** | Item-level deviations, partial-application reasons, cross-links to follow-up issues, file-rename caveats, etc. |
 
 If `FeedbackDocs/APPLIED-LOG.md` does not exist (it should — the repo
@@ -208,8 +208,12 @@ conventions in `.github/CONTRIBUTING.md`:
 - Reflects FeedbackDocs/<filename>
 - Applied items: <ids>
 - Skipped items: <ids> (<reason>)         # omit line if none
-- Version: <unchanged | vX.Y.Z>
+- Release: <none needed (knowledge only) | pending — run /wpf-dev-pack-release>
 ```
+
+> The commit itself never bumps the version. If the batch shipped
+> plugin changes, the maintainer runs `/wpf-dev-pack-release` as a
+> separate follow-up (which produces its own version-bump commit).
 
 `<type>` selection:
 

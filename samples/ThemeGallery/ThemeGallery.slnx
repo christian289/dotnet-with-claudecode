@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ThemeGallery.Themes/ThemeGallery.Themes.csproj" />
+    <Project Path="src/ThemeGallery.ViewModels/ThemeGallery.ViewModels.csproj" />
+    <Project Path="src/ThemeGallery.WpfApp/ThemeGallery.WpfApp.csproj" />
+  </Folder>
+</Solution>

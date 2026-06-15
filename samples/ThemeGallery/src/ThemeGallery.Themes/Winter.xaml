@@ -1,0 +1,2531 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ============================================================  -->
+    <!--  WINTER — polar night, frosted glass, glacial cyan, aurora  -->
+    <!--  ============================================================  -->
+
+    <!--  Shell brushes (consumed by the gallery via DynamicResource)  -->
+    <DrawingBrush
+        x:Key="ThemeWindowBackgroundBrush"
+        Stretch="Fill"
+        Viewbox="0,0,100,100"
+        ViewboxUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <!--  Polar night: deep indigo to ice blue  -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,100,100" />
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#060A1C" />
+                            <GradientStop Offset="0.45" Color="#0D1734" />
+                            <GradientStop Offset="1" Color="#1C3A66" />
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+                <!--  Faint aurora band: translucent green-violet drift  -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,10,100,24" />
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.6">
+                            <GradientStop Offset="0" Color="#0044FF88" />
+                            <GradientStop Offset="0.3" Color="#2E38E08A" />
+                            <GradientStop Offset="0.55" Color="#2469D8C8" />
+                            <GradientStop Offset="0.78" Color="#288A6BD8" />
+                            <GradientStop Offset="1" Color="#008A6BD8" />
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <SolidColorBrush x:Key="ThemeTextBrush" Color="#F0F7FF" />
+    <SolidColorBrush x:Key="ThemeSubtleTextBrush" Color="#9DB9D8" />
+    <SolidColorBrush x:Key="ThemeAccentBrush" Color="#6FE3FF" />
+    <SolidColorBrush x:Key="ThemeCardBrush" Color="#CC10203E" />
+    <SolidColorBrush x:Key="ThemeBorderBrush" Color="#466B9E" />
+
+    <!--  Static helper brushes (never animated)  -->
+    <SolidColorBrush x:Key="WinterFrostWhiteBrush" Color="#DFF2FF" />
+    <SolidColorBrush x:Key="WinterDeepIceBrush" Color="#102A4C" />
+
+    <!--  Cracked-ice hairlines (tiled)  -->
+    <DrawingBrush
+        x:Key="WinterCrackBrush"
+        Opacity="0.55"
+        TileMode="Tile"
+        Viewbox="0,0,14,8"
+        ViewboxUnits="Absolute"
+        Viewport="0,0,14,8"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Geometry="M0,6 L6,2 M6,2 L10,5 M10,5 L14,1">
+                <GeometryDrawing.Pen>
+                    <Pen Brush="#8CFFFFFF" Thickness="0.8" />
+                </GeometryDrawing.Pen>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--  Hanging icicle fringe (tiled triangles)  -->
+    <DrawingBrush
+        x:Key="WinterIcicleFringeBrush"
+        TileMode="Tile"
+        Viewbox="0,0,12,9"
+        ViewboxUnits="Absolute"
+        Viewport="0,0,12,9"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="#66DFF2FF" Geometry="M0,0 L12,0 L6,9 Z" />
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!--  Keyboard focus cue  -->
+    <Style x:Key="WinterFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="-3"
+                        RadiusX="5"
+                        RadiusY="5"
+                        SnapsToDevicePixels="True"
+                        Stroke="#8C6FE3FF"
+                        StrokeDashArray="2 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Transparent repeat button for Slider / ScrollBar tracks  -->
+    <Style x:Key="WinterTrackButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  BUTTON — frosted-glass slab; hover = frost crystallizes on  -->
+    <!--  the edges + cold rim glow; press = ice compresses + flash  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Padding" Value="16,7" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        x:Name="Root"
+                        RenderTransformOrigin="0.5,0.5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="Slab"
+                            BorderThickness="1.2"
+                            CornerRadius="6">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#5E86B8" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#4DEAF6FF" />
+                                    <GradientStop Offset="0.5" Color="#269CC8E8" />
+                                    <GradientStop Offset="1" Color="#338CB8DE" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="14"
+                                    Opacity="0"
+                                    ShadowDepth="0"
+                                    Color="#6FE3FF" />
+                            </Border.Effect>
+                        </Border>
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <!--  Frost crystals that fade in along the edges on hover  -->
+                        <Path
+                            x:Name="FrostL"
+                            Width="9"
+                            Height="9"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Data="M6,0 L6,12 M0.8,3 L11.2,9 M0.8,9 L11.2,3 M6,0 L4.2,1.8 M6,0 L7.8,1.8 M6,12 L4.2,10.2 M6,12 L7.8,10.2"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            RenderTransformOrigin="0.5,0.5"
+                            Stretch="Uniform"
+                            StrokeThickness="1.1">
+                            <Path.Stroke>
+                                <SolidColorBrush Color="#BFF0FF" />
+                            </Path.Stroke>
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path
+                            x:Name="FrostR"
+                            Width="9"
+                            Height="9"
+                            Margin="0,0,5,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Data="M6,0 L6,12 M0.8,3 L11.2,9 M0.8,9 L11.2,3 M6,0 L4.2,1.8 M6,0 L7.8,1.8 M6,12 L4.2,10.2 M6,12 L7.8,10.2"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            RenderTransformOrigin="0.5,0.5"
+                            Stretch="Uniform"
+                            StrokeThickness="1.1">
+                            <Path.Stroke>
+                                <SolidColorBrush Color="#BFF0FF" />
+                            </Path.Stroke>
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#A5EBFF"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.85"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.95"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.95"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostL"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="FrostR"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <!--  Crack-white flash  -->
+                                        <ColorAnimation
+                                            AutoReverse="True"
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            To="#F2FFFFFF"
+                                            Duration="0:0:0.12">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  TOGGLEBUTTON — frosted slab that freezes solid when checked  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ToggleButton}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Padding" Value="16,7" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid
+                        x:Name="Root"
+                        RenderTransformOrigin="0.5,0.5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Border
+                            x:Name="Slab"
+                            BorderThickness="1.2"
+                            CornerRadius="6">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#5E86B8" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#33EAF6FF" />
+                                    <GradientStop Offset="1" Color="#268CB8DE" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="14"
+                                    Opacity="0"
+                                    ShadowDepth="0"
+                                    Color="#6FE3FF" />
+                            </Border.Effect>
+                        </Border>
+                        <!--  Frozen-solid glaze shown while checked  -->
+                        <Border
+                            x:Name="Glaze"
+                            Margin="1.5"
+                            CornerRadius="5"
+                            IsHitTestVisible="False"
+                            Opacity="0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#807FE8FF" />
+                                    <GradientStop Offset="1" Color="#403B9FD8" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Rectangle
+                            x:Name="GlazeCracks"
+                            Margin="2"
+                            Fill="{StaticResource WinterCrackBrush}"
+                            IsHitTestVisible="False"
+                            Opacity="0"
+                            RadiusX="5"
+                            RadiusY="5" />
+                        <ContentPresenter
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#A5EBFF"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.7"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="0.94"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuadraticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Root"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.75"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlazeCracks"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.6"
+                                            Duration="0:0:0.45">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#6FE3FF"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GlazeCracks"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Slab"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  CHECKBOX — empty frost circle; checked = snowflake  -->
+    <!--  crystallizes in (scale from 0 + rotation + overshoot)  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid
+                        x:Name="Root"
+                        Background="Transparent"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid
+                            Width="19"
+                            Height="19"
+                            VerticalAlignment="Center">
+                            <Ellipse x:Name="FrostRing" StrokeThickness="1.5">
+                                <Ellipse.Stroke>
+                                    <SolidColorBrush Color="#6E93C4" />
+                                </Ellipse.Stroke>
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#1ADFF2FF" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Path
+                                x:Name="Snowflake"
+                                Width="11"
+                                Height="11"
+                                Data="M6,0 L6,12 M0.8,3 L11.2,9 M0.8,9 L11.2,3 M6,0 L4.2,1.8 M6,0 L7.8,1.8 M6,12 L4.2,10.2 M6,12 L7.8,10.2 M0.8,3 L3.1,3.4 M11.2,9 L8.9,8.6 M0.8,9 L3.1,8.6 M11.2,3 L8.9,3.4"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Uniform"
+                                StrokeThickness="1.3">
+                                <Path.Stroke>
+                                    <SolidColorBrush Color="#9FEAFF" />
+                                </Path.Stroke>
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0" ScaleY="0" />
+                                        <RotateTransform Angle="-120" />
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="FrostRing"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            To="#9FE6FF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="FrostRing"
+                                            Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                            To="#33DFF2FF"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="FrostRing"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="FrostRing"
+                                            Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:0.38">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.7" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.38">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.7" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                            To="0"
+                                            Duration="0:0:0.38">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Snowflake"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  RADIOBUTTON — selected = ice core forms with a perpetual  -->
+    <!--  breathing cold glow; unselected = dim icicle dot  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid
+                        x:Name="Root"
+                        Background="Transparent"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid
+                            Width="19"
+                            Height="19"
+                            VerticalAlignment="Center">
+                            <Ellipse x:Name="Ring" StrokeThickness="1.5">
+                                <Ellipse.Stroke>
+                                    <SolidColorBrush Color="#6E93C4" />
+                                </Ellipse.Stroke>
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="#14DFF2FF" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Ellipse
+                                x:Name="IceCore"
+                                Width="10"
+                                Height="10"
+                                Opacity="0.25"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Ellipse.RenderTransform>
+                                    <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
+                                </Ellipse.RenderTransform>
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush GradientOrigin="0.35,0.3">
+                                        <GradientStop Offset="0" Color="#FFFFFF" />
+                                        <GradientStop Offset="0.5" Color="#9FE6FF" />
+                                        <GradientStop Offset="1" Color="#3B9FD8" />
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                                <Ellipse.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="12"
+                                        Opacity="0"
+                                        ShadowDepth="0"
+                                        Color="#6FE3FF" />
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Grid>
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Ring"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            To="#9FE6FF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Ring"
+                                            Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="CoreForm">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <!--  Perpetual breathing cold glow  -->
+                                        <DoubleAnimation
+                                            AutoReverse="True"
+                                            BeginTime="0:0:0.35"
+                                            RepeatBehavior="Forever"
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            From="0.25"
+                                            To="0.85"
+                                            Duration="0:0:1.5">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="CoreForm" />
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            FillBehavior="Stop"
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1"
+                                            To="0.25"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            FillBehavior="Stop"
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            From="1"
+                                            To="0.4"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            FillBehavior="Stop"
+                                            Storyboard.TargetName="IceCore"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            From="1"
+                                            To="0.4"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  TEXTBOX — frosted input; focus = rim thaws to bright cyan  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource ThemeAccentBrush}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource ThemeAccentBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="Shell"
+                        BorderThickness="1.2"
+                        CornerRadius="5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#4A6FA5" />
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <SolidColorBrush Color="#22DDEFFF" />
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Opacity="0"
+                                ShadowDepth="0"
+                                Color="#6FE3FF" />
+                        </Border.Effect>
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="8,5"
+                            VerticalAlignment="Center"
+                            Focusable="False" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#6F9CCF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#7FE8FF"
+                                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#2EE6F6FF"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.7"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.3" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Shell"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Shell" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  COMBOBOX — frosted bar; dropdown = icicle panel sliding down  -->
+    <!--  with a frosty fade  -->
+    <!--  ============================================================  -->
+    <Style x:Key="WinterComboToggleStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        x:Name="Bar"
+                        BorderThickness="1.2"
+                        CornerRadius="5"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#4A6FA5" />
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#33EAF6FF" />
+                                <GradientStop Offset="1" Color="#268CB8DE" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Path
+                            x:Name="Arrow"
+                            Width="10"
+                            Height="6"
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Data="M0,0 L5,6 L10,0"
+                            RenderTransformOrigin="0.5,0.5"
+                            Stretch="Uniform"
+                            StrokeThickness="1.6">
+                            <Path.Stroke>
+                                <SolidColorBrush Color="#9FE6FF" />
+                            </Path.Stroke>
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="0" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#9FE6FF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Arrow"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            To="180"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Arrow"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <ToggleButton
+                            x:Name="Toggle"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource WinterComboToggleStyle}" />
+                        <ContentPresenter
+                            Margin="12,5,32,5"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            IsHitTestVisible="False"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                            Placement="Bottom"
+                            PopupAnimation="None">
+                            <Grid
+                                x:Name="DropRoot"
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                Margin="0,2,0,8"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0">
+                                <Grid.RenderTransform>
+                                    <TranslateTransform Y="-14" />
+                                </Grid.RenderTransform>
+                                <Border
+                                    Background="{StaticResource WinterDeepIceBrush}"
+                                    BorderBrush="{StaticResource ThemeBorderBrush}"
+                                    BorderThickness="1.2"
+                                    CornerRadius="0,0,7,7">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <!--  Icicle fringe hanging from the panel top  -->
+                                        <Rectangle
+                                            Height="9"
+                                            Margin="4,0"
+                                            Fill="{StaticResource WinterIcicleFringeBrush}" />
+                                        <ScrollViewer Grid.Row="1" Margin="2,0,2,4">
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DropRoot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DropRoot"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                            To="0"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DropRoot"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="DropRoot"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ComboBoxItem — breath-fog hover, glacial selection glaze  -->
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Grid x:Name="Root" SnapsToDevicePixels="True">
+                        <Rectangle
+                            x:Name="HoverFog"
+                            Opacity="0"
+                            RadiusX="4"
+                            RadiusY="4">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#3BDFF2FF" />
+                                    <GradientStop Offset="1" Color="#1ADFF2FF" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle
+                            x:Name="SelGlaze"
+                            Fill="#2E6FE3FF"
+                            Opacity="0"
+                            RadiusX="4"
+                            RadiusY="4" />
+                        <ContentPresenter
+                            Margin="10,5"
+                            VerticalAlignment="Center"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HoverFog"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.18">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HoverFog"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ThemeAccentBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelGlaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelGlaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  SLIDER — frozen stream track, cracked-ice fill, polished  -->
+    <!--  ice-sphere thumb that glints on hover  -->
+    <!--  ============================================================  -->
+    <Style x:Key="WinterSliderFillStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid
+                        Height="6"
+                        VerticalAlignment="Center"
+                        Background="Transparent">
+                        <Border CornerRadius="3,0,0,3">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#B0CFF0FF" />
+                                    <GradientStop Offset="1" Color="#8C7FC8EE" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Rectangle
+                            Fill="{StaticResource WinterCrackBrush}"
+                            Opacity="0.7"
+                            RadiusX="3"
+                            RadiusY="3" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WinterSliderThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid
+                        Width="18"
+                        Height="18"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </Grid.RenderTransform>
+                        <Ellipse x:Name="Sphere">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush GradientOrigin="0.3,0.28">
+                                    <GradientStop Offset="0" Color="#FFFFFF" />
+                                    <GradientStop Offset="0.45" Color="#BFE8FF" />
+                                    <GradientStop Offset="0.85" Color="#5FA8D8" />
+                                    <GradientStop Offset="1" Color="#2E5E8E" />
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                            <Ellipse.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="12"
+                                    Opacity="0"
+                                    ShadowDepth="0"
+                                    Color="#6FE3FF" />
+                            </Ellipse.Effect>
+                        </Ellipse>
+                        <!--  Glint sweep, clipped to the sphere  -->
+                        <Grid>
+                            <Grid.Clip>
+                                <EllipseGeometry
+                                    Center="9,9"
+                                    RadiusX="9"
+                                    RadiusY="9" />
+                            </Grid.Clip>
+                            <Rectangle
+                                x:Name="Glint"
+                                Width="5"
+                                Height="24"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="#00FFFFFF" />
+                                        <GradientStop Offset="0.5" Color="#E8FFFFFF" />
+                                        <GradientStop Offset="1" Color="#00FFFFFF" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="25" />
+                                        <TranslateTransform X="-14" />
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Sphere"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            To="0.75"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Glint" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0.9" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.45" Value="0.9" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.55" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                            From="-14"
+                                            To="14"
+                                            Duration="0:0:0.55">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Sphere"
+                                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.15" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Glint"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="1.15"
+                                            Duration="0:0:0.15">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1.15"
+                                            Duration="0:0:0.15">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" Duration="0:0:0.2" />
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <!--  Frozen stream bed  -->
+                        <Border
+                            Height="6"
+                            VerticalAlignment="Center"
+                            BorderBrush="#2E4E7E"
+                            BorderThickness="0.8"
+                            CornerRadius="3">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#0E2240" />
+                                    <GradientStop Offset="1" Color="#1A3A62" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Track x:Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource WinterSliderFillStyle}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource WinterTrackButtonStyle}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource WinterSliderThumbStyle}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  PROGRESSBAR — advancing glacier with slow internal shimmer;  -->
+    <!--  indeterminate = a gust of snow sweeping across forever  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid
+                        x:Name="Root"
+                        ClipToBounds="True"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border
+                            x:Name="PART_Track"
+                            BorderBrush="{StaticResource ThemeBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#0C1E3A" />
+                                    <GradientStop Offset="1" Color="#16335A" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Border
+                            x:Name="PART_Indicator"
+                            Margin="1"
+                            HorizontalAlignment="Left"
+                            ClipToBounds="True"
+                            CornerRadius="7">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.4">
+                                    <GradientStop Offset="0" Color="#7FC8EE" />
+                                    <GradientStop Offset="0.6" Color="#A8DCF8" />
+                                    <GradientStop Offset="1" Color="#CFEFFF" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid>
+                                <!--  Crevasse hints inside the glacier  -->
+                                <Rectangle Fill="{StaticResource WinterCrackBrush}" Opacity="0.45" />
+                                <!--  Slow-moving internal shimmer  -->
+                                <Rectangle
+                                    x:Name="Shimmer"
+                                    Width="52"
+                                    HorizontalAlignment="Left"
+                                    Opacity="0.6">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Offset="0" Color="#00FFFFFF" />
+                                            <GradientStop Offset="0.5" Color="#B8FFFFFF" />
+                                            <GradientStop Offset="1" Color="#00FFFFFF" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.RenderTransform>
+                                        <TranslateTransform X="-70" Y="0" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Grid>
+                        </Border>
+                        <!--  Snow gust for indeterminate mode  -->
+                        <Grid
+                            x:Name="Gust"
+                            Margin="1"
+                            Visibility="Collapsed">
+                            <Rectangle
+                                x:Name="GustRect"
+                                Width="100"
+                                HorizontalAlignment="Left"
+                                RadiusX="7"
+                                RadiusY="7">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Offset="0" Color="#00FFFFFF" />
+                                        <GradientStop Offset="0.35" Color="#7CDFF2FF" />
+                                        <GradientStop Offset="0.6" Color="#B0FFFFFF" />
+                                        <GradientStop Offset="1" Color="#00FFFFFF" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.RenderTransform>
+                                    <TranslateTransform X="-110" Y="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Shimmer"
+                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                        From="-70"
+                                        To="380"
+                                        Duration="0:0:2.6">
+                                        <DoubleAnimation.EasingFunction>
+                                            <SineEase EasingMode="EaseInOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="Gust" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="GustSweep">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="GustRect"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="-110"
+                                            To="440"
+                                            Duration="0:0:1.7">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="GustSweep" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  SCROLLBAR — icicle thumb, frost lane, both orientations  -->
+    <!--  ============================================================  -->
+    <Style x:Key="WinterScrollThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        x:Name="Icicle"
+                        Margin="2"
+                        BorderThickness="0.8"
+                        CornerRadius="4">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#7FB8DEFF" />
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#B8E4F8FF" />
+                                <GradientStop Offset="0.5" Color="#8C9FD2EE" />
+                                <GradientStop Offset="1" Color="#7A5F94C4" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Icicle"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            To="#CFDDF2FF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Icicle"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Icicle"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            To="#E86FE3FF"
+                                            Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Icicle"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="WinterScrollBarVertical" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
+            <Border
+                Margin="2"
+                Background="#1A4A6F9E"
+                CornerRadius="5" />
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource WinterTrackButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource WinterTrackButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource WinterScrollThumbStyle}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.4" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="WinterScrollBarHorizontal" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" SnapsToDevicePixels="True">
+            <Border
+                Margin="2"
+                Background="#1A4A6F9E"
+                CornerRadius="5" />
+            <Track x:Name="PART_Track">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource WinterTrackButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource WinterTrackButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource WinterScrollThumbStyle}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.4" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Width" Value="12" />
+        <Setter Property="MinWidth" Value="12" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template" Value="{StaticResource WinterScrollBarVertical}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="MinHeight" Value="12" />
+                <Setter Property="Template" Value="{StaticResource WinterScrollBarHorizontal}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  TABCONTROL / TABITEM — selected tab grows an icicle  -->
+    <!--  underline downward  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid
+                        x:Name="Root"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TabPanel
+                            Margin="4,0,0,-1"
+                            Panel.ZIndex="1"
+                            IsItemsHost="True" />
+                        <Border
+                            Grid.Row="1"
+                            Background="{StaticResource ThemeCardBrush}"
+                            BorderBrush="{StaticResource ThemeBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="0,7,7,7">
+                            <ContentPresenter Margin="4" ContentSource="SelectedContent" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeSubtleTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid
+                        x:Name="Root"
+                        Margin="0,0,4,0"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="12" />
+                        </Grid.RowDefinitions>
+                        <Border
+                            x:Name="Cap"
+                            Padding="14,7"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="6,6,0,0">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#33466B9E" />
+                            </Border.BorderBrush>
+                            <Border.Background>
+                                <SolidColorBrush Color="#1A8CB8DE" />
+                            </Border.Background>
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ContentSource="Header"
+                                RecognizesAccessKey="True"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                        <!--  Icicle underline that grows downward when selected  -->
+                        <Path
+                            x:Name="IcicleLine"
+                            Grid.Row="1"
+                            Height="11"
+                            Margin="6,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            Data="M0,0 L40,0 L40,1.6 L36,1.6 L34,8 L32,1.6 L26,1.6 L24,11 L22,1.6 L16,1.6 L14,6.5 L12,1.6 L6,1.6 L5,9 L4,1.6 L0,1.6 Z"
+                            Fill="#9FE6FF"
+                            IsHitTestVisible="False"
+                            RenderTransformOrigin="0.5,0"
+                            Stretch="Fill">
+                            <Path.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="0" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#3BAFD8F2"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#7F9FE6FF"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ThemeAccentBrush}" />
+                            <Setter Property="Panel.ZIndex" Value="2" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IcicleLine"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            To="#52BFE8FF"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IcicleLine"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Cap"
+                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  LISTBOX / LISTBOXITEM — breath-fog hover highlight  -->
+    <!--  ============================================================  -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource ThemeCardBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ThemeBorderBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border
+                        x:Name="Shell"
+                        Padding="3"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="7"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <ScrollViewer Focusable="False">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Shell" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid x:Name="Root" SnapsToDevicePixels="True">
+                        <!--  Breath fog on hover  -->
+                        <Rectangle
+                            x:Name="HoverFog"
+                            Opacity="0"
+                            RadiusX="5"
+                            RadiusY="5">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Offset="0" Color="#36DFF2FF" />
+                                    <GradientStop Offset="1" Color="#12DFF2FF" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle
+                            x:Name="SelGlaze"
+                            Fill="#2E6FE3FF"
+                            Opacity="0"
+                            RadiusX="5"
+                            RadiusY="5" />
+                        <!--  Icy selection bar  -->
+                        <Rectangle
+                            x:Name="SelBar"
+                            Width="3"
+                            Margin="1,3"
+                            HorizontalAlignment="Left"
+                            Fill="#9FE6FF"
+                            RadiusX="1.5"
+                            RadiusY="1.5"
+                            RenderTransformOrigin="0.5,0.5">
+                            <Rectangle.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="0" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <ContentPresenter
+                            Margin="11,5"
+                            VerticalAlignment="Center"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HoverFog"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.22">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="HoverFog"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource ThemeAccentBrush}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelGlaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelBar"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelGlaze"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="SelBar"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ============================================================  -->
+    <!--  EXPANDER — ice door cracks open; header carries the  -->
+    <!--  signature perpetual snowfall (ambient animation)  -->
+    <!--  ============================================================  -->
+    <Style x:Key="WinterExpanderHeaderStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WinterFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border
+                        x:Name="Bar"
+                        Padding="12,8"
+                        BorderThickness="1.2"
+                        CornerRadius="6"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#4A6FA5" />
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="#33EAF6FF" />
+                                <GradientStop Offset="1" Color="#268CB8DE" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <DockPanel>
+                            <Path
+                                x:Name="Arrow"
+                                Width="7"
+                                Height="11"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                Data="M0,0 L6,5.5 L0,11"
+                                DockPanel.Dock="Left"
+                                RenderTransformOrigin="0.5,0.5"
+                                Stretch="Uniform"
+                                StrokeThickness="1.6">
+                                <Path.Stroke>
+                                    <SolidColorBrush Color="#9FE6FF" />
+                                </Path.Stroke>
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
+                            <!--  Signature ambient: perpetual snowfall  -->
+                            <Canvas
+                                x:Name="SnowZone"
+                                Width="22"
+                                Height="18"
+                                VerticalAlignment="Center"
+                                ClipToBounds="True"
+                                DockPanel.Dock="Right"
+                                IsHitTestVisible="False">
+                                <Ellipse
+                                    x:Name="Flake1"
+                                    Canvas.Left="3"
+                                    Canvas.Top="-4"
+                                    Width="2.6"
+                                    Height="2.6"
+                                    Fill="#CFFFFFFF">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform Y="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Ellipse
+                                    x:Name="Flake2"
+                                    Canvas.Left="10"
+                                    Canvas.Top="-4"
+                                    Width="2"
+                                    Height="2"
+                                    Fill="#9FDFF2FF">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform Y="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                                <Ellipse
+                                    x:Name="Flake3"
+                                    Canvas.Left="16"
+                                    Canvas.Top="-4"
+                                    Width="3"
+                                    Height="3"
+                                    Fill="#B8FFFFFF">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform Y="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Canvas>
+                            <ContentPresenter
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="Flake1"
+                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                        From="0"
+                                        To="24"
+                                        Duration="0:0:2.8" />
+                                    <DoubleAnimation
+                                        BeginTime="0:0:0.9"
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="Flake2"
+                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                        From="0"
+                                        To="24"
+                                        Duration="0:0:3.7" />
+                                    <DoubleAnimation
+                                        BeginTime="0:0:1.7"
+                                        RepeatBehavior="Forever"
+                                        Storyboard.TargetName="Flake3"
+                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                        From="0"
+                                        To="24"
+                                        Duration="0:0:4.5" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#9FE6FF"
+                                            Duration="0:0:0.2">
+                                            <ColorAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            To="#4DEAF6FF"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            Duration="0:0:0.25" />
+                                        <ColorAnimation
+                                            Storyboard.TargetName="Bar"
+                                            Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Arrow"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            To="90"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Arrow"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeTextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Grid x:Name="Root" SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ToggleButton
+                            x:Name="HeaderSite"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource WinterExpanderHeaderStyle}" />
+                        <Border
+                            x:Name="ContentSite"
+                            Grid.Row="1"
+                            Margin="0,4,0,0"
+                            Background="{StaticResource ThemeCardBrush}"
+                            BorderBrush="{StaticResource ThemeBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Opacity="0"
+                            Visibility="Collapsed">
+                            <Border.RenderTransform>
+                                <TranslateTransform Y="-8" />
+                            </Border.RenderTransform>
+                            <ContentPresenter Margin="4" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentSite"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <SineEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentSite"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                            To="0"
+                                            Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentSite"
+                                            Storyboard.TargetProperty="Opacity"
+                                            Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ContentSite"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                            Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -24,3 +24,14 @@ dotnet "${CLAUDE_PLUGIN_ROOT}/scripts/SetWpfDevPackRepoPath.cs" "$0" "$1"
 Surface the app's output verbatim, including any `!` warnings (path missing,
 no `.git`, etc.). After it succeeds, tell the user the WpfDevPackMcp tools
 are now usable and that the server will clone/pull the repo as needed.
+
+## Companion skills
+
+- `/wpf-dev-pack:show-wpf-dev-pack-config` — view the current config.json /
+  state.json paths and values (and any `WPFDEVPACK_REPO_PATH` env override).
+- `/wpf-dev-pack:set-repo-branch <branch>` — change the tracked branch
+  (preserves repoPath).
+- `/wpf-dev-pack:set-repo-managed <true|false>` — control whether refresh
+  hard-resets the clone. Set `false` if you ever point `repoPath` at your own
+  working repo, so a refresh cannot `git reset --hard` your working tree.
+

@@ -126,6 +126,12 @@ Define styles in independent XAML files for each control:
 </ResourceDictionary>
 ```
 
+> The `ControlTemplate.Triggers` above only *set* a static value on hover. To
+> animate state changes — `Trigger.EnterActions`/`ExitActions` hosting
+> Storyboards, ambient looping signatures, or `VisualStateManager` for a custom
+> control's Parts & States contract — see
+> [`animating-wpf-controltemplates`](../animating-wpf-controltemplates/TOPIC.md).
+
 ## Real Project Example
 
 ### Generic.xaml Example

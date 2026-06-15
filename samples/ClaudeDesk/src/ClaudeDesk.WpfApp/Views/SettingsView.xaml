@@ -1,0 +1,60 @@
+﻿<UserControl
+    x:Class="ClaudeDesk.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:ClaudeDesk.Behaviors"
+    xmlns:converters="clr-namespace:ClaudeDesk.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ClaudeDesk.ViewModels;assembly=ClaudeDesk.ViewModels"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+    mc:Ignorable="d">
+    <StackPanel
+        MaxWidth="420"
+        Margin="16"
+        HorizontalAlignment="Left">
+        <TextBlock
+            Margin="0,0,0,4"
+            FontWeight="Bold"
+            Text="Provider" />
+        <ComboBox
+            AutomationProperties.AutomationId="ProviderCombo"
+            ItemsSource="{Binding Providers}"
+            SelectedItem="{Binding Provider}" />
+
+        <TextBlock
+            Margin="0,12,0,4"
+            FontWeight="Bold"
+            Text="Model id" />
+        <TextBox AutomationProperties.AutomationId="ModelIdBox" Text="{Binding ModelId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!--  Base URL only where meaningful for the selected provider  -->
+        <StackPanel Visibility="{Binding ShowBaseUrl, Converter={converters:BoolToVisibilityConverter}}">
+            <TextBlock
+                Margin="0,12,0,4"
+                FontWeight="Bold"
+                Text="Base URL (optional)" />
+            <TextBox AutomationProperties.AutomationId="BaseUrlBox" Text="{Binding BaseUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  API key: PasswordBox.Password is not a DP — attached behavior, OneWayToSource  -->
+        <StackPanel Visibility="{Binding ShowApiKey, Converter={converters:BoolToVisibilityConverter}}">
+            <TextBlock
+                Margin="0,12,0,4"
+                FontWeight="Bold"
+                Text="API key (stored in Windows Credential Manager)" />
+            <PasswordBox behaviors:PasswordBoxAssistant.BoundPassword="{Binding ApiKey, Mode=OneWayToSource}" AutomationProperties.AutomationId="ApiKeyBox" />
+        </StackPanel>
+
+        <Button
+            Margin="0,16,0,0"
+            HorizontalAlignment="Left"
+            AutomationProperties.AutomationId="SaveSettingsButton"
+            Command="{Binding SaveCommand}"
+            Content="Save" />
+        <TextBlock
+            Margin="0,8,0,0"
+            Foreground="Green"
+            Text="{Binding Status}" />
+    </StackPanel>
+</UserControl>
