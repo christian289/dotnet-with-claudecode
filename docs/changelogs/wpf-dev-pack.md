@@ -10,6 +10,38 @@ skill only. Do not edit `version` fields by hand — see the repository
 
 ---
 
+## v1.7.4
+
+### Added
+- **Streaming LLM chat skills** — `make-wpf-chatclient` (one-button full client)
+  plus four component scaffolders: `make-wpf-chatclient-factory`,
+  `make-wpf-chat-orchestrator`, `make-wpf-chat-bubble-template`,
+  `make-wpf-markdown-presenter`.
+- **MCP configuration skills** — `show-wpf-dev-pack-config` (prints the
+  `config.json` / `state.json` paths + values and env overrides),
+  `set-repo-branch` (sets the tracked branch in `config.json`, preserving
+  repoPath), `set-repo-managed` (sets the server-managed flag in `state.json`
+  that controls destructive `git reset --hard` vs non-destructive refresh).
+- **`WpfAuthoringRulesLoader` SessionStart hook** — injects enforced WPF
+  ControlTemplate / Style / animation authoring rules into every session
+  (required `PART_` names, animation safety, Setter-on-Freezable → MC4111,
+  `StaticResource` forward-reference, the `(UIElement.Children)[n]` path trap,
+  enter/exit pairing, runtime verification). Plugin `.claude/rules` are not
+  auto-loaded for installed users, so the rules ship as a hook.
+- **Knowledge topics** (served on demand via WpfDevPackMcp):
+  `animating-wpf-controltemplates`, `building-swappable-wpf-themes`,
+  `setting-up-flaui-ui-tests`, `hosting-extensions-ai-chatclient-in-wpf-mvvm`,
+  `sharing-httpclient-across-llm-sdks`, `consuming-mcp-tools-in-extensions-ai`,
+  `rendering-markdown-in-wpf`, `displaying-selectable-rich-text-in-wpf`,
+  `styling-chat-bubbles-in-wpf`, `storing-api-keys-and-binding-passwordbox-in-wpf`,
+  `building-a-provider-settings-panel`.
+
+### Changed
+- `make-wpf-custom-control` cross-links the new `animating-wpf-controltemplates`
+  topic; several existing topics gained cross-links to it.
+- hooks `README.md` / `README.ko.md` and `skills/.claude/CLAUDE.md` routing table
+  updated for the new hook and skills.
+
 ## v1.7.3
 
 ### Fixed

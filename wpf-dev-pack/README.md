@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.7.3-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.7.4-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**11 Skills** · **10 Specialized Agents** · **2 MCP Servers**
+**19 Skills** · **10 Specialized Agents** · **2 MCP Servers**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **11 command Skills** + on-demand WPF knowledge via MCP
+- **19 command Skills** + on-demand WPF knowledge via MCP
 - **Best practices** built-in
 
 </td>
@@ -246,7 +246,7 @@ For complex tasks, a specialized agent is recommended (e.g. `wpf-performance-opt
 
 ### Command Skills vs Knowledge
 
-- **Command skills** (`/wpf-dev-pack:<name>`) — slash-invocable generators and plugin operations (11 bundled; see **Skills & Knowledge** below).
+- **Command skills** (`/wpf-dev-pack:<name>`) — slash-invocable generators and plugin operations (19 bundled; see **Skills & Knowledge** below).
 - **Knowledge topics** — reference content served by WpfDevPackMcp; kept out of the session skill listing (no per-session context cost).
 
 ---
@@ -294,7 +294,7 @@ For complex tasks, a specialized agent is recommended (e.g. `wpf-performance-opt
 > as plain Markdown. See [`mcp/README.md`](../mcp/README.md) and
 > [`/wpf-dev-pack:set-repo-path`](#-configuration).
 
-The plugin bundles **11 command skills** (slash-invocable):
+The plugin bundles **19 command skills** (slash-invocable):
 
 <details>
 <summary><b>🏗️ Scaffolding (7 skills)</b></summary>
@@ -312,6 +312,19 @@ The plugin bundles **11 command skills** (slash-invocable):
 </details>
 
 <details>
+<summary><b>💬 LLM Chat (5 skills)</b></summary>
+
+| Skill | Description |
+|-------|-------------|
+| `make-wpf-chatclient` | One-button streaming LLM chat client (full surface) |
+| `make-wpf-chatclient-factory` | Provider-agnostic IChatClient factory (shared SocketsHttpHandler) + MockChatClient |
+| `make-wpf-chat-orchestrator` | Streaming chat orchestrator (UI-agnostic events) + MCP tool acquisition |
+| `make-wpf-chat-bubble-template` | Role-differentiated chat bubble templates |
+| `make-wpf-markdown-presenter` | Markdig → selectable FlowDocument markdown presenter |
+
+</details>
+
+<details>
 <summary><b>🎨 Code Quality (1 skill)</b></summary>
 
 | Skill | Description |
@@ -321,13 +334,16 @@ The plugin bundles **11 command skills** (slash-invocable):
 </details>
 
 <details>
-<summary><b>🔧 Plugin Operations (3 skills)</b></summary>
+<summary><b>🔧 Plugin Operations (6 skills)</b></summary>
 
 | Skill | Description |
 |-------|-------------|
 | `collecting-wpf-dev-pack-feedback` | Capture anonymized feedback docs for later application |
 | `configuring-wpf-dev-pack-language` | Set the per-project response language (`.claude/wpf-dev-pack.local.md`) |
 | `set-repo-path` | Configure the local repo-clone path WpfDevPackMcp reads knowledge from |
+| `set-repo-branch` | Set the git branch WpfDevPackMcp tracks (`config.json`) |
+| `set-repo-managed` | Set the server-managed flag (`state.json`) — destructive vs non-destructive refresh |
+| `show-wpf-dev-pack-config` | Show the WpfDevPackMcp `config.json` / `state.json` paths and values |
 
 </details>
 
@@ -350,7 +366,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 11 command skills
+├── 📁 skills/                 # 19 command skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md
