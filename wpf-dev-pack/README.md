@@ -119,10 +119,7 @@ wpf-dev-pack agents require the following Claude Code plugins to be installed se
 |--------|-----------|---------|
 | **[context7](https://github.com/upstash/context7)** | context7 | Up-to-date library/framework documentation |
 | **[microsoft-docs](https://github.com/MicrosoftDocs/mcp)** | microsoft-learn | Official Microsoft documentation and code samples |
-
-> **C# LSP**: wpf-dev-pack now bundles its own `.lsp.json` (C# language server config),
-> so the separate `csharp-lsp` plugin is no longer required. You only need the
-> `csharp-ls` binary on your PATH — see [C# LSP](#c-lsp-required-for-intellisense).
+| **[csharp-lsp](https://github.com/razzmatazz/csharp-language-server)** | csharp | C# Language Server Protocol (definition, references, diagnostics) |
 
 ### Required MCPs
 
@@ -282,7 +279,7 @@ For complex tasks, a specialized agent is recommended (e.g. `wpf-performance-opt
 | **context7** | context7 | Library/framework documentation |
 | _(direct MCP via `uv`)_ | **serena** | Semantic code analysis |
 | **microsoft-docs** | microsoft-learn | Official Microsoft documentation |
-| _(bundled `.lsp.json`)_ | csharp (`csharp-ls`) | C# LSP code intelligence |
+| **csharp-lsp** | csharp | C# LSP code intelligence |
 
 > See [Required Plugin Dependencies](#required-plugin-dependencies) and [Required MCPs](#required-mcps) for installation. Serena is **not** a Claude Code plugin — install it directly as an MCP server via `uv`.
 
@@ -371,6 +368,8 @@ wpf-dev-pack/
 │   └── serena-initializer.md
 ├── 📁 skills/                 # 19 command skills + 9 wpf-rule-* preload skills
 ├── 📁 hooks/                  # Event hooks
+├── 📁 themes/                 # Color themes (experimental) — .NET Purple dark/light
+├── 📁 monitors/               # Background monitors (experimental) — build watch
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md
 └── 📄 LICENSE
@@ -391,16 +390,9 @@ uvx --from git+https://github.com/oraios/serena serena start-mcp-server
 
 ### C# LSP (Required for IntelliSense)
 
-wpf-dev-pack bundles a `.lsp.json` that configures the C# language server, so no
-separate LSP plugin is needed. Install the `csharp-ls` binary (a .NET global tool):
-
 ```bash
-dotnet tool install -g csharp-ls
+claude /install-plugin csharp-lsp
 ```
-
-If `csharp-ls` is not on your PATH, Claude Code shows
-`Executable not found in $PATH` in the `/plugin` Errors tab; the rest of the plugin
-still works without LSP code intelligence.
 
 ---
 
