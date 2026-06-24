@@ -17,5 +17,9 @@
     "customcontrol",
     "communitytoolkit",
     "prism"
-  ]
+  ],
+  "experimental": {
+    "themes": "./themes/",
+    "monitors": "./monitors/monitors.json"
+  }
 }

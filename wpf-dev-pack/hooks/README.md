@@ -13,7 +13,7 @@ Event hooks that run automatically during Claude Code operations.
 | **WpfAuthoringRulesLoader** | SessionStart | Injects an always-on, enforced rule set for authoring WPF ControlTemplates / Styles / animations (required `PART_` names per stock control, animation safety, Setter-on-Freezable → MC4111, `StaticResource` forward-reference, the `(UIElement.Children)[n]` path trap, runtime verification). Plugin-bundled rules are not auto-loaded for installed users, so these ship as a hook. Full detail in the `animating-wpf-controltemplates` MCP topic. |
 | **HandMirrorReminder** | PreToolUse (context7 / Microsoft Learn) | When a .NET/NuGet documentation lookup runs, reminds the agent to verify exact namespaces/signatures with HandMirrorMcp before writing code. |
 | **RepoPathGuard** | PreToolUse (WpfDevPackMcp) | Blocks `WpfDevPackMcp` tool calls when the knowledge repo path is unconfigured, instructing the user to run `/wpf-dev-pack:set-repo-path`. |
-| **McpDependencyChecker** | UserPromptSubmit | Checks for required MCP servers (context7, serena, microsoft-learn) once per session and warns if any are missing. |
+| **McpDependencyChecker** | UserPromptSubmit | Checks for required MCP servers (context7, serena, microsoft-learn, csharp-lsp) once per session and warns if any are missing. |
 | **XamlValidator** | PostToolUse (Edit/Write `*.xaml`) | Validates XAML syntax after edits. |
 | **MvvmViolationDetector** | PostToolUse (Edit/Write `*.cs`) | Flags MVVM layer violations (e.g. `System.Windows` UI types in a ViewModel) after C# edits. |
 | **CodeFormatter** | PostToolUse (Edit/Write `*.cs` / `*.xaml`) | Formats C# (`dotnet format`) and XAML (XamlStyler) after file modifications. |

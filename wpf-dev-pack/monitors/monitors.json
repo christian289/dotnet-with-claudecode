@@ -1,0 +1,8 @@
+[
+  {
+    "name": "wpf-build-watch",
+    "command": "dotnet watch build",
+    "description": "Live WPF/.NET build errors; rebuilds on file change (experimental)",
+    "when": "on-skill-invoke:make-wpf-project"
+  }
+]

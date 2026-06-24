@@ -36,7 +36,7 @@ Review WPF code quality and provide improvement suggestions. Operate in read-onl
 
 ## C# LSP Integration
 
-Use the C# LSP (`csharp-ls`) tools for enhanced code analysis:
+Use the csharp-lsp tools for enhanced code analysis:
 
 | Tool | Purpose |
 |------|---------|
@@ -53,7 +53,7 @@ Use the C# LSP (`csharp-ls`) tools for enhanced code analysis:
 3. **Type Checking**: Use `hover` to verify property types and inheritance
 4. **Error Detection**: Use `diagnostic` to identify compile-time issues
 
-> **Prerequisite**: Requires the `csharp-ls` binary (`dotnet tool install -g csharp-ls`). wpf-dev-pack bundles the `.lsp.json` config, so no separate LSP plugin is needed.
+> **Prerequisite**: Requires `csharp-lsp` plugin from Claude Code marketplace.
 
 ## Shared Rules
 
