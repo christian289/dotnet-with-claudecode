@@ -82,7 +82,7 @@ composition style을 강제합니다. 두 경로 모두 **Stateful ViewModel**�
 CurrentViewModel = new HomeViewModel();  // ViewModel 인스턴스가 lookup key
 ```
 
-상세: [`view-viewmodel-wiring-communitytoolkit.md`](../.claude/rules/view-viewmodel-wiring-communitytoolkit.md)
+상세: [`wpf-rule-view-viewmodel-wiring-communitytoolkit`](../skills/wpf-rule-view-viewmodel-wiring-communitytoolkit/SKILL.md)
 
 ### 2.2 Prism 9 경로 (대안)
 
@@ -99,7 +99,7 @@ containerRegistry.RegisterForNavigation<HomeView, HomeViewModel>();
 _regionManager.RequestNavigate("ContentRegion", "HomeView");  // View name이 lookup key
 ```
 
-상세: [`view-viewmodel-wiring-prism.md`](../.claude/rules/view-viewmodel-wiring-prism.md)
+상세: [`wpf-rule-view-viewmodel-wiring-prism`](../skills/wpf-rule-view-viewmodel-wiring-prism/SKILL.md)
 
 ### 2.3 두 경로의 공통점
 
@@ -113,7 +113,7 @@ _regionManager.RequestNavigate("ContentRegion", "HomeView");  // View name이 lo
 
 ## 3. 명시적으로 금지하는 패턴
 
-전체 규칙은 [`prohibitions.md`](../.claude/rules/prohibitions.md) 참조.
+전체 규칙은 [`wpf-rule-prohibitions`](../skills/wpf-rule-prohibitions/SKILL.md) 스킬 참조.
 
 요약:
 

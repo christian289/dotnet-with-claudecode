@@ -1,5 +1,8 @@
 ---
 name: wpf-architect
+skills:
+  - wpf-rule-mvvm-constraints
+  - wpf-rule-resourcedictionary-patterns
 description: Strategic WPF architecture advisor. Analyzes solution/project structure, reviews MVVM architecture, performs dependency analysis. Provides analysis and recommendations without modifying code.
 color: blue
 tools: Read, Glob, Grep, WebSearch, AskUserQuestion, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__get_symbols_overview, mcp__serena__search_for_pattern
@@ -33,8 +36,11 @@ Act as an Oracle providing WPF architecture analysis and recommendations. Operat
 
 ## Shared Rules
 
-@rules/mvvm-constraints.md
-@rules/resourcedictionary-patterns.md
+These rules are preloaded into your context at startup (see frontmatter `skills`).
+Apply them throughout:
+
+- mvvm-constraints
+- resourcedictionary-patterns
 
 ## Project Structure
 

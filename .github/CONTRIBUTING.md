@@ -125,6 +125,53 @@ the Applied Log directly.
 - Choose appropriate model tier (haiku/sonnet/opus)
 - Minimize overlap with other agents
 
+### Adding wpf-dev-pack Components
+
+> These recipes previously lived in the plugin-internal `CLAUDE.md` files, which
+> are not loaded for installed users and have been removed. They are maintainer
+> instructions for this repository, so they live here.
+
+**Adding a knowledge topic** (WPF knowledge served via the WpfDevPackMcp MCP — NOT a
+plugin skill):
+
+1. Create `knowledge/<id>/TOPIC.md` at the repo root (outside the plugin, so it is
+   not bundled). **No YAML frontmatter.** The first `# H1` is the title; put a
+   one-line `> summary` blockquote directly under the H1 — the MCP catalog
+   (`TopicDocReader`) reads the title from the first H1 and the summary from the
+   first `>` blockquote.
+2. No router edit, no plugin-skill registration, no plugin version bump, and no MCP
+   republish — the MCP catalog auto-discovers the new directory and
+   `search_wpf_topics` surfaces it on the next `git pull` (the server reads
+   knowledge content live).
+
+**Adding a command skill** (slash-invocable plugin skill under `skills/`):
+
+When adding `skills/<skill-name>/SKILL.md`, also:
+
+1. **Cross-link adjacent SKILL.md files** — when topics overlap, add a cross-link to
+   the new skill (`See [...](../skill-name/SKILL.md)`). (Skills are auto-discovered by
+   their `description`; there is no manual skill registry to update.)
+2. **Author a `PRISM.md` companion** for skills that need a Prism 9 branch (see the
+   MVVM-framework knowledge topic).
+3. **Foundation + Application skill pairs** — author the two skills separately and
+   cross-reference. The Foundation skill describes the mechanism / general principle;
+   the Application skill applies it to a specific scenario (e.g.,
+   `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`).
+
+**Adding a WPF rule.** Detailed WPF authoring rules ship as preloadable skills under
+`skills/wpf-rule-<name>/SKILL.md` with `user-invocable: false` (hidden from the `/`
+menu, but Claude-invocable so they can preload — do **not** set
+`disable-model-invocation`, which blocks preloading). Agents pull the rules they need
+via the `skills:` frontmatter field, which injects the full skill content into the
+subagent at startup (deterministic; plugin agents ignore `hooks` and `.claude/rules`
+is not auto-loaded). To add a rule: create the `wpf-rule-<name>` skill, then add its
+name to the `skills:` list of each agent that should enforce it.
+
+> Shipping a new command skill or hook changes bundled plugin content, so finish the
+> work and then run `/wpf-dev-pack-release` to bump the version. Knowledge-only edits
+> under `knowledge/` need no version bump. See the root `.claude/CLAUDE.md`
+> "Plugin Version Update Checklist".
+
 ## Code of Conduct
 
 Please follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).

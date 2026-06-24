@@ -1,9 +1,9 @@
 {
-  "description": "WPF Dev Pack hooks - .NET SDK version check, MCP dependency check, XAML validation, MVVM violation detection, build error diagnosis, code formatting, HandMirror API verification reminder, per-project language preference loader, and WPF ControlTemplate/Style/animation authoring-rules injection (SessionStart) (C# file-based apps, .NET SDK 10.0.300+ required). Note: feedback document anonymity audit and Microsoft skill creator reminder are wired through skill frontmatter, not here.",
+  "description": "WPF Dev Pack hooks - .NET SDK version check, MCP dependency check, XAML validation, MVVM violation detection, build error diagnosis, code formatting, HandMirror API verification reminder, per-project language preference loader, core policy injection from context/*.md (SessionStart; matcher includes 'compact' so policy is re-injected after context compaction), and WPF ControlTemplate/Style/animation authoring-rules injection (SessionStart) (C# file-based apps, .NET SDK 10.0.300+ required). Note: feedback document anonymity audit and Microsoft skill creator reminder are wired through skill frontmatter, not here.",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "*",
+        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",
@@ -18,6 +18,11 @@
           {
             "type": "command",
             "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/WpfAuthoringRulesLoader.cs\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "dotnet \"${CLAUDE_PLUGIN_ROOT}/hooks/CorePolicyLoader.cs\"",
             "timeout": 5
           }
         ]

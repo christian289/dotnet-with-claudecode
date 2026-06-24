@@ -156,7 +156,7 @@ Use `ConverterMarkupExtension<T>` pattern for converters to eliminate resource d
 <Button Visibility="{Binding IsVisible, Converter={local:BoolToVisibilityConverter}}"/>
 ```
 
-> **Details**: See `using-converter-markup-extension` skill. Active rule: `.claude/rules/converter-patterns.md`.
+> **Details**: See `using-converter-markup-extension` skill. Active rule: `wpf-rule-converter-patterns` skill.
 
 ---
 

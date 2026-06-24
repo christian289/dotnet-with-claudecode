@@ -1,3 +1,9 @@
+---
+name: wpf-rule-resourcedictionary-patterns
+description: "WPF ResourceDictionary rules: Generic.xaml as MergedDictionaries hub only, per-control style files, resource order."
+user-invocable: false
+---
+
 # ResourceDictionary Patterns
 
 Rules for organizing ResourceDictionary files in WPF custom control libraries.
