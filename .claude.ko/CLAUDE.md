@@ -33,16 +33,17 @@
 
 - 루트 레벨 `CLAUDE.md` (`.claude/CLAUDE.md` ↔ `.claude.ko/CLAUDE.md`).
 - `.claude/rules/` 하위 전 파일 (`.claude.ko/rules/`에 미러링).
-- 플러그인 내부 `<plugin>/.claude/` 및 `<plugin>/<subdir>/.claude/` 하위 CLAUDE.md
-  (대응되는 `<plugin>/.claude.ko/` 또는 `<plugin>/<subdir>/.claude.ko/`에 미러링).
 - `.claude/` 바깥에 위치하는 저장소 노출 문서 — 자동 로드 이슈가 없으므로
   in-place `<name>.ko.md` 접미사를 그대로 사용합니다: `README.md` /
   `README.ko.md`, `.github/` 아래 CONTRIBUTING 쌍,
   `wpf-dev-pack/hooks/` 아래 hooks README 등.
 
-플러그인 번들 `SKILL.md`에는 적용되지 않습니다 — skill 본문은 별도
+플러그인 번들 AI 대상 콘텐츠에는 적용되지 않습니다 — skill 본문 등은 별도
 정책에 따라 영문 단일입니다 (`.claude/rules/claude-skills/best-practices.md`
-참조).
+참조): `SKILL.md` 파일과 `wpf-dev-pack/context/` 아래 세션 주입 정책 문서
+(`CorePolicyLoader` SessionStart 훅이 전달). 플러그인은 `CLAUDE.md`를 갖지
+않습니다 — 플러그인 `CLAUDE.md`는 설치 사용자에게 자동 로드되지 않으므로,
+플러그인 컨텍스트는 skill·agent·hook으로 전달합니다.
 
 ## Directory Layout
 

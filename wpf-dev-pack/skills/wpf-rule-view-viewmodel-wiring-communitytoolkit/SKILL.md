@@ -1,3 +1,9 @@
+---
+name: wpf-rule-view-viewmodel-wiring-communitytoolkit
+description: "View-ViewModel wiring for CommunityToolkit.Mvvm: Mappings.xaml + implicit DataTemplate (ViewModel First)."
+user-invocable: false
+---
+
 <!--
 =============================================================================
 AI Agent Reading Hint — wpf-dev-pack Composition Style Anchor

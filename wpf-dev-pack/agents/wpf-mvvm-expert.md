@@ -1,5 +1,7 @@
 ---
 name: wpf-mvvm-expert
+skills:
+  - wpf-rule-mvvm-constraints
 description: WPF MVVM pattern implementation expert. Implements ViewModel with CommunityToolkit.Mvvm, data binding, ICommand, CollectionView encapsulation.
 color: magenta
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__rename_symbol, mcp__serena__get_symbols_overview
@@ -20,7 +22,10 @@ Design and implement ViewModel following strict MVVM pattern with CommunityToolk
 
 ## Shared Rules
 
-@rules/mvvm-constraints.md
+This rule is preloaded into your context at startup (see frontmatter `skills`).
+Apply it throughout:
+
+- mvvm-constraints
 
 ## Critical Constraints
 

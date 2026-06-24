@@ -1,3 +1,9 @@
+---
+name: wpf-rule-converter-patterns
+description: "WPF IValueConverter rules: MarkupExtension singleton, pure functions, null/UnsetValue handling, TemplateBinding."
+user-invocable: false
+---
+
 # Converter Patterns
 
 Standards for implementing `IValueConverter` in wpf-dev-pack projects.

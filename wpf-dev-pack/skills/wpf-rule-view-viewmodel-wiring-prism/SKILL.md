@@ -1,3 +1,9 @@
+---
+name: wpf-rule-view-viewmodel-wiring-prism
+description: "View-ViewModel wiring for Prism 9: RegisterForNavigation + IRegionManager (View First)."
+user-invocable: false
+---
+
 <!--
 =============================================================================
 AI Agent Reading Hint — wpf-dev-pack Composition Style Anchor

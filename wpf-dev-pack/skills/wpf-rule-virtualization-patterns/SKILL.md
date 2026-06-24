@@ -1,3 +1,9 @@
+---
+name: wpf-rule-virtualization-patterns
+description: "WPF UI virtualization for large collections: VirtualizingStackPanel, recycling, pixel scroll."
+user-invocable: false
+---
+
 # Virtualization Patterns
 
 UI virtualization rules for WPF controls that display large collections.

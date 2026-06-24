@@ -1,5 +1,7 @@
 ---
 name: wpf-xaml-designer
+skills:
+  - wpf-rule-resourcedictionary-patterns
 description: WPF XAML Style/ControlTemplate designer. Configures ResourceDictionary, implements Trigger, VisualStateManager, animation Storyboard.
 color: cyan
 tools: Read, Glob, Grep, Edit, Write, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__search_for_pattern, mcp__serena__replace_content
@@ -18,7 +20,7 @@ Design XAML styles, ControlTemplate, ResourceDictionary organization, and animat
 
 ### ResourceDictionary Structure
 
-@rules/resourcedictionary-patterns.md
+Apply the preloaded `resourcedictionary-patterns` rules (see frontmatter `skills`).
 
 ### Individual Control Style Pattern
 ```xml

@@ -40,18 +40,18 @@ This convention applies to:
 
 - `CLAUDE.md` at root level (`.claude/CLAUDE.md` ↔ `.claude.ko/CLAUDE.md`).
 - Every file under `.claude/rules/` (mirrored under `.claude.ko/rules/`).
-- Plugin-internal CLAUDE.md files under `<plugin>/.claude/` and
-  `<plugin>/<subdir>/.claude/` (mirrored under
-  `<plugin>/.claude.ko/` and `<plugin>/<subdir>/.claude.ko/`
-  respectively).
 - Repository-facing documents that live outside `.claude/` — these use
   the in-place `<name>.ko.md` suffix because they have no auto-load
   concern: `README.md` / `README.ko.md`, the CONTRIBUTING pair under
   `.github/`, the hooks READMEs under `wpf-dev-pack/hooks/`, etc.
 
-It does not apply to plugin-bundled `SKILL.md` files, which are
+It does not apply to plugin-bundled, AI-facing content, which is
 English-only by skill-content policy (see
-`.claude/rules/claude-skills/best-practices.md`).
+`.claude/rules/claude-skills/best-practices.md`): `SKILL.md` files and
+the session-injected policy docs under `wpf-dev-pack/context/` (delivered
+by the `CorePolicyLoader` SessionStart hook). Plugins do not carry
+`CLAUDE.md` files — a plugin `CLAUDE.md` is not auto-loaded for installed
+users, so plugin context ships through skills, agents, and hooks instead.
 
 ## Directory Layout
 

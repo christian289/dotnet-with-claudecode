@@ -84,7 +84,7 @@ Concrete mechanism: implicit DataTemplate mapping via `Mappings.xaml`.
 CurrentViewModel = new HomeViewModel();  // the ViewModel instance is the lookup key
 ```
 
-Details: [`view-viewmodel-wiring-communitytoolkit.md`](../.claude/rules/view-viewmodel-wiring-communitytoolkit.md)
+Details: [`wpf-rule-view-viewmodel-wiring-communitytoolkit`](../skills/wpf-rule-view-viewmodel-wiring-communitytoolkit/SKILL.md)
 
 ### 2.2 Prism 9 path (alternative)
 
@@ -101,7 +101,7 @@ containerRegistry.RegisterForNavigation<HomeView, HomeViewModel>();
 _regionManager.RequestNavigate("ContentRegion", "HomeView");  // View name is the lookup key
 ```
 
-Details: [`view-viewmodel-wiring-prism.md`](../.claude/rules/view-viewmodel-wiring-prism.md)
+Details: [`wpf-rule-view-viewmodel-wiring-prism`](../skills/wpf-rule-view-viewmodel-wiring-prism/SKILL.md)
 
 ### 2.3 Shared
 
@@ -116,7 +116,7 @@ Details: [`view-viewmodel-wiring-prism.md`](../.claude/rules/view-viewmodel-wiri
 
 ## 3. Explicitly Prohibited Patterns
 
-Full rules live in [`prohibitions.md`](../.claude/rules/prohibitions.md).
+Full rules live in the [`wpf-rule-prohibitions`](../skills/wpf-rule-prohibitions/SKILL.md) skill.
 
 Summary:
 

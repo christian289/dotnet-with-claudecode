@@ -1,3 +1,9 @@
+---
+name: wpf-rule-mvvm-constraints
+description: "WPF MVVM layer-separation rules: no System.Windows in ViewModels, BCL-only types, CommunityToolkit.Mvvm base classes. Preloaded into MVVM-related wpf-dev-pack agents."
+user-invocable: false
+---
+
 # MVVM Constraints
 
 Rules for enforcing strict MVVM layer separation in wpf-dev-pack projects.

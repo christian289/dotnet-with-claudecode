@@ -1,3 +1,9 @@
+---
+name: wpf-rule-rendering-antipatterns
+description: "WPF rendering anti-patterns: no InvalidateVisual in loops, no resource allocation in OnRender."
+user-invocable: false
+---
+
 # Rendering Anti-Patterns
 
 Common WPF rendering mistakes that cause performance problems or visual corruption.

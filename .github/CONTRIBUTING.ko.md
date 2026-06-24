@@ -123,6 +123,45 @@ git commit -m "feat: add new skill for XYZ"
 - 적절한 모델 등급 선택 (haiku/sonnet/opus)
 - 다른 에이전트와의 중복 최소화
 
+### wpf-dev-pack 구성요소 추가
+
+> 이 레시피들은 이전에 플러그인 내부 `CLAUDE.md` 파일에 있었습니다. 해당 파일들은 설치 사용자에게
+> 로드되지 않아 제거되었고, 이 레포 메인테이너용 지침이므로 여기로 옮겼습니다.
+
+**지식 토픽 추가** (WpfDevPackMcp MCP로 제공되는 WPF 지식 — 플러그인 스킬이 *아님*):
+
+1. 레포 루트의 `knowledge/<id>/TOPIC.md`를 생성합니다(플러그인 외부이므로 번들되지 않음).
+   **YAML frontmatter 없음.** 첫 번째 `# H1`이 제목이고, H1 바로 아래에 한 줄짜리 `> summary`
+   blockquote를 둡니다 — MCP 카탈로그(`TopicDocReader`)가 첫 H1에서 제목을, 첫 `>` blockquote에서
+   요약을 읽습니다.
+2. 라우터 수정·플러그인 스킬 등록·플러그인 버전 범프·MCP 재배포 모두 불필요 — MCP 카탈로그가 새
+   디렉터리를 자동 발견하고 `search_wpf_topics`가 다음 `git pull` 시 노출합니다(서버가 지식 콘텐츠를
+   실시간으로 읽음).
+
+**커맨드 스킬 추가** (`skills/` 아래 슬래시 호출 플러그인 스킬):
+
+`skills/<skill-name>/SKILL.md`를 추가할 때 함께:
+
+1. **인접 SKILL.md 상호 링크** — 토픽이 겹치면 새 스킬로의 상호 링크를 추가합니다
+   (`See [...](../skill-name/SKILL.md)`). (스킬은 `description`으로 자동 발견되므로 수동 스킬
+   레지스트리를 갱신할 필요가 없습니다.)
+2. Prism 9 분기가 필요한 스킬은 **`PRISM.md` 컴패니언**을 작성합니다(MVVM 프레임워크 지식 토픽 참고).
+3. **Foundation + Application 스킬 쌍** — 두 스킬을 별도로 작성하고 상호 참조합니다. Foundation
+   스킬은 메커니즘/일반 원칙을, Application 스킬은 특정 시나리오 적용을 설명합니다(예:
+   `preventing-dispatcher-deadlock` + `shutting-down-wpf-gracefully`).
+
+**WPF 룰 추가.** 상세 WPF 작성 룰은 `skills/wpf-rule-<name>/SKILL.md`에 preload용
+스킬로 배포합니다(`user-invocable: false` — `/` 메뉴에선 숨기되 Claude가 호출 가능해야
+preload되므로 `disable-model-invocation`은 설정하지 마세요; 설정하면 preload가 막힙니다).
+에이전트는 `skills:` frontmatter로 필요한 룰을 가져오며, 이는 서브에이전트 시작 시 스킬
+전체 내용을 결정적으로 주입합니다(플러그인 에이전트는 `hooks`를 무시하고 `.claude/rules`는
+자동 로드되지 않음). 룰 추가 절차: `wpf-rule-<name>` 스킬을 만들고, 이를 적용해야 하는 각
+에이전트의 `skills:` 목록에 이름을 추가합니다.
+
+> 새 커맨드 스킬이나 훅을 추가하면 번들 플러그인 콘텐츠가 바뀌므로, 작업을 마친 뒤
+> `/wpf-dev-pack-release`로 버전을 범프하세요. `knowledge/` 아래 지식 전용 편집은 버전 범프가
+> 필요 없습니다. 루트 `.claude/CLAUDE.md`의 "Plugin Version Update Checklist"를 참고하세요.
+
 ## 행동 강령
 
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)를 준수해주세요.

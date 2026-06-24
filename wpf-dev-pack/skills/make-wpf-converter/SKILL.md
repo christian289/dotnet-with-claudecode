@@ -315,4 +315,4 @@ Fetch with `WpfDevPackMcp get_wpf_topic`:
 - `using-converter-markup-extension` — detailed MarkupExtension pattern (the canonical converter pattern)
 - `advanced-data-binding` — MultiBinding patterns
 
-Plugin rule: `.claude/rules/converter-patterns.md` — MarkupExtension singleton, null/UnsetValue handling, TemplateBinding guidance.
+Plugin rule: `wpf-rule-converter-patterns` skill — MarkupExtension singleton, null/UnsetValue handling, TemplateBinding guidance.

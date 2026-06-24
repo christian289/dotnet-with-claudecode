@@ -1,5 +1,8 @@
 ---
 name: wpf-data-binding-expert
+skills:
+  - wpf-rule-mvvm-constraints
+  - wpf-rule-converter-patterns
 description: WPF data binding specialist. Implements complex bindings (MultiBinding, PriorityBinding), custom converters, validation patterns, and debugging binding issues.
 color: green
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body
@@ -24,8 +27,11 @@ WPF 데이터 바인딩 관련 모든 작업을 담당합니다:
 
 ## Shared Rules
 
-@rules/mvvm-constraints.md
-@rules/converter-patterns.md
+These rules are preloaded into your context at startup (see frontmatter `skills`).
+Apply them throughout:
+
+- mvvm-constraints
+- converter-patterns
 
 ## Critical Constraints
 

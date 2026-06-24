@@ -5,7 +5,7 @@
 // At the start of every Claude Code session where the wpf-dev-pack plugin is
 // installed, this hook injects a compact, ENFORCED rule set for authoring WPF
 // ControlTemplates, Styles, and animations into the session context. Plugin
-// .claude/rules files are NOT auto-loaded for installed users (plugins deliver
+// bundled rule files are NOT auto-loaded for installed users (plugins deliver
 // context only through skills, agents, and hooks), so these always-on rules
 // are shipped as a SessionStart hook.
 //

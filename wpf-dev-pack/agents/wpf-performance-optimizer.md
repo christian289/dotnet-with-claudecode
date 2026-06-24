@@ -1,5 +1,9 @@
 ---
 name: wpf-performance-optimizer
+skills:
+  - wpf-rule-freezable-performance
+  - wpf-rule-rendering-antipatterns
+  - wpf-rule-virtualization-patterns
 description: WPF rendering and performance optimization specialist. Implements DrawingContext, DrawingVisual, VirtualizingStackPanel, Freezable patterns, memory optimization.
 color: red
 tools: Read, Glob, Grep, Edit, Write, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__microsoft-learn, mcp__serena__find_symbol, mcp__serena__find_referencing_symbols, mcp__serena__replace_symbol_body, mcp__serena__get_symbols_overview
@@ -89,15 +93,15 @@ public class VisualHost : FrameworkElement
 
 ### Freezable Pattern
 
-@rules/freezable-performance.md
+Apply the preloaded `freezable-performance` rules (see frontmatter `skills`).
 
 ### Rendering Best Practices
 
-@rules/rendering-antipatterns.md
+Apply the preloaded `rendering-antipatterns` rules.
 
 ### VirtualizingStackPanel Pattern
 
-@rules/virtualization-patterns.md
+Apply the preloaded `virtualization-patterns` rules.
 
 ### BitmapCache Pattern
 ```xml

@@ -1,3 +1,9 @@
+---
+name: wpf-rule-freezable-performance
+description: "WPF Freezable performance rules: Freeze() all Brush/Pen/Geometry; create-and-freeze in constructor, reuse in OnRender."
+user-invocable: false
+---
+
 # Freezable Performance
 
 Rules for using `Freeze()` on WPF Freezable objects to maximize rendering performance.

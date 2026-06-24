@@ -1,3 +1,9 @@
+---
+name: wpf-rule-prohibitions
+description: "Banned wpf-dev-pack patterns (P-001..P-004): ViewModelLocator, code-behind DataContext, Stateless ViewModel, mixing composition paths."
+user-invocable: false
+---
+
 # Prohibitions
 
 Items explicitly banned from wpf-dev-pack.
