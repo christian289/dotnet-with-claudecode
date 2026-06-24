@@ -6,12 +6,12 @@
 
 ### The Ultimate WPF Development Toolkit for Claude Code
 
-[![Version](https://img.shields.io/badge/version-1.7.4-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
+[![Version](https://img.shields.io/badge/version-1.8.0-blue.svg)](https://github.com/christian289/dotnet-with-claudecode)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_SDK-10.0.300+-purple.svg)](https://dotnet.microsoft.com/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange.svg)](https://claude.ai)
 
-**19 Skills** · **10 Specialized Agents** · **2 MCP Servers**
+**28 Skills** · **10 Specialized Agents** · **2 MCP Servers**
 
 [Installation](#-installation) · [Quick Start](#-quick-start) · [Features](#-features) · [Documentation](#-documentation)
 
@@ -43,7 +43,7 @@
 <td width="50%">
 
 ### 🛠️ Complete Toolkit
-- **19 command Skills** + on-demand WPF knowledge via MCP
+- **19 command Skills** (+ 9 internal rule-skills preloaded into agents) + on-demand WPF knowledge via MCP
 - **Best practices** built-in
 
 </td>
@@ -297,7 +297,7 @@ For complex tasks, a specialized agent is recommended (e.g. `wpf-performance-opt
 > as plain Markdown. See [`mcp/README.md`](../mcp/README.md) and
 > [`/wpf-dev-pack:set-repo-path`](#-configuration).
 
-The plugin bundles **19 command skills** (slash-invocable):
+The plugin bundles **19 command skills** (slash-invocable), plus **9 internal `wpf-rule-*` skills** (`user-invocable: false`) that are preloaded into the specialized agents — 28 skill folders in total:
 
 <details>
 <summary><b>🏗️ Scaffolding (7 skills)</b></summary>
@@ -369,7 +369,7 @@ wpf-dev-pack/
 │   ├── wpf-performance-optimizer.md
 │   ├── code-formatter.md
 │   └── serena-initializer.md
-├── 📁 skills/                 # 19 command skills
+├── 📁 skills/                 # 19 command skills + 9 wpf-rule-* preload skills
 ├── 📁 hooks/                  # Event hooks
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md
