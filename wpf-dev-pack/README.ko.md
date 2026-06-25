@@ -369,7 +369,7 @@ wpf-dev-pack/
 │   └── serena-initializer.md
 ├── 📁 skills/                 # 19개 커맨드 스킬 + 9개 wpf-rule-* preload 스킬
 ├── 📁 hooks/                  # 이벤트 훅
-├── 📁 themes/                 # 컬러 테마 (실험적) — .NET Purple 다크/라이트
+├── 📁 themes/                 # 컬러 테마 (실험적) — .NET Purple (다크)
 ├── 📁 monitors/               # 백그라운드 모니터 (실험적) — 빌드 워치
 ├── 📄 .mcp.json               # MCP 설정 (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md

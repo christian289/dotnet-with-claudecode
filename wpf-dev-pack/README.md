@@ -368,7 +368,7 @@ wpf-dev-pack/
 │   └── serena-initializer.md
 ├── 📁 skills/                 # 19 command skills + 9 wpf-rule-* preload skills
 ├── 📁 hooks/                  # Event hooks
-├── 📁 themes/                 # Color themes (experimental) — .NET Purple dark/light
+├── 📁 themes/                 # Color themes (experimental) — .NET Purple (dark)
 ├── 📁 monitors/               # Background monitors (experimental) — build watch
 ├── 📄 .mcp.json               # MCP config (HandMirrorMcp + WpfDevPackMcp)
 ├── 📄 README.md

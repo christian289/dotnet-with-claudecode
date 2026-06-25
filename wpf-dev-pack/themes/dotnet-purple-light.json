@@ -1,9 +1,0 @@
-{
-  "name": "wpf-dev-pack .NET Purple (Light)",
-  "base": "light",
-  "overrides": {
-    "claude": "#512BD4",
-    "error": "#CF222E",
-    "success": "#1A7F37"
-  }
-}

@@ -1,8 +1,12 @@
 {
-  "name": "wpf-dev-pack .NET Purple (Dark)",
+  "name": "wpf-dev-pack .NET Purple",
   "base": "dark",
   "overrides": {
-    "claude": "#512BD4",
+    "claude": "#7C59F7",
+    "promptBorder": "#512BD4",
+    "planMode": "#22D3EE",
+    "suggestion": "#22D3EE",
+    "permission": "#F472B6",
     "error": "#F85149",
     "success": "#3FB950"
   }
