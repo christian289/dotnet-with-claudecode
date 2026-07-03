@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PolyLab3DStudio.Core/PolyLab3DStudio.Core.csproj" />
+    <Project Path="src/PolyLab3DStudio.ViewModels/PolyLab3DStudio.ViewModels.csproj" />
+    <Project Path="src/PolyLab3DStudio.WpfApp/PolyLab3DStudio.WpfApp.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,314 @@
+<Window x:Class="PolyLab3DStudio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:PolyLab3DStudio.Core;assembly=PolyLab3DStudio.Core"
+        xmlns:vm="clr-namespace:PolyLab3DStudio.ViewModels;assembly=PolyLab3DStudio.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="폴리랩 3D 스튜디오"
+        Width="1280" Height="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <!-- ===== Header ===== -->
+        <Border Grid.Row="0" Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <DockPanel LastChildFill="False" Margin="16,0">
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="◆" FontSize="18" Foreground="{StaticResource AccentBrush}"
+                               VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBlock Text="폴리랩 3D 스튜디오" FontSize="16" FontWeight="Bold"
+                               Foreground="{StaticResource TextBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="POLYLAB 3D STUDIO" FontSize="10" Margin="12,2,0,0"
+                               Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" />
+                </StackPanel>
+                <Button DockPanel.Dock="Right" Style="{StaticResource ToolButtonStyle}"
+                        Padding="14,6" VerticalAlignment="Center"
+                        Command="{Binding ClearSceneCommand}" Content="장면 비우기" />
+            </DockPanel>
+        </Border>
+
+        <!-- ===== Body ===== -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="260" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: primitive palette + object list -->
+            <Border Grid.Column="0" Background="{StaticResource PanelBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="도형 추가" Style="{StaticResource PanelTitleStyle}" />
+
+                    <UniformGrid DockPanel.Dock="Top" Columns="2" Margin="8,0">
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Cube}">
+                            <StackPanel>
+                                <TextBlock Text="⬛" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="정육면체" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Sphere}">
+                            <StackPanel>
+                                <TextBlock Text="⚫" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="구" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Cylinder}">
+                            <StackPanel>
+                                <TextBlock Text="⬮" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="원기둥" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Cone}">
+                            <StackPanel>
+                                <TextBlock Text="▲" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="원뿔" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Torus}">
+                            <StackPanel>
+                                <TextBlock Text="◎" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="도넛" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Command="{Binding AddPrimitiveCommand}"
+                                CommandParameter="{x:Static core:PrimitiveKind.Plane}">
+                            <StackPanel>
+                                <TextBlock Text="▬" FontSize="16" HorizontalAlignment="Center" />
+                                <TextBlock Text="평면" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                    </UniformGrid>
+
+                    <TextBlock DockPanel.Dock="Top" Text="오브젝트" Style="{StaticResource PanelTitleStyle}" />
+
+                    <StackPanel DockPanel.Dock="Bottom" Margin="8">
+                        <Button Style="{StaticResource ToolButtonStyle}" Padding="0,6"
+                                Command="{Binding DuplicateSelectedCommand}" Content="복제" />
+                        <Button Style="{StaticResource ToolButtonStyle}" Padding="0,6"
+                                Command="{Binding RemoveSelectedCommand}" Content="삭제" />
+                    </StackPanel>
+
+                    <ListBox ItemsSource="{Binding SceneObjects}"
+                             SelectedItem="{Binding SelectedObject, Mode=TwoWay}"
+                             Background="Transparent" BorderThickness="0"
+                             Margin="8,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                <Setter Property="Padding" Value="8,6" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border x:Name="Chrome" Background="Transparent" CornerRadius="6"
+                                                    Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Chrome" Property="Background"
+                                                            Value="{StaticResource PanelAltBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Chrome" Property="Background"
+                                                            Value="{StaticResource PanelAltBrush}" />
+                                                    <Setter TargetName="Chrome" Property="BorderBrush"
+                                                            Value="{StaticResource AccentBrush}" />
+                                                    <Setter TargetName="Chrome" Property="BorderThickness" Value="1" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="10" Height="10" Fill="{Binding ColorHex}"
+                                             VerticalAlignment="Center" Margin="0,0,8,0" />
+                                    <TextBlock Text="{Binding Name}" FontSize="12" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- Center: 3D viewport -->
+            <Border x:Name="ViewportSurface" Grid.Column="1" Background="{StaticResource ViewportBrush}">
+                <Grid>
+                    <Viewport3D x:Name="Viewport">
+                        <Viewport3D.Camera>
+                            <PerspectiveCamera x:Name="Camera" FieldOfView="55" UpDirection="0,1,0" />
+                        </Viewport3D.Camera>
+
+                        <ModelVisual3D>
+                            <ModelVisual3D.Content>
+                                <Model3DGroup>
+                                    <AmbientLight Color="#5A5A66" />
+                                    <DirectionalLight Color="#C8C4BC" Direction="-1,-1.6,-2" />
+                                    <DirectionalLight Color="#3E4452" Direction="1.5,-0.4,1" />
+                                </Model3DGroup>
+                            </ModelVisual3D.Content>
+                        </ModelVisual3D>
+
+                        <!-- Studio floor -->
+                        <ModelVisual3D>
+                            <ModelVisual3D.Content>
+                                <GeometryModel3D>
+                                    <GeometryModel3D.Geometry>
+                                        <MeshGeometry3D
+                                            Positions="-7,-0.75,7 7,-0.75,7 7,-0.75,-7 -7,-0.75,-7"
+                                            TriangleIndices="0 1 2 0 2 3" />
+                                    </GeometryModel3D.Geometry>
+                                    <GeometryModel3D.Material>
+                                        <DiffuseMaterial Brush="#20212B" />
+                                    </GeometryModel3D.Material>
+                                </GeometryModel3D>
+                            </ModelVisual3D.Content>
+                        </ModelVisual3D>
+                    </Viewport3D>
+
+                    <TextBlock Text="드래그: 회전  ·  휠: 확대/축소  ·  클릭: 선택"
+                               Foreground="{StaticResource TextDimBrush}" FontSize="11"
+                               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12" />
+                </Grid>
+            </Border>
+
+            <!-- Right: properties -->
+            <Border Grid.Column="2" Background="{StaticResource PanelBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="속성" Style="{StaticResource PanelTitleStyle}" />
+
+                        <TextBlock Text="선택된 오브젝트가 없습니다"
+                                   Foreground="{StaticResource TextDimBrush}" FontSize="12"
+                                   Margin="12,4" TextWrapping="Wrap">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasSelection}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <StackPanel Margin="12,0"
+                                    Visibility="{Binding HasSelection, Converter={StaticResource BoolToVisibility}}">
+
+                            <TextBlock Text="이름" Style="{StaticResource FieldLabelStyle}" />
+                            <TextBox Text="{Binding SelectedObject.Name, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="{StaticResource PanelAltBrush}"
+                                     Foreground="{StaticResource TextBrush}"
+                                     BorderBrush="{StaticResource BorderBrush}"
+                                     Padding="6,4" Margin="0,0,0,12" CaretBrush="{StaticResource TextBrush}" />
+
+                            <TextBlock Text="위치" Style="{StaticResource PanelTitleStyle}" Margin="0,0,0,4" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.PositionX, StringFormat=X  {0:0.00}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-4" Maximum="4"
+                                    Value="{Binding SelectedObject.PositionX}" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.PositionY, StringFormat=Y  {0:0.00}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-4" Maximum="4"
+                                    Value="{Binding SelectedObject.PositionY}" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.PositionZ, StringFormat=Z  {0:0.00}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-4" Maximum="4"
+                                    Value="{Binding SelectedObject.PositionZ}" />
+
+                            <TextBlock Text="회전 (°)" Style="{StaticResource PanelTitleStyle}" Margin="0,4,0,4" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.RotationX, StringFormat=X  {0:0}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-180" Maximum="180"
+                                    Value="{Binding SelectedObject.RotationX}" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.RotationY, StringFormat=Y  {0:0}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-180" Maximum="180"
+                                    Value="{Binding SelectedObject.RotationY}" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.RotationZ, StringFormat=Z  {0:0}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="-180" Maximum="180"
+                                    Value="{Binding SelectedObject.RotationZ}" />
+
+                            <TextBlock Text="크기" Style="{StaticResource PanelTitleStyle}" Margin="0,4,0,4" />
+                            <TextBlock Style="{StaticResource FieldLabelStyle}"
+                                       Text="{Binding SelectedObject.Scale, StringFormat={}{0:0.00}}" />
+                            <Slider Style="{StaticResource ValueSliderStyle}" Minimum="0.2" Maximum="3"
+                                    Value="{Binding SelectedObject.Scale}" />
+
+                            <TextBlock Text="색상" Style="{StaticResource PanelTitleStyle}" Margin="0,4,0,4" />
+                            <ItemsControl ItemsSource="{x:Static vm:MainViewModel.Palette}" Margin="0,0,0,16">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Command="{Binding DataContext.ApplyColorCommand,
+                                                          RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}"
+                                                Cursor="Hand" Margin="0,0,8,8"
+                                                Background="Transparent" BorderThickness="0" Padding="0">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Width="26" Height="26" CornerRadius="13"
+                                                            Background="{Binding}"
+                                                            BorderBrush="#50FFFFFF" BorderThickness="1" />
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- ===== Status bar ===== -->
+        <Border Grid.Row="2" Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
+            <DockPanel LastChildFill="False" Margin="12,0">
+                <TextBlock DockPanel.Dock="Left" Text="{Binding StatusMessage}"
+                           Foreground="{StaticResource TextDimBrush}" FontSize="11" VerticalAlignment="Center" />
+                <TextBlock DockPanel.Dock="Right"
+                           Text="{Binding ObjectCount, StringFormat=오브젝트 {0}개}"
+                           Foreground="{StaticResource TextDimBrush}" FontSize="11" VerticalAlignment="Center" />
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
