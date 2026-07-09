@@ -1,0 +1,95 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Vector icons transcribed from the design screen's inline SVGs. -->
+
+    <!-- 4x4 pixel grid (raster world). -->
+    <DataTemplate x:Key="RasterIconTemplate">
+        <Canvas Width="44" Height="44">
+            <Rectangle Canvas.Left="4" Canvas.Top="4" Width="8" Height="8" Fill="{StaticResource BorderCardBrush}" />
+            <Rectangle Canvas.Left="13" Canvas.Top="4" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="22" Canvas.Top="4" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="31" Canvas.Top="4" Width="8" Height="8" Fill="{StaticResource BorderCardBrush}" />
+            <Rectangle Canvas.Left="4" Canvas.Top="13" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="13" Canvas.Top="13" Width="8" Height="8" Fill="{StaticResource YellowBrush}" />
+            <Rectangle Canvas.Left="22" Canvas.Top="13" Width="8" Height="8" Fill="{StaticResource YellowBrush}" />
+            <Rectangle Canvas.Left="31" Canvas.Top="13" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="4" Canvas.Top="22" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="13" Canvas.Top="22" Width="8" Height="8" Fill="{StaticResource YellowBrush}" />
+            <Rectangle Canvas.Left="22" Canvas.Top="22" Width="8" Height="8" Fill="{StaticResource YellowBrush}" />
+            <Rectangle Canvas.Left="31" Canvas.Top="22" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="4" Canvas.Top="31" Width="8" Height="8" Fill="{StaticResource BorderCardBrush}" />
+            <Rectangle Canvas.Left="13" Canvas.Top="31" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="22" Canvas.Top="31" Width="8" Height="8" Fill="{StaticResource AccentBrush}" />
+            <Rectangle Canvas.Left="31" Canvas.Top="31" Width="8" Height="8" Fill="{StaticResource BorderCardBrush}" />
+        </Canvas>
+    </DataTemplate>
+
+    <!-- Bezier path with nodes (vector world). -->
+    <DataTemplate x:Key="VectorIconTemplate">
+        <Canvas Width="44" Height="44">
+            <Path Data="M6,34 C14,10 30,10 38,26"
+                  Stroke="{StaticResource AccentBrush}" StrokeThickness="2.5"
+                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+            <Ellipse Canvas.Left="2.5" Canvas.Top="30.5" Width="7" Height="7"
+                     Fill="{StaticResource SurfaceBrush}" Stroke="{StaticResource InkBrush}" StrokeThickness="1.6" />
+            <Ellipse Canvas.Left="34.5" Canvas.Top="22.5" Width="7" Height="7"
+                     Fill="{StaticResource SurfaceBrush}" Stroke="{StaticResource InkBrush}" StrokeThickness="1.6" />
+            <Ellipse Canvas.Left="17" Canvas.Top="11" Width="6" Height="6"
+                     Fill="{StaticResource YellowBrush}" Stroke="{StaticResource InkBrush}" StrokeThickness="1.4" />
+            <Path Data="M6,34 L20,14 M38,26 L20,14"
+                  Stroke="{StaticResource FaintBrush}" StrokeThickness="1" StrokeDashArray="3 3" />
+        </Canvas>
+    </DataTemplate>
+
+    <!-- Wireframe cube (3D world). -->
+    <DataTemplate x:Key="MeshIconTemplate">
+        <Canvas Width="44" Height="44">
+            <Path Data="M22,4 L38,13 L38,31 L22,40 L6,31 L6,13 Z"
+                  Fill="{StaticResource AccentTintBrush}"
+                  Stroke="{StaticResource AccentBrush}" StrokeThickness="2" StrokeLineJoin="Round" />
+            <Path Data="M22,22 L38,13 M22,22 L6,13 M22,22 L22,40"
+                  Stroke="{StaticResource AccentBrush}" StrokeThickness="1.6"
+                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+        </Canvas>
+    </DataTemplate>
+
+    <!-- Header logo: solid orange cube with white edges. -->
+    <DataTemplate x:Key="LogoIconTemplate">
+        <Viewbox Width="22" Height="22">
+            <Canvas Width="24" Height="24">
+                <Path Data="M12,2 L20,6.5 L20,15.5 L12,20 L4,15.5 L4,6.5 Z" Fill="{StaticResource AccentBrush}" />
+                <Path Data="M12,11 L20,6.5 M12,11 L4,6.5 M12,11 L12,20"
+                      Stroke="{StaticResource SurfaceBrush}" StrokeThickness="1.2"
+                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+            </Canvas>
+        </Viewbox>
+    </DataTemplate>
+
+    <!-- Scattered points fading from accent to grey (point cloud). -->
+    <DataTemplate x:Key="PointCloudIconTemplate">
+        <Canvas Width="88" Height="88">
+            <Ellipse Canvas.Left="42" Canvas.Top="14" Width="4" Height="4" Fill="{StaticResource AccentBrush}" />
+            <Ellipse Canvas.Left="28" Canvas.Top="22" Width="4" Height="4" Fill="{StaticResource AccentBrush}" />
+            <Ellipse Canvas.Left="56" Canvas.Top="22" Width="4" Height="4" Fill="{StaticResource AccentBrush}" />
+            <Ellipse Canvas.Left="20" Canvas.Top="34" Width="4" Height="4" Fill="{StaticResource PointWarmBrush}" />
+            <Ellipse Canvas.Left="42" Canvas.Top="28" Width="4" Height="4" Fill="{StaticResource AccentBrush}" />
+            <Ellipse Canvas.Left="64" Canvas.Top="34" Width="4" Height="4" Fill="{StaticResource PointWarmBrush}" />
+            <Ellipse Canvas.Left="14" Canvas.Top="48" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="31" Canvas.Top="40" Width="4" Height="4" Fill="{StaticResource PointWarmBrush}" />
+            <Ellipse Canvas.Left="53" Canvas.Top="40" Width="4" Height="4" Fill="{StaticResource PointWarmBrush}" />
+            <Ellipse Canvas.Left="70" Canvas.Top="48" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="24" Canvas.Top="54" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="42" Canvas.Top="46" Width="4" Height="4" Fill="{StaticResource PointWarmBrush}" />
+            <Ellipse Canvas.Left="60" Canvas.Top="54" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="18" Canvas.Top="66" Width="4" Height="4" Fill="{StaticResource MutedBrush}" />
+            <Ellipse Canvas.Left="34" Canvas.Top="60" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="50" Canvas.Top="60" Width="4" Height="4" Fill="{StaticResource PointSandBrush}" />
+            <Ellipse Canvas.Left="66" Canvas.Top="66" Width="4" Height="4" Fill="{StaticResource MutedBrush}" />
+            <Ellipse Canvas.Left="28" Canvas.Top="72" Width="4" Height="4" Fill="{StaticResource MutedBrush}" />
+            <Ellipse Canvas.Left="42" Canvas.Top="68" Width="4" Height="4" Fill="{StaticResource MutedBrush}" />
+            <Ellipse Canvas.Left="56" Canvas.Top="72" Width="4" Height="4" Fill="{StaticResource MutedBrush}" />
+        </Canvas>
+    </DataTemplate>
+
+</ResourceDictionary>

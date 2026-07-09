@@ -1,0 +1,163 @@
+<UserControl x:Class="PolyLab3DStudio.Views.StartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PolyLab3DStudio.Controls">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="46*" MinWidth="440" />
+            <ColumnDefinition Width="54*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left: hero copy + CTAs -->
+        <StackPanel Margin="64,56,40,56" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="36" Height="36">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M12,2 L20,6.5 L20,15.5 L12,20 L4,15.5 L4,6.5 Z" Fill="{StaticResource AccentBrush}" />
+                        <Path Data="M12,11 L20,6.5 M12,11 L4,6.5 M12,11 L12,20"
+                              Stroke="{StaticResource SurfaceBrush}" StrokeThickness="1.2"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                    </Canvas>
+                </Viewbox>
+                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="폴리랩" FontSize="20" FontWeight="Bold" />
+                    <TextBlock Text="POLYLAB · LEARN 3D" Style="{StaticResource MonoMutedText}" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Margin="0,26,0,0"
+                       FontSize="42" FontWeight="Bold"
+                       LineHeight="54" LineStackingStrategy="BlockLineHeight"
+                       TextWrapping="Wrap">한 시간이면,<LineBreak />3D가 손에 익어요.</TextBlock>
+            <TextBlock Margin="0,14,0,0" MaxWidth="430" HorizontalAlignment="Left"
+                       FontSize="15" Foreground="{StaticResource BodyBrush}"
+                       LineHeight="24.7" LineStackingStrategy="BlockLineHeight" TextWrapping="Wrap"
+                       Text="폴리랩은 진짜 작업 도구를 닮은 연습용 3D 스튜디오예요. 짧은 레슨을 따라 하다 보면, 나중에 Blender 같은 전문 도구를 열었을 때 낯설지 않게 됩니다." />
+
+            <StackPanel Width="340" Margin="0,26,0,0" HorizontalAlignment="Left">
+                <!-- Continue learning (primary) -->
+                <Button Command="{Binding ContinueCommand}" Cursor="Hand" Focusable="False" AutomationProperties.Name="이어서 학습하기">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Chrome" Background="{StaticResource AccentBrush}" CornerRadius="12" Padding="18,14">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#F0562F" Opacity="0.28" BlurRadius="24" ShadowDepth="10" Direction="270" />
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="이어서 학습하기" FontSize="15" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}" />
+                                        <TextBlock Text="{Binding Shell.ContinueSub}" FontSize="12" Foreground="{StaticResource SurfaceBrush}" Opacity="0.88" Margin="0,2,0,0" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" Text="→" FontSize="18" Foreground="{StaticResource SurfaceBrush}" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentHoverBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource GhostButton}" FontSize="13.5" Padding="12"
+                            Content="코스 둘러보기" Command="{Binding GoCoursesCommand}" />
+                    <Button Grid.Column="2" Style="{StaticResource GhostButton}" FontSize="13.5" Padding="12"
+                            Content="자유롭게 만들기" Command="{Binding GoStudioFreeCommand}" />
+                </Grid>
+
+                <!-- Concept guide card (companion app; decorative link) -->
+                <Button Margin="0,10,0,0" Cursor="Hand" Focusable="False" AutomationProperties.Name="도구 개념 가이드"
+                        Command="{Binding GoGuideCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Chrome" Background="{StaticResource DarkBarBrush}" CornerRadius="12" Padding="18,14">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="도구 개념 가이드" FontSize="15" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}" />
+                                        <TextBlock Text="GIMP · Inkscape · Blender · 포인트 클라우드 — 다음 도구로 가기 전 개념 정리"
+                                                   FontSize="12" Foreground="{StaticResource SurfaceBrush}" Opacity="0.78"
+                                                   Margin="0,2,0,0" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="→" FontSize="18" Foreground="{StaticResource SurfaceBrush}" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource DarkBarHoverBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+
+            <Grid Width="340" Margin="0,26,0,0" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ProgressBar Style="{StaticResource AccentProgress}" Value="{Binding Shell.OverallPct, Mode=OneWay}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="2" Text="{Binding Shell.ProgressText}"
+                           FontFamily="{StaticResource MonoFont}" FontSize="11"
+                           Foreground="{StaticResource BodyBrush}" VerticalAlignment="Center" />
+            </Grid>
+
+            <Button Margin="0,26,0,0" HorizontalAlignment="Left" Cursor="Hand" Focusable="False"
+                    AutomationProperties.Name="설정" Command="{Binding GoSettingsCommand}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <TextBlock x:Name="Label" Text="⚙ 설정" FontSize="12.5" Foreground="{StaticResource MutedBrush}" />
+                            <TextBlock Text="SETTINGS" FontFamily="{StaticResource MonoFont}" FontSize="10"
+                                       Foreground="{StaticResource MutedBrush}" Margin="6,0,0,0" VerticalAlignment="Center"
+                                       Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Label" Property="Foreground" Value="{StaticResource InkBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
+        <!-- Right: auto-spinning demo viewport -->
+        <Grid Grid.Column="1" Margin="8,44,52,44">
+            <Border CornerRadius="18" Background="{StaticResource ViewportBrush}">
+                <Border.Effect>
+                    <DropShadowEffect Color="#22272B" Opacity="0.20" BlurRadius="60" ShadowDepth="24" Direction="270" />
+                </Border.Effect>
+            </Border>
+            <Grid x:Name="DemoClip">
+                <controls:PolyViewport ObjectsSource="{Binding DemoObjects}" AutoSpin="True" />
+                <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16"
+                        Background="{StaticResource ViewportPillBrush}" CornerRadius="20" Padding="14,7">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="마우스로 드래그해 보세요" FontSize="12" Foreground="#DCE3EA" />
+                        <TextBlock Text=" · DRAG TO ORBIT" FontFamily="{StaticResource MonoFont}" FontSize="10"
+                                   Foreground="{StaticResource DarkMutedBrush}" VerticalAlignment="Center"
+                                   Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

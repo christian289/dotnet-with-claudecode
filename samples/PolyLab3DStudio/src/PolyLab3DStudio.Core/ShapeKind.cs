@@ -1,11 +1,14 @@
 namespace PolyLab3DStudio.Core;
 
-public enum PrimitiveKind
+public enum ShapeKind
 {
     Cube,
     Sphere,
     Cylinder,
     Cone,
     Torus,
-    Plane,
+    Board,
+    CloudSphere,
+    CloudTorus,
+    CloudTerrain,
 }

@@ -1,0 +1,137 @@
+<UserControl x:Class="PolyLab3DStudio.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource HeaderBrush}"
+                BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="0,0,0,1"
+                Padding="28,0">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource BackButton}" Command="{Binding BackCommand}" VerticalAlignment="Center" AutomationProperties.Name="뒤로" />
+                <TextBlock Text="설정" Style="{StaticResource ScreenTitleText}" Margin="14,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="SETTINGS" Style="{StaticResource MonoMutedText}" Margin="8,0,0,0" VerticalAlignment="Center"
+                           Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel MaxWidth="560" Margin="24,28,24,56">
+                <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderCardBrush}"
+                        BorderThickness="1" CornerRadius="14" Padding="20,6">
+                    <StackPanel>
+                        <Border BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1" Padding="0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="영어 병기 표시" FontSize="14" FontWeight="SemiBold" />
+                                    <TextBlock Text="용어를 영어와 함께 보여줘요. 다른 도구로 갈 때 도움이 됩니다."
+                                               FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="0,2,0,0" TextWrapping="Wrap" />
+                                </StackPanel>
+                                <ToggleButton Grid.Column="2" Style="{StaticResource ToggleSwitch}"
+                                              IsChecked="{Binding Shell.EnglishOn}" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <Border BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1" Padding="0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="바닥 그리드 표시" FontSize="14" FontWeight="SemiBold" />
+                                    <TextBlock Text="뷰포트의 격자 무늬 바닥을 켜고 끕니다."
+                                               FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="0,2,0,0" TextWrapping="Wrap" />
+                                </StackPanel>
+                                <ToggleButton Grid.Column="2" Style="{StaticResource ToggleSwitch}"
+                                              IsChecked="{Binding Shell.GridOn}" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <Border BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1" Padding="0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="휠 방향 반전" FontSize="14" FontWeight="SemiBold" />
+                                    <TextBlock Text="확대/축소 방향을 반대로 바꿉니다."
+                                               FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="0,2,0,0" TextWrapping="Wrap" />
+                                </StackPanel>
+                                <ToggleButton Grid.Column="2" Style="{StaticResource ToggleSwitch}"
+                                              IsChecked="{Binding Shell.InvertZoom}" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                        <Grid Margin="0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="170" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="마우스 감도" FontSize="14" FontWeight="SemiBold" />
+                                <TextBlock Text="카메라 회전 속도를 조절해요."
+                                           FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="0,2,0,0" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Grid Grid.Column="2" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="28" />
+                                </Grid.ColumnDefinitions>
+                                <Slider Style="{StaticResource AccentSlider}" Minimum="0.5" Maximum="2"
+                                        TickFrequency="0.1" IsSnapToTickEnabled="True"
+                                        Value="{Binding Shell.Sensitivity}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{Binding Shell.SensitivityLabel}"
+                                           FontFamily="{StaticResource MonoFont}" FontSize="11"
+                                           Foreground="{StaticResource BodyBrush}" TextAlignment="Right" VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderCardBrush}"
+                        BorderThickness="1" CornerRadius="14" Padding="20,16" Margin="0,14,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="14" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="학습 기록 초기화" FontSize="14" FontWeight="SemiBold" />
+                            <TextBlock Text="레슨·퀴즈 진행 상황을 처음 상태로 되돌립니다."
+                                       FontSize="12" Foreground="{StaticResource MutedBrush}" Margin="0,2,0,0" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <Button Grid.Column="2" Content="초기화" Command="{Binding ResetProgressCommand}"
+                                Cursor="Hand" Focusable="False" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Chrome" Background="{StaticResource SurfaceBrush}"
+                                            BorderBrush="{StaticResource DangerBorderBrush}" BorderThickness="1"
+                                            CornerRadius="9" Padding="14,8">
+                                        <TextBlock Text="초기화" Foreground="{StaticResource DangerBrush}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentTintBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

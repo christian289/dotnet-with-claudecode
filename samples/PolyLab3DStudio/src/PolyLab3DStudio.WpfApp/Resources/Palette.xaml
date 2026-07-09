@@ -1,0 +1,73 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Warm paper UI palette from the design. -->
+    <SolidColorBrush x:Key="PaperBrush" Color="#F6F3EC" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="HeaderBrush" Color="#FBFAF6" />
+    <SolidColorBrush x:Key="InputBrush" Color="#FDFCF9" />
+
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="#E5DFD2" />
+    <SolidColorBrush x:Key="BorderCardBrush" Color="#E9E3D6" />
+    <SolidColorBrush x:Key="BorderSoftBrush" Color="#EFEAE0" />
+    <SolidColorBrush x:Key="DividerBrush" Color="#F1EDE3" />
+    <SolidColorBrush x:Key="RibbonDividerBrush" Color="#EAE4D6" />
+    <SolidColorBrush x:Key="KnobBrush" Color="#D8D2C4" />
+    <SolidColorBrush x:Key="DashBorderBrush" Color="#C9C2B2" />
+
+    <SolidColorBrush x:Key="InkBrush" Color="#22272B" />
+    <SolidColorBrush x:Key="InkSoftBrush" Color="#3A4148" />
+    <SolidColorBrush x:Key="BodyBrush" Color="#51606E" />
+    <SolidColorBrush x:Key="MutedBrush" Color="#9AA3AC" />
+    <SolidColorBrush x:Key="FaintBrush" Color="#B4BAC1" />
+
+    <SolidColorBrush x:Key="AccentBrush" Color="#F0562F" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#D94A26" />
+    <SolidColorBrush x:Key="AccentTintBrush" Color="#FDEBE5" />
+    <SolidColorBrush x:Key="YellowBrush" Color="#FFC24B" />
+    <SolidColorBrush x:Key="TrackBrush" Color="#E9E3D6" />
+    <SolidColorBrush x:Key="TrackSoftBrush" Color="#EFEAE0" />
+
+    <!-- Studio dark chrome. -->
+    <SolidColorBrush x:Key="DarkBarBrush" Color="#232A31" />
+    <SolidColorBrush x:Key="DarkBarHoverBrush" Color="#3A4148" />
+    <SolidColorBrush x:Key="DarkFgBrush" Color="#E8EAED" />
+    <SolidColorBrush x:Key="DarkBodyBrush" Color="#B8C2CC" />
+    <SolidColorBrush x:Key="DarkMutedBrush" Color="#8896A5" />
+    <SolidColorBrush x:Key="ViewportBrush" Color="#1B2530" />
+    <SolidColorBrush x:Key="WhiteHoverBrush" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="WhiteChipBrush" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="WhiteLineBrush" Color="#26FFFFFF" />
+    <SolidColorBrush x:Key="ViewportPillBrush" Color="#B8141C26" />
+    <SolidColorBrush x:Key="ViewportPillHoverBrush" Color="#EB141C26" />
+    <SolidColorBrush x:Key="ViewportLegendBrush" Color="#99141C26" />
+    <SolidColorBrush x:Key="ViewportHintBrush" Color="#8C141C26" />
+    <SolidColorBrush x:Key="OverlayBrush" Color="#7A22272B" />
+    <SolidColorBrush x:Key="OverlayDarkBrush" Color="#8C22272B" />
+
+    <!-- States and badges. -->
+    <SolidColorBrush x:Key="DangerBrush" Color="#C0392B" />
+    <SolidColorBrush x:Key="DangerBorderBrush" Color="#E8B4A8" />
+    <SolidColorBrush x:Key="WrongTintBrush" Color="#F9E3DF" />
+    <SolidColorBrush x:Key="GreenBrush" Color="#3E7A4B" />
+    <SolidColorBrush x:Key="GreenTintBrush" Color="#E7F0E6" />
+    <SolidColorBrush x:Key="IndigoBrush" Color="#4356A8" />
+    <SolidColorBrush x:Key="IndigoTintBrush" Color="#E9EBF8" />
+    <SolidColorBrush x:Key="MissionFgBrush" Color="#A05A17" />
+    <SolidColorBrush x:Key="MissionTintBrush" Color="#FDEAD2" />
+    <SolidColorBrush x:Key="LessonTintBrush" Color="#EEF2F7" />
+    <SolidColorBrush x:Key="SelectedRowBrush" Color="#F3E3DC" />
+
+    <!-- Guide screen extras. -->
+    <SolidColorBrush x:Key="DarkCardBrush" Color="#232A31" />
+    <SolidColorBrush x:Key="AccentTintBorderBrush" Color="#F5CBBC" />
+    <SolidColorBrush x:Key="PointWarmBrush" Color="#E2946A" />
+    <SolidColorBrush x:Key="PointSandBrush" Color="#D8B36A" />
+
+    <!-- Axis colors (properties panel / viewport legend). -->
+    <SolidColorBrush x:Key="AxisXBrush" Color="#D45B4A" />
+    <SolidColorBrush x:Key="AxisXLegendBrush" Color="#E2574C" />
+    <SolidColorBrush x:Key="AxisYBrush" Color="#4E9A51" />
+    <SolidColorBrush x:Key="AxisZBrush" Color="#4C8DF5" />
+
+</ResourceDictionary>

@@ -1,0 +1,27 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:PolyLab3DStudio.ViewModels;assembly=PolyLab3DStudio.ViewModels"
+                    xmlns:views="clr-namespace:PolyLab3DStudio.Views">
+
+    <!-- Screen ViewModel → View mapping for the shell's ContentControl. -->
+    <DataTemplate DataType="{x:Type vm:StartViewModel}">
+        <views:StartView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:CoursesViewModel}">
+        <views:CoursesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:StudioViewModel}">
+        <views:StudioView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <views:SettingsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:GuideViewModel}">
+        <views:GuideView />
+    </DataTemplate>
+
+</ResourceDictionary>

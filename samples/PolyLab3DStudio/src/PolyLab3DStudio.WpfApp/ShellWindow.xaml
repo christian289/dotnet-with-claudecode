@@ -1,0 +1,15 @@
+<Window x:Class="PolyLab3DStudio.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="폴리랩 · PolyLab"
+        Width="1440" Height="900"
+        MinWidth="1100" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource PaperBrush}"
+        FontFamily="{StaticResource BodyFont}"
+        Foreground="{StaticResource InkBrush}"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        PreviewKeyDown="OnShellPreviewKeyDown">
+    <ContentControl Content="{Binding CurrentViewModel}" Focusable="False" />
+</Window>

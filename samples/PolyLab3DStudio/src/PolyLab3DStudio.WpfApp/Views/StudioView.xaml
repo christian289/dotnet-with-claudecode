@@ -1,0 +1,1181 @@
+<UserControl x:Class="PolyLab3DStudio.Views.StudioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PolyLab3DStudio.Controls"
+             xmlns:vm="clr-namespace:PolyLab3DStudio.ViewModels;assembly=PolyLab3DStudio.ViewModels">
+    <UserControl.Resources>
+        <!-- Group caption under each ribbon cluster. -->
+        <Style x:Key="RibbonCaption" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+        </Style>
+
+        <Style x:Key="RibbonDividerLine" TargetType="Rectangle">
+            <Setter Property="Width" Value="1" />
+            <Setter Property="Fill" Value="{StaticResource RibbonDividerBrush}" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+
+        <!-- Viewport preset pill. -->
+        <Style x:Key="PresetButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Chrome" Background="{StaticResource ViewportPillBrush}" CornerRadius="7" Padding="11,6">
+                            <TextBlock Text="{TemplateBinding Content}" FontSize="11" FontWeight="SemiBold" Foreground="#DCE3EA" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Chrome" Property="Background" Value="{StaticResource ViewportPillHoverBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Properties/light slider row label pair. -->
+        <Style x:Key="SliderCaption" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{StaticResource BodyBrush}" />
+        </Style>
+
+        <Style x:Key="SliderValue" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <!-- ============ App bar (dark) ============ -->
+        <Border Background="{StaticResource DarkBarBrush}" Padding="12,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource DarkIconButton}" Command="{Binding GoStartCommand}"
+                        ToolTip="홈으로" AutomationProperties.Name="홈으로" VerticalAlignment="Center">
+                    <TextBlock Text="←" FontSize="14" />
+                </Button>
+                <Viewbox Grid.Column="1" Width="20" Height="20" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M12,2 L20,6.5 L20,15.5 L12,20 L4,15.5 L4,6.5 Z" Fill="{StaticResource AccentBrush}" />
+                        <Path Data="M12,11 L20,6.5 M12,11 L4,6.5 M12,11 L12,20"
+                              Stroke="{StaticResource SurfaceBrush}" StrokeThickness="1.2"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Grid.Column="2" Text="폴리랩" FontSize="13.5" FontWeight="Bold"
+                           Foreground="{StaticResource DarkFgBrush}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                <Border Grid.Column="3" Background="{StaticResource WhiteChipBrush}" CornerRadius="14" Padding="14,5"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding StudioContext}" FontSize="12" Foreground="{StaticResource DarkBodyBrush}" />
+                </Border>
+                <Button Grid.Column="4" Command="{Binding UndoCommand}" ToolTip="실행 취소 (Ctrl+Z)" AutomationProperties.Name="실행 취소" VerticalAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DarkIconButton}">
+                            <Setter Property="Opacity" Value="0.35" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CanUndo}" Value="True">
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Viewbox Width="17" Height="17">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M4 10 h11 a5 5 0 1 1 0 10 h-3 M4 10 l4 -4 M4 10 l4 4"
+                                  Stroke="{StaticResource DarkFgBrush}" StrokeThickness="1.8"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                <Button Grid.Column="5" Command="{Binding RedoCommand}" ToolTip="다시 실행 (Ctrl+Shift+Z)" AutomationProperties.Name="다시 실행" VerticalAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DarkIconButton}">
+                            <Setter Property="Opacity" Value="0.35" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CanRedo}" Value="True">
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Viewbox Width="17" Height="17">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M20 10 H9 a5 5 0 1 0 0 10 h3 M20 10 l-4 -4 M20 10 l-4 4"
+                                  Stroke="{StaticResource DarkFgBrush}" StrokeThickness="1.8"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                <Rectangle Grid.Column="6" Width="1" Height="18" Fill="{StaticResource WhiteLineBrush}" Margin="10,0" />
+                <Button Grid.Column="7" Command="{Binding OpenXamlCommand}" ToolTip="WPF XAML로 내보내기"
+                        AutomationProperties.Name="XAML" Cursor="Hand" Focusable="False" VerticalAlignment="Center">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Chrome" Height="30" Padding="10,0" CornerRadius="7"
+                                    BorderBrush="{StaticResource WhiteLineBrush}" BorderThickness="1" Background="Transparent">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="&lt;/&gt;" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource DarkFgBrush}" />
+                                    <TextBlock Text="XAML" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="{StaticResource DarkFgBrush}" Margin="6,0,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource WhiteHoverBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Rectangle Grid.Column="8" Width="1" Height="18" Fill="{StaticResource WhiteLineBrush}" Margin="10,0" />
+                <Button Grid.Column="9" Style="{StaticResource DarkIconButton}" Command="{Binding GoSettingsCommand}"
+                        ToolTip="설정" AutomationProperties.Name="설정" VerticalAlignment="Center">
+                    <Viewbox Width="17" Height="17">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M12 8.5 a3.5 3.5 0 1 0 0 7 a3.5 3.5 0 0 0 0 -7 z M12 2 v2.5 M12 19.5 V22 M2 12 h2.5 M19.5 12 H22 M4.9 4.9 l1.8 1.8 M17.3 17.3 l1.8 1.8 M19.1 4.9 l-1.8 1.8 M6.7 17.3 l-1.8 1.8"
+                                  Stroke="{StaticResource DarkFgBrush}" StrokeThickness="1.7"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- ============ Ribbon ============ -->
+        <Border Grid.Row="1" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="0,0,0,1"
+                Padding="14,8,14,6">
+            <StackPanel Orientation="Horizontal">
+                <!-- Tools -->
+                <StackPanel Margin="4,0">
+                    <ItemsControl ItemsSource="{Binding Tools}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Cursor="Hand" Focusable="False" Margin="0,0,4,0"
+                                        ToolTip="{Binding English}" AutomationProperties.Name="{Binding Label}"
+                                        Command="{Binding DataContext.SetToolCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding Id}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="Chrome" Width="58" Height="62" CornerRadius="9"
+                                                    Background="{StaticResource SurfaceBrush}"
+                                                    BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1">
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <Viewbox Width="20" Height="20" HorizontalAlignment="Center">
+                                                        <Canvas Width="24" Height="24">
+                                                            <Path x:Name="Icon" Data="{Binding IconData, Converter={StaticResource StringToGeometry}}"
+                                                                  Stroke="{StaticResource InkSoftBrush}" StrokeThickness="1.7"
+                                                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                    <TextBlock x:Name="Label" Text="{Binding Label}" FontSize="11" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource InkSoftBrush}" HorizontalAlignment="Center" Margin="0,3,0,0" />
+                                                    <TextBlock x:Name="Key" Text="{Binding Key}" FontFamily="{StaticResource MonoFont}" FontSize="9"
+                                                               Foreground="{StaticResource FaintBrush}" HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Value="True">
+                                                    <DataTrigger.Binding>
+                                                        <MultiBinding Converter="{StaticResource ValuesEqual}">
+                                                            <Binding Path="Id" />
+                                                            <Binding Path="DataContext.Tool" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                        </MultiBinding>
+                                                    </DataTrigger.Binding>
+                                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
+                                                    <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource InkBrush}" />
+                                                    <Setter TargetName="Icon" Property="Stroke" Value="{StaticResource SurfaceBrush}" />
+                                                    <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                    <Setter TargetName="Key" Property="Foreground" Value="{StaticResource DarkBodyBrush}" />
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource RibbonCaption}">
+                        <Run Text="도구" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · TOOLS', Mode=OneWay}" />
+                    </TextBlock>
+                </StackPanel>
+                <Rectangle Style="{StaticResource RibbonDividerLine}" />
+
+                <!-- Create -->
+                <StackPanel Margin="4,0">
+                    <ItemsControl ItemsSource="{Binding SolidShapes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Cursor="Hand" Focusable="False" Margin="0,0,4,0"
+                                        ToolTip="{Binding English}" AutomationProperties.Name="{Binding Label}"
+                                        Command="{Binding DataContext.AddShapeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="Chrome" Width="58" Height="62" CornerRadius="9"
+                                                    Background="{StaticResource SurfaceBrush}"
+                                                    BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1">
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <Viewbox Width="21" Height="21" HorizontalAlignment="Center">
+                                                        <Canvas Width="24" Height="24">
+                                                            <Path Data="{Binding IconData, Converter={StaticResource StringToGeometry}}"
+                                                                  Stroke="{StaticResource InkSoftBrush}" StrokeThickness="1.6"
+                                                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                    <TextBlock Text="{Binding Label}" FontSize="11" FontWeight="Medium"
+                                                               Foreground="{StaticResource InkSoftBrush}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                                                </StackPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource PaperBrush}" />
+                                                    <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource KnobBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource RibbonCaption}">
+                        <Run Text="만들기" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · CREATE', Mode=OneWay}" />
+                    </TextBlock>
+                </StackPanel>
+                <Rectangle Style="{StaticResource RibbonDividerLine}" />
+
+                <!-- Point clouds (dashed) -->
+                <StackPanel Margin="4,0">
+                    <ItemsControl ItemsSource="{Binding CloudShapes}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Cursor="Hand" Focusable="False" Margin="0,0,4,0"
+                                        ToolTip="{Binding English}" AutomationProperties.Name="{Binding Label}"
+                                        Command="{Binding DataContext.AddShapeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Width="58" Height="62">
+                                                <Rectangle x:Name="Chrome" RadiusX="9" RadiusY="9"
+                                                           Fill="{StaticResource SurfaceBrush}"
+                                                           Stroke="{StaticResource DashBorderBrush}"
+                                                           StrokeThickness="1" StrokeDashArray="3 2" />
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <Viewbox Width="21" Height="21" HorizontalAlignment="Center">
+                                                        <Canvas Width="24" Height="24">
+                                                            <Path Data="{Binding IconData, Converter={StaticResource StringToGeometry}}"
+                                                                  Stroke="{StaticResource InkSoftBrush}" StrokeThickness="2"
+                                                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                    <TextBlock Text="{Binding Label}" FontSize="11" FontWeight="Medium"
+                                                               Foreground="{StaticResource InkSoftBrush}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Chrome" Property="Fill" Value="{StaticResource PaperBrush}" />
+                                                    <Setter TargetName="Chrome" Property="Stroke" Value="{StaticResource AccentBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource RibbonCaption}">
+                        <Run Text="포인트 클라우드" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · SCAN', Mode=OneWay}" />
+                    </TextBlock>
+                </StackPanel>
+                <Rectangle Style="{StaticResource RibbonDividerLine}" />
+
+                <!-- Edit -->
+                <StackPanel Margin="4,0">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Opacity" Value="0.4" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasSelection}" Value="True">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <Button Cursor="Hand" Focusable="False" Margin="0,0,4,0" ToolTip="Duplicate" AutomationProperties.Name="복제"
+                                Command="{Binding DuplicateCommand}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Chrome" Width="58" Height="62" CornerRadius="9"
+                                            Background="{StaticResource SurfaceBrush}"
+                                            BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <Viewbox Width="20" Height="20" HorizontalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M8 8 h12 v12 H8 z M8 8 V4 h12 v12 h-4"
+                                                          Stroke="{StaticResource InkSoftBrush}" StrokeThickness="1.6"
+                                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Text="복제" FontSize="11" FontWeight="Medium"
+                                                       Foreground="{StaticResource InkSoftBrush}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource PaperBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Cursor="Hand" Focusable="False" ToolTip="Delete" AutomationProperties.Name="삭제"
+                                Command="{Binding DeleteSelectedCommand}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Chrome" Width="58" Height="62" CornerRadius="9"
+                                            Background="{StaticResource SurfaceBrush}"
+                                            BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <Viewbox Width="20" Height="20" HorizontalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path x:Name="DelIcon" Data="M4 7 h16 M9 7 V4 h6 v3 M6 7 l1 13 h10 l1 -13 M10 11 v6 M14 11 v6"
+                                                          Stroke="{StaticResource InkSoftBrush}" StrokeThickness="1.6"
+                                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock x:Name="DelLabel" Text="삭제" FontSize="11" FontWeight="Medium"
+                                                       Foreground="{StaticResource InkSoftBrush}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentTintBrush}" />
+                                            <Setter TargetName="Chrome" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                            <Setter TargetName="DelIcon" Property="Stroke" Value="{StaticResource DangerBrush}" />
+                                            <Setter TargetName="DelLabel" Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource RibbonCaption}">
+                        <Run Text="편집" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · EDIT', Mode=OneWay}" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- ============ Main area ============ -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="212" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="258" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Scene dock -->
+            <Border Background="{StaticResource HeaderBrush}"
+                    BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="0,0,1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="14,12,14,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="장면" FontSize="11.5" FontWeight="Bold" Foreground="{StaticResource BodyBrush}" />
+                        <TextBlock Grid.Column="1" Text="SCENE" FontFamily="{StaticResource MonoFont}" FontSize="9.5"
+                                   Foreground="{StaticResource MutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
+                                   Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBlock Grid.Column="3" Text="{Binding ObjCount}" FontFamily="{StaticResource MonoFont}" FontSize="10.5"
+                                   Foreground="{StaticResource MutedBrush}" />
+                    </Grid>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="8,0,8,12">
+                        <StackPanel>
+                            <TextBlock Text="아직 오브젝트가 없어요. 위의 [만들기]에서 도형을 추가해 보세요."
+                                       FontSize="12" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"
+                                       LineHeight="19.2" LineStackingStrategy="BlockLineHeight" Margin="10,14"
+                                       Visibility="{Binding SceneEmpty, Converter={StaticResource BoolToVisibility}}" />
+                            <ItemsControl ItemsSource="{Binding Objects}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type vm:SceneObjectViewModel}">
+                                        <Button Cursor="Hand" Focusable="False" Margin="0,0,0,2" AutomationProperties.Name="{Binding Name}"
+                                                Command="{Binding DataContext.SelectObjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Row" Background="Transparent" CornerRadius="8" Padding="10,7">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Viewbox Width="15" Height="15" VerticalAlignment="Center">
+                                                                <Canvas Width="24" Height="24">
+                                                                    <Path Data="{Binding IconData, Converter={StaticResource StringToGeometry}}"
+                                                                          Stroke="{StaticResource BodyBrush}" StrokeThickness="1.8"
+                                                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" />
+                                                                </Canvas>
+                                                            </Viewbox>
+                                                            <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="12.5"
+                                                                       Foreground="{StaticResource InkBrush}" Margin="8,0,0,0"
+                                                                       TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                                            <Button Grid.Column="2" ToolTip="삭제" Cursor="Hand" Focusable="False" AutomationProperties.Name="제거"
+                                                                    Command="{Binding DataContext.RemoveObjectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                    CommandParameter="{Binding}">
+                                                                <Button.Template>
+                                                                    <ControlTemplate TargetType="Button">
+                                                                        <Border x:Name="XChrome" Width="18" Height="18" CornerRadius="5" Background="Transparent">
+                                                                            <TextBlock x:Name="XGlyph" Text="×" FontSize="14"
+                                                                                       Foreground="{StaticResource FaintBrush}"
+                                                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter TargetName="XChrome" Property="Background" Value="{StaticResource DividerBrush}" />
+                                                                                <Setter TargetName="XGlyph" Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Button.Template>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Value="True">
+                                                            <DataTrigger.Binding>
+                                                                <MultiBinding Converter="{StaticResource ValuesEqual}">
+                                                                    <Binding />
+                                                                    <Binding Path="DataContext.SelectedObject" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                                </MultiBinding>
+                                                            </DataTrigger.Binding>
+                                                            <Setter TargetName="Row" Property="Background" Value="{StaticResource SelectedRowBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- Viewport -->
+            <Grid Grid.Column="1" Background="{StaticResource ViewportBrush}">
+                <controls:PolyViewport x:Name="Viewport"
+                                       ObjectsSource="{Binding Objects}"
+                                       SelectedId="{Binding SelectedId}"
+                                       Tool="{Binding Tool}"
+                                       LightIntensity="{Binding LightIntensity}"
+                                       LightAngle="{Binding LightAngle}"
+                                       ShowGrid="{Binding Shell.GridOn}"
+                                       Sensitivity="{Binding Shell.Sensitivity}"
+                                       InvertZoom="{Binding Shell.InvertZoom}" />
+
+                <!-- Camera presets -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,12,12,0">
+                    <Button Style="{StaticResource PresetButton}" Content="앞" Command="{Binding RequestViewCommand}" CommandParameter="front" Margin="0,0,6,0" />
+                    <Button Style="{StaticResource PresetButton}" Content="위" Command="{Binding RequestViewCommand}" CommandParameter="top" Margin="0,0,6,0" />
+                    <Button Style="{StaticResource PresetButton}" Content="옆" Command="{Binding RequestViewCommand}" CommandParameter="side" Margin="0,0,6,0" />
+                    <Button Command="{Binding RequestViewCommand}" CommandParameter="iso" Cursor="Hand" Focusable="False" AutomationProperties.Name="입체">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="Chrome" Background="#D9F0562F" CornerRadius="7" Padding="11,6">
+                                    <TextBlock Text="입체" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource SurfaceBrush}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+                <!-- Axis legend -->
+                <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="12,0,0,12"
+                        Background="{StaticResource ViewportLegendBrush}" CornerRadius="7" Padding="11,6">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="8" Height="8" RadiusX="2" RadiusY="2" Fill="{StaticResource AxisXLegendBrush}" VerticalAlignment="Center" />
+                        <TextBlock Text="X 좌우" FontFamily="{StaticResource MonoFont}" FontSize="10" Foreground="{StaticResource DarkBodyBrush}" Margin="5,0,12,0" />
+                        <Rectangle Width="8" Height="8" RadiusX="2" RadiusY="2" Fill="{StaticResource AxisYBrush}" VerticalAlignment="Center" />
+                        <TextBlock Text="Y 위아래" FontFamily="{StaticResource MonoFont}" FontSize="10" Foreground="{StaticResource DarkBodyBrush}" Margin="5,0,12,0" />
+                        <Rectangle Width="8" Height="8" RadiusX="2" RadiusY="2" Fill="{StaticResource AxisZBrush}" VerticalAlignment="Center" />
+                        <TextBlock Text="Z 앞뒤" FontFamily="{StaticResource MonoFont}" FontSize="10" Foreground="{StaticResource DarkBodyBrush}" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Empty scene hint -->
+                <Border HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"
+                        Background="{StaticResource ViewportHintBrush}" CornerRadius="12" Padding="20,12"
+                        Visibility="{Binding ShowEmptyHint, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Text="위의 [만들기]에서 도형을 눌러 시작해 보세요" FontSize="13.5" Foreground="{StaticResource DarkBodyBrush}" />
+                </Border>
+
+                <!-- Tutorial overlay -->
+                <Border Width="460" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,44"
+                        Background="{StaticResource SurfaceBrush}" CornerRadius="14" Padding="18,15"
+                        DataContext="{Binding Tutorial}"
+                        Visibility="{Binding Converter={StaticResource NotNullToVisibility}}">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#141C26" Opacity="0.35" BlurRadius="44" ShadowDepth="18" Direction="270" />
+                    </Border.Effect>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource AccentTintBrush}" CornerRadius="6" Padding="8,3" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding CourseLabel}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" />
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="14" FontWeight="Bold" Margin="10,0" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Text="{Binding StepLabel}" FontFamily="{StaticResource MonoFont}" FontSize="11"
+                                       Foreground="{StaticResource MutedBrush}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                            <Button Grid.Column="3" Style="{StaticResource CloseButton}" Width="24" Height="24"
+                                    ToolTip="그만하기" AutomationProperties.Name="그만하기" Command="{Binding ExitCommand}" />
+                        </Grid>
+
+                        <!-- Active tasks -->
+                        <StackPanel Visibility="{Binding IsActive, Converter={StaticResource BoolToVisibility}}">
+                            <ItemsControl ItemsSource="{Binding Tasks}" Margin="0,11,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type vm:TutorialTaskRowViewModel}">
+                                        <Grid Margin="0,0,0,7">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Width="20" Height="20" VerticalAlignment="Top">
+                                                <Ellipse x:Name="Mark" Fill="{StaticResource BorderSoftBrush}">
+                                                    <Ellipse.Style>
+                                                        <Style TargetType="Ellipse">
+                                                            <Setter Property="Fill" Value="{StaticResource BorderSoftBrush}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding State}" Value="Done">
+                                                                    <Setter Property="Fill" Value="{StaticResource GreenBrush}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding State}" Value="Now">
+                                                                    <Setter Property="Fill" Value="{StaticResource AccentBrush}" />
+                                                                    <DataTrigger.EnterActions>
+                                                                        <BeginStoryboard x:Name="Pulse">
+                                                                            <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                                 From="1" To="0.45" Duration="0:0:0.8" />
+                                                                            </Storyboard>
+                                                                        </BeginStoryboard>
+                                                                    </DataTrigger.EnterActions>
+                                                                    <DataTrigger.ExitActions>
+                                                                        <StopStoryboard BeginStoryboardName="Pulse" />
+                                                                    </DataTrigger.ExitActions>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Ellipse.Style>
+                                                </Ellipse>
+                                                <TextBlock Text="{Binding Glyph}" FontSize="11" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding State}" Value="Done">
+                                                                    <Setter Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding State}" Value="Now">
+                                                                    <Setter Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Column="1" Text="{Binding Text}" FontSize="13" TextWrapping="Wrap"
+                                                       LineHeight="18.9" LineStackingStrategy="BlockLineHeight"
+                                                       Margin="10,1,0,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding State}" Value="Done">
+                                                                <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding State}" Value="Now">
+                                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Border Background="{StaticResource HeaderBrush}" BorderBrush="{StaticResource BorderSoftBrush}"
+                                    BorderThickness="1" CornerRadius="9" Padding="12,9" Margin="0,4,0,0"
+                                    Visibility="{Binding HasTip, Converter={StaticResource BoolToVisibility}}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="TIP" FontFamily="{StaticResource MonoFont}" FontSize="9.5" FontWeight="SemiBold"
+                                               Foreground="{StaticResource AccentBrush}" Margin="0,2,8,0" VerticalAlignment="Top" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Tip}" FontSize="12" Foreground="{StaticResource BodyBrush}"
+                                               TextWrapping="Wrap" LineHeight="18.6" LineStackingStrategy="BlockLineHeight" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                        <!-- Completed -->
+                        <StackPanel Visibility="{Binding Completed, Converter={StaticResource BoolToVisibility}}">
+                            <Grid Width="42" Height="42" Margin="0,10,0,0" HorizontalAlignment="Center">
+                                <Ellipse Fill="{StaticResource GreenBrush}" />
+                                <TextBlock Text="✓" FontSize="20" Foreground="{StaticResource SurfaceBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                            <TextBlock Text="레슨 완료!" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,8,0,0" />
+                            <TextBlock Text="이 감각, 다른 3D 도구에서도 그대로 통해요." FontSize="12.5"
+                                       Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" Margin="0,4,0,0" />
+                            <Grid Margin="0,12,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{StaticResource GhostButton}" Content="이어서 자유롭게"
+                                        Command="{Binding ContinueFreeCommand}" Padding="10" FontSize="13" />
+                                <Button Grid.Column="2" Style="{StaticResource AccentButton}" Content="코스 목록으로"
+                                        Command="{Binding BackToCoursesCommand}" Padding="10" FontSize="13" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Properties dock -->
+            <Border Grid.Column="2" Background="{StaticResource HeaderBrush}"
+                    BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="16,12,16,8">
+                            <TextBlock Text="속성" FontSize="11.5" FontWeight="Bold" Foreground="{StaticResource BodyBrush}" />
+                            <TextBlock Text="PROPERTIES" FontFamily="{StaticResource MonoFont}" FontSize="9.5"
+                                       Foreground="{StaticResource MutedBrush}" Margin="8,0,0,0" VerticalAlignment="Center"
+                                       Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />
+                        </StackPanel>
+
+                        <TextBlock Text="오브젝트를 클릭하면 여기서 위치·회전·크기와 재질을 바꿀 수 있어요."
+                                   FontSize="12" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"
+                                   LineHeight="19.2" LineStackingStrategy="BlockLineHeight" Margin="16,0,16,14"
+                                   Visibility="{Binding NoSelection, Converter={StaticResource BoolToVisibility}}" />
+
+                        <StackPanel Margin="16,2,16,14"
+                                    Visibility="{Binding HasSelection, Converter={StaticResource BoolToVisibility}}">
+                            <TextBlock Text="{Binding SelectedObject.Name}" FontSize="13.5" FontWeight="Bold" />
+
+                            <TextBlock Style="{StaticResource PanelLabelText}" Margin="0,16,0,0">
+                                <Run Text="변형" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · TRANSFORM', Mode=OneWay}" />
+                            </TextBlock>
+
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="X" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AxisXBrush}" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="2" Style="{StaticResource NumberBox}"
+                                         Text="{Binding SelectedObject.X, StringFormat={}{0:0.##}, UpdateSourceTrigger=LostFocus}" />
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Y" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AxisYBrush}" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="2" Style="{StaticResource NumberBox}"
+                                         Text="{Binding SelectedObject.Y, StringFormat={}{0:0.##}, UpdateSourceTrigger=LostFocus}" />
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Z" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AxisZBrush}" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="2" Style="{StaticResource NumberBox}"
+                                         Text="{Binding SelectedObject.Z, StringFormat={}{0:0.##}, UpdateSourceTrigger=LostFocus}" />
+                            </Grid>
+
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="회전" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding SelectedObject.RotationYLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="-180" Maximum="180"
+                                    TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding SelectedObject.RotationY}" />
+
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="크기" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding SelectedObject.ScaleLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="0.2" Maximum="3"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding SelectedObject.Scale}" />
+
+                            <Rectangle Height="1" Fill="{StaticResource RibbonDividerBrush}" Margin="0,16,0,0" />
+
+                            <TextBlock Style="{StaticResource PanelLabelText}" Margin="0,16,0,0">
+                                <Run Text="재질" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · MATERIAL', Mode=OneWay}" />
+                            </TextBlock>
+                            <ItemsControl ItemsSource="{Binding Swatches}" Margin="0,9,0,0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Cursor="Hand" Focusable="False" Margin="0,0,6,6"
+                                                Command="{Binding DataContext.PickColorCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Swatch" Width="24" Height="24" CornerRadius="7"
+                                                            Background="{Binding Converter={StaticResource HexToBrush}}"
+                                                            BorderBrush="#14000000" BorderThickness="1">
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Value="True">
+                                                            <DataTrigger.Binding>
+                                                                <MultiBinding Converter="{StaticResource ValuesEqual}">
+                                                                    <Binding />
+                                                                    <Binding Path="DataContext.SelectedObject.ColorHex" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                                </MultiBinding>
+                                                            </DataTrigger.Binding>
+                                                            <Setter TargetName="Swatch" Property="BorderBrush" Value="{StaticResource InkBrush}" />
+                                                            <Setter TargetName="Swatch" Property="BorderThickness" Value="2" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Point-cloud only: height colormap toggle -->
+                            <Grid Margin="0,6,0,0"
+                                  Visibility="{Binding SelectedObject.IsCloud, Converter={StaticResource BoolToVisibility}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Style="{StaticResource SliderCaption}" Text="높이 컬러맵" />
+                                    <Border Height="6" CornerRadius="3" Margin="0,5,0,0">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Color="#4C8DF5" Offset="0" />
+                                                <GradientStop Color="#37A6A0" Offset="0.25" />
+                                                <GradientStop Color="#7BC96F" Offset="0.5" />
+                                                <GradientStop Color="#FFC24B" Offset="0.75" />
+                                                <GradientStop Color="#F0562F" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                </StackPanel>
+                                <ToggleButton Grid.Column="2" Style="{StaticResource ToggleSwitch}"
+                                              AutomationProperties.Name="높이 컬러맵"
+                                              IsChecked="{Binding SelectedObject.HeightColormap}"
+                                              VerticalAlignment="Center" />
+                            </Grid>
+
+                            <!-- Point-cloud only: point count -->
+                            <Grid Margin="0,8,0,0"
+                                  Visibility="{Binding SelectedObject.IsCloud, Converter={StaticResource BoolToVisibility}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="점 개수" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding SelectedObject.PointCountLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="100" Maximum="100000"
+                                    TickFrequency="100" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    AutomationProperties.Name="점 개수"
+                                    Visibility="{Binding SelectedObject.IsCloud, Converter={StaticResource BoolToVisibility}}"
+                                    Value="{Binding SelectedObject.PointCount}" />
+
+                            <Grid Margin="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="거칠기" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding SelectedObject.RoughnessLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="0" Maximum="1"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding SelectedObject.Roughness}" />
+
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="금속성" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding SelectedObject.MetalnessLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="0" Maximum="1"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding SelectedObject.Metalness}" />
+                        </StackPanel>
+
+                        <Rectangle Height="1" Fill="{StaticResource RibbonDividerBrush}" Margin="16,0" />
+
+                        <!-- Light -->
+                        <StackPanel Margin="16,12,16,20">
+                            <TextBlock Style="{StaticResource PanelLabelText}">
+                                <Run Text="조명" /><Run Text="{Binding Shell.EnglishOn, Converter={StaticResource EnglishLabel}, ConverterParameter=' · LIGHT', Mode=OneWay}" />
+                            </TextBlock>
+                            <Grid Margin="0,9,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="밝기" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding LightIntensityLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="0.1" Maximum="2.2"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding LightIntensity}" />
+                            <Grid Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource SliderCaption}" Text="방향" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource SliderValue}" Text="{Binding LightAngleLabel}" />
+                            </Grid>
+                            <Slider Style="{StaticResource AccentSlider}" Minimum="0" Maximum="360"
+                                    TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,5,0,0"
+                                    Value="{Binding LightAngle}" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- ============ Status bar ============ -->
+        <Border Grid.Row="3" Background="{StaticResource HeaderBrush}"
+                BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="0,1,0,0"
+                Padding="14,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding StatusHint}" FontSize="11.5" Foreground="{StaticResource BodyBrush}"
+                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="{Binding ObjCountLabel}" FontFamily="{StaticResource MonoFont}" FontSize="10.5"
+                           Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+
+        <!-- ============ XAML export modal ============ -->
+        <Grid Grid.RowSpan="4" Background="{StaticResource OverlayDarkBrush}"
+              Visibility="{Binding Export, Converter={StaticResource NotNullToVisibility}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="80*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Width="880" Background="{StaticResource SurfaceBrush}" CornerRadius="16"
+                    HorizontalAlignment="Center" DataContext="{Binding Export}">
+                <Border.Effect>
+                    <DropShadowEffect Color="#141C26" Opacity="0.45" BlurRadius="64" ShadowDepth="24" Direction="270" />
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="0,0,0,1" Padding="20,14">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource AccentTintBrush}" CornerRadius="6" Padding="8,3" VerticalAlignment="Center">
+                                <TextBlock Text="&lt;/&gt;" FontFamily="{StaticResource MonoFont}" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AccentBrush}" />
+                            </Border>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="WPF XAML 내보내기" FontSize="15" FontWeight="Bold" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="{Binding Summary}" FontSize="12" Foreground="{StaticResource MutedBrush}"
+                                       TextAlignment="Right" Margin="10,0" VerticalAlignment="Center" />
+                            <Button Grid.Column="3" Style="{StaticResource CloseButton}" Command="{Binding CloseCommand}" AutomationProperties.Name="내보내기 닫기" />
+                        </Grid>
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="262" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource HeaderBrush}"
+                                BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="0,0,1,0">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="18,16">
+                                <StackPanel>
+                                    <TextBlock Text="복붙 가이드 · 4단계" Style="{StaticResource PanelLabelText}" />
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Width="20" Height="20" VerticalAlignment="Top">
+                                            <Ellipse Fill="{StaticResource AccentBrush}" />
+                                            <TextBlock Text="1" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                        <TextBlock Grid.Column="1" FontSize="12.5" TextWrapping="Wrap" Margin="10,0,0,0"
+                                                   LineHeight="19.4" LineStackingStrategy="BlockLineHeight">
+                                            <Run Text="Visual Studio에서 새 프로젝트 → " /><Run Text="WPF 애플리케이션" FontWeight="Bold" /><Run Text=" 선택, 프로젝트 이름을 " /><Run Text="PolyLabScene" FontFamily="{StaticResource MonoFont}" FontSize="11" /><Run Text="으로 만들어요." />
+                                        </TextBlock>
+                                    </Grid>
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Width="20" Height="20" VerticalAlignment="Top">
+                                            <Ellipse Fill="{StaticResource AccentBrush}" />
+                                            <TextBlock Text="2" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                        <TextBlock Grid.Column="1" FontSize="12.5" TextWrapping="Wrap" Margin="10,0,0,0"
+                                                   LineHeight="19.4" LineStackingStrategy="BlockLineHeight">
+                                            <Run Text="MainWindow.xaml" FontFamily="{StaticResource MonoFont}" FontSize="11" /><Run Text=" 내용 전체를 지우고 오른쪽 [MainWindow.xaml] 탭 코드를 붙여넣어요." />
+                                        </TextBlock>
+                                    </Grid>
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Width="20" Height="20" VerticalAlignment="Top">
+                                            <Ellipse Fill="{StaticResource AccentBrush}" />
+                                            <TextBlock Text="3" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                        <TextBlock Grid.Column="1" FontSize="12.5" TextWrapping="Wrap" Margin="10,0,0,0"
+                                                   LineHeight="19.4" LineStackingStrategy="BlockLineHeight">
+                                            <Run Text="MainWindow.xaml.cs" FontFamily="{StaticResource MonoFont}" FontSize="11" /><Run Text="도 같은 방법으로 [MainWindow.xaml.cs] 탭 코드로 교체해요." />
+                                        </TextBlock>
+                                    </Grid>
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Width="20" Height="20" VerticalAlignment="Top">
+                                            <Ellipse Fill="{StaticResource AccentBrush}" />
+                                            <TextBlock Text="4" FontSize="11" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Grid>
+                                        <TextBlock Grid.Column="1" FontSize="12.5" TextWrapping="Wrap" Margin="10,0,0,0"
+                                                   LineHeight="19.4" LineStackingStrategy="BlockLineHeight">
+                                            <Run Text="F5" FontWeight="Bold" /><Run Text="로 실행! 드래그로 회전, 휠로 확대/축소하며 내보낸 장면을 볼 수 있어요." />
+                                        </TextBlock>
+                                    </Grid>
+                                    <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderSoftBrush}"
+                                            BorderThickness="1" CornerRadius="9" Padding="12,10" Margin="0,14,0,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="TIP" FontFamily="{StaticResource MonoFont}" FontSize="9.5" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource AccentBrush}" Margin="0,2,8,0" VerticalAlignment="Top" />
+                                            <TextBlock Grid.Column="1" FontSize="11.5" Foreground="{StaticResource BodyBrush}"
+                                                       TextWrapping="Wrap" LineHeight="17.8" LineStackingStrategy="BlockLineHeight"
+                                                       Text="프로젝트 이름이 다르면 XAML 첫 줄의 x:Class와 C#의 namespace를 그 이름으로 바꿔 주세요. .NET 6+ / .NET Framework 4.x 모두 동작하고, 별도 패키지 설치는 필요 없어요." />
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="0,0,0,1" Padding="14,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Command="{Binding PickCodeBehindVariantCommand}" Cursor="Hand" Focusable="False"
+                                            AutomationProperties.Name="코드 비하인드형" ToolTip="장면을 C# 코드(BuildScene)로 구성">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="10,6">
+                                                    <TextBlock x:Name="Label" Text="코드 비하인드형" FontSize="11.5" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource BodyBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsCodeBehindVariant}" Value="True">
+                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="1" Command="{Binding PickDeclarativeVariantCommand}" Cursor="Hand" Focusable="False"
+                                            AutomationProperties.Name="XAML 중심형" Margin="6,0,0,0"
+                                            ToolTip="장면(재질·변형·조명)을 XAML로 선언, C#은 카메라·메시 생성만">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="10,6">
+                                                    <TextBlock x:Name="Label" Text="XAML 중심형" FontSize="11.5" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource BodyBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsDeclarativeVariant}" Value="True">
+                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Rectangle Grid.Column="2" Width="1" Height="18" Fill="{StaticResource BorderSoftBrush}" Margin="10,0" />
+                                    <Button Grid.Column="3" Command="{Binding PickXamlTabCommand}" Cursor="Hand" Focusable="False" AutomationProperties.Name="MainWindow.xaml">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="12,6">
+                                                    <TextBlock x:Name="Label" Text="MainWindow.xaml" FontFamily="{StaticResource MonoFont}"
+                                                               FontSize="11.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsXamlTab}" Value="True">
+                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
+                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="4" Command="{Binding PickCsTabCommand}" Cursor="Hand" Focusable="False" Margin="6,0,0,0" AutomationProperties.Name="MainWindow.xaml.cs">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="12,6">
+                                                    <TextBlock x:Name="Label" Text="MainWindow.xaml.cs" FontFamily="{StaticResource MonoFont}"
+                                                               FontSize="11.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding IsCsTab}" Value="True">
+                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
+                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="6" Style="{StaticResource AccentButton}" Content="{Binding CopyLabel}"
+                                            Command="{Binding CopyCommand}" Padding="14,7" FontSize="12" />
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="1" Background="{StaticResource DarkBarBrush}">
+                                <TextBox Text="{Binding CodeText, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
+                                         Background="Transparent" Foreground="#DCE3EA" CaretBrush="#DCE3EA"
+                                         FontFamily="{StaticResource MonoFont}" FontSize="11" Padding="16,14"
+                                         HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

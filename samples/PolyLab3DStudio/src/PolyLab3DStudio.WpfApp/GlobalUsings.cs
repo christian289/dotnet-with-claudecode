@@ -1,7 +1,12 @@
-global using System;
+global using System.Collections.Specialized;
+global using System.ComponentModel;
+global using System.Globalization;
 global using System.Windows;
+global using System.Windows.Controls;
+global using System.Windows.Controls.Primitives;
+global using System.Windows.Data;
+global using System.Windows.Input;
 global using System.Windows.Media;
 global using System.Windows.Media.Media3D;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
-global using PolyLab3DStudio.ViewModels;

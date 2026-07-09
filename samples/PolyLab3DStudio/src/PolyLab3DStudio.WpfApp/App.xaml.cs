@@ -1,41 +1,35 @@
-using PolyLab3DStudio.Services;
+using PolyLab3DStudio.Core;
+using PolyLab3DStudio.ViewModels;
 
 namespace PolyLab3DStudio;
 
-public partial class App : Application
+public sealed partial class App : Application
 {
-    private readonly IHost _host;
+    private readonly IHost _host = Host.CreateDefaultBuilder()
+        .ConfigureServices(services =>
+        {
+            services.AddSingleton<SettingsStore>();
+            services.AddSingleton<ProgressStore>();
+            services.AddSingleton<ShellViewModel>();
+            services.AddSingleton<ShellWindow>();
+        })
+        .Build();
 
-    public App()
+    protected override void OnStartup(StartupEventArgs e)
     {
-        _host = Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
-            {
-                services.AddSingleton<SceneRenderer>();
-
-                // ViewModels
-                services.AddSingleton<MainViewModel>();
-
-                // Windows
-                services.AddSingleton<MainWindow>();
-            })
-            .Build();
-    }
-
-    protected override async void OnStartup(StartupEventArgs e)
-    {
-        await _host.StartAsync();
-
-        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
-
         base.OnStartup(e);
+
+        _host.Start();
+
+        MainWindow = _host.Services.GetRequiredService<ShellWindow>();
+        MainWindow.Show();
     }
 
-    protected override async void OnExit(ExitEventArgs e)
+    protected override void OnExit(ExitEventArgs e)
     {
-        await _host.StopAsync();
+        _host.StopAsync().GetAwaiter().GetResult();
         _host.Dispose();
+
         base.OnExit(e);
     }
 }

@@ -1,0 +1,270 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PolyLab3DStudio"
+                    xmlns:vm="clr-namespace:PolyLab3DStudio.ViewModels;assembly=PolyLab3DStudio.ViewModels">
+
+    <!-- Orange-dot bullet with **bold** markup body. Content is a markup string. -->
+    <DataTemplate x:Key="BulletTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Ellipse Width="6" Height="6"
+                     Fill="{StaticResource AccentBrush}"
+                     VerticalAlignment="Top"
+                     Margin="0,7,10,0" />
+            <TextBlock Grid.Column="1"
+                       Style="{StaticResource BulletText}"
+                       local:BoldableText.Text="{Binding}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- Workflow chip; the leading arrow is hidden on the first item. -->
+    <DataTemplate x:Key="WorkflowStepTemplate">
+        <StackPanel Orientation="Horizontal" Margin="0,0,8,8">
+            <TextBlock x:Name="Arrow"
+                       Text="→"
+                       Foreground="{StaticResource FaintBrush}"
+                       VerticalAlignment="Center"
+                       Margin="0,0,8,0" />
+            <Border Style="{StaticResource WorkflowChip}">
+                <TextBlock Text="{Binding}" FontSize="12.5" Foreground="{StaticResource InkBrush}" />
+            </Border>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Path=(ItemsControl.AlternationIndex)}"
+                         Value="0">
+                <Setter TargetName="Arrow" Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!-- Keyboard shortcut chip; accent chips (Ctrl+Z) get the orange key badge. -->
+    <DataTemplate x:Key="ShortcutChipTemplate" DataType="{x:Type vm:ShortcutChip}">
+        <Border Style="{StaticResource ShortcutChipBorder}" Margin="0,0,8,8">
+            <StackPanel Orientation="Horizontal">
+                <Border x:Name="KeyBadge"
+                        Background="{StaticResource InkBrush}"
+                        CornerRadius="4"
+                        Padding="6,1">
+                    <TextBlock Text="{Binding Key}"
+                               FontFamily="{StaticResource MonoFont}"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource SurfaceBrush}" />
+                </Border>
+                <TextBlock Text="{Binding Label}"
+                           FontSize="12"
+                           Foreground="{StaticResource InkBrush}"
+                           VerticalAlignment="Center"
+                           Margin="6,0,0,0" />
+            </StackPanel>
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsAccent}" Value="True">
+                <Setter TargetName="KeyBadge" Property="Background" Value="{StaticResource AccentBrush}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!-- "Three graphic worlds" card with a per-world icon. -->
+    <DataTemplate x:Key="WorldCardTemplate" DataType="{x:Type vm:WorldCard}">
+        <Border Style="{StaticResource GuideCardBorder}" Padding="18">
+            <StackPanel>
+                <ContentControl Content="{Binding}"
+                                Focusable="False"
+                                HorizontalAlignment="Left">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IconKey}" Value="raster">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource RasterIconTemplate}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IconKey}" Value="vector">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource VectorIconTemplate}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IconKey}" Value="mesh">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource MeshIconTemplate}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+                <TextBlock Margin="0,10,0,0">
+                    <Run Text="{Binding Name, Mode=OneWay}" FontSize="15" FontWeight="Bold" /><Run Text=" " /><Run Text="{Binding EnglishTag, Mode=OneWay}"
+                         FontFamily="{StaticResource MonoFont}"
+                         FontSize="10.5"
+                         Foreground="{StaticResource MutedBrush}" />
+                </TextBlock>
+                <TextBlock Text="{Binding ToolName}"
+                           FontFamily="{StaticResource MonoFont}"
+                           FontSize="11"
+                           Foreground="{StaticResource AccentBrush}"
+                           Margin="0,2,0,0" />
+                <TextBlock Style="{StaticResource CalloutText}"
+                           local:BoldableText.Text="{Binding Description}"
+                           Margin="0,10,0,0" />
+                <TextBlock FontSize="11.5"
+                           Foreground="{StaticResource MutedBrush}"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,0">
+                    <Run Text="{Binding Uses, Mode=OneWay}" /><LineBreak /><Run Text="{Binding Formats, Mode=OneWay}"
+                         FontFamily="{StaticResource MonoFont}"
+                         FontSize="10" />
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!-- Full GIMP / Inkscape / Blender section: header + card with bullets,
+         workflow, and shortcuts. -->
+    <DataTemplate x:Key="ToolGuideSectionTemplate" DataType="{x:Type vm:ToolGuideSection}">
+        <StackPanel Margin="0,0,0,40">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                <TextBlock Style="{StaticResource SectionNumberText}"
+                           Text="{Binding Number}"
+                           VerticalAlignment="Bottom"
+                           Margin="0,0,0,2" />
+                <TextBlock Style="{StaticResource H2Text}"
+                           Text="{Binding Title}"
+                           VerticalAlignment="Bottom"
+                           Margin="10,0,0,0" />
+                <TextBlock Style="{StaticResource TaglineMonoText}"
+                           Text="{Binding Tagline}"
+                           VerticalAlignment="Bottom"
+                           Margin="10,0,0,3" />
+            </StackPanel>
+            <Border Style="{StaticResource GuideCardBorder}" Padding="22,20">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="18" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Grid.Row="0" Grid.Column="0" Focusable="False"
+                                        Content="{Binding Bullets[0]}"
+                                        ContentTemplate="{StaticResource BulletTemplate}" />
+                        <ContentControl Grid.Row="0" Grid.Column="2" Focusable="False"
+                                        Content="{Binding Bullets[1]}"
+                                        ContentTemplate="{StaticResource BulletTemplate}" />
+                        <ContentControl Grid.Row="2" Grid.Column="0" Focusable="False"
+                                        Content="{Binding Bullets[2]}"
+                                        ContentTemplate="{StaticResource BulletTemplate}" />
+                        <ContentControl Grid.Row="2" Grid.Column="2" Focusable="False"
+                                        Content="{Binding Bullets[3]}"
+                                        ContentTemplate="{StaticResource BulletTemplate}" />
+                    </Grid>
+                    <Rectangle Style="{StaticResource CardDivider}" />
+                    <TextBlock Style="{StaticResource SubLabelText}" Text="기본 작업 흐름 · WORKFLOW" />
+                    <ItemsControl ItemsSource="{Binding WorkflowSteps}"
+                                  AlternationCount="99"
+                                  ItemTemplate="{StaticResource WorkflowStepTemplate}"
+                                  Margin="0,0,0,-8">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <Rectangle Style="{StaticResource CardDivider}" />
+                    <TextBlock Style="{StaticResource SubLabelText}" Text="자주 쓰는 단축키 · SHORTCUTS" />
+                    <ItemsControl ItemsSource="{Binding Shortcuts}"
+                                  ItemTemplate="{StaticResource ShortcutChipTemplate}"
+                                  Margin="0,0,0,-8">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource FootnoteText}" Text="{Binding Footnote}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- One row of the comparison table. -->
+    <DataTemplate x:Key="ComparisonRowTemplate" DataType="{x:Type vm:ComparisonRow}">
+        <Border x:Name="RowBorder"
+                BorderBrush="{StaticResource DividerBrush}"
+                BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Label}"
+                           FontSize="11.5"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource MutedBrush}"
+                           TextWrapping="Wrap"
+                           Margin="14,11" />
+                <TextBlock x:Name="GimpCell" Grid.Column="1"
+                           FontSize="12.5"
+                           TextWrapping="Wrap"
+                           LineHeight="20"
+                           LineStackingStrategy="BlockLineHeight"
+                           local:BoldableText.Text="{Binding Gimp}"
+                           Margin="14,11" />
+                <Border Grid.Column="2" BorderBrush="{StaticResource DividerBrush}" BorderThickness="1,0,0,0">
+                    <TextBlock x:Name="InkscapeCell"
+                               FontSize="12.5"
+                               TextWrapping="Wrap"
+                               LineHeight="20"
+                               LineStackingStrategy="BlockLineHeight"
+                               local:BoldableText.Text="{Binding Inkscape}"
+                               Margin="14,11" />
+                </Border>
+                <Border Grid.Column="3" BorderBrush="{StaticResource DividerBrush}" BorderThickness="1,0,0,0">
+                    <TextBlock x:Name="BlenderCell"
+                               FontSize="12.5"
+                               TextWrapping="Wrap"
+                               LineHeight="20"
+                               LineStackingStrategy="BlockLineHeight"
+                               local:BoldableText.Text="{Binding Blender}"
+                               Margin="14,11" />
+                </Border>
+            </Grid>
+        </Border>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsLast}" Value="True">
+                <Setter TargetName="RowBorder" Property="BorderThickness" Value="0" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsMono}" Value="True">
+                <Setter TargetName="GimpCell" Property="FontFamily" Value="{StaticResource MonoFont}" />
+                <Setter TargetName="InkscapeCell" Property="FontFamily" Value="{StaticResource MonoFont}" />
+                <Setter TargetName="BlenderCell" Property="FontFamily" Value="{StaticResource MonoFont}" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!-- Small point-cloud tool card (CloudCompare / MeshLab). -->
+    <DataTemplate x:Key="MiniToolCardTemplate" DataType="{x:Type vm:MiniToolCard}">
+        <Border Style="{StaticResource MiniCardBorder}">
+            <StackPanel>
+                <TextBlock Text="{Binding Name}" FontSize="13" FontWeight="Bold" Foreground="{StaticResource InkBrush}" />
+                <TextBlock FontSize="12"
+                           Foreground="{StaticResource BodyBrush}"
+                           TextWrapping="Wrap"
+                           LineHeight="19"
+                           LineStackingStrategy="BlockLineHeight"
+                           Margin="0,4,0,0">
+                    <Run Text="{Binding Body, Mode=OneWay}" /><Run Text=" " /><Run Text="{Binding Badge, Mode=OneWay}"
+                         FontFamily="{StaticResource MonoFont}"
+                         FontSize="10.5"
+                         Foreground="{StaticResource MutedBrush}" />
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>
