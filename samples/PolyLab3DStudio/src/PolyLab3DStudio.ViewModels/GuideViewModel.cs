@@ -19,7 +19,7 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
     [
         new(
             IconKey: "raster",
-            Name: "래스터",
+            Name: "[[래스터]]",
             EnglishTag: "RASTER",
             ToolName: "GIMP",
             Description: "그림이 **픽셀(색깔 점)의 격자**로 저장돼요. 확대하면 계단처럼 깨지지만, 사진처럼 미묘한 색을 다루는 데 최고예요.",
@@ -27,7 +27,7 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
             Formats: "PNG · JPG · XCF"),
         new(
             IconKey: "vector",
-            Name: "벡터",
+            Name: "[[벡터]]",
             EnglishTag: "VECTOR",
             ToolName: "Inkscape",
             Description: "그림이 **수학적인 선(패스)과 점(노드)**으로 저장돼요. 아무리 확대해도 깨지지 않아 로고·아이콘에 딱이에요.",
@@ -38,7 +38,7 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
             Name: "3D",
             EnglishTag: "3D MODELING",
             ToolName: "폴리랩 → Blender",
-            Description: "그림이 아니라 **공간 속의 입체(메시)**를 만들어요. 카메라와 빛을 정해서 원하는 각도의 그림을 \"찍어\" 냅니다.",
+            Description: "그림이 아니라 **공간 속의 입체([[메시]])**를 만들어요. 카메라와 빛을 정해서 원하는 각도의 그림을 \"찍어\" 냅니다.",
             Uses: "게임 소품 · 3D 프린팅 · 제품 시안",
             Formats: "OBJ · GLB · STL"),
     ];
@@ -52,7 +52,7 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
             Bullets:
             [
                 "**캔버스** — 정해진 크기의 픽셀 격자 위에서 작업해요. 폴리랩의 뷰포트처럼 **휠로 확대/축소**, 스페이스+드래그로 화면 이동.",
-                "**레이어** — 투명한 필름을 겹쳐 놓은 구조. 폴리랩의 **[장면] 목록에 있는 오브젝트**와 같은 역할이에요. 하나씩 따로 고치고, 순서를 바꿔요.",
+                "**[[레이어]]** — 투명한 필름을 겹쳐 놓은 구조. 폴리랩의 **[장면] 목록에 있는 오브젝트**와 같은 역할이에요. 하나씩 따로 고치고, 순서를 바꿔요.",
                 "**선택 영역** — \"여기만 고칠게\"라고 범위를 정하는 것. 폴리랩에서 오브젝트를 **클릭해 선택**하는 것과 같은 개념이에요.",
                 "**브러시와 필터** — 브러시로 픽셀을 직접 칠하고, 필터(흐림·선명 등)로 한꺼번에 계산해서 바꿔요.",
             ],
@@ -75,9 +75,9 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
             Bullets:
             [
                 "**오브젝트** — 사각형, 원, 패스 하나하나가 독립된 오브젝트예요. 폴리랩의 큐브·구와 완전히 같은 개념! 클릭해 선택하고 각각 옮겨요.",
-                "**패스와 노드** — 모든 모양은 점(노드)을 곡선으로 이은 것. 노드를 끌면 모양이 바뀌어요. 3D에서 정점(Vertex)을 편집하는 것의 2D 버전이에요.",
+                "**[[패스]]와 노드** — 모든 모양은 점(노드)을 곡선으로 이은 것. 노드를 끌면 모양이 바뀌어요. 3D에서 정점(Vertex)을 편집하는 것의 2D 버전이에요.",
                 "**채우기와 윤곽선** — 오브젝트마다 안쪽 색(Fill)과 테두리(Stroke)를 정해요. 폴리랩의 **재질 패널**과 같은 자리예요.",
-                "**불리언 연산** — 두 도형을 합치거나(Union) 한쪽으로 구멍을 뚫어요(Difference). 복잡한 로고도 기본 도형의 조합으로 만들어요.",
+                "**[[불리언 연산]]** — 두 도형을 합치거나(Union) 한쪽으로 구멍을 뚫어요(Difference). 복잡한 로고도 기본 도형의 조합으로 만들어요.",
             ],
             WorkflowSteps: ["1 기본 도형 그리기", "2 노드를 다듬고 도형 합치기", "3 채우기·윤곽선 색 정하기", "4 SVG/PDF로 저장"],
             Shortcuts:
@@ -98,9 +98,9 @@ public sealed partial class GuideViewModel(ShellViewModel shell) : ObservableObj
             Bullets:
             [
                 "**오브젝트 모드 vs 편집 모드** — 오브젝트 모드는 폴리랩과 똑같이 물체 단위로 이동·회전·크기를 다뤄요. **Tab**을 누르면 편집 모드로 들어가 정점·엣지·면을 직접 다듬어요.",
-                "**메시** — 모든 입체는 정점(Vertex)·엣지(Edge)·면(Face)의 그물이에요. 폴리랩의 큐브·구도 같은 구조로 되어 있어요.",
+                "**[[메시]]** — 모든 입체는 [[정점]](Vertex)·엣지(Edge)·면(Face)의 그물이에요. 폴리랩의 큐브·구도 같은 구조로 되어 있어요.",
                 "**모디파이어** — 원본을 남긴 채 효과를 겹겹이 쌓는 비파괴 편집. Subdivision으로 매끈하게, Mirror로 좌우 대칭을 자동으로 만들어요.",
-                "**머티리얼과 렌더** — 색·거칠기(Roughness)·금속성(Metalness)… 폴리랩 재질 패널과 같은 항목이 그대로 있어요. 카메라와 빛을 놓고 최종 그림을 렌더링합니다.",
+                "**머티리얼과 렌더** — 색·[[거칠기]](Roughness)·[[금속성]](Metalness)… 폴리랩 재질 패널과 같은 항목이 그대로 있어요. 카메라와 빛을 놓고 최종 그림을 렌더링합니다.",
             ],
             WorkflowSteps: ["1 도형 추가 (Shift+A)", "2 편집 모드로 다듬기", "3 머티리얼·조명", "4 렌더/내보내기"],
             Shortcuts:

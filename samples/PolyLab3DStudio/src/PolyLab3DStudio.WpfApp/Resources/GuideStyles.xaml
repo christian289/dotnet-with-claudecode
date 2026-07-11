@@ -77,6 +77,44 @@
         <Setter Property="Margin" Value="0,8,0,0" />
     </Style>
 
+    <!-- Glossary term-tip: dotted accent underline + hover tooltip (design's term-tip). -->
+
+    <TextDecorationCollection x:Key="TermTipUnderline">
+        <TextDecoration Location="Underline" PenOffset="2" PenOffsetUnit="Pixel">
+            <TextDecoration.Pen>
+                <Pen Brush="{StaticResource AccentBrush}" Thickness="1.5" DashCap="Round">
+                    <Pen.DashStyle>
+                        <DashStyle Dashes="0,2.2" />
+                    </Pen.DashStyle>
+                </Pen>
+            </TextDecoration.Pen>
+        </TextDecoration>
+    </TextDecorationCollection>
+
+    <!-- Dark styled tooltip card used by the TermTip inline control. -->
+    <Style x:Key="TermTipToolTip" TargetType="ToolTip">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="{StaticResource DarkCardBrush}"
+                            CornerRadius="12"
+                            Padding="15,13"
+                            MaxWidth="320"
+                            Margin="4,4,18,22">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#141C26" Opacity="0.45" BlurRadius="36"
+                                              ShadowDepth="14" Direction="270" />
+                        </Border.Effect>
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Guide screen containers and chips. -->
 
     <Style x:Key="GuideCardBorder" TargetType="Border">

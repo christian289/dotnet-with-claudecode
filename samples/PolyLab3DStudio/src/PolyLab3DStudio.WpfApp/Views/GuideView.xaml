@@ -179,7 +179,7 @@
                                            TextWrapping="Wrap"
                                            LineHeight="23"
                                            LineStackingStrategy="BlockLineHeight"
-                                           local:BoldableText.Text="포인트 클라우드는 **3D 스캐너, LiDAR(아이폰 프로에도 있어요!), 사진측량**이 만들어내는 결과물이에요. 수십만~수백만 개의 점이 공간에 흩뿌려져 있고, 점 하나하나가 **위치(X·Y·Z)와 색**을 가져요. 폴리랩에서 배운 좌표 개념 그대로, 점만 아주 많아진 거예요." />
+                                           local:BoldableText.Text="[[포인트 클라우드]]는 **3D 스캐너, LiDAR(아이폰 프로에도 있어요!), 사진측량**이 만들어내는 결과물이에요. 수십만~수백만 개의 점이 공간에 흩뿌려져 있고, 점 하나하나가 **위치(X·Y·Z)와 색**을 가져요. 폴리랩에서 배운 좌표 개념 그대로, 점만 아주 많아진 거예요." />
                             </Grid>
                             <Grid Margin="0,14,0,0">
                                 <Grid.ColumnDefinitions>

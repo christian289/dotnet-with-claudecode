@@ -10,6 +10,44 @@ namespace PolyLab3DStudio.Core;
 /// </summary>
 public static class WpfSceneCodeGenerator
 {
+    // ==================== runnable project scaffold ====================
+
+    /// <summary>Csproj for the exported project; the TFM comes from the modal's .NET picker.</summary>
+    public static string GenerateProjectFile(string targetFramework) =>
+        $"""
+        <Project Sdk="Microsoft.NET.Sdk">
+
+          <PropertyGroup>
+            <OutputType>WinExe</OutputType>
+            <TargetFramework>{targetFramework}</TargetFramework>
+            <Nullable>enable</Nullable>
+            <ImplicitUsings>enable</ImplicitUsings>
+            <UseWPF>true</UseWPF>
+          </PropertyGroup>
+
+        </Project>
+        """;
+
+    public static string GenerateAppXaml() =>
+        """
+        <Application x:Class="PolyLabScene.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     StartupUri="MainWindow.xaml" />
+        """;
+
+    public static string GenerateAppCs() =>
+        """
+        using System.Windows;
+
+        namespace PolyLabScene
+        {
+            public partial class App : Application
+            {
+            }
+        }
+        """;
+
     // ==================== code-behind variant ====================
 
     public static string GenerateXaml() =>

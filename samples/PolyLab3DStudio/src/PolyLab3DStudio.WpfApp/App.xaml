@@ -20,6 +20,7 @@
             <conv:ValuesEqualConverter x:Key="ValuesEqual" />
             <conv:NotNullToVisibilityConverter x:Key="NotNullToVisibility" />
             <conv:EnglishLabelConverter x:Key="EnglishLabel" />
+            <conv:HalfWidthConverter x:Key="HalfWidth" />
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         </ResourceDictionary>
     </Application.Resources>

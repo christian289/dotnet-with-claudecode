@@ -68,6 +68,11 @@ public sealed partial class StudioViewModel : ObservableObject
     /// <summary>Raised when generated code should be placed on the clipboard (view-side concern).</summary>
     public event Action<string>? CopyToClipboardRequested;
 
+    /// <summary>Folder picker supplied by the view layer for the project export.</summary>
+    public Func<string?>? PickFolderRequested { get; set; }
+
+    public event Action<string>? OpenFolderRequested;
+
     public string? SelectedId => SelectedObject?.Id;
 
     public bool HasSelection => SelectedObject is not null;
@@ -243,6 +248,8 @@ public sealed partial class StudioViewModel : ObservableObject
             () => [.. Objects.Select(o => o.ToState())],
             () => (LightIntensity, LightAngle),
             text => CopyToClipboardRequested?.Invoke(text),
+            () => PickFolderRequested?.Invoke(),
+            path => OpenFolderRequested?.Invoke(path),
             CheckTask,
             () => Export = null);
         CheckTask(TaskEvent.ForAction("xaml"));

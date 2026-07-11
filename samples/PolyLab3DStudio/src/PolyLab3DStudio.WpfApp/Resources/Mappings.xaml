@@ -24,4 +24,16 @@
         <views:GuideView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:PipelineViewModel}">
+        <views:PipelineView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:DictViewModel}">
+        <views:DictView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ToolMapViewModel}">
+        <views:ToolMapView />
+    </DataTemplate>
+
 </ResourceDictionary>

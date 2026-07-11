@@ -64,6 +64,24 @@
     <SolidColorBrush x:Key="PointWarmBrush" Color="#E2946A" />
     <SolidColorBrush x:Key="PointSandBrush" Color="#D8B36A" />
 
+    <!-- Pipeline screen extras. -->
+    <SolidColorBrush x:Key="PipelineUiLaneBrush" Color="#EDF0FA" />
+    <SolidColorBrush x:Key="PipelineUiLaneBorderBrush" Color="#D7DDF1" />
+    <SolidColorBrush x:Key="PipelineUiSubBrush" Color="#5A69A8" />
+    <SolidColorBrush x:Key="PipelineUiIconRingBrush" Color="#404356A8" />
+    <SolidColorBrush x:Key="PipelineRenderLaneBrush" Color="#FAEEE4" />
+    <SolidColorBrush x:Key="PipelineRenderLaneBorderBrush" Color="#F0DCC9" />
+    <SolidColorBrush x:Key="PipelineWarmBrush" Color="#B0592F" />
+    <SolidColorBrush x:Key="PipelineWarmTintBrush" Color="#FBEADF" />
+    <SolidColorBrush x:Key="PipelineWarmIconRingBrush" Color="#47B0592F" />
+    <SolidColorBrush x:Key="PipelineBoundaryBrush" Color="#FCF3E2" />
+    <SolidColorBrush x:Key="PipelineBoundaryFgBrush" Color="#8A4D12" />
+    <SolidColorBrush x:Key="PipelineBoundaryArrowBrush" Color="#C9964B" />
+    <SolidColorBrush x:Key="PipelineStageIdleBrush" Color="#9EFFFFFF" />
+    <SolidColorBrush x:Key="PipelineStageSubIdleBrush" Color="#7A828B" />
+    <SolidColorBrush x:Key="PipelineDarkChipBrush" Color="#0FFFFFFF" />
+    <SolidColorBrush x:Key="PipelineDarkChipBorderBrush" Color="#24FFFFFF" />
+
     <!-- Axis colors (properties panel / viewport legend). -->
     <SolidColorBrush x:Key="AxisXBrush" Color="#D45B4A" />
     <SolidColorBrush x:Key="AxisXLegendBrush" Color="#E2574C" />

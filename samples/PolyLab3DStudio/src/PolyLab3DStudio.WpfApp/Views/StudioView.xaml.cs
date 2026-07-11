@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Microsoft.Win32;
 using PolyLab3DStudio.Controls;
 using PolyLab3DStudio.ViewModels;
 
@@ -24,6 +26,8 @@ public sealed partial class StudioView : UserControl
         {
             _vm.ViewPresetRequested -= OnViewPresetRequested;
             _vm.CopyToClipboardRequested -= OnCopyToClipboardRequested;
+            _vm.OpenFolderRequested -= OnOpenFolderRequested;
+            _vm.PickFolderRequested = null;
         }
 
         _vm = DataContext as StudioViewModel;
@@ -32,6 +36,8 @@ public sealed partial class StudioView : UserControl
         {
             _vm.ViewPresetRequested += OnViewPresetRequested;
             _vm.CopyToClipboardRequested += OnCopyToClipboardRequested;
+            _vm.OpenFolderRequested += OnOpenFolderRequested;
+            _vm.PickFolderRequested = OnPickFolderRequested;
         }
     }
 
@@ -41,4 +47,12 @@ public sealed partial class StudioView : UserControl
     private void OnViewPresetRequested(string preset) => Viewport.SetView(preset);
 
     private static void OnCopyToClipboardRequested(string text) => Clipboard.SetText(text);
+
+    private static string? OnPickFolderRequested()
+    {
+        var dialog = new OpenFolderDialog { Title = "프로젝트를 만들 폴더 선택" };
+        return dialog.ShowDialog() == true ? dialog.FolderName : null;
+    }
+
+    private static void OnOpenFolderRequested(string path) => Process.Start("explorer.exe", path);
 }

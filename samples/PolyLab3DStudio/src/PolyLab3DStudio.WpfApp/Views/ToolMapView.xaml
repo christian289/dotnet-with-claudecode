@@ -1,0 +1,324 @@
+<UserControl x:Class="PolyLab3DStudio.Views.ToolMapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PolyLab3DStudio.Controls"
+             Background="{StaticResource PaperBrush}">
+    <UserControl.Resources>
+
+        <!-- Ladder step card -->
+        <Style x:Key="LadderStepBorder" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderSoftBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="Padding" Value="14,12" />
+        </Style>
+
+        <Style x:Key="LadderOrdinalText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+        </Style>
+
+        <Style x:Key="LadderTitleText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+        </Style>
+
+        <Style x:Key="LadderDescText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="LineHeight" Value="16.5" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+        </Style>
+
+        <Style x:Key="LadderArrowText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{StaticResource FaintBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="8,0" />
+        </Style>
+
+        <!-- Comparison table cells -->
+        <Style x:Key="TableToolHeaderText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12.5" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="Margin" Value="14,12" />
+        </Style>
+
+        <Style x:Key="TableValueText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11.5" />
+            <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="LineHeight" Value="17.8" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+            <Setter Property="Margin" Value="14,11" />
+        </Style>
+
+        <Style x:Key="TableCellBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="{StaticResource DividerBrush}" />
+            <Setter Property="BorderThickness" Value="1,0,0,0" />
+        </Style>
+
+        <!-- One comparison row -->
+        <DataTemplate x:Key="ToolMapRowTemplate">
+            <Border BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Label}" FontSize="11" FontWeight="Bold"
+                               Foreground="{StaticResource MutedBrush}" Margin="14,11"
+                               TextWrapping="Wrap" />
+                    <Border Grid.Column="1">
+                        <TextBlock Style="{StaticResource TableValueText}" Text="{Binding A}" />
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource TableCellBorder}">
+                        <TextBlock Style="{StaticResource TableValueText}" Text="{Binding B}" />
+                    </Border>
+                    <Border Grid.Column="3" Style="{StaticResource TableCellBorder}">
+                        <TextBlock Style="{StaticResource TableValueText}" Text="{Binding C}" />
+                    </Border>
+                    <Border Grid.Column="4" Style="{StaticResource TableCellBorder}">
+                        <TextBlock Style="{StaticResource TableValueText}" Text="{Binding D}" />
+                    </Border>
+                    <Border Grid.Column="5" Style="{StaticResource TableCellBorder}">
+                        <TextBlock Style="{StaticResource TableValueText}" Text="{Binding E}" />
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <DockPanel>
+
+        <!-- Sticky header -->
+        <Border DockPanel.Dock="Top"
+                Height="60"
+                Background="{StaticResource HeaderBrush}"
+                BorderBrush="{StaticResource BorderStrongBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="28,0">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource BackButton}" Command="{Binding GoStartCommand}"
+                        AutomationProperties.Name="도구 지도 뒤로" VerticalAlignment="Center" />
+                <ContentControl ContentTemplate="{StaticResource LogoIconTemplate}"
+                                Content=""
+                                Focusable="False"
+                                VerticalAlignment="Center"
+                                Margin="14,0,0,0" />
+                <TextBlock Text="Windows .NET 3D 도구 지도" FontSize="16" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="14,0,0,0" />
+                <TextBlock Style="{StaticResource TaglineMonoText}"
+                           Text="DIRECTX ONLY · 2026-07 기준"
+                           VerticalAlignment="Center"
+                           Margin="8,0,0,0" />
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      PanningMode="VerticalOnly">
+            <StackPanel MaxWidth="1080" Margin="24,32,24,64">
+
+                <!-- Intro -->
+                <StackPanel Margin="0,0,0,28">
+                    <TextBlock FontSize="26" FontWeight="Bold" TextWrapping="Wrap"
+                               LineHeight="36.4" LineStackingStrategy="BlockLineHeight"
+                               Text="언제 쓰나, 무엇을 얻나, 무엇을 포기하나" />
+                    <TextBlock Margin="0,10,0,0" MaxWidth="660" HorizontalAlignment="Left"
+                               FontSize="14" Foreground="{StaticResource BodyBrush}"
+                               TextWrapping="Wrap" LineHeight="23.8" LineStackingStrategy="BlockLineHeight"
+                               Text="WPF 앱에서 3D를 그리는 다섯 가지 선택지예요. 왼쪽에서 오른쪽으로 갈수록 얻는 것(품질·성능·제어)이 늘고, 포기하는 것(단순함·WPF 통합)도 늘어요. 크로스플랫폼은 이 지도의 범위 밖입니다." />
+                </StackPanel>
+
+                <!-- Learning ladder -->
+                <Border Style="{StaticResource GuideCardBorder}" CornerRadius="16" Padding="22,20" Margin="0,0,0,28">
+                    <StackPanel>
+                        <TextBlock Text="학습 사다리 · 권장 순서" FontSize="12" FontWeight="Bold"
+                                   Foreground="{StaticResource MutedBrush}" Margin="0,0,0,12" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Style="{StaticResource LadderStepBorder}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource LadderOrdinalText}" Text="1 · 원리" />
+                                    <TextBlock Style="{StaticResource LadderTitleText}" Text="순정 Media3D" />
+                                    <TextBlock Style="{StaticResource LadderDescText}">
+                                        <controls:TermTip Word="노멀" /><Run Text="·" /><controls:TermTip Word="와인딩" /><Run
+                                             Text="·변환 순서를 몸으로" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Grid.Column="1" Style="{StaticResource LadderArrowText}" Text="→" />
+                            <Border Grid.Column="2" Style="{StaticResource LadderStepBorder}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource LadderOrdinalText}" Text="2 · 편의" />
+                                    <TextBlock Style="{StaticResource LadderTitleText}" Text="HelixToolkit.Wpf" />
+                                    <TextBlock Style="{StaticResource LadderDescText}" Text="카메라·임포터를 라이브러리가 대신" />
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Grid.Column="3" Style="{StaticResource LadderArrowText}" Text="→" />
+                            <Border Grid.Column="4" Style="{StaticResource LadderStepBorder}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource LadderOrdinalText}" Text="3 · 품질·성능" />
+                                    <TextBlock Style="{StaticResource LadderTitleText}" Text="Helix.SharpDX" />
+                                    <TextBlock Style="{StaticResource LadderDescText}">
+                                        <controls:TermTip Word="그림자 매핑">그림자</controls:TermTip><Run Text="·" /><controls:TermTip Word="PBR" /><Run
+                                             Text=" — 단, DX11 천장" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <StackPanel Grid.Column="5" VerticalAlignment="Center" Margin="8,0">
+                                <TextBlock Text="→" FontSize="14" Foreground="{StaticResource FaintBrush}"
+                                           HorizontalAlignment="Center" />
+                                <TextBlock Text="DX11 천장 돌파" FontFamily="{StaticResource MonoFont}"
+                                           FontSize="9" Foreground="{StaticResource AccentBrush}" />
+                            </StackPanel>
+                            <Border Grid.Column="6" Style="{StaticResource LadderStepBorder}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource LadderOrdinalText}" Text="4 · 최대 제어" />
+                                    <TextBlock Style="{StaticResource LadderTitleText}" Text="Vortice / Silk.NET" />
+                                    <TextBlock Style="{StaticResource LadderDescText}">
+                                        <Run Text="DX12·" /><controls:TermTip Word="DXR" /><Run
+                                             Text=", 브릿지로 WPF 삽입" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Grid.Column="7" Style="{StaticResource LadderArrowText}" Text="→" />
+                            <Border Grid.Column="8" Style="{StaticResource LadderStepBorder}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource LadderOrdinalText}" Text="5 · 엔진" />
+                                    <TextBlock Style="{StaticResource LadderTitleText}" Text="Stride" />
+                                    <TextBlock Style="{StaticResource LadderDescText}" Text="3D가 경험 전체일 때 (WPF 밖)" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <TextBlock FontSize="11.5" Foreground="{StaticResource MutedBrush}"
+                                   TextWrapping="Wrap" LineHeight="18.4"
+                                   LineStackingStrategy="BlockLineHeight" Margin="0,12,0,0">
+                            <Run Text="계단마다 " /><Run Text="같은 눈사람 장면"
+                                 FontWeight="Bold" Foreground="{StaticResource BodyBrush}" /><Run
+                                 Text="을 다시 만들어 보세요 — 도구가 바뀌어도 개념은 그대로임을 체득하게 됩니다." />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Comparison table -->
+                <Border Style="{StaticResource GuideCardBorder}" CornerRadius="16" Margin="0,0,0,12">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                                  Focusable="False">
+                        <StackPanel MinWidth="940">
+                            <Border Background="{StaticResource HeaderBrush}"
+                                    CornerRadius="15,15,0,0"
+                                    BorderBrush="{StaticResource BorderSoftBrush}"
+                                    BorderThickness="0,0,0,1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="1">
+                                        <TextBlock Style="{StaticResource TableToolHeaderText}" Text="순정 Media3D" />
+                                    </Border>
+                                    <Border Grid.Column="2" BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
+                                        <TextBlock Style="{StaticResource TableToolHeaderText}" Text="HelixToolkit.Wpf" />
+                                    </Border>
+                                    <Border Grid.Column="3" BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
+                                        <TextBlock Style="{StaticResource TableToolHeaderText}" Text="Helix.SharpDX" />
+                                    </Border>
+                                    <Border Grid.Column="4" BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
+                                        <TextBlock Style="{StaticResource TableToolHeaderText}" Text="Vortice / Silk.NET" />
+                                    </Border>
+                                    <Border Grid.Column="5" BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
+                                        <TextBlock Style="{StaticResource TableToolHeaderText}" Text="Stride" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Rows}"
+                                          ItemTemplate="{StaticResource ToolMapRowTemplate}"
+                                          Focusable="False" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- Verdict callout -->
+                <Border Background="{StaticResource SurfaceBrush}"
+                        BorderBrush="{StaticResource BorderSoftBrush}"
+                        BorderThickness="1" CornerRadius="10" Padding="14,12" Margin="0,0,0,28">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource CalloutLabelText}" Text="판단" VerticalAlignment="Top" />
+                        <TextBlock Grid.Column="1" FontSize="12.5" Foreground="{StaticResource BodyBrush}"
+                                   TextWrapping="Wrap" LineHeight="20.6" LineStackingStrategy="BlockLineHeight">
+                            <Run Text="대부분의 WPF 3D(LOB·시각화·CAD성 뷰어)에는 " /><Run
+                                 Text="DX11(3번 계단)로 충분" FontWeight="Bold" /><Run
+                                 Text="해요. D3DImage 복사가 병목이면 DX12의 CPU 이점은 상쇄됩니다. DX12가 값어치를 하는 경우는 " /><controls:TermTip
+                                 Word="DXR" FontWeight="Bold">DXR 레이트레이싱</controls:TermTip><Run
+                                 Text=" · " FontWeight="Bold" /><controls:TermTip Word="메시 셰이더" FontWeight="Bold" /><Run
+                                 Text=" · 초대량 " FontWeight="Bold" /><controls:TermTip Word="드로우콜" FontWeight="Bold" /><Run
+                                 Text=" · 기존 DX12 렌더러 공유" FontWeight="Bold" /><Run
+                                 Text=" — 이럴 때만 브릿지 비용을 지불하세요. 라이브러리 버전·기능은 NuGet/GitHub에서 도입 시점에 다시 확인하는 것을 권장해요." />
+                        </TextBlock>
+                    </Grid>
+                </Border>
+
+                <!-- Dark CTA -->
+                <Border Background="{StaticResource DarkCardBrush}" CornerRadius="16" Padding="26,22">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="이 지도의 수업 버전이 트랙 B예요"
+                                       FontSize="16" FontWeight="Bold"
+                                       Foreground="{StaticResource SurfaceBrush}" />
+                            <TextBlock Text="각 계단을 레슨으로 밟아가며, D3DImage/HwndHost 브릿지의 실제 흐름까지 배웁니다."
+                                       FontSize="12.5" Foreground="{StaticResource DarkBodyBrush}"
+                                       TextWrapping="Wrap" LineHeight="20.6"
+                                       LineStackingStrategy="BlockLineHeight" Margin="0,6,0,0" />
+                        </StackPanel>
+                        <Button Grid.Column="2"
+                                Style="{StaticResource AccentButton}"
+                                Content="트랙 B 시작하기 →"
+                                Command="{Binding GoCoursesCommand}"
+                                FontSize="13" FontWeight="Bold"
+                                Padding="18,11"
+                                VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

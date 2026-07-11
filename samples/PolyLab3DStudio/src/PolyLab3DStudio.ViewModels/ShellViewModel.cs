@@ -36,6 +36,9 @@ public sealed partial class ShellViewModel : ObservableObject
         Studio = new StudioViewModel(this);
         Settings = new SettingsViewModel(this);
         Guide = new GuideViewModel(this);
+        Pipeline = new PipelineViewModel(this);
+        Dict = new DictViewModel(this);
+        ToolMap = new ToolMapViewModel(this);
 
         _currentViewModel = Start;
         RefreshProgress();
@@ -50,6 +53,12 @@ public sealed partial class ShellViewModel : ObservableObject
     public SettingsViewModel Settings { get; }
 
     public GuideViewModel Guide { get; }
+
+    public PipelineViewModel Pipeline { get; }
+
+    public DictViewModel Dict { get; }
+
+    public ToolMapViewModel ToolMap { get; }
 
     [NotifyPropertyChangedFor(nameof(IsStudioActive))]
     [ObservableProperty] private object _currentViewModel;
@@ -176,6 +185,19 @@ public sealed partial class ShellViewModel : ObservableObject
     }
 
     public void GoGuide() => SetScreen("guide", Guide);
+
+    public void GoPipeline() => SetScreen("pipeline", Pipeline);
+
+    public void GoDict() => SetScreen("dict", Dict);
+
+    /// <summary>Term-tip deep link: open the dictionary pre-searched with a word.</summary>
+    public void GoDictSearch(string word)
+    {
+        Dict.SearchFor(word);
+        SetScreen("dict", Dict);
+    }
+
+    public void GoToolMap() => SetScreen("map", ToolMap);
 
     public void GoSettings()
     {

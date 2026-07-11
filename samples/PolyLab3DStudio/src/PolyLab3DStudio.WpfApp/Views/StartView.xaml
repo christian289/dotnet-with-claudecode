@@ -76,35 +76,55 @@
                             Content="자유롭게 만들기" Command="{Binding GoStudioFreeCommand}" />
                 </Grid>
 
-                <!-- Concept guide card (companion app; decorative link) -->
-                <Button Margin="0,10,0,0" Cursor="Hand" Focusable="False" AutomationProperties.Name="도구 개념 가이드"
-                        Command="{Binding GoGuideCommand}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="Chrome" Background="{StaticResource DarkBarBrush}" CornerRadius="12" Padding="18,14">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="12" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <TextBlock Text="도구 개념 가이드" FontSize="15" FontWeight="Bold" Foreground="{StaticResource SurfaceBrush}" />
-                                        <TextBlock Text="GIMP · Inkscape · Blender · 포인트 클라우드 — 다음 도구로 가기 전 개념 정리"
-                                                   FontSize="12" Foreground="{StaticResource SurfaceBrush}" Opacity="0.78"
-                                                   Margin="0,2,0,0" TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <TextBlock Grid.Column="2" Text="→" FontSize="18" Foreground="{StaticResource SurfaceBrush}" VerticalAlignment="Center" />
-                                </Grid>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Chrome" Property="Background" Value="{StaticResource DarkBarHoverBrush}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <!-- Reference hub: four companion learning screens -->
+                <StackPanel Margin="0,12,0,0">
+                    <StackPanel.Resources>
+                        <!-- Dark reference card: Content = title, Tag = subtitle. -->
+                        <Style x:Key="ReferenceCard" TargetType="Button">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="Chrome" Background="{StaticResource DarkBarBrush}"
+                                                CornerRadius="11" Padding="14,12" Margin="0,0,8,8">
+                                            <StackPanel>
+                                                <TextBlock Text="{TemplateBinding Content}" FontSize="13" FontWeight="Bold"
+                                                           Foreground="{StaticResource SurfaceBrush}" />
+                                                <TextBlock Text="{TemplateBinding Tag}" FontSize="11"
+                                                           Foreground="{StaticResource SurfaceBrush}" Opacity="0.72"
+                                                           TextWrapping="Wrap" Margin="0,3,0,0" />
+                                            </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Chrome" Property="Background" Value="{StaticResource DarkBarHoverBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="참조 자료 · REFERENCE"
+                               FontFamily="{StaticResource MonoFont}" FontSize="10"
+                               Foreground="{StaticResource MutedBrush}"
+                               Margin="0,0,0,8" />
+                    <UniformGrid Columns="2" Margin="0,0,-8,-8">
+                        <Button Style="{StaticResource ReferenceCard}" Command="{Binding GoGuideCommand}"
+                                AutomationProperties.Name="도구 개념 가이드"
+                                Content="도구 개념 가이드" Tag="GIMP · Inkscape · Blender" />
+                        <Button Style="{StaticResource ReferenceCard}" Command="{Binding GoDictCommand}"
+                                AutomationProperties.Name="3D 사전"
+                                Content="3D 사전" Tag="용어 검색 · 카테고리별" />
+                        <Button Style="{StaticResource ReferenceCard}" Command="{Binding GoPipelineCommand}"
+                                AutomationProperties.Name="WPF 코어 파이프라인"
+                                Content="WPF 코어 파이프라인" Tag="화면에 그려지기까지" />
+                        <Button Style="{StaticResource ReferenceCard}" Command="{Binding GoToolMapCommand}"
+                                AutomationProperties.Name=".NET 3D 도구 지도"
+                                Content=".NET 3D 도구 지도" Tag="Media3D → Helix → DX12" />
+                    </UniformGrid>
+                </StackPanel>
             </StackPanel>
 
             <Grid Width="340" Margin="0,26,0,0" HorizontalAlignment="Left">

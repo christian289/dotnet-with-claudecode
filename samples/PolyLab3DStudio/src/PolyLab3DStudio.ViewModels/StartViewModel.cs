@@ -25,4 +25,13 @@ public sealed partial class StartViewModel(ShellViewModel shell) : ObservableObj
 
     [RelayCommand]
     private void GoGuide() => Shell.GoGuide();
+
+    [RelayCommand]
+    private void GoPipeline() => Shell.GoPipeline();
+
+    [RelayCommand]
+    private void GoDict() => Shell.GoDict();
+
+    [RelayCommand]
+    private void GoToolMap() => Shell.GoToolMap();
 }

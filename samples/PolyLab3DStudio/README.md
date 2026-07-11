@@ -9,11 +9,19 @@ GenericHost, UI-independent ViewModels, `net10.0-windows`).
 ## Screens & Features
 
 - **시작 화면** — hero copy, "이어서 학습하기" (jumps to the next unfinished
-  lesson), course/free-mode entry points, overall progress bar, and an
-  auto-spinning snowman demo scene.
-- **학습 코스** — 4 courses × 15 lessons (레슨/미션/퀴즈/이론), per-course
-  progress, **quiz modal** (answer reveal, explanations, score) and
-  **reading modal** (paged theory with code blocks teaching WPF 3D itself).
+  lesson), course/free-mode entry points, a **참조 자료 · REFERENCE hub**
+  (2×2 dark cards linking the four reference screens: 도구 개념 가이드 /
+  3D 사전 / WPF 코어 파이프라인 / .NET 3D 도구 지도), overall progress bar,
+  and an auto-spinning snowman demo scene.
+- **학습 코스** — 6 courses × 30 units: courses 01–04 (레슨/미션/퀴즈/이론)
+  plus two advanced tracks — **트랙 A · 순수 WPF 3D 심화** (9 readings +
+  comprehensive quiz: hand-built meshes, material layers, all four lights,
+  transform order/gimbal lock, scene graph, projection, animation, picking,
+  the honest ceiling) and **트랙 B · Windows용 .NET 3D 도구** (4 readings +
+  quiz: HelixToolkit.Wpf, Helix.SharpDX/DX11, the DX12 bridge, low-level &
+  engines). Per-course progress, **quiz modal** (answer reveal, explanations,
+  score) and **reading modal** (paged theory with code blocks teaching WPF 3D
+  itself).
 - **스튜디오** — dark app bar (undo/redo, XAML export), ribbon toolbar
   (Q/W/E/R tools · 6 solid shapes · 3 point clouds · duplicate/delete),
   scene dock, orbit-camera viewport (presets 앞/위/옆/입체, click select,
@@ -21,10 +29,40 @@ GenericHost, UI-independent ViewModels, `net10.0-windows`).
   dock (XYZ, rotation/scale, 10 material swatches, roughness/metalness,
   lighting), tutorial overlay with auto-checked tasks, and a status bar.
 - **도구 개념 가이드** — the `도구 개념 가이드.dc.html` design merged in as
-  an in-app screen (start-screen dark card ↔ guide header buttons navigate
+  an in-app screen (reference-hub card ↔ guide header buttons navigate
   between the guide, the start screen, and free mode, as the design links
   intended): GIMP/Inkscape/Blender/point-cloud concepts with workflows,
   shortcut chips, and a comparison table.
+- **WPF 렌더링 파이프라인** — the `WPF 렌더링 파이프라인.dc.html` design
+  merged in as an in-app screen (reachable from the reference hub, back
+  button returns to start): an interactive 6-stage diagram of how XAML
+  becomes pixels — 3 clickable stages on the UI-thread lane, 3 on the
+  render-thread lane, a DUCE-channel boundary chip, a detail panel for the
+  selected stage, a "where does 3D fit" card, and a dark DX12 entry-path
+  card (D3DImage bridge vs HwndHost airspace). Glossary terms carry the
+  design's term-tips as dotted-underlined runs with hover tooltips; copy is
+  verbatim (트랙 A-3 / 트랙 B references resolve to the in-app tracks), and
+  the CTA navigates to the courses screen.
+- **3D 사전** — the `3D 사전.dc.html` design merged in as an in-app screen:
+  the shared 60-term glossary (`GlossaryCatalog`, from the design's
+  `glossary.js`) with live substring search across word/english/short/detail,
+  11 category filter chips (selected chip inverts to dark), a live "N개 용어"
+  count, a two-column card grid, and the design's empty-state message.
+  The 12 WPF-specific terms (Viewport3D, MeshGeometry3D, …, milcore,
+  DUCE 채널, Freeze()) additionally carry a verified "Microsoft Learn 문서 ↗"
+  link that opens the official docs in the browser.
+- **용어 툴팁 (term-tips)** — the design's `term-tip.js` ported as a reusable
+  `TermTip` inline control: dotted accent underline, the design's dark tooltip
+  card (word + English + short description + "3D 사전에서 자세히 →"), and
+  clicking the term deep-links into the 3D 사전 pre-searched with that word.
+  Used across the pipeline, tool-map, and concept-guide screens (the guide
+  gets its 11 design term-tips via a `[[word]]` marker extension of the
+  `**bold**` text renderer).
+- **.NET 3D 도구 지도** — the `닷넷 3D 도구 지도.dc.html` design merged in
+  as an in-app screen: the 5-step learning ladder (순정 Media3D →
+  HelixToolkit.Wpf → Helix.SharpDX → Vortice/Silk.NET → Stride, with the
+  "DX11 천장 돌파" marker), an 8-row × 5-tool comparison table, the "판단"
+  callout, term-tips, and a dark CTA ("트랙 B 시작하기 →" → courses screen).
 - **XAML 내보내기** — generates a complete, standalone
   `MainWindow.xaml` / `MainWindow.xaml.cs` for the current scene
   (mesh + point cloud factories, orbit camera included) with a 4-step
@@ -35,6 +73,11 @@ GenericHost, UI-independent ViewModels, `net10.0-windows`).
     transforms, and lights are declared in XAML; procedural meshes are
     supplied by a `{local:SceneMesh ...}` markup extension, and C# keeps
     only the orbit camera and mesh factories.
+  - **프로젝트로 바로 내보내기** — beyond copy-paste, the modal can write a
+    complete, immediately runnable `PolyLabScene` WPF project (csproj +
+    App.xaml/.cs + the current flavor's MainWindow pair) into a chosen
+    folder, with a .NET target picker (.NET 8 / 9 / 10) — `dotnet run`
+    or F5 works out of the box.
 - **포인트 클라우드 옵션** — cloud objects get two extra properties-panel
   controls (both carried into the exported code of both flavors):
   - **높이 컬러맵** — colors each point by its height (Y) via
