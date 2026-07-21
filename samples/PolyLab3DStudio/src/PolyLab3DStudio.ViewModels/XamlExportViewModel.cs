@@ -13,6 +13,7 @@ public sealed partial class XamlExportViewModel : ObservableObject
     private readonly Action<string> _copyToClipboard;
     private readonly Func<string?> _pickFolder;
     private readonly Action<string> _openFolder;
+    private readonly Func<string, string?> _openInVisualStudio;
     private readonly Action<TaskEvent> _notify;
     private readonly Action _close;
 
@@ -23,6 +24,7 @@ public sealed partial class XamlExportViewModel : ObservableObject
         Action<string> copyToClipboard,
         Func<string?> pickFolder,
         Action<string> openFolder,
+        Func<string, string?> openInVisualStudio,
         Action<TaskEvent> notify,
         Action close)
     {
@@ -32,6 +34,7 @@ public sealed partial class XamlExportViewModel : ObservableObject
         _copyToClipboard = copyToClipboard;
         _pickFolder = pickFolder;
         _openFolder = openFolder;
+        _openInVisualStudio = openInVisualStudio;
         _notify = notify;
         _close = close;
     }
@@ -177,5 +180,17 @@ public sealed partial class XamlExportViewModel : ObservableObject
         {
             _openFolder(path);
         }
+    }
+
+    [RelayCommand]
+    private void OpenInVisualStudio()
+    {
+        if (ExportedPath is not { Length: > 0 } directory)
+        {
+            return;
+        }
+
+        string solutionPath = Path.Combine(directory, "PolyLabScene.slnx");
+        ExportError = _openInVisualStudio(solutionPath); // null on success
     }
 }

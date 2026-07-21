@@ -71,6 +71,9 @@ public sealed partial class StudioViewModel : ObservableObject
     /// <summary>Folder picker supplied by the view layer for the project export.</summary>
     public Func<string?>? PickFolderRequested { get; set; }
 
+    /// <summary>Set by the view: opens the exported .slnx in Visual Studio; returns an error message or null on success.</summary>
+    public Func<string, string?>? OpenInVisualStudioRequested { get; set; }
+
     public event Action<string>? OpenFolderRequested;
 
     public string? SelectedId => SelectedObject?.Id;
@@ -250,6 +253,7 @@ public sealed partial class StudioViewModel : ObservableObject
             text => CopyToClipboardRequested?.Invoke(text),
             () => PickFolderRequested?.Invoke(),
             path => OpenFolderRequested?.Invoke(path),
+            slnx => OpenInVisualStudioRequested?.Invoke(slnx),
             CheckTask,
             () => Export = null);
         CheckTask(TaskEvent.ForAction("xaml"));
