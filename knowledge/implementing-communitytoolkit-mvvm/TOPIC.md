@@ -15,7 +15,8 @@ CommunityToolkit.Mvvm 8.4+ 기반 MVVM 패턴 구현 가이드.
 </ItemGroup>
 ```
 
-- **.NET 8+** 필수 (최소 지원 버전)
+- **최소 지원 프레임워크**: CommunityToolkit.Mvvm은 `netstandard2.0`/`netstandard2.1` 자산을 배포하므로 .NET Framework 4.6.1+ · 구버전 .NET Core를 포함해 .NET 8보다 훨씬 낮은 타깃에서도 사용 가능합니다. `net8.0`이 최소 요구인 것은 아니며, 높은 최소를 요구하는 것은 WinRT 전용 `net8.0-windows10.0.17763` 자산뿐입니다.
+- **.NET 8+ 참고**: partial property `[ObservableProperty]` 등 일부 최신 문법은 별도로 .NET 8/9+와 최신 C#을 요구합니다(아래 참조).
 
 ## Project Structure
 

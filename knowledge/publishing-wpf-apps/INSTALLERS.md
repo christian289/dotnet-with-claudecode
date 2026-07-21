@@ -7,14 +7,16 @@
 Modern deployment framework with automatic updates.
 
 ```bash
-# Install CLI
+# Install CLI — keep the vpk version in step with the Velopack package
+# reference below (Velopack recommends matching versions for compatibility).
 dotnet tool install -g vpk
 
 # Pack application
 vpk pack -u MyApp -v 1.0.0 -p publish -e MyApp.exe
 
-# Create delta updates automatically
-vpk pack -u MyApp -v 1.0.1 -p publish -e MyApp.exe --delta
+# Create delta updates — --delta requires an explicit mode:
+# None | BestSpeed (default when deltas are enabled) | BestSize
+vpk pack -u MyApp -v 1.0.1 -p publish -e MyApp.exe --delta BestSpeed
 ```
 
 **Features:**
@@ -25,7 +27,7 @@ vpk pack -u MyApp -v 1.0.1 -p publish -e MyApp.exe --delta
 
 **NuGet:**
 ```xml
-<PackageReference Include="Velopack" Version="0.*" />
+<PackageReference Include="Velopack" Version="1.*" />
 ```
 
 **Resources:** [velopack.io](https://velopack.io)

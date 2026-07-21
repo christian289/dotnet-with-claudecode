@@ -62,15 +62,28 @@ Omit a region entirely if no cases exist for it — never leave an empty region.
 
 ## NuGet Packages
 
+Use **xUnit v3** (`xunit.v3`, built on Microsoft.Testing.Platform) for new
+projects — it is the current line and what `dotnet new xunit3` scaffolds. The
+legacy v2 stack (the `xunit` package id + a v2 runner) still builds and is
+supported, but is effectively frozen; prefer v3 going forward.
+
 ```xml
 <ItemGroup>
-  <PackageReference Include="xunit" Version="2.*" />
-  <PackageReference Include="xunit.runner.visualstudio" Version="2.*" />
+  <PackageReference Include="xunit.v3" Version="3.*" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="3.*" />
   <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
   <PackageReference Include="NSubstitute" Version="5.*" />
+  <!-- Pinned to 7.x on purpose: FluentAssertions 8.0+ requires a paid Xceed
+       commercial license for commercial/organizational use; 7.x is the last
+       Apache-2.0 release. Do NOT bump to 8.x unless you accept that license. -->
   <PackageReference Include="FluentAssertions" Version="7.*" />
 </ItemGroup>
 ```
+
+> Migrating from v2: swap the `xunit` package id for `xunit.v3` and move the
+> runner to `3.*`. In v3 the `[Fact]`/`[Theory]`/`Assert` API stays in the
+> `Xunit` namespace, but `ITestOutputHelper` moved from `Xunit.Abstractions`
+> into `Xunit` — drop any `using Xunit.Abstractions;`.
 
 ---
 
