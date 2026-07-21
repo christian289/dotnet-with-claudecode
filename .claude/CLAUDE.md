@@ -53,26 +53,6 @@ by the `CorePolicyLoader` SessionStart hook). Plugins do not carry
 `CLAUDE.md` files — a plugin `CLAUDE.md` is not auto-loaded for installed
 users, so plugin context ships through skills, agents, and hooks instead.
 
-## Directory Layout
-
-```
-dotnet-with-claudecode/
-├── .claude/
-│   ├── CLAUDE.md                 # this file (repo-wide configuration)
-│   └── rules/                    # rules shared across all plugins
-│       ├── claude-rules/         # how to write memory/rule files
-│       ├── claude-skills/        # how to write Skills
-│       ├── dotnet/               # C#, WPF, AvaloniaUI, spreadsheet
-│       ├── secure-coding/        # secure-coding guidelines
-│       └── preferences.md        # default behavior (response language, etc.)
-├── mcp/                          # WpfDevPackMcp MCP server source (outside the plugin)
-├── knowledge/                    # MCP knowledge topics (served by WpfDevPackMcp; outside the plugin so it is not bundled)
-├── wpf-dev-pack/                 # WPF-focused plugin (currently the only hosted plugin)
-├── FeedbackDocs/                 # accumulated wpf-dev-pack feedback md files from foreign sessions
-├── archive-skills/               # legacy skills superseded by the microsoft-docs MCP
-└── docs/                         # project documentation
-```
-
 ## Plugin Version Update Checklist
 
 **Version bumps are performed via the `/wpf-dev-pack-release` skill only.**
