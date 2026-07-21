@@ -25,6 +25,7 @@ public static class WpfProjectExporter
         File.WriteAllText(Path.Combine(directory, "App.xaml.cs"), WpfSceneCodeGenerator.GenerateAppCs());
         File.WriteAllText(Path.Combine(directory, "MainWindow.xaml"), mainWindowXaml);
         File.WriteAllText(Path.Combine(directory, "MainWindow.xaml.cs"), mainWindowCs);
+        File.WriteAllText(Path.Combine(directory, "PolyLabScene.slnx"), WpfSceneCodeGenerator.GenerateSolutionFile());
         return directory;
     }
 }

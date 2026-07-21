@@ -48,6 +48,17 @@ public static class WpfSceneCodeGenerator
         }
         """;
 
+    /// <summary>
+    /// Minimal .slnx solution referencing the exported csproj so the folder
+    /// opens as a solution in Visual Studio (VS 2022 17.10+ / dotnet CLI).
+    /// </summary>
+    public static string GenerateSolutionFile() =>
+        """
+        <Solution>
+          <Project Path="PolyLabScene.csproj" />
+        </Solution>
+        """;
+
     // ==================== code-behind variant ====================
 
     public static string GenerateXaml() =>
