@@ -94,7 +94,7 @@ public sealed partial class StudioViewModel : ObservableObject
 
     public string ObjCount => Objects.Count.ToString(CultureInfo.InvariantCulture);
 
-    public string ObjCountLabel => $"오브젝트 {Objects.Count}개 · 폴리랩 v0.1";
+    public string ObjCountLabel => $"오브젝트 {Objects.Count}개 · 폴리랩 v0.2";
 
     public string StudioContext => FreeMode || Tutorial is null
         ? "자유 모드 · Free Play"
