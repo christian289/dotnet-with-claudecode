@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.ComponentModel;
+using System.IO;
 using Microsoft.Win32;
 using PolyLab3DStudio.Controls;
 using PolyLab3DStudio.ViewModels;
@@ -28,6 +30,7 @@ public sealed partial class StudioView : UserControl
             _vm.CopyToClipboardRequested -= OnCopyToClipboardRequested;
             _vm.OpenFolderRequested -= OnOpenFolderRequested;
             _vm.PickFolderRequested = null;
+            _vm.OpenInVisualStudioRequested = null;
         }
 
         _vm = DataContext as StudioViewModel;
@@ -38,6 +41,7 @@ public sealed partial class StudioView : UserControl
             _vm.CopyToClipboardRequested += OnCopyToClipboardRequested;
             _vm.OpenFolderRequested += OnOpenFolderRequested;
             _vm.PickFolderRequested = OnPickFolderRequested;
+            _vm.OpenInVisualStudioRequested = OnOpenInVisualStudioRequested;
         }
     }
 
@@ -55,4 +59,17 @@ public sealed partial class StudioView : UserControl
     }
 
     private static void OnOpenFolderRequested(string path) => Process.Start("explorer.exe", path);
+
+    private static string? OnOpenInVisualStudioRequested(string solutionPath)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(solutionPath) { UseShellExecute = true });
+            return null;
+        }
+        catch (Exception ex) when (ex is Win32Exception or InvalidOperationException or FileNotFoundException)
+        {
+            return $"Visual Studio를 열 수 없어요: {ex.Message}";
+        }
+    }
 }
