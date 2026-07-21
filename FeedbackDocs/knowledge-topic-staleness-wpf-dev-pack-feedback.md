@@ -153,3 +153,71 @@ Process recommendation rather than a single content edit: when a knowledge topic
 
 ### Adjacent skill boundaries / cross-links
 Applies repo-wide to any `knowledge/**/TOPIC.md` or companion file that pins a package version — not specific to any one topic.
+
+---
+
+## Reviewer verification (maintainer, 2026-07-21) — apply with these corrections, not verbatim
+
+Every item above was independently re-verified against **live** sources
+(nuget.org flat-container API, the libraries' current GitHub source, and
+official docs) and cross-checked against the actual current content of each
+target file in `knowledge/`. **All 8 findings hold** — the "현상" diagnoses
+match the files exactly, and the proposed corrections match reality. Evidence
+snapshot (versions/APIs current as of 2026-07-21):
+
+| # | Verified reality | Verdict |
+|---|------------------|---------|
+| 1 | WPF-UI restructured resources `Styles/` → `Resources/` at 3.0; `Styles/Controls.xaml` returns 404 in 4.x. `ControlsDictionary` resolves to `Resources/Wpf.Ui.xaml`, `ThemesDictionary` to `Resources/Theme/{Theme}.xaml`. | Accurate |
+| 2 | Prism 9 `IContainerRegistry.RegisterScoped(...)` + `IContainerProvider.CreateScope()`/`IScopedProvider` genuinely exist (Prism.Container.Abstractions). | Accurate |
+| 3 | `IContainerRegistry.RegisterGlobalExceptionHandler` exists nowhere in Prism (0 hits). Real API is `AsyncDelegateCommand.Catch(...)`. | Accurate |
+| 4 | FluentAssertions 8.0+ = Xceed Commercial License (paid for commercial use); 7.x is the last Apache-2.0 line. Latest: 7.2.2 / 8.10.0. | Accurate |
+| 5 | `xunit.v3` is stable (3.2.2) and built on Microsoft.Testing.Platform; xunit's own getting-started steers new projects to v3. | Accurate |
+| 6 | Velopack is now on a stable 1.x line (latest 1.2.0) — `0.*` is genuinely stale. `vpk pack --delta` now requires a mode value (`None`\|`BestSpeed`\|`BestSize`). Docs recommend keeping the `vpk` CLI in step with the package version. | Accurate |
+| 7 | CommunityToolkit.Mvvm 8.4.2 ships `netstandard2.0`, `netstandard2.1`, `net8.0`, `net8.0-windows10.0.17763`. Baseline usage works far below .NET 8; only the WinRT `net8.0-windows` asset carries the higher minimum. | Accurate |
+
+### Three corrections — do NOT apply these three items verbatim
+
+1. **Item 1 (WPF-UI): do not change the version pin.** The proposal says to
+   "loosen the exact two-segment pin to a floating major-version wildcard,"
+   but the file already pins `WPF-UI` `Version="4.2.*"` (already floating).
+   The pin is fine — **only the `App.xaml` merge snippet is broken**. Replace
+   just the `<ResourceDictionary Source="pack://.../Styles/Controls.xaml" />`
+   line with the `<ui:ThemesDictionary />` + `<ui:ControlsDictionary />`
+   markup extensions (namespace `http://schemas.lepo.co/wpfui/2022/xaml`).
+   Leave the version pin as-is.
+
+2. **Item 3 (AsyncDelegateCommand.Catch): synchronous handler only.** The real
+   API is `Catch(Action<Exception>)` and `Catch<TException>(Action<TException>)`
+   — there is **no** `Catch(Func<Exception, Task>)` async overload. When
+   writing the corrected sample, do not use `.Catch(async ex => await ...)`
+   as if the handler is awaited; keep the handler synchronous.
+
+   ```csharp
+   // WRONG — `async ex => ...` compiles only because it binds to
+   // Catch(Action<Exception>), producing an async void lambda. The command
+   // does NOT await it: unhandled exceptions inside LogAsync escape onto the
+   // SynchronizationContext (process-crashing), and the command completes
+   // before the handler finishes.
+   SaveCommand = new AsyncDelegateCommand(ExecuteSaveAsync)
+       .Catch(async ex => await _logger.LogAsync(ex)); // async void — do not do this
+
+   // RIGHT — keep the Catch handler synchronous. If you must do async work,
+   // fire it through a synchronous entry point that owns its own error
+   // handling (or log synchronously here).
+   SaveCommand = new AsyncDelegateCommand(ExecuteSaveAsync)
+       .Catch(ex => _logger.LogError(ex, "Save failed"));
+
+   // RIGHT (per-exception-type) — the generic overload is also Action-based.
+   SaveCommand = new AsyncDelegateCommand(ExecuteSaveAsync)
+       .Catch<OperationCanceledException>(_ => { /* ignore cancellation */ })
+       .Catch<Exception>(ex => _logger.LogError(ex, "Save failed"));
+   ```
+
+3. **Item 5 (xunit v3): keep it additive, not a rewrite.** xunit v2 is still
+   fully supported and builds correctly. Do not replace the existing sample —
+   add a short callout that the shown combo is the legacy (still-supported)
+   path and that new projects may prefer `xunit.v3` + Microsoft.Testing.Platform,
+   pointing to xunit's own migration/getting-started docs.
+
+Items 2, 4, 6, 7, and the item-8 process recommendation can be applied as
+written.
