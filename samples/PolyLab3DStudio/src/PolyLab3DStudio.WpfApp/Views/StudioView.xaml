@@ -916,7 +916,7 @@
                 <RowDefinition Height="80*" />
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
-            <Border Grid.Row="1" Width="880" Background="{StaticResource SurfaceBrush}" CornerRadius="16"
+            <Border Grid.Row="1" Width="1180" Background="{StaticResource SurfaceBrush}" CornerRadius="16"
                     HorizontalAlignment="Center" DataContext="{Binding Export}">
                 <Border.Effect>
                     <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.45" BlurRadius="64" ShadowDepth="24" Direction="270" />
@@ -948,8 +948,9 @@
                     </Border>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="262" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="262" />   <!-- 가이드 -->
+                            <ColumnDefinition Width="*" />     <!-- 코드 -->
+                            <ColumnDefinition Width="320" />   <!-- 속성 dock -->
                         </Grid.ColumnDefinitions>
                         <Border Background="{StaticResource HeaderBrush}"
                                 BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="0,0,1,0">
@@ -1030,99 +1031,6 @@
                                                        Text="프로젝트 이름이 다르면 XAML 첫 줄의 x:Class와 C#의 namespace를 그 이름으로 바꿔 주세요. .NET 6+ / .NET Framework 4.x 모두 동작하고, 별도 패키지 설치는 필요 없어요." />
                                         </Grid>
                                     </Border>
-
-                                    <!-- Runnable project export -->
-                                    <Rectangle Style="{StaticResource CardDivider}" />
-                                    <TextBlock Text="프로젝트로 바로 내보내기" Style="{StaticResource PanelLabelText}" />
-                                    <TextBlock FontSize="11.5" Foreground="{StaticResource BodyBrush}"
-                                               TextWrapping="Wrap" LineHeight="17.8" LineStackingStrategy="BlockLineHeight"
-                                               Margin="0,8,0,0"
-                                               Text="복붙 없이도 돼요 — 폴더를 고르면 바로 F5 실행 가능한 PolyLabScene 프로젝트(csproj + App + MainWindow)를 현재 탭 종류로 만들어 드려요." />
-                                    <Grid Margin="0,10,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="6" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="6" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Button Command="{Binding PickTfmCommand}" CommandParameter="net8.0-windows"
-                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 8">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
-                                                        <TextBlock x:Name="Label" Text=".NET 8" FontSize="11.5" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding IsNet8}" Value="True">
-                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
-                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                        </DataTrigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                        <Button Grid.Column="2" Command="{Binding PickTfmCommand}" CommandParameter="net9.0-windows"
-                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 9">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
-                                                        <TextBlock x:Name="Label" Text=".NET 9" FontSize="11.5" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding IsNet9}" Value="True">
-                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
-                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                        </DataTrigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                        <Button Grid.Column="4" Command="{Binding PickTfmCommand}" CommandParameter="net10.0-windows"
-                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 10">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
-                                                        <TextBlock x:Name="Label" Text=".NET 10" FontSize="11.5" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <DataTrigger Binding="{Binding IsNet10}" Value="True">
-                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
-                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                        </DataTrigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </Grid>
-                                    <Button Style="{StaticResource AccentButton}"
-                                            Content="폴더 선택 후 프로젝트 생성"
-                                            Command="{Binding ExportProjectCommand}"
-                                            FontSize="12" Padding="0,9"
-                                            HorizontalAlignment="Stretch"
-                                            Margin="0,8,0,0" />
-                                    <StackPanel Margin="0,10,0,0"
-                                                Visibility="{Binding ExportedPath, Converter={StaticResource NotNullToVisibility}}">
-                                        <TextBlock Text="프로젝트 생성 완료 ✓" FontSize="11.5" FontWeight="Bold"
-                                                   Foreground="{StaticResource GreenBrush}" />
-                                        <TextBlock Text="{Binding ExportedPath}" FontFamily="{StaticResource MonoFont}"
-                                                   FontSize="10" Foreground="{StaticResource BodyBrush}"
-                                                   TextWrapping="Wrap" Margin="0,3,0,0" />
-                                        <TextBlock FontSize="11.5" Margin="0,5,0,0">
-                                            <Hyperlink Command="{Binding OpenExportedFolderCommand}"
-                                                       Foreground="{StaticResource AccentBrush}"
-                                                       FontWeight="SemiBold"
-                                                       TextDecorations="{x:Null}"
-                                                       Cursor="Hand">폴더 열기 →</Hyperlink>
-                                        </TextBlock>
-                                    </StackPanel>
-                                    <TextBlock Text="{Binding ExportError}" FontSize="11.5"
-                                               Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap"
-                                               Margin="0,8,0,0"
-                                               Visibility="{Binding ExportError, Converter={StaticResource NotNullToVisibility}}" />
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
@@ -1223,6 +1131,116 @@
                                          HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
                             </Border>
                         </Grid>
+                        <Border Grid.Column="2" Background="{StaticResource HeaderBrush}"
+                                BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="18,16">
+                                <StackPanel>
+                                    <TextBlock Text="내보내기 · EXPORT" Style="{StaticResource PanelLabelText}" />
+                                    <TextBlock Text="프로젝트로 바로 내보내기" Style="{StaticResource PanelLabelText}" Margin="0,14,0,0" />
+                                    <TextBlock FontSize="11.5" Foreground="{StaticResource BodyBrush}"
+                                               TextWrapping="Wrap" LineHeight="17.8" LineStackingStrategy="BlockLineHeight"
+                                               Margin="0,8,0,0"
+                                               Text="복붙 없이도 돼요 — 폴더를 고르면 바로 F5 실행 가능한 PolyLabScene 프로젝트(csproj + App + MainWindow)를 현재 탭 종류로 만들어 드려요." />
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="6" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="6" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Command="{Binding PickTfmCommand}" CommandParameter="net8.0-windows"
+                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 8">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text=".NET 8" FontSize="11.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsNet8}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Grid.Column="2" Command="{Binding PickTfmCommand}" CommandParameter="net9.0-windows"
+                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 9">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text=".NET 9" FontSize="11.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsNet9}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Grid.Column="4" Command="{Binding PickTfmCommand}" CommandParameter="net10.0-windows"
+                                                Cursor="Hand" Focusable="False" AutomationProperties.Name=".NET 10">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text=".NET 10" FontSize="11.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsNet10}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                    <Button Style="{StaticResource AccentButton}"
+                                            Content="폴더 선택 후 프로젝트 생성"
+                                            Command="{Binding ExportProjectCommand}"
+                                            FontSize="12" Padding="0,9"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="0,8,0,0" />
+                                    <Button Command="{Binding OpenInVisualStudioCommand}" Margin="0,8,0,0"
+                                            Visibility="{Binding ExportedPath, Converter={StaticResource NotNullToVisibility}}"
+                                            Cursor="Hand" Focusable="False" AutomationProperties.Name="Visual Studio에서 열기">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{StaticResource InkBrush}" CornerRadius="8" Padding="0,9">
+                                                    <TextBlock Text="Visual Studio에서 열기" FontSize="12" FontWeight="SemiBold"
+                                                               Foreground="{StaticResource SurfaceBrush}" HorizontalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <StackPanel Margin="0,10,0,0"
+                                                Visibility="{Binding ExportedPath, Converter={StaticResource NotNullToVisibility}}">
+                                        <TextBlock Text="프로젝트 생성 완료 ✓" FontSize="11.5" FontWeight="Bold"
+                                                   Foreground="{StaticResource GreenBrush}" />
+                                        <TextBlock Text="{Binding ExportedPath}" FontFamily="{StaticResource MonoFont}"
+                                                   FontSize="10" Foreground="{StaticResource BodyBrush}"
+                                                   TextWrapping="Wrap" Margin="0,3,0,0" />
+                                        <TextBlock FontSize="11.5" Margin="0,5,0,0">
+                                            <Hyperlink Command="{Binding OpenExportedFolderCommand}"
+                                                       Foreground="{StaticResource AccentBrush}"
+                                                       FontWeight="SemiBold"
+                                                       TextDecorations="{x:Null}"
+                                                       Cursor="Hand">폴더 열기 →</Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding ExportError}" FontSize="11.5"
+                                               Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap"
+                                               Margin="0,8,0,0"
+                                               Visibility="{Binding ExportError, Converter={StaticResource NotNullToVisibility}}" />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
                     </Grid>
                 </Grid>
             </Border>
