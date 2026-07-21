@@ -1034,108 +1034,104 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Border BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="0,0,0,1" Padding="14,10">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Button Command="{Binding PickCodeBehindVariantCommand}" Cursor="Hand" Focusable="False"
-                                            AutomationProperties.Name="코드 비하인드형" ToolTip="장면을 C# 코드(BuildScene)로 구성">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="10,6">
-                                                    <TextBlock x:Name="Label" Text="코드 비하인드형" FontSize="11.5" FontWeight="SemiBold"
-                                                               Foreground="{StaticResource BodyBrush}" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding IsCodeBehindVariant}" Value="True">
-                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
-                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                    <Button Grid.Column="1" Command="{Binding PickDeclarativeVariantCommand}" Cursor="Hand" Focusable="False"
-                                            AutomationProperties.Name="XAML 중심형" Margin="6,0,0,0"
-                                            ToolTip="장면(재질·변형·조명)을 XAML로 선언, C#은 카메라·메시 생성만">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="10,6">
-                                                    <TextBlock x:Name="Label" Text="XAML 중심형" FontSize="11.5" FontWeight="SemiBold"
-                                                               Foreground="{StaticResource BodyBrush}" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding IsDeclarativeVariant}" Value="True">
-                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
-                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                    <Rectangle Grid.Column="2" Width="1" Height="18" Fill="{StaticResource BorderSoftBrush}" Margin="10,0" />
-                                    <Button Grid.Column="3" Command="{Binding PickXamlTabCommand}" Cursor="Hand" Focusable="False" AutomationProperties.Name="MainWindow.xaml">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="12,6">
-                                                    <TextBlock x:Name="Label" Text="MainWindow.xaml" FontFamily="{StaticResource MonoFont}"
-                                                               FontSize="11.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding IsXamlTab}" Value="True">
-                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
-                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                    <Button Grid.Column="4" Command="{Binding PickCsTabCommand}" Cursor="Hand" Focusable="False" Margin="6,0,0,0" AutomationProperties.Name="MainWindow.xaml.cs">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="12,6">
-                                                    <TextBlock x:Name="Label" Text="MainWindow.xaml.cs" FontFamily="{StaticResource MonoFont}"
-                                                               FontSize="11.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <DataTrigger Binding="{Binding IsCsTab}" Value="True">
-                                                        <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
-                                                        <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
-                                                    </DataTrigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                    <Button Grid.Column="6" Style="{StaticResource AccentButton}" Content="{Binding CopyLabel}"
-                                            Command="{Binding CopyCommand}" Padding="14,7" FontSize="12" />
-                                </Grid>
-                            </Border>
-                            <Border Grid.Row="1" Background="{StaticResource DarkBarBrush}">
-                                <TextBox Text="{Binding CodeText, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
-                                         Background="Transparent"
-                                         Foreground="{StaticResource DarkSoftFgBrush}"
-                                         CaretBrush="{StaticResource DarkSoftFgBrush}"
-                                         FontFamily="{StaticResource MonoFont}" FontSize="11" Padding="16,14"
-                                         HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
-                            </Border>
-                        </Grid>
+                        <Border Grid.Column="1" Background="{StaticResource DarkBarBrush}">
+                            <TextBox Text="{Binding CodeText, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
+                                     Background="Transparent"
+                                     Foreground="{StaticResource DarkSoftFgBrush}"
+                                     CaretBrush="{StaticResource DarkSoftFgBrush}"
+                                     FontFamily="{StaticResource MonoFont}" FontSize="11" Padding="16,14"
+                                     HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+                        </Border>
                         <Border Grid.Column="2" Background="{StaticResource HeaderBrush}"
                                 BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1,0,0,0">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="18,16">
                                 <StackPanel>
-                                    <TextBlock Text="내보내기 · EXPORT" Style="{StaticResource PanelLabelText}" />
+                                    <TextBlock Text="코드 · CODE" Style="{StaticResource PanelLabelText}" />
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="6" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Command="{Binding PickCodeBehindVariantCommand}" Cursor="Hand" Focusable="False"
+                                                AutomationProperties.Name="코드 비하인드형" ToolTip="장면을 C# 코드(BuildScene)로 구성">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text="코드 비하인드형" FontSize="11.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCodeBehindVariant}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Grid.Column="2" Command="{Binding PickDeclarativeVariantCommand}" Cursor="Hand" Focusable="False"
+                                                AutomationProperties.Name="XAML 중심형" ToolTip="장면(재질·변형·조명)을 XAML로 선언, C#은 카메라·메시 생성만">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text="XAML 중심형" FontSize="11.5" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsDeclarativeVariant}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource AccentBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                    <Grid Margin="0,6,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="6" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Command="{Binding PickXamlTabCommand}" Cursor="Hand" Focusable="False" AutomationProperties.Name="MainWindow.xaml">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text="MainWindow.xaml" FontFamily="{StaticResource MonoFont}"
+                                                                   FontSize="10.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsXamlTab}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <Button Grid.Column="2" Command="{Binding PickCsTabCommand}" Cursor="Hand" Focusable="False" AutomationProperties.Name="MainWindow.xaml.cs">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Chrome" Background="{StaticResource DividerBrush}" CornerRadius="7" Padding="0,6">
+                                                        <TextBlock x:Name="Label" Text="MainWindow.xaml.cs" FontFamily="{StaticResource MonoFont}"
+                                                                   FontSize="10.5" FontWeight="SemiBold" Foreground="{StaticResource BodyBrush}" HorizontalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCsTab}" Value="True">
+                                                            <Setter TargetName="Chrome" Property="Background" Value="{StaticResource InkBrush}" />
+                                                            <Setter TargetName="Label" Property="Foreground" Value="{StaticResource SurfaceBrush}" />
+                                                        </DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                    <Button Style="{StaticResource AccentButton}" Content="{Binding CopyLabel}"
+                                            Command="{Binding CopyCommand}" Padding="0,8" FontSize="12" Margin="0,8,0,0"
+                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+                                    <Rectangle Height="1" Fill="{StaticResource BorderSoftBrush}" Margin="0,16,0,0" />
+                                    <TextBlock Text="내보내기 · EXPORT" Style="{StaticResource PanelLabelText}" Margin="0,14,0,0" />
                                     <TextBlock Text="프로젝트로 바로 내보내기" Style="{StaticResource PanelLabelText}" Margin="0,14,0,0" />
                                     <TextBlock FontSize="11.5" Foreground="{StaticResource BodyBrush}"
                                                TextWrapping="Wrap" LineHeight="17.8" LineStackingStrategy="BlockLineHeight"
