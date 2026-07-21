@@ -246,7 +246,8 @@ public class EditorViewModel : BindableBase
 {
     private AsyncDelegateCommand? _saveCommand;
     public AsyncDelegateCommand SaveCommand =>
-        _saveCommand ??= new AsyncDelegateCommand(ExecuteSaveAsync);
+        _saveCommand ??= new AsyncDelegateCommand(ExecuteSaveAsync)
+            .Catch(ex => _logger.LogError(ex, "Save failed"));
 
     private async Task ExecuteSaveAsync()
     {
@@ -255,7 +256,13 @@ public class EditorViewModel : BindableBase
 }
 ```
 
-`AsyncDelegateCommand` blocks reentrancy while executing and routes exceptions to the registered error handler (`IContainerRegistry.RegisterGlobalExceptionHandler` in Prism 9).
+`AsyncDelegateCommand` blocks reentrancy while executing. Exceptions are
+handled per command via the fluent `Catch(...)` callback — `Catch(Action<Exception>)`
+for a catch-all and `Catch<TException>(Action<TException>)` for a specific type.
+There is **no** container-wide/global exception hook in Prism 9 (no such API as
+`IContainerRegistry.RegisterGlobalExceptionHandler`). The handler is synchronous
+(`Action<Exception>`); there is no `Catch(Func<Exception, Task>)` overload, so do
+not write `.Catch(async ex => await ...)` expecting it to be awaited.
 
 ---
 

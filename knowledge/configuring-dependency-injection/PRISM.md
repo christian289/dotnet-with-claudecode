@@ -92,11 +92,13 @@ public partial class App : PrismApplication
 | `services.AddTransient<I, T>()` | `containerRegistry.Register<I, T>()` |
 | `services.AddSingleton<T>()` | `containerRegistry.RegisterSingleton<T>()` |
 | `services.AddTransient<T>()` | `containerRegistry.Register<T>()` |
+| `services.AddScoped<I, T>()` | `containerRegistry.RegisterScoped<I, T>()` |
 | N/A | `containerRegistry.RegisterForNavigation<V, VM>()` |
 | N/A | `containerRegistry.RegisterDialog<V, VM>()` |
 | N/A | `containerRegistry.RegisterInstance<I>(instance)` |
 
-> ⚠️ Prism은 `Scoped` 수명을 지원하지 않습니다. WPF에서는 일반적으로 불필요합니다.
+> ℹ️ Prism 9는 `Scoped` 수명을 지원합니다 — `IContainerRegistry.RegisterScoped(...)`로 등록하고 `IContainerProvider.CreateScope()`(→ `IScopedProvider`)로 스코프를 만듭니다. 다만 WPF에서는 대부분 불필요합니다(객체 대부분이 사실상 싱글턴 또는 ViewModel 단위 수명).
+> ℹ️ Prism 9 supports the `Scoped` lifetime — register with `IContainerRegistry.RegisterScoped(...)` and create scopes via `IContainerProvider.CreateScope()` (returns `IScopedProvider`). It is rarely needed in WPF, though.
 
 ## 4. Constructor Injection
 
@@ -150,7 +152,7 @@ public partial class MainWindow : Window
 |------|------------|---------|------|
 | Singleton | `AddSingleton` | `RegisterSingleton` | Repository, 글로벌 서비스 |
 | Transient | `AddTransient` | `Register` | ViewModel, 일회성 서비스 |
-| Scoped | `AddScoped` | ❌ 미지원 | Web 전용 (WPF 불필요) |
+| Scoped | `AddScoped` | `RegisterScoped` + `CreateScope()` | 지원됨 · WPF에선 대부분 불필요 |
 
 ## 7. GlobalUsings.cs (Prism)
 
@@ -167,5 +169,5 @@ global using Prism.DryIoc;
 - **RegisterTypes**: `ConfigureServices` 대신 `RegisterTypes` 오버라이드
 - **CreateShell**: `OnStartup` + 수동 `Show()` 대신 `CreateShell()` 반환
 - **ViewModelLocator**: XAML에서 `prism:ViewModelLocator.AutoWireViewModel="True"` 설정으로 자동 ViewModel 연결
-- **Scoped 미지원**: Prism DI 컨테이너는 Scoped 수명을 지원하지 않음
+- **Scoped 지원**: Prism DI는 `RegisterScoped` + `IContainerProvider.CreateScope()`로 Scoped 수명을 지원 (WPF에선 대부분 불필요)
 - **Navigation/Dialog 등록**: `RegisterForNavigation`, `RegisterDialog` 전용 API 제공

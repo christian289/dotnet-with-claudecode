@@ -17,11 +17,18 @@ Wpf.Ui 4.x 기반 Fluent Design WPF 앱 구현 가이드.
 ```xml
 <Application x:Class="MyApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Wpf.Ui;component/Styles/Controls.xaml" />
+                <!-- WPF-UI 3.x/4.x: use the library's markup extensions, NOT a
+                     hardcoded pack URI. The old
+                     pack://application:,,,/Wpf.Ui;component/Styles/Controls.xaml
+                     path was removed when resources moved to Resources/ at 3.0
+                     and now throws "cannot locate resource" at startup. -->
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
