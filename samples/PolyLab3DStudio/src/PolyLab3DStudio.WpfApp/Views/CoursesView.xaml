@@ -178,7 +178,7 @@
             <Border Width="520" MaxWidth="700" Background="{StaticResource SurfaceBrush}" CornerRadius="16" Padding="24,22"
                     HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding ActiveQuiz}">
                 <Border.Effect>
-                    <DropShadowEffect Color="#141C26" Opacity="0.4" BlurRadius="64" ShadowDepth="24" Direction="270" />
+                    <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.4" BlurRadius="64" ShadowDepth="24" Direction="270" />
                 </Border.Effect>
                 <StackPanel>
                     <Grid>
@@ -289,7 +289,7 @@
             <Border Width="620" MaxHeight="740" Background="{StaticResource SurfaceBrush}" CornerRadius="16" Padding="24,22"
                     HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding ActiveReading}">
                 <Border.Effect>
-                    <DropShadowEffect Color="#141C26" Opacity="0.4" BlurRadius="64" ShadowDepth="24" Direction="270" />
+                    <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.4" BlurRadius="64" ShadowDepth="24" Direction="270" />
                 </Border.Effect>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -330,7 +330,7 @@
                                     Visibility="{Binding HasCode, Converter={StaticResource BoolToVisibility}}">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                     <TextBlock Text="{Binding Code}" FontFamily="{StaticResource MonoFont}" FontSize="11.5"
-                                               Foreground="#DCE3EA" LineHeight="18.4" LineStackingStrategy="BlockLineHeight" />
+                                               Foreground="{StaticResource DarkSoftFgBrush}" LineHeight="18.4" LineStackingStrategy="BlockLineHeight" />
                                 </ScrollViewer>
                             </Border>
                         </StackPanel>

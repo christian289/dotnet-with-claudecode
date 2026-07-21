@@ -41,7 +41,7 @@
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Chrome" Background="{StaticResource AccentBrush}" CornerRadius="12" Padding="18,14">
                                 <Border.Effect>
-                                    <DropShadowEffect Color="#F0562F" Opacity="0.28" BlurRadius="24" ShadowDepth="10" Direction="270" />
+                                    <DropShadowEffect Color="{StaticResource AccentGlowColor}" Opacity="0.28" BlurRadius="24" ShadowDepth="10" Direction="270" />
                                 </Border.Effect>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -78,34 +78,7 @@
 
                 <!-- Reference hub: four companion learning screens -->
                 <StackPanel Margin="0,12,0,0">
-                    <StackPanel.Resources>
-                        <!-- Dark reference card: Content = title, Tag = subtitle. -->
-                        <Style x:Key="ReferenceCard" TargetType="Button">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Focusable" Value="False" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="Chrome" Background="{StaticResource DarkBarBrush}"
-                                                CornerRadius="11" Padding="14,12" Margin="0,0,8,8">
-                                            <StackPanel>
-                                                <TextBlock Text="{TemplateBinding Content}" FontSize="13" FontWeight="Bold"
-                                                           Foreground="{StaticResource SurfaceBrush}" />
-                                                <TextBlock Text="{TemplateBinding Tag}" FontSize="11"
-                                                           Foreground="{StaticResource SurfaceBrush}" Opacity="0.72"
-                                                           TextWrapping="Wrap" Margin="0,3,0,0" />
-                                            </StackPanel>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Chrome" Property="Background" Value="{StaticResource DarkBarHoverBrush}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
+                    <!-- ReferenceCard style lives in Resources/ViewStyles.xaml. -->
                     <TextBlock Text="참조 자료 · REFERENCE"
                                FontFamily="{StaticResource MonoFont}" FontSize="10"
                                Foreground="{StaticResource MutedBrush}"
@@ -163,7 +136,7 @@
         <Grid Grid.Column="1" Margin="8,44,52,44">
             <Border CornerRadius="18" Background="{StaticResource ViewportBrush}">
                 <Border.Effect>
-                    <DropShadowEffect Color="#22272B" Opacity="0.20" BlurRadius="60" ShadowDepth="24" Direction="270" />
+                    <DropShadowEffect Color="{StaticResource InkShadowColor}" Opacity="0.20" BlurRadius="60" ShadowDepth="24" Direction="270" />
                 </Border.Effect>
             </Border>
             <Grid x:Name="DemoClip">
@@ -171,7 +144,7 @@
                 <Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16"
                         Background="{StaticResource ViewportPillBrush}" CornerRadius="20" Padding="14,7">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="마우스로 드래그해 보세요" FontSize="12" Foreground="#DCE3EA" />
+                        <TextBlock Text="마우스로 드래그해 보세요" FontSize="12" Foreground="{StaticResource DarkSoftFgBrush}" />
                         <TextBlock Text=" · DRAG TO ORBIT" FontFamily="{StaticResource MonoFont}" FontSize="10"
                                    Foreground="{StaticResource DarkMutedBrush}" VerticalAlignment="Center"
                                    Visibility="{Binding Shell.EnglishOn, Converter={StaticResource BoolToVisibility}}" />

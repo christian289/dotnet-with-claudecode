@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Resources/Typography.xaml" />
                 <ResourceDictionary Source="Resources/Controls.xaml" />
                 <ResourceDictionary Source="Resources/GuideStyles.xaml" />
+                <ResourceDictionary Source="Resources/ViewStyles.xaml" />
                 <ResourceDictionary Source="Resources/GuideIcons.xaml" />
                 <ResourceDictionary Source="Resources/GuideTemplates.xaml" />
                 <ResourceDictionary Source="Resources/Mappings.xaml" />

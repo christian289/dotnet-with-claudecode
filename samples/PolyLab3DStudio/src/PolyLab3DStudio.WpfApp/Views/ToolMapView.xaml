@@ -5,78 +5,22 @@
              Background="{StaticResource PaperBrush}">
     <UserControl.Resources>
 
-        <!-- Ladder step card -->
-        <Style x:Key="LadderStepBorder" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
-            <Setter Property="BorderBrush" Value="{StaticResource BorderSoftBrush}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="11" />
-            <Setter Property="Padding" Value="14,12" />
-        </Style>
+        <!-- Ladder/table styles (Ladder*, Table*) live in
+             Resources/ViewStyles.xaml, merged app-wide from App.xaml. -->
 
-        <Style x:Key="LadderOrdinalText" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
-        </Style>
-
-        <Style x:Key="LadderTitleText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
-            <Setter Property="Margin" Value="0,3,0,0" />
-        </Style>
-
-        <Style x:Key="LadderDescText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="LineHeight" Value="16.5" />
-            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
-            <Setter Property="Margin" Value="0,3,0,0" />
-        </Style>
-
-        <Style x:Key="LadderArrowText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="{StaticResource FaintBrush}" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="8,0" />
-        </Style>
-
-        <!-- Comparison table cells -->
-        <Style x:Key="TableToolHeaderText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12.5" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
-            <Setter Property="Margin" Value="14,12" />
-        </Style>
-
-        <Style x:Key="TableValueText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="11.5" />
-            <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="LineHeight" Value="17.8" />
-            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
-            <Setter Property="Margin" Value="14,11" />
-        </Style>
-
-        <Style x:Key="TableCellBorder" TargetType="Border">
-            <Setter Property="BorderBrush" Value="{StaticResource DividerBrush}" />
-            <Setter Property="BorderThickness" Value="1,0,0,0" />
-        </Style>
-
-        <!-- One comparison row -->
+        <!-- One comparison row. Fixed column widths: star sizing collapses to
+             content size inside the horizontal ScrollViewer (infinite measure
+             width), which would misalign every row against the header. -->
         <DataTemplate x:Key="ToolMapRowTemplate">
             <Border BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="190" />
+                        <ColumnDefinition Width="190" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding Label}" FontSize="11" FontWeight="Bold"
                                Foreground="{StaticResource MutedBrush}" Margin="14,11"
@@ -229,7 +173,7 @@
                 <Border Style="{StaticResource GuideCardBorder}" CornerRadius="16" Margin="0,0,0,12">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
                                   Focusable="False">
-                        <StackPanel MinWidth="940">
+                        <StackPanel>
                             <Border Background="{StaticResource HeaderBrush}"
                                     CornerRadius="15,15,0,0"
                                     BorderBrush="{StaticResource BorderSoftBrush}"
@@ -237,11 +181,11 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="190" />
+                                        <ColumnDefinition Width="190" />
+                                        <ColumnDefinition Width="190" />
+                                        <ColumnDefinition Width="190" />
+                                        <ColumnDefinition Width="190" />
                                     </Grid.ColumnDefinitions>
                                     <Border Grid.Column="1">
                                         <TextBlock Style="{StaticResource TableToolHeaderText}" Text="순정 Media3D" />

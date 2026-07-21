@@ -23,6 +23,7 @@
 
     <SolidColorBrush x:Key="AccentBrush" Color="#F0562F" />
     <SolidColorBrush x:Key="AccentHoverBrush" Color="#D94A26" />
+    <SolidColorBrush x:Key="AccentOverlayBrush" Color="#D9F0562F" />
     <SolidColorBrush x:Key="AccentTintBrush" Color="#FDEBE5" />
     <SolidColorBrush x:Key="YellowBrush" Color="#FFC24B" />
     <SolidColorBrush x:Key="TrackBrush" Color="#E9E3D6" />
@@ -32,6 +33,7 @@
     <SolidColorBrush x:Key="DarkBarBrush" Color="#232A31" />
     <SolidColorBrush x:Key="DarkBarHoverBrush" Color="#3A4148" />
     <SolidColorBrush x:Key="DarkFgBrush" Color="#E8EAED" />
+    <SolidColorBrush x:Key="DarkSoftFgBrush" Color="#DCE3EA" />
     <SolidColorBrush x:Key="DarkBodyBrush" Color="#B8C2CC" />
     <SolidColorBrush x:Key="DarkMutedBrush" Color="#8896A5" />
     <SolidColorBrush x:Key="ViewportBrush" Color="#1B2530" />
@@ -87,5 +89,13 @@
     <SolidColorBrush x:Key="AxisXLegendBrush" Color="#E2574C" />
     <SolidColorBrush x:Key="AxisYBrush" Color="#4E9A51" />
     <SolidColorBrush x:Key="AxisZBrush" Color="#4C8DF5" />
+
+    <!-- Effect colors (DropShadowEffect Color values; opacity/blur stay per usage). -->
+    <Color x:Key="ShadowColor">#141C26</Color>
+    <Color x:Key="InkShadowColor">#22272B</Color>
+    <Color x:Key="AccentGlowColor">#F0562F</Color>
+
+    <!-- Hairline outline over arbitrary content (e.g. color swatches). -->
+    <SolidColorBrush x:Key="FaintOutlineBrush" Color="#14000000" />
 
 </ResourceDictionary>

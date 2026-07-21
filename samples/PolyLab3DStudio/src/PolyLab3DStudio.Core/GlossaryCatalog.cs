@@ -1,231 +1,50 @@
+using System.Xml.Linq;
+
 namespace PolyLab3DStudio.Core;
 
 /// <summary>
-/// The shared PolyLab glossary, transcribed 1:1 from the design's
-/// <c>glossary.js</c> (<c>window.PolyGlossary</c>). Feeds the 3D 사전 screen
-/// and the term-tip tooltips on the reference screens.
+/// The shared PolyLab glossary. The data lives in the embedded
+/// <c>Glossary.xml</c> resource (originally transcribed from the design's
+/// <c>glossary.js</c>) so contributors can add or edit terms without touching
+/// C# code. Feeds the 3D 사전 screen and the term-tip hover cards on the
+/// reference screens.
 /// </summary>
 public static class GlossaryCatalog
 {
+    private const string ResourceName = "PolyLab3DStudio.Core.Glossary.xml";
+
     /// <summary>Category filter list for the 3D 사전 screen (전체 first).</summary>
-    public static IReadOnlyList<string> Categories { get; } =
-    [
-        "전체", "공간/좌표", "메시", "재질/텍스처", "빛", "카메라",
-        "파이프라인", "성능", "파일/도구", "2D 그래픽", "WPF 타입",
-    ];
+    public static IReadOnlyList<string> Categories { get; }
 
-    public static IReadOnlyList<GlossaryTerm> All { get; } =
-    [
-        // ---------------- 공간/좌표 ----------------
-        new("축", "Axis", "공간/좌표",
-            "X(좌우)·Y(위아래)·Z(앞뒤)의 기준선.",
-            "X(좌우)·Y(위아래)·Z(앞뒤) 세 방향의 기준선이에요. WPF와 폴리랩은 Y가 위쪽입니다. 도구마다 \"위\"가 Y인지 Z인지 다르니(Blender는 Z), 새 도구를 배울 때 가장 먼저 확인하세요."),
-        new("원점", "Origin", "공간/좌표",
-            "(0,0,0) — 모든 좌표의 기준점.",
-            "(0, 0, 0) — 모든 좌표의 기준점이에요. 새 오브젝트가 태어나는 자리이자, 회전·크기 변형의 기본 중심이기도 합니다."),
-        new("오른손 좌표계", "Right-handed Coordinates", "공간/좌표",
-            "오른손 손가락 방향의 축 규칙. WPF·Blender가 이 방식.",
-            "오른손 엄지(X)·검지(Y)·중지(Z)의 방향 규칙이에요. WPF·Blender·HelixToolkit이 이 방식이고, DirectX 자체는 왼손 좌표계라 저수준 작업에서 Z 방향 변환에 주의해야 해요."),
-        new("로컬/월드 좌표", "Local / World Space", "공간/좌표",
-            "월드는 장면 전체 기준, 로컬은 부모 기준의 좌표.",
-            "월드는 장면 전체 기준, 로컬은 부모(또는 자기 자신) 기준의 좌표예요. \"바퀴는 차체에서 앞으로 1.2\"가 로컬 좌표 — 부모가 움직이면 자식도 따라 움직이는 계층 구조의 바탕입니다."),
+    public static IReadOnlyList<GlossaryTerm> All { get; }
 
-        // ---------------- 메시 ----------------
-        new("정점", "Vertex", "메시",
-            "3D 공간의 점 하나. 메시의 최소 재료.",
-            "3D 공간의 점 하나로, 메시의 최소 재료예요. WPF에서는 MeshGeometry3D.Positions에 담기고, 셰이더 시대에는 정점마다 위치 외에 노멀·UV·색 같은 속성도 함께 붙어요."),
-        new("엣지", "Edge", "메시",
-            "정점 두 개를 잇는 선.",
-            "정점 두 개를 잇는 선이에요. 정점–엣지–면이 메시의 3요소이고, Blender 편집 모드에서 정점/엣지/면 선택을 오가며 모양을 다듬어요."),
-        new("면", "Face / Polygon", "메시",
-            "정점 3개 이상으로 닫힌 평면 조각.",
-            "정점 3개 이상으로 닫힌 평면 조각이에요. GPU는 결국 모든 면을 삼각형으로 쪼개서 그리므로, 삼각형이 3D 그래픽의 원자 단위입니다."),
-        new("메시", "Mesh", "메시",
-            "정점·엣지·면의 그물로 표현한 입체.",
-            "정점·엣지·면의 그물로 표현한 입체예요. 큐브도, 게임 캐릭터도, 3D 프린팅 모델도 전부 메시입니다. WPF에서는 MeshGeometry3D, 파일로는 OBJ·STL·GLB로 담겨요."),
-        new("노멀", "Normal", "메시",
-            "면이 향하는 방향 벡터. 밝기 계산의 재료.",
-            "면(또는 정점)이 향하는 방향 벡터예요. 빛과 노멀의 각도로 밝기가 계산되므로, 노멀이 틀리면 모양은 맞아도 음영이 이상해져요. WPF는 Normals를 비워 두면 자동 계산하고(부드러운 음영), 각진 음영을 원하면 면마다 정점을 복제해 직접 넣습니다."),
-        new("와인딩", "Winding Order", "메시",
-            "삼각형 인덱스를 적는 방향. 앞면을 결정.",
-            "삼각형 인덱스를 적는 방향(시계/반시계)이에요. 카메라에서 볼 때 반시계가 앞면이며, 반대로 적으면 후면 컬링 때문에 면이 투명하게 사라져 보여요. \"면 하나가 안 보여요\"의 원인 1순위!"),
-        new("UV 좌표", "Texture Coordinates", "메시",
-            "이미지의 어느 지점이 표면에 붙는지 정하는 좌표.",
-            "정점마다 \"이미지의 어느 지점(0~1)이 여기에 붙는가\"를 정하는 2D 좌표예요. 텍스처가 늘어나거나 뒤틀리면 UV부터 의심하세요. WPF에서는 MeshGeometry3D.TextureCoordinates에 담습니다."),
-        new("토폴로지", "Topology", "메시",
-            "메시의 정점·면 연결 구조 자체.",
-            "메시에서 정점·면이 연결된 구조 자체를 말해요. 좋은 토폴로지는 변형·애니메이션 시 모양이 깨지지 않고, 서브디비전을 걸어도 매끈하게 유지됩니다."),
+    static GlossaryCatalog()
+    {
+        using Stream stream = typeof(GlossaryCatalog).Assembly.GetManifestResourceStream(ResourceName)
+            ?? throw new InvalidOperationException($"Embedded glossary resource '{ResourceName}' is missing.");
 
-        // ---------------- 재질/텍스처 ----------------
-        new("머티리얼", "Material", "재질/텍스처",
-            "표면의 성질(색·반짝임·발광) 묶음.",
-            "표면의 성질(색·반짝임·발광)을 담는 묶음이에요. WPF에서는 Diffuse·Specular·Emissive를 MaterialGroup으로 겹쳐 쓰고, 현대 엔진에서는 PBR 파라미터(거칠기·금속성)로 정의해요."),
-        new("디퓨즈", "Diffuse", "재질/텍스처",
-            "빛을 사방으로 고르게 반사하는 기본색 성분.",
-            "빛을 사방으로 고르게 반사하는 기본색 성분이에요. WPF의 DiffuseMaterial이 이것이고, Brush에 ImageBrush를 넣으면 텍스처가 됩니다."),
-        new("스페큘러", "Specular", "재질/텍스처",
-            "빛을 한 방향으로 반사하는 반짝임 성분.",
-            "빛을 한 방향으로 반사하는 반짝임(하이라이트) 성분이에요. WPF의 SpecularMaterial에서 SpecularPower가 클수록 하이라이트가 작고 날카로워요 — 거칠기를 낮춘 효과와 같습니다."),
-        new("이미시브", "Emissive", "재질/텍스처",
-            "스스로 빛나 보이는 성분 (주변은 못 밝힘).",
-            "스스로 빛나는 성분이에요. 다만 주변을 밝히지는 못하고 자기만 밝아 보여요 — 네온사인 효과. WPF의 EmissiveMaterial이 이것입니다."),
-        new("텍스처", "Texture", "재질/텍스처",
-            "표면에 입히는 이미지.",
-            "표면에 입히는 이미지예요. UV 좌표를 따라 감기며, WPF에서는 DiffuseMaterial의 Brush에 ImageBrush를 넣어 적용해요. GIMP에서 보정한 이미지를 3D에 붙이는 다리가 됩니다."),
-        new("PBR", "Physically Based Rendering", "재질/텍스처",
-            "물리 법칙 기반의 현대적 재질 모델.",
-            "거칠기·금속성 등 물리 법칙에 기반한 현대적 재질 모델이에요. 어떤 조명에서도 일관된 결과가 나오는 게 장점. 순정 WPF 3D는 PBR이 아닌 Phong 계열이고, HelixToolkit.SharpDX(DX11)부터 지원돼요."),
-        new("거칠기", "Roughness", "재질/텍스처",
-            "표면의 미세한 울퉁불퉁함. 낮을수록 반짝임.",
-            "표면의 미세한 울퉁불퉁함이에요. 낮을수록 매끈해서 반짝이고, 높을수록 무광이 돼요. PBR 재질의 양대 파라미터 중 하나입니다 (다른 하나는 금속성)."),
-        new("금속성", "Metalness", "재질/텍스처",
-            "표면이 금속처럼 빛을 반사하는 정도.",
-            "표면이 금속처럼 빛을 반사하는 정도예요. PBR 재질의 양대 파라미터 중 하나로, 금속은 자기 색으로 반사하고 비금속은 흰색으로 반사한다는 물리 차이를 담아요."),
+        XElement glossary = XDocument.Load(stream).Root
+            ?? throw new InvalidOperationException("Glossary.xml has no root element.");
 
-        // ---------------- 빛 ----------------
-        new("방향광", "Directional Light", "빛",
-            "태양처럼 한 방향으로 내리쬐는 빛.",
-            "태양처럼 무한히 먼 곳에서 한 방향으로 내리쬐는 빛이에요. 위치가 없고 방향만 있어서 계산이 가장 싸고, 대부분 장면의 주광으로 써요."),
-        new("점광", "Point Light", "빛",
-            "전구처럼 한 점에서 사방으로 퍼지는 빛.",
-            "전구처럼 한 점에서 사방으로 퍼지는 빛이에요. 위치·감쇠(Attenuation)·범위(Range)를 가지며, 방향광보다 계산이 비싸요."),
-        new("스포트라이트", "Spot Light", "빛",
-            "손전등처럼 원뿔로 비추는 빛.",
-            "손전등처럼 원뿔 모양으로 비추는 빛이에요. 내부/외부 원뿔각으로 가장자리의 부드러움을 조절해요. 조명 중 계산이 가장 비쌉니다."),
-        new("앰비언트", "Ambient Light", "빛",
-            "장면 전체를 고르게 밝히는 바탕빛.",
-            "방향 없이 장면 전체를 고르게 밝히는 바탕빛이에요. 너무 세게 하면 음영이 사라져 입체감이 죽어요. 조명 개수를 늘리는 대신 앰비언트를 올리는 게 WPF 3D 성능 수칙이기도 해요."),
-        new("그림자 매핑", "Shadow Mapping", "빛",
-            "빛의 시점에서 깊이를 기록해 그림자를 만드는 기법.",
-            "빛의 시점에서 장면의 깊이를 기록해 두고, 각 픽셀이 빛에 가려졌는지 판정해 그림자를 만드는 기법이에요. 순정 WPF 3D에는 없고, HelixToolkit.SharpDX(DX11) 같은 엔진부터 지원됩니다."),
+        Categories = [.. RequiredElement(glossary, "categories").Elements("category").Select(c => c.Value)];
+        All = [.. RequiredElement(glossary, "terms").Elements("term").Select(ParseTerm)];
+    }
 
-        // ---------------- 카메라 ----------------
-        new("원근 투영", "Perspective Projection", "카메라",
-            "멀수록 작게 보이는 사람 눈 방식.",
-            "멀수록 작게 보이는 사람 눈 방식이에요. WPF의 PerspectiveCamera가 이것이고, FieldOfView(화각)를 키우면 광각처럼 왜곡돼요."),
-        new("직교 투영", "Orthographic Projection", "카메라",
-            "거리와 무관하게 같은 크기로 보이는 방식.",
-            "거리와 무관하게 같은 크기로 보이는 방식이에요. 도면·CAD·아이소메트릭 게임 뷰가 이것으로, 길이 비교와 정확한 정렬에 유리해요. WPF에서는 OrthographicCamera."),
-        new("화각", "FOV (Field of View)", "카메라",
-            "카메라가 담는 시야의 각도.",
-            "카메라가 담는 시야의 각도예요. 키우면 광각(왜곡↑, 넓게), 줄이면 망원(왜곡↓, 좁게)처럼 됩니다. 보통 45~60도를 써요."),
-        new("Near/Far 평면", "Clipping Planes", "카메라",
-            "이 범위 밖의 물체는 잘려요.",
-            "카메라가 그리는 깊이 범위예요. 이 범위 밖의 물체는 잘립니다. \"가까이 갔더니 물체가 뚫려 보인다\"는 대부분 Near 값이 큰 탓이고, Near/Far 비율이 너무 크면 Z-파이팅(깊이 판정 떨림)이 생겨요."),
-        new("궤도 카메라", "Orbit Camera", "카메라",
-            "대상 주위를 공전하며 도는 카메라.",
-            "대상(타깃) 주위를 공전하며 도는 카메라예요. 폴리랩·Blender의 기본 시점 조작 방식이고, HelixToolkit의 HelixViewport3D에 내장되어 있어요."),
+    private static GlossaryTerm ParseTerm(XElement term) => new(
+        RequiredAttribute(term, "word"),
+        RequiredAttribute(term, "english"),
+        RequiredAttribute(term, "category"),
+        RequiredElement(term, "short").Value,
+        RequiredElement(term, "detail").Value,
+        (string?)term.Attribute("docUrl"));
 
-        // ---------------- 파이프라인 ----------------
-        new("렌더링", "Rendering", "파이프라인",
-            "3D 장면을 계산해 2D 그림으로 만드는 과정.",
-            "3D 장면 데이터를 계산해 2D 그림으로 만드는 전 과정이에요. 실시간 렌더링(게임, 초당 수십 프레임)과 오프라인 렌더링(영화, 장당 수 분)으로 나뉘어요."),
-        new("래스터화", "Rasterization", "파이프라인",
-            "삼각형을 픽셀로 바꾸는 단계.",
-            "삼각형을 픽셀로 바꾸는 단계예요. GPU가 가장 잘하는 일이고, WPF 파이프라인에서는 렌더 스레드의 DirectX 단계에서 일어나요."),
-        new("셰이더", "Shader", "파이프라인",
-            "GPU에서 실행되는 작은 프로그램.",
-            "GPU에서 실행되는 작은 프로그램이에요. 정점의 위치(버텍스 셰이더)와 픽셀의 색(픽셀 셰이더)을 계산해요. 순정 WPF 3D에서는 직접 쓸 수 없고, Vortice/Silk.NET 같은 저수준 경로에서 HLSL로 작성합니다."),
-        new("드로우콜", "Draw Call", "파이프라인",
-            "CPU가 GPU에게 \"그려라\"라고 명령하는 호출 1회.",
-            "CPU가 GPU에게 \"이거 그려\"라고 명령하는 호출 1회예요. 많아지면 CPU가 병목이 되며, DX12의 멀티스레드 커맨드 리스트가 이 비용을 크게 줄여줍니다."),
-        new("FPS", "Frames Per Second", "파이프라인",
-            "초당 그려지는 프레임 수.",
-            "초당 그려지는 프레임 수예요. 60이면 부드럽고, 30 밑이면 뚝뚝 끊겨 보여요. WPF는 보통 모니터 주사율에 맞춰 프레임을 프레젠트합니다."),
-        new("후면 컬링", "Back-face Culling", "파이프라인",
-            "카메라를 등진 면을 건너뛰는 최적화.",
-            "카메라를 등진 면을 그리지 않고 건너뛰는 최적화예요. 닫힌 입체라면 절반의 면을 공짜로 아끼는 셈. 와인딩이 뒤집힌 면이 안 보이는 이유가 바로 이것입니다."),
-        new("DXR", "DirectX Raytracing", "파이프라인",
-            "DX12의 하드웨어 레이트레이싱.",
-            "DirectX 12의 하드웨어 레이트레이싱이에요. 빛의 경로를 실제로 추적해 정확한 반사·그림자·GI를 만들어요. RTX급 GPU가 필요하고, .NET에서는 Vortice.Windows 같은 DX12 바인딩으로 접근합니다. DX11 경로(HelixToolkit.SharpDX)로는 쓸 수 없어요."),
-        new("메시 셰이더", "Mesh Shader", "파이프라인",
-            "기하 처리를 통째로 재구성한 DX12 세대 셰이더.",
-            "정점/기하 셰이더 단계를 통째로 대체하는 DX12 얼티밋 세대의 셰이더예요. 메시를 작은 조각(meshlet)으로 나눠 GPU가 대량 기하를 훨씬 유연하게 처리합니다. DX12 전용 기능의 대표 예시예요."),
-        new("스왑체인", "Swap Chain", "파이프라인",
-            "그릴 버퍼와 보여줄 버퍼를 교대하는 장치.",
-            "그리는 중인 백버퍼와 화면에 보이는 프론트버퍼를 교대(swap)하는 DXGI 장치예요. HwndHost 방식에서 DX12가 자기 HWND에 직접 스왑체인을 만들어 프레젠트합니다."),
+    private static XElement RequiredElement(XElement parent, string name) =>
+        parent.Element(name)
+        ?? throw new InvalidOperationException(
+            $"Glossary.xml: <{parent.Name}> element '{(string?)parent.Attribute("word") ?? parent.Name.LocalName}' is missing required child <{name}>.");
 
-        // ---------------- 성능 ----------------
-        new("폴리곤 수", "Polygon Count", "성능",
-            "메시의 삼각형 개수.",
-            "메시의 삼각형 개수예요. 순정 WPF 3D는 수만 폴리곤부터 버거워지고, DX11 엔진은 수백만도 다뤄요. 모델을 가져올 때 가장 먼저 확인할 수치입니다."),
-        new("LOD", "Level of Detail", "성능",
-            "먼 물체를 저폴리곤 버전으로 바꾸는 최적화.",
-            "멀리 있는 물체를 저폴리곤 버전으로 바꿔 그리는 최적화 기법이에요. 카메라 거리에 따라 미리 만든 여러 해상도의 메시를 갈아끼워요."),
-        new("Freeze()", "Freezable.Freeze", "성능",
-            "변하지 않을 리소스를 동결하는 WPF 최적화.",
-            "변하지 않을 리소스(재질·기하·변형)를 동결해 스레드 간 복사·동기화 비용을 없애는 WPF 최적화예요. UI 스레드→렌더 스레드 경계(DUCE 채널)를 건널 때 \"다시는 안 바뀐다\"는 약속이 되어 채널 트래픽이 사라집니다. 3D 데이터에 특히 효과가 커요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/desktop/wpf/advanced/freezable-objects-overview"),
-
-        // ---------------- 파일/도구 ----------------
-        new("OBJ / STL / GLB", "Mesh File Formats", "파일/도구",
-            "대표적인 3D 메시 파일 형식들.",
-            "OBJ는 범용 텍스트 메시, STL은 3D 프린팅 표준, GLB(glTF)는 재질·애니메이션까지 담는 현대 표준이에요. HelixToolkit의 ModelImporter가 OBJ/STL/3DS를 읽어요 — 순정 WPF에는 임포터가 없습니다."),
-        new("포인트 클라우드", "Point Cloud", "파일/도구",
-            "LiDAR·3D 스캔이 만드는 점들의 집합.",
-            "LiDAR·3D 스캐너·사진측량이 만드는 점들의 집합이에요. 점마다 위치(X·Y·Z)와 색을 가지며, 표면이 없어 그대로는 프린팅·게임에 못 쓰고 메시로 재구성해야 해요. 파일은 PLY·LAS·E57, 무료 도구는 CloudCompare·MeshLab이 표준입니다."),
-
-        // ---------------- 2D 그래픽 ----------------
-        new("래스터", "Raster", "2D 그래픽",
-            "픽셀(색깔 점)의 격자로 저장하는 이미지 방식.",
-            "그림을 픽셀(색깔 점)의 격자로 저장하는 방식이에요. 사진처럼 미묘한 색에 강하지만 확대하면 계단처럼 깨져요. GIMP가 이 세계의 도구이고, 파일은 PNG·JPG."),
-        new("벡터", "Vector", "2D 그래픽",
-            "수학적인 선과 점으로 저장하는 이미지 방식.",
-            "그림을 수학적인 선(패스)과 점(노드)으로 저장하는 방식이에요. 아무리 확대해도 깨지지 않아 로고·아이콘에 딱. Inkscape가 이 세계의 도구이고, 파일은 SVG·PDF."),
-        new("패스", "Path", "2D 그래픽",
-            "점(노드)들을 곡선으로 이은 선.",
-            "점(노드)들을 베지어 곡선으로 이은 선이에요. 벡터 그래픽의 모든 모양이 패스로 되어 있고, 노드를 끌면 모양이 바뀌어요. 3D의 정점 편집에 해당하는 2D 개념입니다."),
-        new("레이어", "Layer", "2D 그래픽",
-            "투명한 필름을 겹쳐 놓은 편집 구조.",
-            "투명한 필름을 겹쳐 놓은 것 같은 편집 구조예요. 요소를 따로따로 고치고 순서를 바꿀 수 있어요. 3D의 장면 목록(오브젝트 리스트)과 같은 역할입니다."),
-        new("불리언 연산", "Boolean Operations", "2D 그래픽",
-            "도형을 합치거나(Union) 빼는(Difference) 연산.",
-            "두 도형을 합치거나(Union), 한쪽으로 구멍을 뚫거나(Difference), 겹친 부분만 남기는(Intersection) 연산이에요. Inkscape에서도, Blender(모디파이어)에서도 복잡한 형태를 기본 도형의 조합으로 만드는 핵심 도구입니다."),
-
-        // ---------------- WPF 타입 ----------------
-        new("Viewport3D", "WPF Type", "WPF 타입",
-            "3D 장면이 그려지는 WPF 컨트롤.",
-            "3D 장면이 그려지는 WPF 컨트롤이에요. 그 자체가 비주얼 트리의 Visual 하나라서 Grid 안에 넣고 버튼·패널과 함께 배치할 수 있어요. 별도 라이브러리 없이 .NET에 기본 포함됩니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.controls.viewport3d"),
-        new("MeshGeometry3D", "WPF Type", "WPF 타입",
-            "메시 데이터(정점·삼각형·노멀·UV)를 담는 타입.",
-            "메시의 데이터(Positions·TriangleIndices·Normals·TextureCoordinates)를 담는 타입이에요. 모양만 있고 재질은 없어요 — 재질을 입히려면 GeometryModel3D로 감쌉니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.media.media3d.meshgeometry3d"),
-        new("GeometryModel3D", "WPF Type", "WPF 타입",
-            "메시(모양) + 재질을 합친 그릴 수 있는 물체.",
-            "메시(모양)에 Material(재질)을 입힌 \"그릴 수 있는 물체\"예요. BackMaterial로 뒷면 재질도 줄 수 있고, Transform으로 변형을 겁니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.media.media3d.geometrymodel3d"),
-        new("ModelVisual3D", "WPF Type", "WPF 타입",
-            "장면 트리의 노드. 오브젝트도 조명도 여기 담겨요.",
-            "WPF 3D 장면 트리의 노드예요. 오브젝트(GeometryModel3D)도 조명(Light)도 이 노드에 Content로 담아 Viewport3D에 추가합니다. Children 중첩으로 부모-자식 계층도 만들어요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.media.media3d.modelvisual3d"),
-        new("Transform3DGroup", "WPF Type", "WPF 타입",
-            "크기·회전·이동 변형을 순서대로 담는 묶음.",
-            "크기·회전·이동 변형을 순서대로 담는 묶음이에요. 순서가 결과를 바꿉니다 (표준: 크기→회전→이동). 애니메이션이 없다면 행렬을 미리 곱해 MatrixTransform3D 하나로 합치는 게 더 가벼워요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.media.media3d.transform3dgroup"),
-        new("짐벌락", "Gimbal Lock", "WPF 타입",
-            "회전 축이 겹쳐 자유도를 잃는 현상.",
-            "X·Y·Z 각도(오일러 각)로 회전을 쌓다 두 축이 겹쳐 자유도 하나를 잃는 현상이에요. 애니메이션 중 회전이 휙 도는 원인. QuaternionRotation3D(쿼터니언)로 회전을 표현하면 피할 수 있어요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.media.media3d.quaternionrotation3d"),
-        new("D3DImage", "WPF Type", "WPF 타입",
-            "외부 DirectX 표면을 WPF에 합성하는 유일한 창구.",
-            "외부 DirectX 표면을 WPF에 합성하는 유일한 공식 창구예요. 단, D3D9 표면만 받아요. 그래서 DX11/DX12 결과는 공유 표면 브릿지(DX12 → D3D11On12 → D3D11Image → D3D9)를 거쳐야 하고, 매 프레임 복사 비용이 따라옵니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.interop.d3dimage"),
-        new("HwndHost", "WPF Type", "WPF 타입",
-            "자식 HWND를 WPF 안에 끼우는 타입.",
-            "자식 HWND(네이티브 창)를 WPF 레이아웃 안에 끼우는 타입이에요. DX12 스왑체인을 직접 얹어 본연의 성능을 얻을 수 있지만, 에어스페이스 제약(그 위에 WPF 요소를 못 얹음)이 따라와요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/api/system.windows.interop.hwndhost"),
-        new("에어스페이스", "Airspace Problem", "WPF 타입",
-            "HwndHost 영역 위에 WPF 요소를 못 얹는 제약.",
-            "한 픽셀 영역은 한 렌더링 기술만 소유할 수 있다는 WPF의 제약이에요. HwndHost로 끼운 DirectX 영역 위에는 WPF 버튼·패널을 겹칠 수 없고, 마우스/키보드 이벤트도 수동으로 전달해야 해요. AllowsTransparency 창과도 충돌합니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/desktop/wpf/advanced/technology-regions-overview"),
-        new("milcore", "WPF Internals", "WPF 타입",
-            "WPF의 네이티브 합성 엔진 (렌더 스레드).",
-            "WPF의 네이티브 합성 엔진이에요. 렌더 스레드에서 합성 트리를 DirectX로 그립니다. 관리 코드에서 직접 만질 수 없는 영역이라, 외부 DirectX 콘텐츠는 D3DImage나 HwndHost로만 들어올 수 있어요.",
-            DocUrl: "https://learn.microsoft.com/dotnet/desktop/wpf/advanced/wpf-architecture"),
-        new("DUCE 채널", "WPF Internals", "WPF 타입",
-            "UI 스레드 → 렌더 스레드로 명령을 보내는 통로.",
-            "UI 스레드의 비주얼 트리 변경 사항을 렌더 스레드의 합성 트리로 복제해 보내는 내부 통로예요. 이 경계를 건널 때 복사·동기화가 일어나므로, 변하지 않는 리소스는 Freeze()로 동결해 트래픽을 없애는 것이 성능 수칙입니다.",
-            DocUrl: "https://learn.microsoft.com/dotnet/desktop/wpf/advanced/wpf-architecture"),
-    ];
+    private static string RequiredAttribute(XElement term, string name) =>
+        (string?)term.Attribute(name)
+        ?? throw new InvalidOperationException(
+            $"Glossary.xml: <term> '{(string?)term.Attribute("word") ?? "(no word)"}' is missing required attribute '{name}'.");
 }

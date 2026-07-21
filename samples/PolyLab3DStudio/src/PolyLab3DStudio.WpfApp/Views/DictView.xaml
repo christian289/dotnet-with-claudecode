@@ -115,7 +115,7 @@
                                Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
                 </Grid>
                 <StackPanel Margin="28,0,28,14">
-                    <Grid MaxWidth="520" HorizontalAlignment="Left">
+                    <Grid Width="520" HorizontalAlignment="Left">
                         <Border Background="{StaticResource SurfaceBrush}"
                                 BorderBrush="{StaticResource BorderStrongBrush}"
                                 BorderThickness="1" CornerRadius="10" />

@@ -75,7 +75,7 @@
                                     <Setter TargetName="IconPath" Property="Stroke" Value="{StaticResource SurfaceBrush}" />
                                     <Setter TargetName="Chrome" Property="Effect">
                                         <Setter.Value>
-                                            <DropShadowEffect Color="#22272B" Opacity="0.14" BlurRadius="20"
+                                            <DropShadowEffect Color="{StaticResource InkShadowColor}" Opacity="0.14" BlurRadius="20"
                                                               ShadowDepth="8" Direction="270" />
                                         </Setter.Value>
                                     </Setter>

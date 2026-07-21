@@ -3,53 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:PolyLab3DStudio.Controls"
              xmlns:vm="clr-namespace:PolyLab3DStudio.ViewModels;assembly=PolyLab3DStudio.ViewModels">
-    <UserControl.Resources>
-        <!-- Group caption under each ribbon cluster. -->
-        <Style x:Key="RibbonCaption" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0,3,0,0" />
-        </Style>
-
-        <Style x:Key="RibbonDividerLine" TargetType="Rectangle">
-            <Setter Property="Width" Value="1" />
-            <Setter Property="Fill" Value="{StaticResource RibbonDividerBrush}" />
-            <Setter Property="Margin" Value="4" />
-        </Style>
-
-        <!-- Viewport preset pill. -->
-        <Style x:Key="PresetButton" TargetType="Button">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Chrome" Background="{StaticResource ViewportPillBrush}" CornerRadius="7" Padding="11,6">
-                            <TextBlock Text="{TemplateBinding Content}" FontSize="11" FontWeight="SemiBold" Foreground="#DCE3EA" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Chrome" Property="Background" Value="{StaticResource ViewportPillHoverBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Properties/light slider row label pair. -->
-        <Style x:Key="SliderCaption" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="{StaticResource BodyBrush}" />
-        </Style>
-
-        <Style x:Key="SliderValue" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
-        </Style>
-    </UserControl.Resources>
+    <!-- Screen styles (RibbonCaption, PresetButton, Slider*) live in
+         Resources/ViewStyles.xaml, merged app-wide from App.xaml. -->
 
     <Grid>
         <Grid.RowDefinitions>
@@ -533,7 +488,7 @@
                     <Button Command="{Binding RequestViewCommand}" CommandParameter="iso" Cursor="Hand" Focusable="False" AutomationProperties.Name="입체">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="Chrome" Background="#D9F0562F" CornerRadius="7" Padding="11,6">
+                                <Border x:Name="Chrome" Background="{StaticResource AccentOverlayBrush}" CornerRadius="7" Padding="11,6">
                                     <TextBlock Text="입체" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource SurfaceBrush}" />
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -572,7 +527,7 @@
                         DataContext="{Binding Tutorial}"
                         Visibility="{Binding Converter={StaticResource NotNullToVisibility}}">
                     <Border.Effect>
-                        <DropShadowEffect Color="#141C26" Opacity="0.35" BlurRadius="44" ShadowDepth="18" Direction="270" />
+                        <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.35" BlurRadius="44" ShadowDepth="18" Direction="270" />
                     </Border.Effect>
                     <StackPanel>
                         <Grid>
@@ -812,7 +767,7 @@
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="Swatch" Width="24" Height="24" CornerRadius="7"
                                                             Background="{Binding Converter={StaticResource HexToBrush}}"
-                                                            BorderBrush="#14000000" BorderThickness="1">
+                                                            BorderBrush="{StaticResource FaintOutlineBrush}" BorderThickness="1">
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <DataTrigger Value="True">
@@ -964,7 +919,7 @@
             <Border Grid.Row="1" Width="880" Background="{StaticResource SurfaceBrush}" CornerRadius="16"
                     HorizontalAlignment="Center" DataContext="{Binding Export}">
                 <Border.Effect>
-                    <DropShadowEffect Color="#141C26" Opacity="0.45" BlurRadius="64" ShadowDepth="24" Direction="270" />
+                    <DropShadowEffect Color="{StaticResource ShadowColor}" Opacity="0.45" BlurRadius="64" ShadowDepth="24" Direction="270" />
                 </Border.Effect>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -1261,7 +1216,9 @@
                             </Border>
                             <Border Grid.Row="1" Background="{StaticResource DarkBarBrush}">
                                 <TextBox Text="{Binding CodeText, Mode=OneWay}" IsReadOnly="True" BorderThickness="0"
-                                         Background="Transparent" Foreground="#DCE3EA" CaretBrush="#DCE3EA"
+                                         Background="Transparent"
+                                         Foreground="{StaticResource DarkSoftFgBrush}"
+                                         CaretBrush="{StaticResource DarkSoftFgBrush}"
                                          FontFamily="{StaticResource MonoFont}" FontSize="11" Padding="16,14"
                                          HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
                             </Border>
